@@ -36,7 +36,7 @@ class TestAll(unittest.TestCase):
         # assert sys.version_info >= (2,5)
         print()
 
-        serverHost = "https://www.aceql.com:9443/aceql"
+        server_host = "https://www.aceql.com:9443/aceql"
         localhost = "http://localhost:9090/aceql"
 
         host = localhost
