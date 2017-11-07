@@ -51,7 +51,7 @@ class RowParser(object):
         self.__fd = open(filename, mode="r", encoding="utf-8")
 
         # Go to row_1
-        while (True):
+        while True:
             s = self.__fd.readline()
             if s == '':
                 break
@@ -60,10 +60,10 @@ class RowParser(object):
                 break
 
     def buildNextRow(self):
-        """Build the dictionnaries of values per column name & values per column index for the next row"""
+        """Build the dictionaries of values per column name & values per column index for the next row"""
 
         # No parse of course if no rows in file...
-        if (self.__row_count == 0):
+        if self.__row_count == 0:
             return False
 
         # Stop parsing if end of file reached
@@ -73,7 +73,7 @@ class RowParser(object):
             return False
 
         s = ""
-        while (True):
+        while True:
             line = self.__fd.readline()
             if line == '':
                 break
@@ -83,7 +83,7 @@ class RowParser(object):
                 break
 
             # Case last row
-            if (self.__last_row == self.__row_count):
+            if self.__last_row == self.__row_count:
                 if line == "]":
                     self.__last_row += 1
                     break;

@@ -55,7 +55,6 @@ class TestAll(unittest.TestCase):
         print("holdability: " + holdability)
         self.assertEqual(holdability, u"close_cursors_at_commit")
 
-
         connection.set_auto_commit(True)
         auto_commit = connection.get_auto_commit()
         print("auto_commit: " + str(auto_commit))
@@ -99,12 +98,18 @@ class TestAll(unittest.TestCase):
         self.assertEqual(rows, 1)
         print()
 
+        cursor.close()
+        cursor = connection.cursor()
+
         sql = "select * from customer where customer_id >= ? order by customer_id "
         params = (0,)
         cursor.execute(sql, params)
         the_tup = cursor.fetchone()
         print("the_tup: " + str(the_tup))
         self.assertEqual(the_tup[0], 0)
+
+        cursor.close()
+        cursor = connection.cursor()
 
         sql = "select * from customer where customer_id >= ? order by customer_id "
         params = (0,)

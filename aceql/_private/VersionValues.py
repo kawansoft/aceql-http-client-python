@@ -67,7 +67,8 @@
 # 06/11/2017 19:23 NDP: Clean comments in all public classes and methods
 # 06/11/2017 21:44 NDP: Add header notice
 # 07/11/2017 20:38 NDP: Clean code & tests: put var names in Python underscore convention
-# 07/11/2017 21:19 NDP: Clean code
+# 07/11/2017 21:50 NDP: Clean code
+
 
 class VersionValues(object):
     NAME = "AceQL HTTP SDK";

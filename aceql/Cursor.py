@@ -180,19 +180,19 @@ class Cursor(object):
         The number of rows to fetch per call is specified by the parameter.
         If it is not given, the cursor's arraysize determines the number of rows to be fetched."""
 
-        sizeToUse = size
-        if sizeToUse <= 1:
-            sizeToUse = self.arraysize
+        size_to_use = size
+        if size_to_use <= 1:
+            size_to_use = self.arraysize
 
         list_tuples = []
         cpt = 0
-        while (True):
-            theTup = self.fetchone()
+        while True:
+            the_tup = self.fetchone()
             cpt += 1
-            if (theTup is None):
+            if (the_tup is None):
                 break
-            list_tuples.append(theTup)
-            if cpt >= sizeToUse:
+            list_tuples.append(the_tup)
+            if cpt >= size_to_use:
                 return list_tuples
 
         return list_tuples
@@ -205,11 +205,11 @@ class Cursor(object):
         """
 
         list_tuples = []
-        while (True):
-            theTup = self.fetchone()
-            if (theTup is None):
+        while True:
+            the_tup = self.fetchone()
+            if (the_tup is None):
                 break
-            list_tuples.append(theTup)
+            list_tuples.append(the_tup)
 
         return list_tuples
 

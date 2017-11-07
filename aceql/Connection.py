@@ -138,7 +138,7 @@ class Connection(object):
         return self.__aceQLHttpApi.isGzipResult()
 
     def set_gzip_result(self, gzipResult):
-        """Define if result sets are compressed before download.  Defaults to true."""
+        """Define if result sets are compressed before download. Defaults to true."""
         self.__aceQLHttpApi.setGzipResult(gzipResult)
 
     def get_server_version(self):

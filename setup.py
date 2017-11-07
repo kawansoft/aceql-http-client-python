@@ -14,7 +14,7 @@ setup(
     ],
 
     package_data={
-        # If any package contains *.txt or *.rst files, include them:
+        # If any package contains *.txt or *.png or s*.rst files, include them:
         '': ['*.txt', '*.png', '*.rst']
     },
 
