@@ -23,9 +23,9 @@ from aceql._private.ColumnTypesBuilder import *
 from aceql._private.FileUtil import *
 
 
-class Test_ColumnTypesBuilderTest(unittest.TestCase):
+class ColumnTypesBuilderTest(unittest.TestCase):
     def test_A(self):
-        filename = FileUtil.getUserHomeDotKawansoftDir() + sep + "result-set.txt"
+        filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
         columnTypesBuilder = ColumnTypesBuilder(filename)
         dict_column_types = columnTypesBuilder.get_types_per_col_index()
         print(dict_column_types)

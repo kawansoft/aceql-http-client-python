@@ -1,0 +1,97 @@
+
+{
+    "status":"OK",
+    "column_types":[
+        "INTEGER",
+        "CHAR",
+        "VARCHAR",
+        "VARCHAR",
+        "VARCHAR",
+        "VARCHAR",
+        "CHAR",
+        "VARCHAR"
+    ],
+    "query_rows":[
+        {
+            "row_1":[
+                {
+                    "customer_id":0
+                },
+                {
+                    "customer_title":"Sir "
+                },
+                {
+                    "fname":"André_0"
+                },
+                {
+                    "lname":"Name_0"
+                },
+                {
+                    "addressline":"0, road 66"
+                },
+                {
+                    "town":"Town_0"
+                },
+                {
+                    "zipcode":"01111     "
+                },
+                {
+                    "phone":"NULL"
+                }
+            ],
+            "row_2":[
+                {
+                    "customer_id":1
+                },
+                {
+                    "customer_title":"Sir "
+                },
+                {
+                    "fname":"Nicolas"
+                },
+                {
+                    "lname":"Name_1"
+                },
+                {
+                    "addressline":"1, road 66"
+                },
+                {
+                    "town":"Town_1"
+                },
+                {
+                    "zipcode":"11111     "
+                },
+                {
+                    "phone":"NULL"
+                }
+            ],
+            "row_3":[
+                {
+                    "customer_id":2
+                },
+                {
+                    "customer_title":"Sir "
+                },
+                {
+                    "fname":"André_2"
+                },
+                {
+                    "lname":"Name_2"
+                },
+                {
+                    "addressline":"2, road 66"
+                },
+                {
+                    "town":"Town_2"
+                },
+                {
+                    "zipcode":"21111     "
+                },
+                {
+                    "phone":"NULL"
+                }
+            ]
+        }
+    ],
+    "row_count":3
+}

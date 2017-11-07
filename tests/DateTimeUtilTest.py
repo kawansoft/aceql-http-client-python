@@ -22,8 +22,8 @@ import unittest
 from aceql._private.DateTimeUtil import *
 
 
-class Test_DateTimeUtil(unittest.TestCase):
-    def test_something(self):
+class DateTimeUtilTest(unittest.TestCase):
+    def test_A(self):
 
         theDatetime = datetime.now()
         print("theDatetime    : " + str(theDatetime))

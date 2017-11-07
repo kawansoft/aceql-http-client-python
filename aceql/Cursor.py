@@ -61,12 +61,12 @@ class Cursor(object):
           cursor.execute("SELECT * FROM t1 WHERE id = ?", (5,))
         """
 
-        if (sql is None):
+        if sql is None:
             raise TypeError("sql is null!")
 
         sql = sql.strip()
 
-        if (sql.lower().startswith("select")):
+        if sql.lower().startswith("select"):
             return self.__execute_query(sql, params)
         else:
             return self.__execute_update(sql, params)
@@ -84,12 +84,12 @@ class Cursor(object):
         blob_streams = []
 
         try:
-            cursorUtil = CursorUtil()
-            parms_dict = cursorUtil.get_http_parameters_dict(params)
+            cursor_util = CursorUtil()
+            parms_dict = cursor_util.get_http_parameters_dict(params)
 
-            blob_ids = cursorUtil.blob_ids
-            blob_streams = cursorUtil.blob_streams
-            blob_lengths = cursorUtil.blob_lengths
+            blob_ids = cursor_util.blob_ids
+            blob_streams = cursor_util.blob_streams
+            blob_lengths = cursor_util.blob_lengths
 
             cpt = 0
             for blob_id in blob_ids:
@@ -114,8 +114,8 @@ class Cursor(object):
         self.row_count = 0
         self.__description = []
 
-        cursorUtil = CursorUtil()
-        parms_dict = cursorUtil.get_http_parameters_dict(params)
+        cursor_util = CursorUtil()
+        parms_dict = cursor_util.get_http_parameters_dict(params)
 
         isPreparedStatement = False
         if len(parms_dict) > 0:
@@ -146,31 +146,31 @@ class Cursor(object):
     def fetchone(self):
         """ Fetch the next row of a query result set, returning a single sequence,
         or None when no more data is available"""
-        rowAvailable = self.__row_parser.buildNextRow()
+        row_available = self.__row_parser.buildNextRow()
 
-        if not rowAvailable:
+        if not row_available:
             return None
 
         values_per_column_index = self.__row_parser.get_values_per_col_index()
         types_per_column_index = self.__row_parser.get_types_per_col_index()
 
-        theList = []
+        the_list = []
         index = 0
         for k, v in values_per_column_index.items():
             # print(k, v)
             # detect Epoch timestamp and convert them to date for DATE and datetime for
             # TIMESTAMP
             if types_per_column_index[index] == "TIMESTAMP":
-                theList.append(DateTimeUtil.get_datetime_from_timestamp(v))
+                the_list.append(DateTimeUtil.get_datetime_from_timestamp(v))
             elif types_per_column_index[index] == "DATE":
-                theList.append(DateTimeUtil.get_date_from_timestamp(v))
+                the_list.append(DateTimeUtil.get_date_from_timestamp(v))
             else:
-                theList.append(v)
+                the_list.append(v)
 
             index += 1
 
-        theTup = tuple(theList)
-        return theTup
+        the_tup = tuple(the_list)
+        return the_tup
 
     def fetchmany(self, size=-1):
         """Fetch the next set of rows of a query result, returning a sequence of sequences
@@ -236,14 +236,14 @@ class Cursor(object):
         if self.__rowcount < 1:
             return
 
-        rowParser = None
+        row_parser = None
 
         try:
-            rowParser = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
-            rowParser.buildNextRow()  # read first row to get the column names, only way to do it...
+            row_parser = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
+            row_parser.buildNextRow()  # read first row to get the column names, only way to do it...
 
-            aceql_types = rowParser.get_types_per_col_index()
-            aceql_names = rowParser.column_names_per_index()
+            aceql_types = row_parser.get_types_per_col_index()
+            aceql_names = row_parser.column_names_per_index()
 
             AceQLDebug.debug("aceql_types : " + str(aceql_types))
             AceQLDebug.debug("aceql_names: " + str(aceql_names))
@@ -266,8 +266,8 @@ class Cursor(object):
                 index += 1
 
         finally:
-            if rowParser is not None:
-                rowParser.close()
+            if row_parser is not None:
+                row_parser.close()
 
     # def blob_download(self, blob_id, filename, total_length=0,
     # progress_holder=None):

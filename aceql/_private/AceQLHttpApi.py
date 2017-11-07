@@ -549,7 +549,7 @@ class AceQLHttpApi(object):
 
             self._http_status = response.status_code
 
-            filename = FileUtil.buildtResultSetFile()
+            filename = FileUtil.build_result_set_file()
             AceQLDebug.debug("filename1: " + filename)
 
             # We dump the JSon stream into user.home/.kawansoft/tmp

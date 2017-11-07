@@ -24,10 +24,11 @@ from aceql._private.StreamResultAnalyzer import *
 
 from aceql._private.FileUtil import *
 
-class Test_StreamResultAnalyzerTest(unittest.TestCase):
+
+class StreamResultAnalyzerTest(unittest.TestCase):
     def test_A(self):
 
-        filename = FileUtil.getUserHomeDotKawansoftDir() + sep + "exception.txt"
+        filename = os.getcwd() + sep + "files" + sep + "exception.txt"
         streamResultAnalyzer = StreamResultAnalyzer(filename, 200)
 
         isOk = streamResultAnalyzer.isStatusOk()

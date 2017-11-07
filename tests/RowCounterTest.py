@@ -22,14 +22,15 @@ import unittest
 from aceql._private.RowCounter import *
 from aceql._private.FileUtil import *
 
-class Test_RowCounterTest(unittest.TestCase):
-	def test_A(self):
-		filename = FileUtil.getUserHomeDotKawansoftDir() + sep + "result-set.txt"
-		rowCounter = RowCounter(filename)
-		rows = rowCounter.count()
-		print("rows: " + str(rows))
-		self.assertEqual(rows, 3)
-		
+
+class RowCounterTest(unittest.TestCase):
+    def test_A(self):
+        filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
+        row_counter = RowCounter(filename)
+        rows = row_counter.count()
+        print("rows: " + str(rows))
+        self.assertEqual(rows, 3)
+
 
 if __name__ == '__main__':
-	unittest.main()
+    unittest.main()

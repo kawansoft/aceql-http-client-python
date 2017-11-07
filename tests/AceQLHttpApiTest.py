@@ -82,9 +82,9 @@ class AceQLHttpApiTest(object):
         print("statusMessage: " + str(statusMessage))
         print()
 
-        print("UUID: " + FileUtil.getUniqueId())
-        print("Home: " + FileUtil.getUserHomeDotKawansoftDir())
-        print("Tmp : " + FileUtil.getKawansoftTempDir())
+        print("UUID: " + FileUtil.get_unique_id())
+        print("Home: " + FileUtil.get_user_home_dot_kawansoft_dir())
+        print("Tmp : " + FileUtil.get_kawansoft_temp_dir())
         print()
 
         statementParameters2 = {}

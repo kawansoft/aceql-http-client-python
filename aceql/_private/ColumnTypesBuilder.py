@@ -64,7 +64,7 @@ class ColumnTypesBuilder(object):
             # 	index +=1
 
             index = 0
-            while (index < len(list_column_types)):
+            while index < len(list_column_types):
                 dict_column_types[index] = list_column_types[index]
                 index += 1
 

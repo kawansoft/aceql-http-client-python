@@ -34,46 +34,46 @@ class FileUtil(object):
     UNZIP_MODE_PY_3 = "rt"
     WRITE_MODE_PY_3 = "wt"
 
-    def getUniqueId():
+    def get_unique_id():
         x = uuid.uuid4()
         return str(x)
 
-    getUniqueId = staticmethod(getUniqueId)
+    get_unique_id = staticmethod(get_unique_id)
 
-    def getUserHomeDotKawansoftDir():
+    def get_user_home_dot_kawansoft_dir():
         # user.home
         # home = str(Path.home())
         home = os.path.expanduser("~")
         # print("home2: " + home2)
 
         # File.separator
-        homeKawanSoft = home + sep + ".kawansoft"
+        home_kawan_soft = home + sep + ".kawansoft"
 
-        if not os.path.isdir(homeKawanSoft):
-            os.mkdir(homeKawanSoft)
+        if not os.path.isdir(home_kawan_soft):
+            os.mkdir(home_kawan_soft)
 
-        return homeKawanSoft
+        return home_kawan_soft
 
-    getUserHomeDotKawansoftDir = staticmethod(getUserHomeDotKawansoftDir)
+    get_user_home_dot_kawansoft_dir = staticmethod(get_user_home_dot_kawansoft_dir)
 
-    def getKawansoftTempDir():
-        homeKawanSoft = FileUtil.getUserHomeDotKawansoftDir()
+    def get_kawansoft_temp_dir():
+        homeKawanSoft = FileUtil.get_user_home_dot_kawansoft_dir()
 
         # File.separator
-        homeKawanSoftTmp = homeKawanSoft + sep + "tmp"
+        home_kawan_soft_tmp = homeKawanSoft + sep + "tmp"
 
-        if not os.path.isdir(homeKawanSoftTmp):
-            os.mkdir(homeKawanSoftTmp)
+        if not os.path.isdir(home_kawan_soft_tmp):
+            os.mkdir(home_kawan_soft_tmp)
 
-        return homeKawanSoftTmp
+        return home_kawan_soft_tmp
 
-    getKawansoftTempDir = staticmethod(getKawansoftTempDir)
+    get_kawansoft_temp_dir = staticmethod(get_kawansoft_temp_dir)
 
-    def buildtResultSetFile():
-        file = FileUtil.getKawansoftTempDir() + sep + "pc-result-set-" + FileUtil.getUniqueId() + ".txt"
-        return file
+    def build_result_set_file():
+        the_file = FileUtil.get_kawansoft_temp_dir() + sep + "pc-result-set-" + FileUtil.get_unique_id() + ".txt"
+        return the_file
 
-    buildtResultSetFile = staticmethod(buildtResultSetFile)
+    build_result_set_file = staticmethod(build_result_set_file)
 
     def decompress(file_in, file_out):
         """Decompress GZIP text file into a text file."""

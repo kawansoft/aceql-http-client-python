@@ -24,7 +24,7 @@ from aceql.SqlNullType import *
 from aceql._private.CursorUtil import *
 
 
-class Test_CursorUtilTest(unittest.TestCase):
+class CursorUtilTest(unittest.TestCase):
     def test_A(self):
         theDatetime = datetime.now()
         theDate = date(2017, 10, 31)

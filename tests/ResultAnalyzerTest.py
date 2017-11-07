@@ -23,17 +23,17 @@ import unittest
 from aceql._private.ResultAnalyzer import *
 
 
-class Test_ResultAnalyzerTest(unittest.TestCase):
+class ResultAnalyzerTest(unittest.TestCase):
     def test_A(self):
         result = '{"status" : "OK","session_id" : "mn7andp2tt049iaeaskr28j9ch"}'
         analyzer = ResultAnalyzer(result, 200)
-        statusOk = analyzer.isStatusOk()
+        status_ok = analyzer.isStatusOk()
 
-        self.assertEqual(statusOk, True)
+        self.assertEqual(status_ok, True)
         session_id = analyzer.getValue("session_id")
         self.assertEqual(session_id, "mn7andp2tt049iaeaskr28j9ch")
 
-        print("Test_ResultAnalyzerTest Passed!")
+        print("ResultAnalyzerTest Passed!")
 
 
 if __name__ == '__main__':

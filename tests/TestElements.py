@@ -17,40 +17,34 @@
 # limitations under the License. 
 ##
 
+from tests.CursorUtilTest import *
+from tests.DateTimeUtilTest import *
+from tests.ColumnTypesBuilderTest import *
+from tests.ResultAnalyzerTest import *
+
+from tests.RowCounterTest import *
+from tests.RowParserTest import *
+from tests.StreamResultAnalyzerTest import *
+
 import sys
 
-from aceql.Error import *
-from aceql.SqlNullType import *
+theTest = ColumnTypesBuilderTest()
+theTest.test_A()
 
-the_type = SqlNullType.INTEGER
+cursorUtilTest = CursorUtilTest()
+cursorUtilTest.test_A()
 
-x = 12
+dateTimeUtilTest = DateTimeUtilTest()
+dateTimeUtilTest.test_A()
 
-if isinstance(x, int):
-    print ("OK")
-else:
-    print ("KO")
+resultAnalyzerTest = ResultAnalyzerTest()
+resultAnalyzerTest.test_A()
 
-print(sys.version_info)
+rowCounterTest = RowCounterTest()
+rowCounterTest.test_A()
 
-do_raise = False
+rowCounterTest = RowCounterTest()
+rowCounterTest.test_A()
 
-if do_raise:
-
-    raise Error("The error message", 0, None, None, 200)
-
-    # try:
-    #     pass
-    # except Exception as e:
-    #     print(str(e))
-
-try:
-
-    raise Error("SQL error message", 2, None, "stackTrace", 200)
-
-except Exception as e:
-    if type(e) == Error:
-        print("Before raise alone")
-        raise
-    else:
-        raise Error(str(e), 0, e, None, 200)
+streamResultAnalyzerTest = StreamResultAnalyzerTest()
+streamResultAnalyzerTest.test_A()

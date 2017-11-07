@@ -1,0 +1,6 @@
+{
+    "status":"FAIL",
+    "error_type":1,
+    "error_message":"ERREUR: la colonne \"customer_id1\" n'existe pas\n  Position\n: 38",
+    "http_status":400
+}

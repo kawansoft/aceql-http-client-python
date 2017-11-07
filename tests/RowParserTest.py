@@ -24,9 +24,10 @@ from aceql._private.RowParser import *
 from aceql._private.RowCounter import *
 from aceql._private.FileUtil import *
 
-class Test_RowParserTest(unittest.TestCase):
+
+class RowParserTest(unittest.TestCase):
     def test_A(self):
-        filename = FileUtil.getUserHomeDotKawansoftDir() + sep + "result-set.txt"
+        filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
 
         rowCounter = RowCounter(filename)
         row_cout = rowCounter.count()

@@ -54,7 +54,7 @@ class CursorUtil(object):
             # fd = open(filename)
             if CursorUtil.get_class_name(x) == "tuple":
                 if param_type == "BLOB":
-                    blob_id = FileUtil.getUniqueId() + ".blob"
+                    blob_id = FileUtil.get_unique_id() + ".blob"
                     parms_dict["param_value_" + str(param_index)] = blob_id
 
                     self.blob_ids.append(blob_id)
