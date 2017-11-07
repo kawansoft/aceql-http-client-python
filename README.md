@@ -7,6 +7,6 @@ Python Client toolkit for easy access of remote SQL databases managed with <a hr
 
 TODO.
 
-## Using aceql_py ##
+## Using AceQL Python SDK ##
 
 TODO.
