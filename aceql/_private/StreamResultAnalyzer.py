@@ -41,7 +41,7 @@ class StreamResultAnalyzer(object):
     # The stack trace
     # </summary>
     # The JSON file containing Result Set
-    def __init__(self, filename, httpStatusCode):
+    def __init__(self, filename, http_status_code):
         """ <summary>
          Initializes a new instance of the <see cref="StreamResultAnalyzer"/> class.
          </summary>
@@ -54,16 +54,16 @@ class StreamResultAnalyzer(object):
             raise TypeError("filename is null!")
 
         if not os.path.isfile(filename):
-            raise FileNotFoundError("filename does not exist: " + str(filename))
+            raise IOError("filename does not exist: " + str(filename))
 
         self.__filename = filename
-        self.__httpStatusCode = httpStatusCode
+        self.__http_status_code = http_status_code
 
         self.__error_type = None
         self.__error_message = None
         self.__stack_trace = None
 
-    def isStatusOk(self):
+    def is_status_ok(self):
         """ <summary>
          Determines whether the SQL correctly executed on server side.
          </summary>
@@ -84,11 +84,11 @@ class StreamResultAnalyzer(object):
                         break;
 
         if not status_ok:
-            self.parseErrorKeywords()
+            self.parse_error_keywords()
 
         return status_ok
 
-    def parseErrorKeywords(self):
+    def parse_error_keywords(self):
         """ <summary>
          Parses the error keywords.
          </summary>
@@ -129,7 +129,7 @@ class StreamResultAnalyzer(object):
 
             return
 
-    def getErrorMessage(self):
+    def get_error_message(self):
         """ <summary>
          Gets the error message.
          </summary>
@@ -137,7 +137,7 @@ class StreamResultAnalyzer(object):
         """
         return self.__error_message
 
-    def getErrorType(self):
+    def get_error_type(self):
         """ <summary>
          Gets the error type.
          </summary>
@@ -145,7 +145,7 @@ class StreamResultAnalyzer(object):
         """
         return self.__error_type
 
-    def getStackTrace(self):
+    def get_stack_trace(self):
         """ <summary>
          Gets the remote stack trace.
          </summary>

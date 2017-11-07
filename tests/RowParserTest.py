@@ -36,7 +36,7 @@ class RowParserTest(unittest.TestCase):
         rowParser = None
         try:
             rowParser = RowParser(filename, row_cout)
-            rowParser.buildNextRow()
+            rowParser.build_next_row()
 
             valuesPerColIndex = rowParser.get_values_per_col_index()
             typesPerColIndex = rowParser.get_types_per_col_index()
@@ -72,7 +72,7 @@ class RowParserTest(unittest.TestCase):
 
             while (True):
 
-                if (rowParser.buildNextRow()):
+                if (rowParser.build_next_row()):
                     valuesPerColIndex = rowParser.get_values_per_col_index()
                     typesPerColIndex = rowParser.get_types_per_col_index()
                     print()

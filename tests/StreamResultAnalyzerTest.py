@@ -31,8 +31,8 @@ class StreamResultAnalyzerTest(unittest.TestCase):
         filename = os.getcwd() + sep + "files" + sep + "exception.txt"
         streamResultAnalyzer = StreamResultAnalyzer(filename, 200)
 
-        isOk = streamResultAnalyzer.isStatusOk()
-        print("status: " + str(streamResultAnalyzer.isStatusOk()))
+        isOk = streamResultAnalyzer.is_status_ok()
+        print("status: " + str(streamResultAnalyzer.is_status_ok()))
 
         self.assertEqual(isOk, False)
 
@@ -45,14 +45,14 @@ class StreamResultAnalyzerTest(unittest.TestCase):
         # }
 
         if not isOk:
-            print("error_type: " + str(streamResultAnalyzer.getErrorType()))
-            print("error_message: " + streamResultAnalyzer.getErrorMessage())
+            print("error_type: " + str(streamResultAnalyzer.get_error_type()))
+            print("error_message: " + streamResultAnalyzer.get_error_message())
 
-            self.assertEqual(streamResultAnalyzer.getErrorType(), 1)
-            self.assertEqual(streamResultAnalyzer.getErrorMessage()[:18], "ERREUR: la colonne")
+            self.assertEqual(streamResultAnalyzer.get_error_type(), 1)
+            self.assertEqual(streamResultAnalyzer.get_error_message()[:18], "ERREUR: la colonne")
 
-            if streamResultAnalyzer.getStackTrace() is not None:
-                print("statck_trace: " + streamResultAnalyzer.getStackTrace())
+            if streamResultAnalyzer.get_stack_trace() is not None:
+                print("statck_trace: " + streamResultAnalyzer.get_stack_trace())
 
         else:
             print("status OK!")

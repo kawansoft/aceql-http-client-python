@@ -26,7 +26,7 @@ class DateTimeUtil(object):
     """Date & datetime utilities
 
     Includes conversion from and to Unix Timestamp as date/time object
-    are transfere a long Unix Epoch
+    are transferred as a long Unix Epoch
     """
 
     # def get_timestamp_from_datetime(the_date_time):
@@ -59,27 +59,27 @@ class DateTimeUtil(object):
 
         # print("unixtime: " + str(unixtime))
         # unixtimeStr = str(unixtime * 1000)
-        unixtimeStr = str(unixtime)
-        unixtimeStr = unixtimeStr[0:len(unixtimeStr) - 2]
-        return unixtimeStr + "000"
+        unixtime_str = str(unixtime)
+        unixtime_str = unixtime_str[0:len(unixtime_str) - 2]
+        return unixtime_str + "000"
 
     get_timestamp_from_date = staticmethod(get_timestamp_from_date)
 
-    def get_datetime_from_timestamp(tsStr):
+    def get_datetime_from_timestamp(ts_str):
         """Returns a datetime from Unix Epoch."""
 
-        ts = float(tsStr)
-        tsInt = ts / 1000  # we want in seconds
-        return datetime.fromtimestamp(tsInt)
+        ts = float(ts_str)
+        ts_int = ts / 1000  # we want in seconds
+        return datetime.fromtimestamp(ts_int)
 
     get_datetime_from_timestamp = staticmethod(get_datetime_from_timestamp)
 
-    def get_date_from_timestamp(tsStr):
+    def get_date_from_timestamp(ts_str):
         """Returns a date from Unix Epoch."""
 
-        ts = float(tsStr)
-        tsInt = ts / 1000  # we want in seconds
-        theDatetime = datetime.fromtimestamp(tsInt)
-        return theDatetime.date()
+        ts = float(ts_str)
+        ts_int = ts / 1000  # we want in seconds
+        the_datetime = datetime.fromtimestamp(ts_int)
+        return the_datetime.date()
 
     get_date_from_timestamp = staticmethod(get_date_from_timestamp)

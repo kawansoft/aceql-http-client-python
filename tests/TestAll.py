@@ -39,7 +39,7 @@ class TestAll(unittest.TestCase):
         server_host = "https://www.aceql.com:9443/aceql"
         localhost = "http://localhost:9090/aceql"
 
-        host = localhost
+        host = server_host
 
         Connection.set_stateless(True)
         connection = aceql.connect(host, "kawansoft_example", "user1", "password1")

@@ -146,7 +146,7 @@ class Cursor(object):
     def fetchone(self):
         """ Fetch the next row of a query result set, returning a single sequence,
         or None when no more data is available"""
-        row_available = self.__row_parser.buildNextRow()
+        row_available = self.__row_parser.build_next_row()
 
         if not row_available:
             return None
@@ -240,7 +240,7 @@ class Cursor(object):
 
         try:
             row_parser = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
-            row_parser.buildNextRow()  # read first row to get the column names, only way to do it...
+            row_parser.build_next_row()  # read first row to get the column names, only way to do it...
 
             aceql_types = row_parser.get_types_per_col_index()
             aceql_names = row_parser.column_names_per_index()
@@ -249,8 +249,8 @@ class Cursor(object):
             AceQLDebug.debug("aceql_names: " + str(aceql_names))
 
             index = 0
+            name_and_type = []
             while index < len(aceql_types):
-                name_and_type = []
                 name_and_type.append(aceql_names[index])
                 name_and_type.append(aceql_types[index])
 
@@ -261,8 +261,8 @@ class Cursor(object):
                 name_and_type.append(None)
                 name_and_type.append(None)
 
-                theTup = tuple(name_and_type)
-                self.__description.append(theTup)
+                the_tup = tuple(name_and_type)
+                self.__description.append(the_tup)
                 index += 1
 
         finally:

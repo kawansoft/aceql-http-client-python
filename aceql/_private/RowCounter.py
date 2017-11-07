@@ -45,8 +45,8 @@ class RowCounter(object):
                     break
                 s = s.strip()
                 if s.startswith("\"row_count\":"):
-                    countStr = s[12:]
-                    AceQLDebug.debug("countStr: " + countStr + "!")
-                    rows = int(countStr)
+                    count_str = s[12:]
+                    AceQLDebug.debug("countStr: " + count_str + "!")
+                    rows = int(count_str)
                 AceQLDebug.debug(s)
             return rows

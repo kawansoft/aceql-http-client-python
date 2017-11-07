@@ -572,11 +572,11 @@ class AceQLHttpApi(object):
             AceQLDebug.debug("Before StreamResultAnalyzer")
 
             resultAnalyzer = StreamResultAnalyzer(file_out, self.__http_status_code)
-            if not resultAnalyzer.isStatusOk():
+            if not resultAnalyzer.is_status_ok():
                 if Parms.DELETE_FILES:
                     os.remove(filename)
-                raise Error(resultAnalyzer.getErrorMessage(),
-                            resultAnalyzer.getErrorType(), None, None, self.__http_status_code)
+                raise Error(resultAnalyzer.get_error_message(),
+                            resultAnalyzer.get_error_type(), None, None, self.__http_status_code)
 
             rowCounter = RowCounter(file_out)
             row_count = rowCounter.count()

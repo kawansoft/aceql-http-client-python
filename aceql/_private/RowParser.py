@@ -44,9 +44,9 @@ class RowParser(object):
         if not os.path.isfile(filename):
             raise IOError("filename does not exist: " + str(filename))
 
-        # Buils the column types
-        columnTypesBuilder = ColumnTypesBuilder(filename)
-        self.__types_per_col_index = columnTypesBuilder.get_types_per_col_index()
+        # Builds the column types
+        column_types_builder = ColumnTypesBuilder(filename)
+        self.__types_per_col_index = column_types_builder.get_types_per_col_index()
 
         self.__fd = open(filename, mode="r", encoding="utf-8")
 
@@ -59,7 +59,7 @@ class RowParser(object):
             if s == ("\"row_1\":["):
                 break
 
-    def buildNextRow(self):
+    def build_next_row(self):
         """Build the dictionaries of values per column name & values per column index for the next row"""
 
         # No parse of course if no rows in file...
@@ -114,7 +114,7 @@ class RowParser(object):
         # AceQLDebug.debug("key: %s , value: %s" % (key, self.__values_per_col_name [key]))
 
         self.__rows_parsed += 1
-        return True;
+        return True
 
     def column_names_per_index(self):
         """Returns the dictionary of column names per column index, starting at 0 """

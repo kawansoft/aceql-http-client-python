@@ -68,6 +68,7 @@
 # 06/11/2017 21:44 NDP: Add header notice
 # 07/11/2017 20:38 NDP: Clean code & tests: put var names in Python underscore convention
 # 07/11/2017 21:50 NDP: Clean code
+# 07/11/2017 22:28 NDP: Clean code: put var names in Python underscore convention
 
 
 class VersionValues(object):

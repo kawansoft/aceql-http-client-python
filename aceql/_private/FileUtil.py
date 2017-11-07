@@ -57,10 +57,10 @@ class FileUtil(object):
     get_user_home_dot_kawansoft_dir = staticmethod(get_user_home_dot_kawansoft_dir)
 
     def get_kawansoft_temp_dir():
-        homeKawanSoft = FileUtil.get_user_home_dot_kawansoft_dir()
+        home_kawan_soft = FileUtil.get_user_home_dot_kawansoft_dir()
 
         # File.separator
-        home_kawan_soft_tmp = homeKawanSoft + sep + "tmp"
+        home_kawan_soft_tmp = home_kawan_soft + sep + "tmp"
 
         if not os.path.isdir(home_kawan_soft_tmp):
             os.mkdir(home_kawan_soft_tmp)
