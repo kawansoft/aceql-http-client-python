@@ -5,7 +5,7 @@ Python Client toolkit for easy access of remote SQL databases managed with <a hr
 
 ## Installation  ##
 
-TODO;
+TODO.
 
 ## Using aceql_py ##
 
