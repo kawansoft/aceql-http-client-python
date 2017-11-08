@@ -220,14 +220,11 @@ class TestAll(unittest.TestCase):
         print("cursor.rowcount    : " + str(cursor.rowcount))
 
         description = cursor.description
-        print(description)
         print("len(description): " + str(len(description)))
         print("cursor.description: ")
 
-        cpt = 0
-        while cpt < len(description):
-            print(description[cpt])
-            cpt += 1
+        for the_col_desc in description:
+            print(the_col_desc)
 
         connection.commit()
 
