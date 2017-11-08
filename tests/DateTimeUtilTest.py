@@ -25,19 +25,20 @@ from aceql._private.DateTimeUtil import *
 class DateTimeUtilTest(unittest.TestCase):
     def test_A(self):
 
-        theDatetime = datetime.now()
-        print("theDatetime    : " + str(theDatetime))
+        the_datetime = datetime.now()
+        print("theDatetime    : " + str(the_datetime))
 
-        timestampStr = DateTimeUtil.get_timestamp_from_date(theDatetime)
-        print("timestampStr   : " + timestampStr)
+        timestamp_str = DateTimeUtil.get_timestamp_from_date(the_datetime)
+        print("timestampStr   : " + timestamp_str)
 
-        theDatetimeNew = DateTimeUtil.get_datetime_from_timestamp(timestampStr)
-        print("theDatetimeNew : " + str(theDatetimeNew))
+        the_datetime_new = DateTimeUtil.get_datetime_from_timestamp(timestamp_str)
+        print("theDatetimeNew : " + str(the_datetime_new))
 
-        timestampStrNew = DateTimeUtil.get_timestamp_from_date(theDatetimeNew)
-        print("timestampStrNew: " + timestampStrNew)
+        timestamp_str_new = DateTimeUtil.get_timestamp_from_date(the_datetime_new)
+        print("timestampStrNew: " + timestamp_str_new)
 
-        self.assertEqual(timestampStr, timestampStrNew)
+        self.assertEqual(timestamp_str, timestamp_str_new)
+
 
 if __name__ == '__main__':
     unittest.main()

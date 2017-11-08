@@ -52,7 +52,7 @@ class StreamResultAnalyzerTest(unittest.TestCase):
             self.assertEqual(streamResultAnalyzer.get_error_message()[:18], "ERREUR: la colonne")
 
             if streamResultAnalyzer.get_stack_trace() is not None:
-                print("statck_trace: " + streamResultAnalyzer.get_stack_trace())
+                print("stack_trace: " + streamResultAnalyzer.get_stack_trace())
 
         else:
             print("status OK!")

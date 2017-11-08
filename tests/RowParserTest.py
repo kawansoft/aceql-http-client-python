@@ -29,56 +29,56 @@ class RowParserTest(unittest.TestCase):
     def test_A(self):
         filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
 
-        rowCounter = RowCounter(filename)
-        row_cout = rowCounter.count()
+        row_counter = RowCounter(filename)
+        row_cout = row_counter.count()
         print("row_count: " + str(row_cout))
 
-        rowParser = None
+        row_parser = None
         try:
-            rowParser = RowParser(filename, row_cout)
-            rowParser.build_next_row()
+            row_parser = RowParser(filename, row_cout)
+            row_parser.build_next_row()
 
-            valuesPerColIndex = rowParser.get_values_per_col_index()
-            typesPerColIndex = rowParser.get_types_per_col_index()
+            values_per_col_index = row_parser.get_values_per_col_index()
+            types_per_col_index = row_parser.get_types_per_col_index()
 
-            print("values per col index: " + str(valuesPerColIndex))
-            print("types per col index : " + str(typesPerColIndex))
+            print("values per col index: " + str(values_per_col_index))
+            print("types per col index : " + str(types_per_col_index))
 
-            self.assertEqual(valuesPerColIndex[0], 0)
-            self.assertEqual(valuesPerColIndex[1], "Sir ")
-            self.assertEqual(valuesPerColIndex[2], u"André_0")
-            self.assertEqual(valuesPerColIndex[3], "Name_0")
-            self.assertEqual(valuesPerColIndex[4], "0, road 66")
-            self.assertEqual(valuesPerColIndex[5], "Town_0")
-            self.assertEqual(str(valuesPerColIndex[6]).strip(), "01111")
-            self.assertEqual(valuesPerColIndex[7], "NULL")
+            self.assertEqual(values_per_col_index[0], 0)
+            self.assertEqual(values_per_col_index[1], "Sir ")
+            self.assertEqual(values_per_col_index[2], u"André_0")
+            self.assertEqual(values_per_col_index[3], "Name_0")
+            self.assertEqual(values_per_col_index[4], "0, road 66")
+            self.assertEqual(values_per_col_index[5], "Town_0")
+            self.assertEqual(str(values_per_col_index[6]).strip(), "01111")
+            self.assertEqual(values_per_col_index[7], "NULL")
 
-            self.assertEqual(typesPerColIndex[0], "INTEGER")
-            self.assertEqual(typesPerColIndex[1], "CHAR")
-            self.assertEqual(typesPerColIndex[2], "VARCHAR")
-            self.assertEqual(typesPerColIndex[3], "VARCHAR")
-            self.assertEqual(typesPerColIndex[4], "VARCHAR")
-            self.assertEqual(typesPerColIndex[5], "VARCHAR")
-            self.assertEqual(typesPerColIndex[6], "CHAR")
-            self.assertEqual(typesPerColIndex[7], "VARCHAR")
+            self.assertEqual(types_per_col_index[0], "INTEGER")
+            self.assertEqual(types_per_col_index[1], "CHAR")
+            self.assertEqual(types_per_col_index[2], "VARCHAR")
+            self.assertEqual(types_per_col_index[3], "VARCHAR")
+            self.assertEqual(types_per_col_index[4], "VARCHAR")
+            self.assertEqual(types_per_col_index[5], "VARCHAR")
+            self.assertEqual(types_per_col_index[6], "CHAR")
+            self.assertEqual(types_per_col_index[7], "VARCHAR")
         finally:
-            rowParser.close()
+            row_parser.close()
 
         # loop test
         try:
-            rowParser = RowParser(filename, row_cout)
+            row_parser = RowParser(filename, row_cout)
 
             cpt = 0
 
-            while (True):
+            while True:
 
-                if (rowParser.build_next_row()):
-                    valuesPerColIndex = rowParser.get_values_per_col_index()
-                    typesPerColIndex = rowParser.get_types_per_col_index()
+                if row_parser.build_next_row():
+                    values_per_col_index = row_parser.get_values_per_col_index()
+                    types_per_col_index = row_parser.get_types_per_col_index()
                     print()
                     print("cpt: " + str(cpt))
-                    print("values per col name : " + str(typesPerColIndex))
-                    print("values per col index: " + str(valuesPerColIndex))
+                    print("values per col name : " + str(types_per_col_index))
+                    print("values per col index: " + str(values_per_col_index))
                     cpt += 1
                 else:
                     break
@@ -87,7 +87,7 @@ class RowParserTest(unittest.TestCase):
             print("Done!")
 
         finally:
-            rowParser.close()
+            row_parser.close()
 
 
 if __name__ == '__main__':

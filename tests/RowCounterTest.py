@@ -24,6 +24,7 @@ from aceql._private.FileUtil import *
 
 
 class RowCounterTest(unittest.TestCase):
+
     def test_A(self):
         filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
         row_counter = RowCounter(filename)

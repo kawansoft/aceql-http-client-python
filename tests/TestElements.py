@@ -23,7 +23,6 @@ from tests.ColumnTypesBuilderTest import *
 from tests.ResultAnalyzerTest import *
 
 from tests.RowCounterTest import *
-from tests.RowParserTest import *
 from tests.StreamResultAnalyzerTest import *
 
 import sys

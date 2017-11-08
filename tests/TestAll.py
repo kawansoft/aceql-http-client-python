@@ -26,7 +26,7 @@ from aceql.SqlNullType import *
 import unittest
 import aceql
 import sys
-from datetime import datetime, date, time
+from datetime import datetime, date
 
 
 class TestAll(unittest.TestCase):
@@ -39,7 +39,7 @@ class TestAll(unittest.TestCase):
         server_host = "https://www.aceql.com:9443/aceql"
         localhost = "http://localhost:9090/aceql"
 
-        host = server_host
+        host = localhost
 
         Connection.set_stateless(False)
         connection = aceql.connect(host, "kawansoft_example", "user1", "password1")
@@ -74,13 +74,13 @@ class TestAll(unittest.TestCase):
         params = (0,)
         cursor.execute(sql, params)
 
-        sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)";
-        cpt = 0;
+        sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
+        cpt = 0
         while cpt < 10:
             customer_id = cpt
-            params = (customer_id, (None, SqlNullType.VARCHAR), u"André" + str(customer_id), \
-                      u"Smith_" + str(customer_id), str(customer_id) + u" César Avenue", \
-                      u"Town_" + str(customer_id), \
+            params = (customer_id, (None, SqlNullType.VARCHAR), u"André" + str(customer_id),
+                      u"Smith_" + str(customer_id), str(customer_id) + u" César Avenue",
+                      u"Town_" + str(customer_id),
                       str(customer_id) + "", str(customer_id) + u"12345678")
             cursor.execute(sql, params)
             cpt += 1
@@ -111,16 +111,20 @@ class TestAll(unittest.TestCase):
         cursor.close()
         cursor = connection.cursor()
 
-        sql = "select * from customer where customer_id >= ? order by customer_id "
+        sql = "select * from customer where customer_id >= ? order by customer_id"
         params = (0,)
         cursor.execute(sql, params)
 
-        for row in cursor:
+        rows = cursor.fetchall()
+        for row in rows:
             print(row)
 
         print("cursor.rowcount    : " + str(cursor.rowcount))
         print("cursor.description: " + str(cursor.description))
         print("")
+
+        cursor.close()
+        cursor = connection.cursor()
 
         try:
             sql = "update xxxxxxxxxxxxxxxx set lname = ? where customer_id = ?"
@@ -132,6 +136,9 @@ class TestAll(unittest.TestCase):
             print(e)
 
         connection.set_auto_commit(False)
+
+        cursor.close()
+        cursor = connection.cursor()
 
         do_update = True
 
@@ -168,7 +175,8 @@ class TestAll(unittest.TestCase):
 
                 sql = "insert into orderlog values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
-                params = (cpt, cpt, u"intitulé_" + str(cpt), cpt * 1000, the_date, datetime.now(), blob_tuple, 1, cpt * 1000)
+                params = (cpt, cpt, u"intitulé_" + str(cpt), cpt * 1000,
+                          the_date, datetime.now(), blob_tuple, 1, cpt * 1000)
                 print("insert: " + str(params))
                 cursor.execute(sql, params)
                 cpt += 1
@@ -203,14 +211,23 @@ class TestAll(unittest.TestCase):
 
         connection.commit()
 
+        cursor.close()
+        cursor = connection.cursor()
+
         sql = "select * from orderlog where customer_id >= ? order by customer_id"
         params = (0,)
         cursor.execute(sql, params)
         print("cursor.rowcount    : " + str(cursor.rowcount))
-        print("cursor.description: ")
+
         description = cursor.description
-        for desc in description:
-            print(desc)
+        print(description)
+        print("len(description): " + str(len(description)))
+        print("cursor.description: ")
+
+        cpt = 0
+        while cpt < len(description):
+            print(description[cpt])
+            cpt += 1
 
         connection.commit()
 
@@ -224,6 +241,7 @@ class TestAll(unittest.TestCase):
 
             # 6 is is the index of BLOB in the row
             total_length = cursor.get_blob_length(6)
+            print("total_length: " + str(total_length))
 
             cpt += 1
             # print("BLOB length : " + str(total_length))
@@ -238,6 +256,7 @@ class TestAll(unittest.TestCase):
         print()
 
         connection.close()
+
 
 if __name__ == '__main__':
     unittest.main()

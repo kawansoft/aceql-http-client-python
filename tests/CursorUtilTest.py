@@ -26,16 +26,16 @@ from aceql._private.CursorUtil import *
 
 class CursorUtilTest(unittest.TestCase):
     def test_A(self):
-        theDatetime = datetime.now()
-        theDate = date(2017, 10, 31)
+        the_datetime = datetime.now()
+        the_date = date(2017, 10, 31)
 
         # for NULL values
-        tupNullInteger = None, SqlNullType.INTEGER
+        tup_null_integer = None, SqlNullType.INTEGER
 
-        theList = [tupNullInteger, 1, 12.53, True, "text", theDatetime, theDate]
+        the_list = [tup_null_integer, 1, 12.53, True, "text", the_datetime, the_date]
 
         cpt = 0
-        for x in theList:
+        for x in the_list:
             print()
             print(str(x) + " / type: " + str(type(x)))
             sql_type = CursorUtil.get_sql_type(x)

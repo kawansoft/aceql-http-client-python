@@ -35,6 +35,8 @@ class Cursor(object):
         self.__filelist = []
         self.arraysize = 1
 
+        self.__row_parser = None
+
     @property
     def description(self):
         """Describes the name and SLQ type of each column.
@@ -223,7 +225,9 @@ class Cursor(object):
     def close(self):
         """ Closes the cursor and releases underlying file resource (result set). """
         self.__is_closed = True
-        self.__row_parser.close()  # very important
+
+        if self.__row_parser is not None:
+            self.__row_parser.close()  # very important
 
         if Parms.DELETE_FILES:
             for filename in self.__filelist:
@@ -231,6 +235,8 @@ class Cursor(object):
 
     def __build_description(self):
         """ Builds the .description property"""
+
+        self.__description = []
 
         if self.__rowcount < 1:
             return
@@ -248,8 +254,9 @@ class Cursor(object):
             AceQLDebug.debug("aceql_names: " + str(aceql_names))
 
             index = 0
-            name_and_type = []
+
             while index < len(aceql_types):
+                name_and_type = list()
                 name_and_type.append(aceql_names[index])
                 name_and_type.append(aceql_types[index])
 

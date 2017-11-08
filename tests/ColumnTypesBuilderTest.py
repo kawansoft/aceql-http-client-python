@@ -26,8 +26,8 @@ from aceql._private.FileUtil import *
 class ColumnTypesBuilderTest(unittest.TestCase):
     def test_A(self):
         filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
-        columnTypesBuilder = ColumnTypesBuilder(filename)
-        dict_column_types = columnTypesBuilder.get_types_per_col_index()
+        column_types_builder = ColumnTypesBuilder(filename)
+        dict_column_types = column_types_builder.get_types_per_col_index()
         print(dict_column_types)
 
         self.assertEqual(dict_column_types[0], "INTEGER")

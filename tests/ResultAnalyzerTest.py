@@ -24,6 +24,7 @@ from aceql._private.ResultAnalyzer import *
 
 
 class ResultAnalyzerTest(unittest.TestCase):
+
     def test_A(self):
         result = '{"status" : "OK","session_id" : "mn7andp2tt049iaeaskr28j9ch"}'
         analyzer = ResultAnalyzer(result, 200)
