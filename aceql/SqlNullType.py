@@ -20,8 +20,9 @@
 
 class SqlNullType(object):
     """Defines nullable SQL Types when setting a SQL parameter to NULL.
-        To set a prepared statement to NULL, set the value to a tuple (None, SqlNullType.<SQL_TYPE>)
-        Example to set to NULL an INTEGER column: (None, SqlNullType.INTEGER) """
+
+        To set a prepared statement to NULL, set the value to a tuple (None, SqlNullType.<SQL_TYPE>).
+        Example: set to NULL an INTEGER column ==>  (None, SqlNullType.INTEGER) """
 
     BIT = -7
     TINYINT = -6

@@ -53,12 +53,12 @@ class Connection(object):
         self.__aceQLHttpApi = AceQLHttpApi(server_url, database, username, password, proxies=proxies)
 
     def cursor(self):
-        """Instantiates and returns a cursor."""
+        """Instantiatess and returns a cursor."""
         cursor = Cursor(self, self.__aceQLHttpApi)
         return cursor
 
     def is_stateless():
-        """ Says if session is stateless."""
+        """ Say if session is stateless."""
         return AceQLHttpApi.is_stateless()
 
     is_stateless = staticmethod(is_stateless)
@@ -89,7 +89,7 @@ class Connection(object):
     set_timeout = staticmethod(set_timeout)
 
     def set_progress_indicator(self, progress_indicator):
-        """ Allows to set a progress indicator."""
+        """ Allowsto set a progress indicator."""
         self.__aceQLHttpApi.set_progress_indicator(progress_indicator)
 
     def get_progress_indicator(self):
@@ -169,7 +169,7 @@ class Connection(object):
         self.__aceQLHttpApi.set_transaction_isolation(level)
 
     def get_holdability(self):
-        """return the holdability.
+        """Returns the holdability.
          One of hold_cursors_over_commit or close_cursors_at_commit.
         """
         return self.__aceQLHttpApi.get_holdability()

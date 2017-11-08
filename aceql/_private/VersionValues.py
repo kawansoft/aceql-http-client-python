@@ -73,6 +73,7 @@
 # 08/11/2017 15:15 NDP: All _private classes: clean code / underscores for var and methods
 # 08/11/2017 16:12 NDP: Remove all PyCharm warnings
 # 08/11/2017 19:40 NDP: Cursor: fix bug in __build_description: name_and_type was no reset for each column
+# 08/11/2017 21:06 NDP: Cursor & Connection: clean comments
 
 
 class VersionValues(object):

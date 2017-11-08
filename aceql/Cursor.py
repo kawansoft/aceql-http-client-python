@@ -215,11 +215,11 @@ class Cursor(object):
         return list_tuples
 
     def setinputsizes(self, sizes):
-        """ Does nothing. Implemented to respect PEP 249."""
+        """ Does nothing. Implemented for respect to PEP 249."""
         pass
 
     def setoutputsize(self, sizes, column=None):
-        """ Does nothing. Implemented to respect PEP 249."""
+        """ Does nothing. Implemented for respect to PEP 249."""
         pass
 
     def close(self):
@@ -325,7 +325,7 @@ class Cursor(object):
         return blob_length
 
     def get_blob_stream(self, column_index):
-        """ Allows to get a BLOB stream on a column in the current row.
+        """ Returns a BLOB stream on a column in the current row.
 
             The column index starts at 0.
         """
