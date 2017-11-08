@@ -69,11 +69,11 @@ class AceQLHttpApi(object):
         try:
             result = self.call_with_get_url(url)
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.isStatusOk():
-                raise Error(result_analyzer.getErrorMessage(),
-                            result_analyzer.getErrorId(), None, None, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            session_id = result_analyzer.getValue("session_id")
+            session_id = result_analyzer.get_value("session_id")
             self._url = server_url + "/session/" + session_id + "/"
 
         except Exception as e:
@@ -155,11 +155,11 @@ class AceQLHttpApi(object):
             result = self.call_with_get_action(command_name, command_option)
 
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.isStatusOk():
-                raise Error(result_analyzer.getErrorMessage(),
-                            result_analyzer.getErrorId(), None, None, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            return result_analyzer.getResult()
+            return result_analyzer.get_result()
 
         except Exception as e:
             if type(e) == Error:
@@ -175,9 +175,9 @@ class AceQLHttpApi(object):
             result = self.call_with_get_action(command_name, command_option)
 
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.isStatusOk():
-                raise Error(result_analyzer.getErrorMessage(),
-                            result_analyzer.getErrorId(), None, None, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
         except Exception as e:
             if type(e) == Error:
@@ -463,11 +463,11 @@ class AceQLHttpApi(object):
             AceQLDebug.debug("result: " + result)
 
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.isStatusOk():
-                raise Error(result_analyzer.getErrorMessage(),
-                            result_analyzer.getErrorId(), None, None, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            row_count = result_analyzer.getIntvalue("row_count")
+            row_count = result_analyzer.get_int_value("row_count")
             return row_count
 
         except Exception as e:
@@ -696,11 +696,11 @@ class AceQLHttpApi(object):
             AceQLDebug.debug("result: " + result)
 
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.isStatusOk():
-                raise Error(result_analyzer.getErrorMessage(),
-                            result_analyzer.getErrorId(), None, None, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            length_str = result_analyzer.getValue("length")
+            length_str = result_analyzer.get_value("length")
             AceQLDebug.debug("result: " + length_str + ":")
             return int(length_str)
 

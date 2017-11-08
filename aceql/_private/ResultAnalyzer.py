@@ -33,70 +33,70 @@ class ResultAnalyzer(object):
     # We try to find status.  If error parsing, invalidJsonStream = true
     # </summary>
     # * Exception when parsing the JSON stream.  Future usage
-    def __init__(self, jsonResult, httpStatusCode):
+    def __init__(self, son_result, http_status_code):
         """ <summary>
          Initializes a new instance of the <see cref="ResultAnalyzer"/> class.
          </summary>
-         <param name="jsonResult">The json result.</param>
-         <param name="httpStatusCode">The http status code.</param>
-         <exception cref="System.ArgumentNullException">jsonResult is null!</exception>
+         <param name="son_result">The json result.</param>
+         <param name="http_status_code">The http status code.</param>
+         <exception cref="System.ArgumentNullException">son_result is null!</exception>
         """
-        self._invalidJsonStream = False
-        self._parseException = None
-        self._httpStatusCode = httpStatusCode
-        self._jsonResult = jsonResult
+        self._invalid_json_stream = False
+        self._parse_exception = None
+        self._http_status_code = http_status_code
+        self._json_result = son_result
 
-    def isStatusOk(self):
+    def is_status_ok(self):
         """ <summary>
          Determines whether the SQL command correctly executed on server side.
          </summary>
          <returns><c>true</c> if [is status ok]; otherwise, <c>false</c>.</returns>
         """
 
-        if self._jsonResult == None or len(self._jsonResult) == 0:
+        if self._json_result is None or len(self._json_result) == 0:
             return False
         try:
-            j = json.loads(self._jsonResult)
+            j = json.loads(self._json_result)
             status = j["status"]
             if status == "OK":
                 return True
             else:
                 return False
         except Exception as e:
-            self._parseException = e
-            self._invalidJsonStream = True
+            self._parse_exception = e
+            self._invalid_json_stream = True
             return False
 
-    def isInvalidJsonStream(self):
+    def is_invalid_json_stream(self):
         """ <summary>
          Says if the JSON Stream is invalid.
          </summary>
          <returns>true if JSN stream is invalid</returns>
         """
-        if self._jsonResult == None or len(self._jsonResult) == 0:
+        if self._json_result is None or len(self._json_result) == 0:
             return True
-        if self._invalidJsonStream:
+        if self._invalid_json_stream:
             return True
         return False
 
-    def getResult(self, name):
+    def get_result(self, name):
         """ <summary>
          Gets the result for a a key name
          </summary>
          <param name="name">The name.</param>
          <returns>System.String.</returns>
         """
-        return self.getValue(name)
+        return self.get_value(name)
 
-    def getResult(self):
+    def get_result(self):
         """ <summary>
          Gets the result for the key name "result"
          </summary>
          <returns></returns>
         """
-        return self.getValue("result")
+        return self.get_value("result")
 
-    def getValue(self, name):
+    def get_value(self, name):
         """ <summary>
          Gets the value.
          </summary>
@@ -105,13 +105,13 @@ class ResultAnalyzer(object):
          <exception cref="System.ArgumentNullException">name is null!</exception>
          <exception cref="System.Exception">Illegal name: " + name</exception>
         """
-        if name == None:
-            raise ArgumentNullException("name is null!")
-        if self.isInvalidJsonStream():
+        if name is None:
+            raise TypeError("name is null!")
+        if self.is_invalid_json_stream():
             return None
 
         try:
-            j = json.loads(self._jsonResult)
+            j = json.loads(self._json_result)
 
             if name == "session_id":
                 value = j[name]
@@ -125,73 +125,73 @@ class ResultAnalyzer(object):
                 raise Exception("Illegal name: " + name)
             return value
         except Exception as e:
-            self._parseException = e
-            self._invalidJsonStream = True
+            self._parse_exception = e
+            self._invalid_json_stream = True
             return None
 
-    def getErrorId(self):
+    def get_error_type(self):
         """ <summary>
          Gets the error_type.
          </summary>
          <returns>System.Int32.</returns>
         """
-        if self.isInvalidJsonStream():
+        if self.is_invalid_json_stream():
             return 0
 
         try:
-            j = json.loads(self._jsonResult)
-            errorType = j["error_type"]
-            return errorType
+            j = json.loads(self._json_result)
+            error_type = j["error_type"]
+            return error_type
         except Exception as e:
-            self._parseException = e
-            self._invalidJsonStream = True
+            self._parse_exception = e
+            self._invalid_json_stream = True
             return 0
 
-    def getErrorMessage(self):
+    def get_error_message(self):
         """ <summary>
          Gets the error_message.
          </summary>
          <returns>System.String.</returns>
         """
-        if self.isInvalidJsonStream():
-            theErrorMessage = "Unknown error."
-            if self._httpStatusCode != HttpStatusCode.OK:
-                theErrorMessage = "HTTP FAILURE " + self._httpStatusCode + " (" + self._httpStatusCode + ")"
-            return theErrorMessage
+        if self.is_invalid_json_stream():
+            the_error_message = "Unknown error."
+            if self._http_status_code != 200:
+                the_error_message = "HTTP FAILURE " + self._http_status_code + " (" + self._http_status_code + ")"
+            return the_error_message
         try:
-            j = json.loads(self._jsonResult)
-            errorMessage = j["error_message"]
-            return errorMessage
+            j = json.loads(self._json_result)
+            error_message = j["error_message"]
+            return error_message
         except Exception as e:
-            self._parseException = e
-            self._invalidJsonStream = True
+            self._parse_exception = e
+            self._invalid_json_stream = True
             return None
 
-    def getStackTrace(self):
+    def get_stack_trace(self):
         """ <summary>
          Gets the remote stack_trace.
          </summary>
          <returns>String.</returns>
         """
-        if self.isInvalidJsonStream():
+        if self.is_invalid_json_stream():
             return None
         try:
-            j = json.loads(self._jsonResult)
-            stackTrace = j["stack_trace"]
-            return stackTrace
+            j = json.loads(self._json_result)
+            stack_trace = j["stack_trace"]
+            return stack_trace
         except Exception as e:
-            self._parseException = e
-            self._invalidJsonStream = True
+            self._parse_exception = e
+            self._invalid_json_stream = True
             return None
 
-    def getIntvalue(self, name):
+    def get_int_value(self, name):
         """ <summary>
          Gets the int value.
          </summary>
          <param name="name">The name.</param>
          <returns>System.Int32.</returns>
         """
-        insStr = self.getValue(name)
-        if insStr == None:
+        ins_str = self.get_value(name)
+        if ins_str == None:
             return -1
-        return int(insStr)
+        return int(ins_str)

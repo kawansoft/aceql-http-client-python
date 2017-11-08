@@ -70,6 +70,7 @@
 # 07/11/2017 21:50 NDP: Clean code
 # 07/11/2017 22:28 NDP: Clean code: put var names in Python underscore convention
 # 08/11/2017 15:15 NDP: AceQLHttpApi: clean code / underscores for var and methods
+# 08/11/2017 15:15 NDP: All _private classes: clean code / underscores for var and methods
 
 
 class VersionValues(object):

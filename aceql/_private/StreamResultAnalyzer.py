@@ -21,9 +21,11 @@
 import json
 import os
 from io import open
+
 # -*- coding: utf-8 -*-
 from aceql._private.AceQLDebug import *
 from aceql._private.CursorUtil import *
+
 
 class StreamResultAnalyzer(object):
     """ <summary>

@@ -27,10 +27,10 @@ class ResultAnalyzerTest(unittest.TestCase):
     def test_A(self):
         result = '{"status" : "OK","session_id" : "mn7andp2tt049iaeaskr28j9ch"}'
         analyzer = ResultAnalyzer(result, 200)
-        status_ok = analyzer.isStatusOk()
+        status_ok = analyzer.is_status_ok()
 
         self.assertEqual(status_ok, True)
-        session_id = analyzer.getValue("session_id")
+        session_id = analyzer.get_value("session_id")
         self.assertEqual(session_id, "mn7andp2tt049iaeaskr28j9ch")
 
         print("ResultAnalyzerTest Passed!")
