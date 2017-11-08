@@ -131,7 +131,7 @@ class Cursor(object):
         AceQLDebug.debug("self.rowcount: " + str(self.__rowcount))
         AceQLDebug.debug("filename    : " + self.__result_set_info.get_filename())
 
-        # first buil the description for Curose.description
+        # first build the description for Curose.description
         self.__build_description()
 
         self.__row_parser = RowParser(self.__result_set_info.get_filename(), self.__result_set_info.get_row_count())

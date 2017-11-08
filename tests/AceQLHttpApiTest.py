@@ -25,32 +25,32 @@ class AceQLHttpApiTest(object):
     """description of class"""
 
     def doIt(self):
-        AceQLHttpApi.setStateless(True)
-        isStateless = AceQLHttpApi.isStateless()
+        AceQLHttpApi.set_stateless(True)
+        isStateless = AceQLHttpApi.is_stateless()
         print("isStateless: " + str(isStateless))
 
-        AceQLHttpApi.setStateless(False)
-        isStateless = AceQLHttpApi.isStateless()
+        AceQLHttpApi.set_stateless(False)
+        isStateless = AceQLHttpApi.is_stateless()
         print("isStateless: " + str(isStateless))
 
         aceQLHttpApi = AceQLHttpApi("http://localhost:9090/aceql", "kawansoft_example", "user1", "password1")
         print("connect done!")
 
-        print("client version: " + aceQLHttpApi.getClientVersion())
-        print("server version: " + aceQLHttpApi.getServerVersion())
+        print("client version: " + aceQLHttpApi.get_client_version())
+        print("server version: " + aceQLHttpApi.get_server_version())
 
-        autoCommit = aceQLHttpApi.getAutoCommit()
+        autoCommit = aceQLHttpApi.get_auto_commit()
         print("autoCommit: " + str(autoCommit))
 
-        aceQLHttpApi.setAutoCommit(False)
-        autoCommit = aceQLHttpApi.getAutoCommit()
+        aceQLHttpApi.set_auto_commit(False)
+        autoCommit = aceQLHttpApi.get_auto_commit()
         print("autoCommit: " + str(autoCommit))
 
         aceQLHttpApi.commit()
         aceQLHttpApi.rollback()
-        aceQLHttpApi.setAutoCommit(True)
+        aceQLHttpApi.set_auto_commit(True)
 
-        autoCommit = aceQLHttpApi.getAutoCommit()
+        autoCommit = aceQLHttpApi.get_auto_commit()
         print("autoCommit: " + str(autoCommit))
 
         holdability = aceQLHttpApi.get_holdability()
@@ -75,10 +75,10 @@ class AceQLHttpApiTest(object):
         result = aceQLHttpApi.execute_update(sql, isPreparedStatement, statementParameters)
         print("result: " + str(result))
 
-        statusCode = aceQLHttpApi.getHttpStatusCode()
+        statusCode = aceQLHttpApi.get_http_status_code()
         print("statusCode: " + str(statusCode))
 
-        statusMessage = aceQLHttpApi.getHttpStatusMessage()
+        statusMessage = aceQLHttpApi.get_http_status_message()
         print("statusMessage: " + str(statusMessage))
         print()
 
@@ -91,7 +91,7 @@ class AceQLHttpApiTest(object):
         statementParameters2["param_type_1"] = "INTEGER"
         statementParameters2["param_value_1"] = "0"
         sql = "select * from customer where customer_id >= ? order by customer_id"
-        aceQLHttpApi.setPrettyPrinting(True)
+        aceQLHttpApi.set_pretty_printing(True)
 
         result = aceQLHttpApi.execute_query(sql, isPreparedStatement, statementParameters2)
         print("result: " + str(result))
