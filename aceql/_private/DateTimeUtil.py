@@ -54,14 +54,12 @@ class DateTimeUtil(object):
     to_timestamp = staticmethod(to_timestamp)
 
     def get_timestamp_from_date(the_date):
-        "Returns an Epoch for date."
-        unixtime = time.mktime(the_date.timetuple())
+        """"Returns an Epoch for date."""
+        unix_time = time.mktime(the_date.timetuple())
 
-        # print("unixtime: " + str(unixtime))
-        # unixtimeStr = str(unixtime * 1000)
-        unixtime_str = str(unixtime)
-        unixtime_str = unixtime_str[0:len(unixtime_str) - 2]
-        return unixtime_str + "000"
+        unix_time_str = str(unix_time)
+        unix_time_str = unix_time_str[0:len(unix_time_str) - 2]
+        return unix_time_str + "000"
 
     get_timestamp_from_date = staticmethod(get_timestamp_from_date)
 

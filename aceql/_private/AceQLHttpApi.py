@@ -18,14 +18,14 @@
 ##
 
 import requests
-from aceql._private.ResultAnalyzer import *
-from aceql._private.ResultSetInfo import *
-from aceql._private.RowCounter import *
-from aceql._private.StreamResultAnalyzer import *
 from requests_toolbelt.multipart import encoder
 
 from aceql.Error import *
 from aceql._private.FileUtil import *
+from aceql._private.ResultAnalyzer import *
+from aceql._private.ResultSetInfo import *
+from aceql._private.RowCounter import *
+from aceql._private.StreamResultAnalyzer import *
 from aceql._private.VersionValues import *
 
 
@@ -579,10 +579,10 @@ class AceQLHttpApi(object):
             row_counter = RowCounter(file_out)
             row_count = row_counter.count()
 
-            resultSetInfo = ResultSetInfo(file_out, row_count)
+            result_set_info = ResultSetInfo(file_out, row_count)
             AceQLDebug.debug("Before resultSetInfo")
 
-            return resultSetInfo
+            return result_set_info
 
         except Exception as e:
             if type(e) == Error:
@@ -677,20 +677,20 @@ class AceQLHttpApi(object):
             dict_params = {}
             dict_params["blob_id"] = blob_id
 
-            urlWithaction = self._url + action
+            url_withaction = self._url + action
 
-            AceQLDebug.debug("urlWithaction: " + urlWithaction)
+            AceQLDebug.debug("urlWithaction: " + url_withaction)
             AceQLDebug.debug("dictParams   : " + str(dict_params))
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.post(urlWithaction, data=dict_params, proxies=self.__proxies)
+                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies)
             else:
-                response = requests.post(urlWithaction, data=dict_params, proxies=self.__proxies,
+                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies,
                                          timeout=AceQLHttpApi.__timeout)
 
-            self._http_status = response.status_code
+            self.__http_status_code = response.status_code
             result = response.text
 
             AceQLDebug.debug("result: " + result)
@@ -713,7 +713,7 @@ class AceQLHttpApi(object):
     def my_callback(self, monitor):
         """ The callback function when uploading a BLOB """
         try:
-            if self.__total_length == 0 or self.__progress_indicator == None:
+            if self.__total_length == 0 or self.__progress_indicator is None:
                 return
 
             the_read = monitor.bytes_read
@@ -743,7 +743,7 @@ class AceQLHttpApi(object):
 
         m = encoder.MultipartEncoderMonitor(e, self.my_callback)
 
-        theUrl = self._url + "blob_upload"
+        the_url = self._url + "blob_upload"
 
-        r = requests.post(theUrl, data=m,
+        r = requests.post(the_url, data=m,
                           headers={'Content-Type': m.content_type})

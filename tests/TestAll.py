@@ -41,7 +41,7 @@ class TestAll(unittest.TestCase):
 
         host = server_host
 
-        Connection.set_stateless(True)
+        Connection.set_stateless(False)
         connection = aceql.connect(host, "kawansoft_example", "user1", "password1")
         connection.set_gzip_result(True)
 

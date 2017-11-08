@@ -83,7 +83,7 @@ class StreamResultAnalyzer(object):
                     AceQLDebug.debug("status: " + s + "!")
                     if s.endswith("\"OK\","):
                         status_ok = True
-                        break;
+                        break
 
         if not status_ok:
             self.parse_error_keywords()
@@ -96,29 +96,8 @@ class StreamResultAnalyzer(object):
          </summary>
          <param name="reader">The reader.</param>
         """
-
-        """
-        while reader.Read():
-            if reader.Value == None:
-                continue
-            if reader.TokenType == JsonToken.PropertyName and reader.Value.Equals("error_type"):
-                if reader.Read():
-                    self._errorType = reader.Value.ToString()
-                else:
-                    return 
-            if reader.TokenType == JsonToken.PropertyName and reader.Value.Equals("error_message"):
-                if reader.Read():
-                    self._errorMessage = reader.Value.ToString()
-                else:
-                    return 
-            if reader.TokenType == JsonToken.PropertyName and reader.Value.Equals("stack_trace"):
-                if reader.Read():
-                    self._stackTrace = reader.Value
-                else:
-                    return 
-        """
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
-            s = fd.read();
+            s = fd.read()
             j = json.loads(s)
             self.__error_type = j["error_type"]
             self.__error_message = j["error_message"]
@@ -126,8 +105,8 @@ class StreamResultAnalyzer(object):
             try:
                 self.__stack_trace = j["stack_trace"]
             except Exception as e:
-                # AceQLDebug.print(e)
-                pass
+                print("Exception when accessing j[stack_trace]:")
+                print(str(e))
 
             return
 

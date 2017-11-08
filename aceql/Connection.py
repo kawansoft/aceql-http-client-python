@@ -17,7 +17,6 @@
 # limitations under the License. 
 ##
 
-from aceql.ProgressIndicator import *
 from aceql.Cursor import *
 
 
@@ -38,7 +37,7 @@ class Connection(object):
         password: str
                   the authentication password
         proxies: proxies
-                 the proxy to use, can  be an authenticatesd proxy.
+                 the proxy to use, can  be an authenticated proxy.
                  See Requests doc (http://docs.python-requests.org)
         """
 
@@ -51,7 +50,7 @@ class Connection(object):
         if password is None:
             raise TypeError("password is null!")
 
-        self.__aceQLHttpApi = AceQLHttpApi(server_url, database, username, password, proxies=None)
+        self.__aceQLHttpApi = AceQLHttpApi(server_url, database, username, password, proxies=proxies)
 
     def cursor(self):
         """Instantiates and returns a cursor."""
@@ -60,7 +59,7 @@ class Connection(object):
 
     def is_stateless():
         """ Says if session is stateless."""
-        return AceQLHttpApi.__stateless
+        return AceQLHttpApi.is_stateless()
 
     is_stateless = staticmethod(is_stateless)
 
@@ -69,9 +68,9 @@ class Connection(object):
         if stateless is None:
             raise TypeError("stateless is null!")
         if str(stateless) == "True":
-            AceQLHttpApi.__stateless = True
+            AceQLHttpApi.set_stateless(True)
         else:
-            AceQLHttpApi.__stateless = False
+            AceQLHttpApi.set_stateless(False)
 
     set_stateless = staticmethod(set_stateless)
 
@@ -137,9 +136,9 @@ class Connection(object):
         """Says if the query result is returned compressed with the GZIP file format."""
         return self.__aceQLHttpApi.is_gzip_result()
 
-    def set_gzip_result(self, gzipResult):
+    def set_gzip_result(self, gzip_result):
         """Define if result sets are compressed before download. Defaults to true."""
-        self.__aceQLHttpApi.set_gzip_result(gzipResult)
+        self.__aceQLHttpApi.set_gzip_result(gzip_result)
 
     def get_server_version(self):
         """Gets the server version of AceQL HTTP."""

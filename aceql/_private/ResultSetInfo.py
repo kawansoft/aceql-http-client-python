@@ -16,14 +16,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License. 
 ##
+
+
 class ResultSetInfo(object):
     """Gives two info on result set
     1) the local filename,
     2) the number of rows"""
+
     def __init__(self, filename, row_count):
         self.__filename = filename
         self.__row_count = row_count
+
     def get_filename(self):
         return self.__filename
+
     def get_row_count(self):
         return self.__row_count

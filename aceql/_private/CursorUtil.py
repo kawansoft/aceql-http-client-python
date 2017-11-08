@@ -99,8 +99,6 @@ class CursorUtil(object):
         if x is None:
             raise TypeError("Parameter value is None!")
 
-        sql_type = ""
-
         if CursorUtil.get_class_name(x) == "tuple":
             if x[0] is None:
                 sql_type = "TYPE_NULL" + str(x[1])
@@ -126,7 +124,7 @@ class CursorUtil(object):
             sql_type = "DATE"
         # Not supported in version 1.0
         # elif Util.get_class_name(x) == "datetime.time":
-        #	sql_type = "TIME"
+        # sql_type = "TIME"
         else:
             print("CursorUtil.get_class_name(x): " + CursorUtil.get_class_name(x))
             raise TypeError("Type is not supported for value: " + str(x))
@@ -140,7 +138,7 @@ class CursorUtil(object):
 
         s = str(type(x))
         s = s.replace("<class '", "")
-        s = s.replace("<type '", "")  # Python2s
+        s = s.replace("<type '", "")  # Python2 syntax
         s = s[0:len(s) - 2]
         return s
 

@@ -38,5 +38,5 @@ def connect(server_url, database, username, password, proxies=None):
                  See Requests doc (http://docs.python-requests.org)
     """
 
-    connection = Connection(server_url, database, username, password, proxies=None)
+    connection = Connection(server_url, database, username, password, proxies=proxies)
     return connection

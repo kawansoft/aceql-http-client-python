@@ -24,7 +24,7 @@ from io import open
 
 
 class ColumnTypesBuilder(object):
-    """Allows to build the dictionnary of SQL types per coumn index of a
+    """Allows to build the dictionary of SQL types per coumn index of a
        valid result set file (no check is done)"""
 
     def __init__(self, filename):
@@ -39,7 +39,7 @@ class ColumnTypesBuilder(object):
     def get_types_per_col_index(self):
         with open(self.__filename, 'r') as fd:
             s = ""
-            while (True):
+            while True:
                 line = fd.readline()
                 if line == '':
                     break

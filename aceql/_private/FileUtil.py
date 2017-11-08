@@ -59,7 +59,7 @@ class FileUtil(object):
     def get_kawansoft_temp_dir():
         home_kawan_soft = FileUtil.get_user_home_dot_kawansoft_dir()
 
-        # File.sseparator
+        # File.separator
         home_kawan_soft_tmp = home_kawan_soft + sep + "tmp"
 
         if not os.path.isdir(home_kawan_soft_tmp):

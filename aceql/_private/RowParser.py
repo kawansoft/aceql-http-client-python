@@ -26,7 +26,7 @@ from aceql._private.ColumnTypesBuilder import *
 from aceql._private.AceQLDebug import *
 
 class RowParser(object):
-    """Allows to parse rows in retrieved JSON result set and return each row content s dictionnaries"""
+    """Allows to parse rows in retrieved JSON result set and return each row content dictionaries"""
 
     def __init__(self, filename, row_count):
         self.__filename = filename
@@ -56,7 +56,7 @@ class RowParser(object):
             if s == '':
                 break
             s = s.strip()
-            if s == ("\"row_1\":["):
+            if s == "\"row_1\":[":
                 break
 
     def build_next_row(self):
@@ -86,14 +86,14 @@ class RowParser(object):
             if self.__last_row == self.__row_count:
                 if line == "]":
                     self.__last_row += 1
-                    break;
+                    break
 
             # doe not include closing array bracket
             if not line.startswith("]"):
                 s += line
 
         if s == '':
-            return;
+            return
 
         # AceQLDebug.print("s:" + s)
         AceQLDebug.debug("")

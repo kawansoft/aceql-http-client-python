@@ -17,7 +17,6 @@
 # limitations under the License. 
 ##
 
-from aceql._private.CursorUtil import *
 from aceql._private.RowParser import *
 from aceql._private.AceQLHttpApi import *
 
@@ -25,9 +24,9 @@ from aceql._private.AceQLHttpApi import *
 class Cursor(object):
     """Cursor class."""
 
-    def __init__(self, aceqlConnection, aceQLHttpApi):
-        self.__connection = aceqlConnection
-        self.__aceQLHttpApi = aceQLHttpApi
+    def __init__(self, connection, aceql_http_api):
+        self.__connection = connection
+        self.__aceql_http_api = aceql_http_api
         self.__is_closed = False
 
         self.__rowcount = -1
@@ -93,16 +92,16 @@ class Cursor(object):
 
             cpt = 0
             for blob_id in blob_ids:
-                self.__aceQLHttpApi.blob_upload(blob_id, blob_streams[cpt], blob_lengths[cpt])
+                self.__aceql_http_api.blob_upload(blob_id, blob_streams[cpt], blob_lengths[cpt])
                 cpt += 1
 
             AceQLDebug.debug("parms_dict: " + str(parms_dict))
 
-            isPreparedStatement = False
+            is_prepared_statement = False
             if len(parms_dict) > 0:
-                isPreparedStatement = True
+                is_prepared_statement = True
 
-            rows = self.__aceQLHttpApi.execute_update(sql, isPreparedStatement, parms_dict)
+            rows = self.__aceql_http_api.execute_update(sql, is_prepared_statement, parms_dict)
             self.__rowcount = rows
             return rows
         finally:
@@ -117,11 +116,11 @@ class Cursor(object):
         cursor_util = CursorUtil()
         parms_dict = cursor_util.get_http_parameters_dict(params)
 
-        isPreparedStatement = False
+        is_prepared_statement = False
         if len(parms_dict) > 0:
-            isPreparedStatement = True
+            is_prepared_statement = True
 
-        self.__result_set_info = self.__aceQLHttpApi.execute_query(sql, isPreparedStatement, parms_dict)
+        self.__result_set_info = self.__aceql_http_api.execute_query(sql, is_prepared_statement, parms_dict)
 
         # Appends the files to delete
         self.__filelist.append(self.__result_set_info.get_filename())
@@ -189,7 +188,7 @@ class Cursor(object):
         while True:
             the_tup = self.fetchone()
             cpt += 1
-            if (the_tup is None):
+            if the_tup is None:
                 break
             list_tuples.append(the_tup)
             if cpt >= size_to_use:
@@ -207,7 +206,7 @@ class Cursor(object):
         list_tuples = []
         while True:
             the_tup = self.fetchone()
-            if (the_tup is None):
+            if the_tup is None:
                 break
             list_tuples.append(the_tup)
 
@@ -283,7 +282,7 @@ class Cursor(object):
     # 	if filename is None:
     # 		raise TypeError("filename is null!")
     #
-    # 	self.__aceQLHttpApi.blob_download(blob_id, filename, total_length,
+    # 	self.__aceql_http_api.blob_download(blob_id, filename, total_length,
     # 	progress_holder)
 
     def get_blob_length(self, column_index):
@@ -301,7 +300,7 @@ class Cursor(object):
 
         if values_per_column_index is None:
             raise Error("Not positioned on a row. (No fetchone call done.)",
-                        0, None, None, self.__http_status_code)
+                        0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
 
@@ -309,13 +308,13 @@ class Cursor(object):
 
         if blob_id is None:
             raise Error("No value found for column_index " + str(column_index),
-                        0, None, None, self.__http_status_code)
+                        0, None, None, 200)
 
         if not blob_id.endswith(".blob"):
             raise Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
-                        0, None, None, self.__http_status_code)
+                        0, None, None, 200)
 
-        blob_length = self.__aceQLHttpApi.get_blob_length(blob_id)
+        blob_length = self.__aceql_http_api.get_blob_length(blob_id)
         return blob_length
 
     def get_blob_stream(self, column_index):
@@ -330,18 +329,18 @@ class Cursor(object):
 
         if values_per_column_index is None:
             raise Error("Not positioned on a row. (Seems no fetchone() call done.)",
-                        0, None, None, self.__http_status_code)
+                        0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
 
         if blob_id is None:
             raise Error("No value found for column_index " + str(column_index),
-                        0, None, None, self.__http_status_code)
+                        0, None, None, 200)
 
         if not blob_id.endswith(".blob"):
             raise Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
-                        0, None, None, self.__http_status_code)
+                        0, None, None, 200)
 
         # OK!  we have a valid BLOB Id:
-        response = self.__aceQLHttpApi.get_blob_stream(blob_id)
+        response = self.__aceql_http_api.get_blob_stream(blob_id)
         return response

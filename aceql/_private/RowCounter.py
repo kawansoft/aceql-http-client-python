@@ -39,7 +39,7 @@ class RowCounter(object):
         """Returns the number of rows in JSON file (key "row_count") """
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
             rows = 0
-            while (True):
+            while True:
                 s = fd.readline()
                 if s == '':
                     break

@@ -71,9 +71,10 @@
 # 07/11/2017 22:28 NDP: Clean code: put var names in Python underscore convention
 # 08/11/2017 15:15 NDP: AceQLHttpApi: clean code / underscores for var and methods
 # 08/11/2017 15:15 NDP: All _private classes: clean code / underscores for var and methods
+# 08/11/2017 16:12 NDP: Remove all PyCharm warnings
 
 
 class VersionValues(object):
-    NAME = "AceQL HTTP SDK";
+    NAME = "AceQL HTTP SDK"
     VERSION = "v1.0-beta-1"
-    DATE = "07-nov-2017"
+    DATE = "08-nov-2017"
