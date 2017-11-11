@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
@@ -18,21 +19,21 @@
 ##
 
 import unittest
-from datetime import datetime, date
 
+from datetime import datetime, date, time
 from aceql.SqlNullType import *
 from aceql._private.CursorUtil import *
-
 
 class CursorUtilTest(unittest.TestCase):
     def test_A(self):
         the_datetime = datetime.now()
         the_date = date(2017, 10, 31)
+        the_time = the_datetime.time()
 
         # for NULL values
         tup_null_integer = None, SqlNullType.INTEGER
 
-        the_list = [tup_null_integer, 1, 12.53, True, "text", the_datetime, the_date]
+        the_list = [tup_null_integer, 1, 12.53, True, "text", the_datetime, the_date, the_time]
 
         cpt = 0
         for x in the_list:
@@ -61,6 +62,9 @@ class CursorUtilTest(unittest.TestCase):
 
             if cpt == 6:
                 self.assertEqual(sql_type, "DATE")
+
+            if cpt == 7:
+                self.assertEqual(sql_type, "TIME")
 
             cpt += 1
 

@@ -41,22 +41,35 @@ class Error(Exception):
                         4 for AceQL failure.
         cause
                    the wrapped/trapped Exception
+
         remote_stack_trace
                    the stack trace in case for remote Exception
+
         http_status_code
                    the http status code
         """
 
         # Format all to UTF-8 for Python-2 server messages, we may be have weird messages from server
-        self._reason = CursorUtil.get_utf8_value(reason)
+        if reason is None:
+            self._reason = None
+        else:
+            reason = CursorUtil.get_utf8_value(reason)
+            self._reason = reason.splitlines()
+
         self._error_type = error_type
         self._cause = cause
-        self._remote_stack_trace = CursorUtil.get_utf8_value(remote_stack_trace)
+
+        if remote_stack_trace is None:
+            self._remote_stack_trace = None
+        else:
+            remote_stack_trace = CursorUtil.get_utf8_value(remote_stack_trace)
+            self._remote_stack_trace = remote_stack_trace.splitlines()
+
         self._http_status_code = http_status_code
 
     @property
     def reason(self):
-        """ The main error wrapped Exception message. Can be None"""
+        """ The main error wrapped Exception message as a list of a split str. Can be None"""
         return self._reason
 
     @property
@@ -79,7 +92,7 @@ class Error(Exception):
 
     @property
     def remote_stack_trace(self):
-        """ The Remote Stack Trace, None if Exception raised locally"""
+        """ The Remote Stack Trace as a list of a split str. None if Exception raised locally"""
         return self._remote_stack_trace
 
     @property
@@ -89,8 +102,8 @@ class Error(Exception):
 
     def __str__(self):
         """ The string representation."""
-        return self._reason + ", " + str(self._error_type) + ", " + str(type(self._cause)) + ", " + str(
-            self._remote_stack_trace) + ", " + str(self._http_status_code)
+        return str(self._reason) + ", " + str(self._error_type) + ", " + str(type(self._cause)) + ", " + str(
+             self._remote_stack_trace) + ", " + str(self._http_status_code)
 
 
 class InterfaceError(Error):

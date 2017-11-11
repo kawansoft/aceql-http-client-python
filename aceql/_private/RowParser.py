@@ -22,8 +22,10 @@ import json
 import os
 from io import open
 
+from aceql._private import CursorUtil
 from aceql._private.ColumnTypesBuilder import *
 from aceql._private.AceQLDebug import *
+from aceql._private.CursorUtil import *
 
 class RowParser(object):
     """Allows to parse rows in retrieved JSON result set and return each row content dictionaries"""
@@ -109,7 +111,13 @@ class RowParser(object):
         for key, value in resp.items():
             # AceQLDebug.debug("key/value: " + str(key) + " " + str(value))
             self.__column_names_per_index[index] = key
-            self.__values_per_col_index[index] = value
+
+            x = CursorUtil.get_utf8_value(value)
+            if str(x) == 'NULL':
+                self.__values_per_col_index[index] = None
+            else:
+                self.__values_per_col_index[index] = value
+
             index += 1
         # AceQLDebug.debug("key: %s , value: %s" % (key, self.__values_per_col_name [key]))
 

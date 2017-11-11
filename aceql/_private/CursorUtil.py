@@ -104,6 +104,8 @@ class CursorUtil(object):
                 sql_type = "TYPE_NULL" + str(x[1])
             elif CursorUtil.get_class_name(x[0]) == "_io.BufferedReader":
                 sql_type = "BLOB"
+            #elif CursorUtil.get_class_name(x[0]) == "file":
+            #    sql_type = "BLOB"
             else:
                 raise TypeError("Invalid tuple parameter. Not a NULL Type nor a BLOB: " + str(x))
         elif CursorUtil.get_class_name(x) == "int":
@@ -116,15 +118,15 @@ class CursorUtil(object):
             sql_type = "REAL"
         elif CursorUtil.get_class_name(x) == "str":
             sql_type = "VARCHAR"
+        # NO! unicode is translate to str previously
         # elif CursorUtil.get_class_name(x) == "unicode":
         #    sql_type = "VARCHAR"
         elif CursorUtil.get_class_name(x) == "datetime.datetime":
             sql_type = "TIMESTAMP"
         elif CursorUtil.get_class_name(x) == "datetime.date":
             sql_type = "DATE"
-        # Not supported in version 1.0
-        # elif Util.get_class_name(x) == "datetime.time":
-        # sql_type = "TIME"
+        #elif CursorUtil.get_class_name(x) == "datetime.time":
+        #    sql_type = "TIME"
         else:
             print("CursorUtil.get_class_name(x): " + CursorUtil.get_class_name(x))
             raise TypeError("Type is not supported for value: " + str(x))

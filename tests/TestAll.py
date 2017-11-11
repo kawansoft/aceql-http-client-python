@@ -36,7 +36,7 @@ class TestAll(unittest.TestCase):
         # assert sys.version_info >= (2,5)
         print()
 
-        server_host = "https://www.aceql.com:9443/aceql"
+        #server_host = "https://www.aceql.com:9443/aceql"
         localhost = "http://localhost:9090/aceql"
 
         host = localhost
@@ -126,14 +126,15 @@ class TestAll(unittest.TestCase):
         cursor.close()
         cursor = connection.cursor()
 
-        try:
-            sql = "update xxxxxxxxxxxxxxxx set lname = ? where customer_id = ?"
-            params = ("Python3.6", 1)
-            rows = cursor.execute(sql, params)
-            print("update rows: " + str(rows))
-            print()
-        except Exception as e:
-            print(e)
+        if True:
+            try:
+                sql = "update xxxxxxxxxxxxxxxx set lname = ? where customer_id = ?"
+                params = ("Python3.6", 1)
+                rows = cursor.execute(sql, params)
+                print("update rows: " + str(rows))
+                print()
+            except Error as e:
+                print(str(e))
 
         connection.set_auto_commit(False)
 
@@ -142,6 +143,7 @@ class TestAll(unittest.TestCase):
 
         do_update = True
 
+        print("Before delete all orderlog")
         if do_update:
             sql = "delete from orderlog where customer_id >= ?"
             params = (0,)

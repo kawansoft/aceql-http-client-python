@@ -21,7 +21,7 @@ from aceql.Cursor import *
 
 
 class Connection(object):
-    """ Allows to create a database connection to a remote server."""
+    """Allows to create a database connection to a remote server."""
 
     def __init__(self, server_url, database, username, password, proxies=None):
         """Creates a database connection to the remote server.
@@ -42,7 +42,7 @@ class Connection(object):
         """
 
         if server_url is None:
-            raise TypeError("serverUrl is null!")
+            raise TypeError("server_url is null!")
         if database is None:
             raise TypeError("database is null!")
         if username is None:
@@ -53,18 +53,18 @@ class Connection(object):
         self.__aceQLHttpApi = AceQLHttpApi(server_url, database, username, password, proxies=proxies)
 
     def cursor(self):
-        """Instantiatess and returns a cursor."""
+        """Instantiates and returns a cursor."""
         cursor = Cursor(self, self.__aceQLHttpApi)
         return cursor
 
     def is_stateless():
-        """ Say if session is stateless."""
+        """Says if session is stateless."""
         return AceQLHttpApi.is_stateless()
 
     is_stateless = staticmethod(is_stateless)
 
     def set_stateless(stateless):
-        """ Sets the session mode. if true, the session will be stateless, else stateful."""
+        """Sets the session mode. if true, the session will be stateless, else stateful."""
         if stateless is None:
             raise TypeError("stateless is null!")
         if str(stateless) == "True":
@@ -82,14 +82,14 @@ class Connection(object):
             raise TypeError("timeout is null!")
 
         if isinstance(timeout, int):
-            AceQLHttpApi.__timeout = timeout
+            AceQLHttpApi.set_timeout(timeout)
         else:
             raise Exception("timeout is not numeric!")
 
     set_timeout = staticmethod(set_timeout)
 
     def set_progress_indicator(self, progress_indicator):
-        """ Allowsto set a progress indicator."""
+        """ Allows to set a progress indicator."""
         self.__aceQLHttpApi.set_progress_indicator(progress_indicator)
 
     def get_progress_indicator(self):
@@ -117,7 +117,7 @@ class Connection(object):
         self.__aceQLHttpApi.trace()
 
     def trace(self, s):
-        """Print the string on trace."""
+        """Prints the string on trace."""
         self.__aceQLHttpApi.trace(s)
 
     def _is_trace_on():

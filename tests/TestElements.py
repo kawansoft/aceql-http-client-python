@@ -27,11 +27,11 @@ from tests.StreamResultAnalyzerTest import *
 
 import sys
 
-theTest = ColumnTypesBuilderTest()
-theTest.test_A()
-
 cursorUtilTest = CursorUtilTest()
 cursorUtilTest.test_A()
+
+theTest = ColumnTypesBuilderTest()
+theTest.test_A()
 
 dateTimeUtilTest = DateTimeUtilTest()
 dateTimeUtilTest.test_A()
