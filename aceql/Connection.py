@@ -24,21 +24,27 @@ class Connection(object):
     """Allows to create a database connection to a remote server."""
 
     def __init__(self, server_url, database, username, password, proxies=None):
-        """Creates a database connection to the remote server.
+        """
+        Creates a database connection to the remote AceQL HTTP server.
 
         Parameters
         ----------
-        server_url: str
-                   the URL of the AceQL server. Example: https://www.acme.com:9443/aceql
-        database: str
-                  the remote database name
-        username: str
-                  the authentication username
-        password: str
-                  the authentication password
-        proxies: proxies
-                 the proxy to use, can  be an authenticated proxy.
-                 See Requests doc (http://docs.python-requests.org)
+        server_url : str
+            The URL of the AceQL server. Example: https://www.acme.com:9443/aceql.
+        database : str
+            The remote database name.
+        username : str
+            The authentication username.
+        password : str
+            the authentication password.
+        proxies : str
+            The proxy to use, can  be an authenticated proxy.
+
+        Returns
+        -------
+        Connection
+            A connection to the remote database.
+
         """
 
         if server_url is None:

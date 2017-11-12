@@ -30,7 +30,7 @@
 # <class 'datetime.time'>
 # <class '_io.BufferedReader'>
 
-import StringIO
+import aceql
 from datetime import datetime, date,  time
 
 datetimeNow = datetime.now()
@@ -43,8 +43,41 @@ print(str(type(date)))
 print(str(type(theTime)))
 print(str(type(fd)))
 
-input = StringIO.StringIO()
-input.write("line1\n")
-input.write("line2\n")
+server = "http://localhost:9090/aceql"
+database = "kawansoft_example"
+username = "MyUsername"
+password = "MySecret"
 
-input.readlines()
+# Attempt to establish a connection to the remote SQL database:
+connection = aceql.connect(server, database, username, password)
+print("Successfully connected to database " + database)
+
+cursor = connection.cursor()
+
+sql = "delete from customer where customer_id >= ?"
+params = (0,)
+cursor.execute(sql, params)
+
+sql = "insert into customer values (1, 'Sir', 'John', 'Doe', '1 Madison Ave', 'New York', 'NY 10010', NULL)"
+cursor.execute(sql)
+print("Rows updated: " + str(cursor.rowcount))
+
+sql = "select customer_id, customer_title, lname from customer where customer_id = 1"
+cursor.execute(sql)
+
+try:
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print("customer_id   : " + str(row[0]))
+        print("customer_title: " + row[1])
+        print("lname         : " + row[2])
+finally:
+    cursor.close()
+
+cursor = connection.cursor()
+sql = "update customer set fname = ? where customer_id = ?"
+params = ("Jim", 1)
+cursor.execute(sql, params)
+print("Rows updated: " + str(cursor.rowcount))
+
