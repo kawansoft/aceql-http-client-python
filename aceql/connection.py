@@ -17,7 +17,7 @@
 # limitations under the License. 
 ##
 
-from aceql.Cursor import *
+from aceql.cursor import *
 
 
 class Connection(object):

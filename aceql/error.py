@@ -18,7 +18,7 @@
 # limitations under the License. 
 ##
 
-from aceql._private.CursorUtil import *
+from aceql._private.cursor_util import *
 
 
 class Error(Exception):

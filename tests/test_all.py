@@ -18,10 +18,10 @@
 # limitations under the License. 
 ##
 
-from aceql.ProgressIndicator import *
-from aceql.Connection import *
-from tests.AceQLHttpApiTest import *
-from aceql.SqlNullType import *
+from aceql.progress_indicator import *
+from aceql.connection import *
+from tests.aceql_http_api_test import *
+from aceql.sql_null_type import *
 
 import unittest
 import aceql

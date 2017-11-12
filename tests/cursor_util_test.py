@@ -21,8 +21,8 @@
 import unittest
 
 from datetime import datetime, date, time
-from aceql.SqlNullType import *
-from aceql._private.CursorUtil import *
+from aceql.sql_null_type import *
+from aceql._private.cursor_util import *
 
 class CursorUtilTest(unittest.TestCase):
     def test_A(self):

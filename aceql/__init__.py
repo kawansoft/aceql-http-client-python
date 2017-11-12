@@ -24,7 +24,7 @@
 
 """
 
-from aceql.Connection import *
+from aceql.connection import *
 
 
 def connect(server_url, database, username, password, proxies=None):
@@ -51,5 +51,5 @@ def connect(server_url, database, username, password, proxies=None):
 
     """
 
-    connection = Connection(server_url, database, username, password, proxies=proxies)
-    return connection
+    the_connection = Connection(server_url, database, username, password, proxies=proxies)
+    return the_connection

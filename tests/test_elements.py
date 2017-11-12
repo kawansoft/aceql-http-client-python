@@ -17,28 +17,33 @@
 # limitations under the License. 
 ##
 
-import unittest
+from tests.cursor_util_test import *
+from tests.daterime_util_test import *
+from tests.column_types_builder_test import *
+from tests.result_analyzer_test import *
 
-from aceql._private.DateTimeUtil import *
+from tests.row_counter_test import *
+from tests.stream_result_analyzer_test import *
 
+import sys
 
-class DateTimeUtilTest(unittest.TestCase):
-    def test_A(self):
+cursorUtilTest = CursorUtilTest()
+cursorUtilTest.test_A()
 
-        the_datetime = datetime.now()
-        print("theDatetime    : " + str(the_datetime))
+theTest = ColumnTypesBuilderTest()
+theTest.test_A()
 
-        timestamp_str = DateTimeUtil.get_timestamp_from_date(the_datetime)
-        print("timestampStr   : " + timestamp_str)
+dateTimeUtilTest = DateTimeUtilTest()
+dateTimeUtilTest.test_A()
 
-        the_datetime_new = DateTimeUtil.get_datetime_from_timestamp(timestamp_str)
-        print("theDatetimeNew : " + str(the_datetime_new))
+resultAnalyzerTest = ResultAnalyzerTest()
+resultAnalyzerTest.test_A()
 
-        timestamp_str_new = DateTimeUtil.get_timestamp_from_date(the_datetime_new)
-        print("timestampStrNew: " + timestamp_str_new)
+rowCounterTest = RowCounterTest()
+rowCounterTest.test_A()
 
-        self.assertEqual(timestamp_str, timestamp_str_new)
+rowCounterTest = RowCounterTest()
+rowCounterTest.test_A()
 
-
-if __name__ == '__main__':
-    unittest.main()
+streamResultAnalyzerTest = StreamResultAnalyzerTest()
+streamResultAnalyzerTest.test_A()

@@ -17,8 +17,8 @@
 # limitations under the License. 
 ##
 
-from aceql._private.AceQLHttpApi import *
-from aceql._private.FileUtil import *
+from aceql._private.aceql_http_api import *
+from aceql._private.file_util import *
 
 
 class AceQLHttpApiTest(object):

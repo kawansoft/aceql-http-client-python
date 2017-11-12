@@ -20,9 +20,9 @@
 
 import unittest
 
-from aceql._private.StreamResultAnalyzer import *
+from aceql._private.stream_result_analyzer import *
 
-from aceql._private.FileUtil import *
+from aceql._private.file_util import *
 
 
 class StreamResultAnalyzerTest(unittest.TestCase):

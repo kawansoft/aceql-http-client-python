@@ -19,25 +19,18 @@
 
 import unittest
 
-from aceql._private.ColumnTypesBuilder import *
-from aceql._private.FileUtil import *
+from aceql._private.row_counter import *
+from aceql._private.file_util import *
 
 
-class ColumnTypesBuilderTest(unittest.TestCase):
+class RowCounterTest(unittest.TestCase):
+
     def test_A(self):
         filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
-        column_types_builder = ColumnTypesBuilder(filename)
-        dict_column_types = column_types_builder.get_types_per_col_index()
-        print(dict_column_types)
-
-        self.assertEqual(dict_column_types[0], "INTEGER")
-        self.assertEqual(dict_column_types[1], "CHAR")
-        self.assertEqual(dict_column_types[2], "VARCHAR")
-        self.assertEqual(dict_column_types[3], "VARCHAR")
-        self.assertEqual(dict_column_types[4], "VARCHAR")
-        self.assertEqual(dict_column_types[5], "VARCHAR")
-        self.assertEqual(dict_column_types[6], "CHAR")
-        self.assertEqual(dict_column_types[7], "VARCHAR")
+        row_counter = RowCounter(filename)
+        rows = row_counter.count()
+        print("rows: " + str(rows))
+        self.assertEqual(rows, 3)
 
 
 if __name__ == '__main__':

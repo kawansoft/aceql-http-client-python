@@ -17,8 +17,8 @@
 # limitations under the License. 
 ##
 
-from aceql._private.RowParser import *
-from aceql._private.AceQLHttpApi import *
+from aceql._private.row_parser import *
+from aceql._private.aceql_http_api import *
 
 
 class Cursor(object):

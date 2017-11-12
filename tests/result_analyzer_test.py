@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
@@ -17,33 +18,24 @@
 # limitations under the License. 
 ##
 
-from tests.CursorUtilTest import *
-from tests.DateTimeUtilTest import *
-from tests.ColumnTypesBuilderTest import *
-from tests.ResultAnalyzerTest import *
+import unittest
 
-from tests.RowCounterTest import *
-from tests.StreamResultAnalyzerTest import *
+from aceql._private.result_analyzer import *
 
-import sys
 
-cursorUtilTest = CursorUtilTest()
-cursorUtilTest.test_A()
+class ResultAnalyzerTest(unittest.TestCase):
 
-theTest = ColumnTypesBuilderTest()
-theTest.test_A()
+    def test_A(self):
+        result = '{"status" : "OK","session_id" : "mn7andp2tt049iaeaskr28j9ch"}'
+        analyzer = ResultAnalyzer(result, 200)
+        status_ok = analyzer.is_status_ok()
 
-dateTimeUtilTest = DateTimeUtilTest()
-dateTimeUtilTest.test_A()
+        self.assertEqual(status_ok, True)
+        session_id = analyzer.get_value("session_id")
+        self.assertEqual(session_id, "mn7andp2tt049iaeaskr28j9ch")
 
-resultAnalyzerTest = ResultAnalyzerTest()
-resultAnalyzerTest.test_A()
+        print("ResultAnalyzerTest Passed!")
 
-rowCounterTest = RowCounterTest()
-rowCounterTest.test_A()
 
-rowCounterTest = RowCounterTest()
-rowCounterTest.test_A()
-
-streamResultAnalyzerTest = StreamResultAnalyzerTest()
-streamResultAnalyzerTest.test_A()
+if __name__ == '__main__':
+    unittest.main()

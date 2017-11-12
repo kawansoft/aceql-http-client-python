@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
@@ -18,24 +17,28 @@
 # limitations under the License. 
 ##
 
-import unittest
-
-from aceql._private.ResultAnalyzer import *
+from aceql._private.parms import *
 
 
-class ResultAnalyzerTest(unittest.TestCase):
+class AceQLDebug(object):
+    """debug class"""
 
-    def test_A(self):
-        result = '{"status" : "OK","session_id" : "mn7andp2tt049iaeaskr28j9ch"}'
-        analyzer = ResultAnalyzer(result, 200)
-        status_ok = analyzer.is_status_ok()
+    # stack = inspect.stack()
+    # the_class = stack[1][0].f_locals["self"].__class__
+    # the_method = stack[1][0].f_code.co_name
 
-        self.assertEqual(status_ok, True)
-        session_id = analyzer.get_value("session_id")
-        self.assertEqual(session_id, "mn7andp2tt049iaeaskr28j9ch")
+    # print("I was called by {}.{}()".format(str(calling_class),
+    # calling_code_name))
+    ## => I was called by A.a()
 
-        print("ResultAnalyzerTest Passed!")
+    def debug():
+        if Parms.DEBUG_ON:
+            print("debug> ")
 
+    debug = staticmethod(debug)
 
-if __name__ == '__main__':
-    unittest.main()
+    def debug(s):
+        if Parms.DEBUG_ON:
+            print("debug> " + str(s))
+
+    debug = staticmethod(debug)

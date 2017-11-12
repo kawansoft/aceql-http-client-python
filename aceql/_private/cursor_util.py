@@ -18,8 +18,8 @@
 # limitations under the License. 
 ##
 
-from aceql._private.DateTimeUtil import *
-from aceql._private.FileUtil import *
+from aceql._private.datetime_util import *
+from aceql._private.file_util import *
 
 
 class CursorUtil(object):

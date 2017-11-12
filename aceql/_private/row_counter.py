@@ -20,7 +20,7 @@
 import os
 from io import open
 
-from aceql._private.AceQLDebug import *
+from aceql._private.aceal_debug import *
 
 
 class RowCounter(object):

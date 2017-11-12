@@ -79,6 +79,7 @@
 # 11/11/2017 19:56 NDP: Error: multi lines reason & stack exception are split into list of str
 # 11/11/2017 15:03 NDP: Clean comments in aceql module
 # 11/11/2017 17:09 NDP: Cursor: raise error Error if Cursor is closed
+# 11/11/2017 17:26 NDP: .py files are now all lowercase
 
 
 class VersionValues(object):

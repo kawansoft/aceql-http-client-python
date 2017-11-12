@@ -17,7 +17,7 @@
 # limitations under the License. 
 ##
 
-from aceql._private.Parms import  *
+from aceql._private.parms import  *
 
 
 class ProgressIndicator(object):

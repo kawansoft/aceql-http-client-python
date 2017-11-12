@@ -17,28 +17,28 @@
 # limitations under the License. 
 ##
 
-from aceql._private.Parms import *
+import unittest
+
+from aceql._private.datetime_util import *
 
 
-class AceQLDebug(object):
-    """debug class"""
+class DateTimeUtilTest(unittest.TestCase):
+    def test_A(self):
 
-    # stack = inspect.stack()
-    # the_class = stack[1][0].f_locals["self"].__class__
-    # the_method = stack[1][0].f_code.co_name
+        the_datetime = datetime.now()
+        print("theDatetime    : " + str(the_datetime))
 
-    # print("I was called by {}.{}()".format(str(calling_class),
-    # calling_code_name))
-    ## => I was called by A.a()
+        timestamp_str = DateTimeUtil.get_timestamp_from_date(the_datetime)
+        print("timestampStr   : " + timestamp_str)
 
-    def debug():
-        if Parms.DEBUG_ON:
-            print("debug> ")
+        the_datetime_new = DateTimeUtil.get_datetime_from_timestamp(timestamp_str)
+        print("theDatetimeNew : " + str(the_datetime_new))
 
-    debug = staticmethod(debug)
+        timestamp_str_new = DateTimeUtil.get_timestamp_from_date(the_datetime_new)
+        print("timestampStrNew: " + timestamp_str_new)
 
-    def debug(s):
-        if Parms.DEBUG_ON:
-            print("debug> " + str(s))
+        self.assertEqual(timestamp_str, timestamp_str_new)
 
-    debug = staticmethod(debug)
+
+if __name__ == '__main__':
+    unittest.main()
