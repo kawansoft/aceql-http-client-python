@@ -33,6 +33,7 @@ from aceql.dbapi2 import *
 
 __all__ = ["Connection", "ProgressIndicator", "SqlNullType", "Cursor", "Error"]
 
+
 def connect(server_url, database, username, password, proxies=None):
     """
     Creates a database connection to the remote AceQL HTTP server.
@@ -57,5 +58,5 @@ def connect(server_url, database, username, password, proxies=None):
 
     """
 
-    connection = Connection(server_url, database, username, password, proxies=proxies)
-    return connection
+    the_connection = Connection(server_url, database, username, password, proxies=proxies)
+    return the_connection

@@ -89,12 +89,12 @@ class Cursor(object):
         blob_streams = []
 
         try:
-            cursor_util = CursorUtil()
-            parms_dict = cursor_util.get_http_parameters_dict(params)
+            the_cursor_util = CursorUtil()
+            parms_dict = the_cursor_util.get_http_parameters_dict(params)
 
-            blob_ids = cursor_util.blob_ids
-            blob_streams = cursor_util.blob_streams
-            blob_lengths = cursor_util.blob_lengths
+            blob_ids = the_cursor_util.blob_ids
+            blob_streams = the_cursor_util.blob_streams
+            blob_lengths = the_cursor_util.blob_lengths
 
             cpt = 0
             for blob_id in blob_ids:
@@ -121,8 +121,8 @@ class Cursor(object):
         self.row_count = 0
         self.__description = []
 
-        cursor_util = CursorUtil()
-        parms_dict = cursor_util.get_http_parameters_dict(params)
+        the_cursor_util = CursorUtil()
+        parms_dict = the_cursor_util.get_http_parameters_dict(params)
 
         is_prepared_statement = False
         if len(parms_dict) > 0:
@@ -219,12 +219,10 @@ class Cursor(object):
 
     def setinputsizes(self, sizes):
         """ Does nothing. Implemented for respect to PEP 249."""
-        self.__raise_error_if_closed()
         pass
 
     def setoutputsize(self, sizes, column=None):
         """ Does nothing. Implemented for respect to PEP 249."""
-        self.__raise_error_if_closed()
         pass
 
     def __build_description(self):

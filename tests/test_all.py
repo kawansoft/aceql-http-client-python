@@ -35,7 +35,9 @@ class TestAll(unittest.TestCase):
         # assert sys.version_info >= (2,5)
         print()
 
-        print("aceql.apilevel: " + aceql.apilevel)
+        print("aceql.apilevel    : " + aceql.apilevel)
+        print("aceql.threadsafety: " + str(aceql.threadsafety))
+        print("aceql.paramstyle  : " + aceql.paramstyle)
 
         #server_host = "https://www.aceql.com:9443/aceql"
         localhost = "http://localhost:9090/aceql"
