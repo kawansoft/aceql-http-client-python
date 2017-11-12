@@ -18,6 +18,7 @@
 # limitations under the License. 
 ##
 
+from io import open
 from aceql._private.datetime_util import *
 from aceql._private.file_util import *
 
@@ -104,8 +105,8 @@ class CursorUtil(object):
                 sql_type = "TYPE_NULL" + str(x[1])
             elif CursorUtil.get_class_name(x[0]) == "_io.BufferedReader":
                 sql_type = "BLOB"
-            #elif CursorUtil.get_class_name(x[0]) == "file":
-            #    sql_type = "BLOB"
+            elif CursorUtil.get_class_name(x[0]) == "file":
+                sql_type = "BLOB"
             else:
                 raise TypeError("Invalid tuple parameter. Not a NULL Type nor a BLOB: " + str(x))
         elif CursorUtil.get_class_name(x) == "int":

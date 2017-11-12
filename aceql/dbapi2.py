@@ -17,13 +17,13 @@
 # limitations under the License. 
 ##
 
-import time
-import datetime
-
 """
 This module implements some constructors and singletons as required by the
 DB API v2.0 (PEP-249).
 """
+
+import time
+import datetime
 
 # Python Db API v2
 apilevel = '2.0'
@@ -33,7 +33,6 @@ paramstyle = 'qmark'
 Date = datetime.date
 Time = datetime.time
 Timestamp = datetime.datetime
-
 
 def DateFromTicks(ticks):
     return Date(*time.localtime(ticks)[:3])

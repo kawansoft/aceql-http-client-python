@@ -21,7 +21,6 @@
 import aceql
 from aceql import *
 
-
 # URL of the AceQL server, Remote SQL database name
 # & authentication info
 host = "http://localhost:9090/aceql"
@@ -29,8 +28,9 @@ database = "kawansoft_example"
 username = "user1"
 password = "password1"
 
-connection = aceql.connect(host, database, username, password)
+print("aceql.apilevel: " + aceql.apilevel)
 
+connection = aceql.connect(host, database, username, password)
 cursor = connection.cursor()
 
 if True:

@@ -77,10 +77,11 @@
 # 11/11/2017 18:36 NDP: RowParser: convert 'NULL' to None
 # 11/11/2017 18:39 NDP: CursorUtil: Support datetime.time to TIME  & BLOB is 'file' type for Python 2.7s
 # 11/11/2017 19:56 NDP: Error: multi lines reason & stack exception are split into list of str
-# 11/11/2017 15:03 NDP: Clean comments in aceql module
-# 11/11/2017 17:09 NDP: Cursor: raise error Error if Cursor is closed
-# 11/11/2017 17:26 NDP: .py files are now all lowercase
-# 11/11/2017 18:17 NDP: import all aceql classes in __init__
+# 12/11/2017 15:03 NDP: Clean comments in aceql module
+# 12/11/2017 17:09 NDP: Cursor: raise error Error if Cursor is closed
+# 12/11/2017 17:26 NDP: .py files are now all lowercase
+# 12/11/2017 18:17 NDP: import all aceql classes in __init__
+# 12/11/2017 21:56 NDP: __init__: define __all__ in aceql and import dbapi2 mandatory values
 
 
 class VersionValues(object):

@@ -20,7 +20,6 @@
 
 from aceql._private.cursor_util import *
 
-
 class Error(Exception):
     """
     Wrapper class for Exceptions thrown on client side or server side.

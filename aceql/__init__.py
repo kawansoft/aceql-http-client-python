@@ -21,7 +21,6 @@
 
     The library supports Python 2.6 to 2.7 and 3.4 to 3.7.
     It provides a SQL interface compliant with the DB-API 2.0 specification described by PEP 249.
-
 """
 
 from aceql.connection import *
@@ -29,10 +28,10 @@ from aceql.progress_indicator import *
 from aceql.sql_null_type import *
 from aceql.cursor import *
 from aceql.error import *
+
 from aceql.dbapi2 import *
 
-#__all__ = ["connection", "progress_indicator", "sql_null_type", "cursor", "error", "dbapi2"]
-
+__all__ = ["Connection", "ProgressIndicator", "SqlNullType", "Cursor", "Error"]
 
 def connect(server_url, database, username, password, proxies=None):
     """
@@ -58,5 +57,5 @@ def connect(server_url, database, username, password, proxies=None):
 
     """
 
-    the_connection = Connection(server_url, database, username, password, proxies=proxies)
-    return the_connection
+    connection = Connection(server_url, database, username, password, proxies=proxies)
+    return connection

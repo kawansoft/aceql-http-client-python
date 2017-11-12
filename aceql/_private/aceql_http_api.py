@@ -21,7 +21,6 @@ import requests
 from requests_toolbelt.multipart import encoder
 
 from aceql.error import *
-from aceql._private.file_util import *
 from aceql._private.result_analyzer import *
 from aceql._private.result_set_info import *
 from aceql._private.row_counter import *

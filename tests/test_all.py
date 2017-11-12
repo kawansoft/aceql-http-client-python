@@ -23,6 +23,8 @@ from aceql import *
 
 import unittest
 import sys
+import os
+from os import sep
 from datetime import datetime, date
 
 
@@ -33,7 +35,7 @@ class TestAll(unittest.TestCase):
         # assert sys.version_info >= (2,5)
         print()
 
-        the_progress_indicator = ProgressIndicator()
+        print("aceql.apilevel: " + aceql.apilevel)
 
         #server_host = "https://www.aceql.com:9443/aceql"
         localhost = "http://localhost:9090/aceql"
