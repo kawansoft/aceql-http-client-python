@@ -19,7 +19,7 @@
 ##
 
 import aceql
-from aceql.sql_null_type import *
+from aceql import *
 
 
 # URL of the AceQL server, Remote SQL database name

@@ -18,13 +18,10 @@
 # limitations under the License. 
 ##
 
-from aceql.progress_indicator import *
-from aceql.connection import *
-from tests.aceql_http_api_test import *
-from aceql.sql_null_type import *
+import aceql
+from aceql import *
 
 import unittest
-import aceql
 import sys
 from datetime import datetime, date
 
@@ -35,6 +32,8 @@ class TestAll(unittest.TestCase):
         print(sys.version)
         # assert sys.version_info >= (2,5)
         print()
+
+        the_progress_indicator = ProgressIndicator()
 
         #server_host = "https://www.aceql.com:9443/aceql"
         localhost = "http://localhost:9090/aceql"
