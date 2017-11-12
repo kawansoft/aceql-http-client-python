@@ -78,7 +78,7 @@ class TestAll(unittest.TestCase):
         cpt = 0
         while cpt < 10:
             customer_id = cpt
-            params = (customer_id, (None, SqlNullType.VARCHAR), u"André" + str(customer_id),
+            params = (customer_id, (None, SqlNullType.VARCHAR), u"André_" + str(customer_id),
                       u"Smith_" + str(customer_id), str(customer_id) + u" César Avenue",
                       u"Town_" + str(customer_id),
                       str(customer_id) + "", str(customer_id) + u"12345678")
@@ -107,6 +107,8 @@ class TestAll(unittest.TestCase):
         the_tup = cursor.fetchone()
         print("the_tup: " + str(the_tup))
         self.assertEqual(the_tup[0], 0)
+
+        print("firstname: " + the_tup[2])
 
         cursor.close()
         cursor = connection.cursor()
@@ -244,7 +246,7 @@ class TestAll(unittest.TestCase):
 
             cpt += 1
             # print("BLOB length : " + str(total_length))
-            filename = os.path.expanduser("~") + sep + "AceQL-Schema_OUT.png"
+            filename = os.path.expanduser("~") + sep + "AceQL-Schema_OUT_" + str(cpt) + ".png"
             response = cursor.get_blob_stream(6)
 
             with open(filename, 'wb') as fd:

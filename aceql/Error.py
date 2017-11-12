@@ -87,7 +87,7 @@ class Error(Exception):
 
     @property
     def cause(self):
-        """ The Exception cause, None if none."""
+        """ The Exception cause, None if no cause."""
         return self._cause
 
     @property
@@ -97,7 +97,7 @@ class Error(Exception):
 
     @property
     def http_status_code(self):
-        """ The HTTP Status Code"""
+        """ The HTTP Status Code."""
         return self._http_status_code
 
     def __str__(self):

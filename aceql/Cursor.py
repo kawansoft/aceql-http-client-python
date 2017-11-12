@@ -43,6 +43,7 @@ class Cursor(object):
 
         (5 other elements are not set in this version)"""
 
+        self.__raise_error_if_closed()
         return self.__description
 
     @property
@@ -50,6 +51,7 @@ class Cursor(object):
         """This read-only attribute specifies the number of rows that the last .execute*()
         produced (for DQL statements like SELECT)
         or affected (for DML statements like UPDATE or INSERT)"""
+        self.__raise_error_if_closed()
         return self.__rowcount
 
     def execute(self, sql, params=()):
@@ -61,6 +63,7 @@ class Cursor(object):
         For example, getting all rows where id is 5:
           cursor.execute("SELECT * FROM t1 WHERE id = ?", (5,))
         """
+        self.__raise_error_if_closed()
 
         if sql is None:
             raise TypeError("sql is null!")
@@ -77,6 +80,7 @@ class Cursor(object):
 
         Not implemented in this version.
         """
+        self.__raise_error_if_closed()
         raise NotImplementedError("executemany is not implemented in this AceQL SDK version.")
 
     def __execute_update(self, sql, params=()):
@@ -112,6 +116,8 @@ class Cursor(object):
 
     def __execute_query(self, sql, params=()):
         """Executes a SELECT on remote database"""
+        self.__raise_error_if_closed()
+
         self.row_count = 0
         self.__description = []
 
@@ -137,16 +143,11 @@ class Cursor(object):
 
         self.__row_parser = RowParser(self.__result_set_info.get_filename(), self.__result_set_info.get_row_count())
 
-    def __iter__(self):
-        """
-        Iteration over the result set which calls self.fetchone()
-        and returns the next row.
-        """
-        return iter(self.fetchone, None)
-
     def fetchone(self):
         """ Fetch the next row of a query result set, returning a single sequence,
         or None when no more data is available"""
+
+        self.__raise_error_if_closed()
         row_available = self.__row_parser.build_next_row()
 
         if not row_available:
@@ -181,6 +182,7 @@ class Cursor(object):
         The number of rows to fetch per call is specified by the parameter.
         If it is not given, the cursor's arraysize determines the number of rows to be fetched."""
 
+        self.__raise_error_if_closed()
         size_to_use = size
         if size_to_use <= 1:
             size_to_use = self.arraysize
@@ -204,6 +206,7 @@ class Cursor(object):
             Note that the cursors arraysize attribute can affect the performance
             of this operation. An empty list is returned when no rows are available.
         """
+        self.__raise_error_if_closed()
 
         list_tuples = []
         while True:
@@ -216,26 +219,18 @@ class Cursor(object):
 
     def setinputsizes(self, sizes):
         """ Does nothing. Implemented for respect to PEP 249."""
+        self.__raise_error_if_closed()
         pass
 
     def setoutputsize(self, sizes, column=None):
         """ Does nothing. Implemented for respect to PEP 249."""
+        self.__raise_error_if_closed()
         pass
-
-    def close(self):
-        """ Closes the cursor and releases underlying file resource (result set). """
-        self.__is_closed = True
-
-        if self.__row_parser is not None:
-            self.__row_parser.close()  # very important
-
-        if Parms.DELETE_FILES:
-            for filename in self.__filelist:
-                os.remove(filename)
 
     def __build_description(self):
         """ Builds the .description property"""
 
+        self.__raise_error_if_closed()
         self.__description = []
 
         if self.__rowcount < 1:
@@ -298,6 +293,8 @@ class Cursor(object):
         To be used if progress indicator needed.
 
         """
+        self.__raise_error_if_closed()
+
         if column_index is None:
             raise TypeError("column_index is null!")
 
@@ -329,6 +326,9 @@ class Cursor(object):
 
             The column index starts at 0.
         """
+
+        self.__raise_error_if_closed()
+
         if column_index is None:
             raise TypeError("column_index is null!")
 
@@ -351,3 +351,22 @@ class Cursor(object):
         # OK!  we have a valid BLOB Id:
         response = self.__aceql_http_api.get_blob_stream(blob_id)
         return response
+
+    def close(self):
+        """ Closes the cursor and releases underlying stream & file resource (result set). """
+
+        if self.__is_closed:
+            return
+
+        self.__is_closed = True
+
+        if self.__row_parser is not None:
+            self.__row_parser.close()  # very important
+
+        if Parms.DELETE_FILES:
+            for filename in self.__filelist:
+                os.remove(filename)
+
+    def __raise_error_if_closed(self):
+        if self.__is_closed:
+            raise Error("Invalid call: Cursor is closed.", 0, None, None, 200)

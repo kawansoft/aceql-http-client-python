@@ -27,6 +27,7 @@ from aceql._private.ColumnTypesBuilder import *
 from aceql._private.AceQLDebug import *
 from aceql._private.CursorUtil import *
 
+
 class RowParser(object):
     """Allows to parse rows in retrieved JSON result set and return each row content dictionaries"""
 

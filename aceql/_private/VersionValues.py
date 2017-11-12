@@ -78,8 +78,10 @@
 # 11/11/2017 18:39 NDP: CursorUtil: Support datetime.time to TIME  & BLOB is 'file' type for Python 2.7s
 # 11/11/2017 19:56 NDP: Error: multi lines reason & stack exception are split into list of str
 # 11/11/2017 15:03 NDP: Clean comments in aceql module
+# 11/11/2017 17:09 NDP: Cursor: raise error Error if Cursor is closed
+
 
 class VersionValues(object):
     NAME = "AceQL HTTP SDK"
     VERSION = "v1.0-beta-1"
-    DATE = "08-nov-2017"
+    DATE = "12-nov-2017"
