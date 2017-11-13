@@ -18,30 +18,8 @@
 # limitations under the License.
 ##
 
-# P2
-# <type 'datetime.datetime'>
-# <type 'datetime.date'>
-# <type 'datetime.time'>
-# <type 'file'>
-
-# P3
-# <class 'datetime.datetime'>
-# <class 'datetime.date'>
-# <class 'datetime.time'>
-# <class '_io.BufferedReader'>
-
 import aceql
 from datetime import datetime, date,  time
-
-datetimeNow = datetime.now()
-date = datetimeNow.date()
-theTime = time(12, 40)
-fd = open("c:\\test\\koala.jpg" ,"rb")
-
-print(str(type(datetimeNow)))
-print(str(type(date)))
-print(str(type(theTime)))
-print(str(type(fd)))
 
 server = "http://localhost:9090/aceql"
 database = "kawansoft_example"

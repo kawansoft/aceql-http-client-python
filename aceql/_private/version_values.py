@@ -84,7 +84,7 @@
 # 12/11/2017 21:56 NDP: __init__: define __all__ in aceql and import dbapi2 mandatory values
 # 12/11/2017 22:07 NDP: Clean shadowing in Cursor
 # 12/11/2017 14:03 NDP: Parms: reset default values for prod
-
+# 12/11/2017 21:14 NDP: Create samples package
 
 class VersionValues(object):
     NAME = "AceQL HTTP SDK"
