@@ -19,7 +19,7 @@
 
 from aceql import *
 from datetime import datetime, date
-from contextlib import contextmanager
+from contextlib import closing
 
 
 class MyRemoteConnection(object):
@@ -62,7 +62,8 @@ class MyRemoteConnection(object):
 
     def insert_customer_and_order_log(self, customer_id, item_id):
         """Example of 2 INSERT in the same transaction
-            using a customer id and an order id.
+
+            using a customer id and an item id.
         """
 
         self.connection.set_auto_commit(False)
@@ -81,8 +82,9 @@ class MyRemoteConnection(object):
             the_datetime = datetime.now()
             the_date = the_datetime.date()
 
-            # (None, SqlNullType.BLOB) means to set the jpeg_image BLOB column to NULL on server:
-            params = (customer_id, item_id, "Item Description", 99.99,
+            # (None, SqlNullType.BLOB) means to set the jpeg_image BLOB
+            # column to NULL on server:
+            params = (customer_id, item_id, "Item Description", 9999,
                       the_date, the_datetime, (None, SqlNullType.BLOB), 1, 2)
             cursor.execute(sql, params)
 
@@ -90,6 +92,7 @@ class MyRemoteConnection(object):
         except Error as e:
             print(e)
             self.connection.rollback()
+            raise e
         finally:
             self.connection.set_auto_commit(True)
             cursor.close()
@@ -134,7 +137,7 @@ class MyRemoteConnection(object):
                 print("item_cost   : " + str(row[3]))
                 print("date_placed : " + str(row[4]))
                 print("date_shipped: " + str(row[5]))
-
+                # Do not print jpeg_image
                 print("is_delivered: " + str(row[7]))
                 print("quantity    : " + str(row[8]))
         finally:
@@ -161,18 +164,17 @@ def main():
 
     # Make sure connection is always closed in order to close and release
     # server connection into the pool
+    with closing(MyRemoteConnection.remote_connection_builder()) as connection:
+        my_remote_connection = MyRemoteConnection(connection)
 
-    connection = MyRemoteConnection.remote_connection_builder()
-    my_remote_connection = MyRemoteConnection(connection)
+        print("deleting customer...")
+        # Delete previous instances, so that user can recall class
+        my_remote_connection.delete_customer(customer_id)
+        print("deleting orderlog...")
+        my_remote_connection.delete_orderlog(customer_id, item_id)
 
-    print("deleting customer...")
-    # Delete previous instances, so that user can recall class
-    my_remote_connection.delete_customer(customer_id)
-    print("deleting orderlog...")
-    my_remote_connection.delete_orderlog(customer_id, item_id)
-
-    my_remote_connection.insert_customer_and_order_log(customer_id, item_id)
-    my_remote_connection.select_customer_and_orderlog(customer_id, item_id)
+        my_remote_connection.insert_customer_and_order_log(customer_id, item_id)
+        my_remote_connection.select_customer_and_orderlog(customer_id, item_id)
 
 
 if __name__ == '__main__':

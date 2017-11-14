@@ -81,3 +81,13 @@ class DateTimeUtil(object):
         return the_datetime.date()
 
     get_date_from_timestamp = staticmethod(get_date_from_timestamp)
+
+    def get_time_from_timestamp(ts_str):
+        """Returns a date from Unix Epoch."""
+
+        ts = float(ts_str)
+        ts_int = ts / 1000  # we want in seconds
+        the_datetime = datetime.fromtimestamp(ts_int)
+        return the_datetime.time()
+
+        get_time_from_timestamp = staticmethod(get_time_from_timestamp)

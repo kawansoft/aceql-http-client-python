@@ -26,6 +26,8 @@ from aceql._private.file_util import *
 class CursorUtil(object):
     """Utilities for Cursor class. """
 
+    JAVA_MAX_INT_VALUE = 2147483647
+
     def __init__(self):
         self.blob_ids = []
         self.blob_streams = []
@@ -72,6 +74,12 @@ class CursorUtil(object):
                 parms_dict["param_value_" + str(param_index)] = DateTimeUtil.get_timestamp_from_date(x)
             elif CursorUtil.get_class_name(x) == "datetime.date":
                 parms_dict["param_value_" + str(param_index)] = DateTimeUtil.get_timestamp_from_date(x)
+            elif CursorUtil.get_class_name(x) == "datetime.time":
+                the_datetime = datetime.now()
+                the_datetime.hour = x.hour
+                the_datetime.minute = x.minute
+                the_datetime.second = x.second
+                parms_dict["param_value_" + str(param_index)] = DateTimeUtil.get_timestamp_from_date(the_datetime)
             else:
                 parms_dict["param_value_" + str(param_index)] = str(x)
 
@@ -109,12 +117,19 @@ class CursorUtil(object):
                 sql_type = "BLOB"
             else:
                 raise TypeError("Invalid tuple parameter. Not a NULL Type nor a BLOB: " + str(x))
-        elif CursorUtil.get_class_name(x) == "int":
-            sql_type = "INTEGER"
+        # elif CursorUtil.get_class_name(x) == "int":
+        #     sql_type = "INTEGER"
+        # elif CursorUtil.get_class_name(x) == "long":
+        #     sql_type = "BIGINT"
+        #
+        # because p2 int and long are different, and p3 int and long are int, special treatment
+        elif CursorUtil.get_class_name(x) == "int" or CursorUtil.get_class_name(x) == "long":
+            if x < CursorUtil.JAVA_MAX_INT_VALUE * -1 or x >  CursorUtil.JAVA_MAX_INT_VALUE:
+                sql_type = "BIGINT"
+            else:
+                sql_type = "INTEGER"
         elif CursorUtil.get_class_name(x) == "bool":
             sql_type = "BIT"
-        elif CursorUtil.get_class_name(x) == "long":
-            sql_type = "BIGINT"
         elif CursorUtil.get_class_name(x) == "float":
             sql_type = "REAL"
         elif CursorUtil.get_class_name(x) == "str":
@@ -126,8 +141,8 @@ class CursorUtil(object):
             sql_type = "TIMESTAMP"
         elif CursorUtil.get_class_name(x) == "datetime.date":
             sql_type = "DATE"
-        #elif CursorUtil.get_class_name(x) == "datetime.time":
-        #    sql_type = "TIME"
+        elif CursorUtil.get_class_name(x) == "datetime.time":
+            sql_type = "TIME"
         else:
             print("CursorUtil.get_class_name(x): " + CursorUtil.get_class_name(x))
             raise TypeError("Type is not supported for value: " + str(x))

@@ -84,9 +84,11 @@
 # 12/11/2017 21:56 NDP: __init__: define __all__ in aceql and import dbapi2 mandatory values
 # 12/11/2017 22:07 NDP: Clean shadowing in Cursor
 # 12/11/2017 14:03 NDP: Parms: reset default values for prod
-# 12/11/2017 21:14 NDP: Create samples package
+# 13/11/2017 21:14 NDP: Create samples package
+# 14/11/2017 11:17 NDP: Convert long values (< -2 147 483 647 or > 2 147 483 647) to BIGINT
+
 
 class VersionValues(object):
     NAME = "AceQL HTTP SDK"
     VERSION = "v1.0-beta-1"
-    DATE = "13-nov-2017"
+    DATE = "14-nov-2017"

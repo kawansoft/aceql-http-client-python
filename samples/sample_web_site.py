@@ -19,7 +19,7 @@
 ##
 
 import aceql
-from datetime import datetime, date,  time
+from contextlib import closing
 
 server = "http://localhost:9090/aceql"
 database = "kawansoft_example"
@@ -40,18 +40,17 @@ sql = "insert into customer values (1, 'Sir', 'John', 'Doe', '1 Madison Ave', 'N
 cursor.execute(sql)
 print("Rows updated: " + str(cursor.rowcount))
 
-sql = "select customer_id, customer_title, lname from customer where customer_id = 1"
-cursor.execute(sql)
+with closing(connection.cursor()) as cursor:
+    sql = "select customer_id, customer_title, lname from customer where customer_id = 1"
+    cursor.execute(sql)
 
-try:
     rows = cursor.fetchall()
 
     for row in rows:
         print("customer_id   : " + str(row[0]))
         print("customer_title: " + row[1])
         print("lname         : " + row[2])
-finally:
-    cursor.close()
+
 
 cursor = connection.cursor()
 sql = "update customer set fname = ? where customer_id = ?"

@@ -166,6 +166,8 @@ class Cursor(object):
                 the_list.append(DateTimeUtil.get_datetime_from_timestamp(v))
             elif types_per_column_index[index] == "DATE":
                 the_list.append(DateTimeUtil.get_date_from_timestamp(v))
+            elif types_per_column_index[index] == "TIME":
+                the_list.append(DateTimeUtil.get_time_from_timestamp(v))
             else:
                 the_list.append(v)
 

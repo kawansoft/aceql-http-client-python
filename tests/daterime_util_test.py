@@ -26,16 +26,16 @@ class DateTimeUtilTest(unittest.TestCase):
     def test_A(self):
 
         the_datetime = datetime.now()
-        print("theDatetime    : " + str(the_datetime))
+        print("theDatetime       : " + str(the_datetime))
 
         timestamp_str = DateTimeUtil.get_timestamp_from_date(the_datetime)
-        print("timestampStr   : " + timestamp_str)
+        print("timestamp_str     : " + timestamp_str)
 
         the_datetime_new = DateTimeUtil.get_datetime_from_timestamp(timestamp_str)
-        print("theDatetimeNew : " + str(the_datetime_new))
+        print("the_datetime_new  : " + str(the_datetime_new))
 
         timestamp_str_new = DateTimeUtil.get_timestamp_from_date(the_datetime_new)
-        print("timestampStrNew: " + timestamp_str_new)
+        print("timestamp_str_new : " + timestamp_str_new)
 
         self.assertEqual(timestamp_str, timestamp_str_new)
 
