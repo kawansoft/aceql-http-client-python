@@ -85,8 +85,8 @@
 # 12/11/2017 22:07 NDP: Clean shadowing in Cursor
 # 12/11/2017 14:03 NDP: Parms: reset default values for prod
 # 13/11/2017 21:14 NDP: Create samples package
-# 14/11/2017 11:17 NDP: Convert long values (< -2 147 483 647 or > 2 147 483 647) to BIGINT
-
+# 14/11/2017 11:17 NDP: Convert & long values (< -2 147 483 647 or > 2 147 483 647) to BIGINT
+# 14/11/2017 11:41 NDP: Add support for SQL TIME type & clean samples
 
 class VersionValues(object):
     NAME = "AceQL HTTP SDK"

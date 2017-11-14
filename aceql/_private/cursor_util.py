@@ -117,12 +117,7 @@ class CursorUtil(object):
                 sql_type = "BLOB"
             else:
                 raise TypeError("Invalid tuple parameter. Not a NULL Type nor a BLOB: " + str(x))
-        # elif CursorUtil.get_class_name(x) == "int":
-        #     sql_type = "INTEGER"
-        # elif CursorUtil.get_class_name(x) == "long":
-        #     sql_type = "BIGINT"
-        #
-        # because p2 int and long are different, and p3 int and long are int, special treatment
+        # Because P2 int and long are different, and p3 int and long are awlays int, special treatment:
         elif CursorUtil.get_class_name(x) == "int" or CursorUtil.get_class_name(x) == "long":
             if x < CursorUtil.JAVA_MAX_INT_VALUE * -1 or x >  CursorUtil.JAVA_MAX_INT_VALUE:
                 sql_type = "BIGINT"
