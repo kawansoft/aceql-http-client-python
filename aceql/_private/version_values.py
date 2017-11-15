@@ -87,8 +87,11 @@
 # 13/11/2017 21:14 NDP: Create samples package
 # 14/11/2017 11:17 NDP: Convert & long values (< -2 147 483 647 or > 2 147 483 647) to BIGINT
 # 14/11/2017 11:41 NDP: Add support for SQL TIME type & clean samples
+# 15/11/2017 19:55 NDP: Add class ProxyAuth for authenticated proxy usage
+# 15/11/2017 00:48 NDP: Add class ProxyUtil and Authenticated proxy tested on all operation
+
 
 class VersionValues(object):
     NAME = "AceQL HTTP SDK"
     VERSION = "v1.0-beta-1"
-    DATE = "14-nov-2017"
+    DATE = "16-nov-2017"

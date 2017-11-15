@@ -17,22 +17,25 @@
 # limitations under the License.
 ##
 
+import aceql
 from aceql import *
 from datetime import datetime, date
 from contextlib import closing
 
 
 class MyRemoteConnection(object):
-    """
+    """ Connection example to a remote database with INSERT & SELECT.
+
     This example:
         - Inserts a Customer and an Order on a remote database.
-        - Displays the inserted raws on the console with two SELECT executed on the
+        - Displays the inserted rows on the console with two SELECT executed on the
           remote database.
     """
 
     def __init__(self, connection):
         self.connection = connection
 
+    @staticmethod
     def remote_connection_builder():
         """Remote Connection Quick Start client example.
 
@@ -55,10 +58,8 @@ class MyRemoteConnection(object):
         # On the server side, a JDBC connection is extracted from the
         # connection pool created by the server at startup.
         # The connection will remain ours during the session.
-        connection = Connection(url, database, username, password)
+        connection = aceql.connect(url, database, username, password)
         return connection
-
-    remote_connection_builder = staticmethod(remote_connection_builder)
 
     def insert_customer_and_order_log(self, customer_id, item_id):
         """Example of 2 INSERT in the same transaction
@@ -105,7 +106,7 @@ class MyRemoteConnection(object):
 
             sql = "select customer_id, fname, lname from customer " \
                   "where customer_id = ?"
-            params = (customer_id, )
+            params = (customer_id,)
             cursor.execute(sql, params)
 
             rows = cursor.fetchall()
@@ -179,4 +180,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

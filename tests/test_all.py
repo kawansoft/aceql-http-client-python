@@ -39,13 +39,29 @@ class TestAll(unittest.TestCase):
         print("aceql.threadsafety: " + str(aceql.threadsafety))
         print("aceql.paramstyle  : " + aceql.paramstyle)
 
-        #server_host = "https://www.aceql.com:9443/aceql"
-        localhost = "http://localhost:9090/aceql"
+        if ProxyUtil.get_windows_proxy_proxy() is None:
+            use_proxy = False
+        else:
+            use_proxy = True
 
-        host = localhost
+        proxies = None
+        auth = None
+
+        if use_proxy:
+            proxies = {
+                "http": "http://localhost:8080",
+            }
+
+            auth = TestAll.getProxyAuth()
+
+        # localhost = "http://localhost:9090/aceql"
+        # server_host = "https://www.aceql.com:9443/aceql"
+        server_host_no_ssl = "http://www.aceql.com:9090/aceql"
+
+        host = server_host_no_ssl
 
         Connection.set_stateless(False)
-        connection = aceql.connect(host, "kawansoft_example", "user1", "password1")
+        connection = aceql.connect(host, "kawansoft_example", "user1", "password1", proxies=proxies, auth=auth)
         connection.set_gzip_result(True)
 
         connection.set_holdability("hold_cursors_over_commit")
@@ -76,6 +92,7 @@ class TestAll(unittest.TestCase):
         sql = "delete from customer where customer_id >= ?"
         params = (0,)
         cursor.execute(sql, params)
+        print("rows deleted: " + str(cursor.rowcount))
 
         sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
         cpt = 0
@@ -86,18 +103,20 @@ class TestAll(unittest.TestCase):
                       u"Town_" + str(customer_id),
                       str(customer_id) + "", str(customer_id) + u"12345678")
             cursor.execute(sql, params)
+            print("rows inserted: " + str(cursor.rowcount))
             cpt += 1
 
         sql = "select count(customer_id) from customer where customer_id >= ?"
         params = (0,)
         cursor.execute(sql, params)
         the_tup = cursor.fetchone()
+        print("count(customer_id): " + str(the_tup[0]))
         self.assertEqual(the_tup[0], 10)
 
         sql = "update customer set lname = ? where customer_id = ?"
         params = ("Python3.6", 1)
         rows = cursor.execute(sql, params)
-        print("update rows: " + str(rows))
+        print("rows updated: " + str(rows))
         self.assertEqual(rows, 1)
         print()
 
@@ -260,6 +279,15 @@ class TestAll(unittest.TestCase):
         print()
 
         connection.close()
+
+    @staticmethod
+    def getProxyAuth():
+        """Get proxy auth info from a filename"""
+        with open("I:\\neotunnel.txt", "rt") as fd:
+            content = fd.read()
+        lines = content.split()
+        auth = ProxyAuth(lines[0].strip(), lines[1].strip())
+        return auth
 
 
 if __name__ == '__main__':

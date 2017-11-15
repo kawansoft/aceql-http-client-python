@@ -23,7 +23,7 @@ from aceql.cursor import *
 class Connection(object):
     """Allows to create a database connection to a remote server."""
 
-    def __init__(self, server_url, database, username, password, proxies=None):
+    def __init__(self, server_url, database, username, password, proxies=None, auth=None):
         """
         Creates a database connection to the remote AceQL HTTP server.
 
@@ -39,6 +39,8 @@ class Connection(object):
             the authentication password.
         proxies : str
             The proxy to use, can  be an authenticated proxy.
+        auth:   : ProxyAuth
+            aceql.ProxyAuth instance with proxy (username, password)
 
         Returns
         -------
@@ -56,7 +58,7 @@ class Connection(object):
         if password is None:
             raise TypeError("password is null!")
 
-        self.__aceQLHttpApi = AceQLHttpApi(server_url, database, username, password, proxies=proxies)
+        self.__aceQLHttpApi = AceQLHttpApi(server_url, database, username, password, proxies=proxies, auth=auth)
 
     def cursor(self):
         """Instantiates and returns a cursor."""

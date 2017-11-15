@@ -20,9 +20,12 @@
 
 import aceql
 from aceql import *
+from contextlib import closing
 
 # URL of the AceQL server, Remote SQL database name
 # & authentication info
+#host = "http://localhost:9090/aceql"
+
 host = "http://localhost:9090/aceql"
 database = "kawansoft_example"
 username = "user1"
@@ -80,52 +83,59 @@ cursor.execute(sql)
 sql = "delete from customer where customer_id >= ?"
 params = (0,)
 cursor.execute(sql, params)
+cursor.close()
+
+cursor = connection.cursor()
 
 sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
-params = (1, 'Sir', 'John', 'Smith', '1 Madison Ave', 'New York', 'NY 10010', '+1 212-586-7000')
+params = (1, 'Sir', 'John', 'Smith', '1 Madison Ave', 'New York',
+          'NY 10010', '+1 212-586-7001')
 cursor.execute(sql, params)
+rows_inserted = cursor.rowcount
 
-print("rows inserted: " + str(cursor.rowcount))
+sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
+params = (2, 'Sir', 'William', 'Smith II', '1 Madison Ave', 'New York',
+          'NY 10010', '+1 212-586-7002')
+cursor.execute(sql, params)
+rows_inserted += cursor.rowcount
+
+sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
+params = (3, 'Sir', 'William', 'Smith III', '1 Madison Ave', 'New York',
+          'NY 10010', '+1 212-586-7003')
+cursor.execute(sql, params)
+rows_inserted += cursor.rowcount
+
+print("rows inserted: " + str(rows_inserted))
+
+
 
 sql = "select * from customer where customer_id = ?"
 params = (1,)
 cursor.execute(sql, params)
+row = cursor.fetchone()
+print (row)
 
 print()
 for desc in cursor.description:
     print(desc[0] + ", " + desc[1])
 
-print()
-row = cursor.fetchone()
-print (row)
-
 cursor.close()
-cursor = connection.cursor()
-
-sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
-params = (2, 'Sir', 'William', 'Smith II', '1 Madison Ave', 'New York', 'NY 10010', '+1 212-586-7002')
-cursor.execute(sql, params)
-
-sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
-params = (3, 'Sir', 'William', 'Smith III', '1 Madison Ave', 'New York', 'NY 10010', '+1 212-586-7003')
-cursor.execute(sql, params)
-
-cursor.close()
-cursor = connection.cursor()
-
-sql = "select * from customer where customer_id >= ? order by customer_id"
-params = (1,)
-cursor.execute(sql, params)
 
 print()
 
-rows  = cursor.fetchall()
 
-for row in rows:
-    print(row)
-print("rows: " + str(cursor.rowcount))
+with closing(connection.cursor()) as cursor:
+    sql = "select * from customer where customer_id >= ? order by customer_id"
+    params = (1,)
+    cursor.execute(sql, params)
 
-cursor.close()
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print(row)
+
+    print("rows: " + str(cursor.rowcount))
+
 cursor = connection.cursor()
 
 sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
@@ -152,6 +162,10 @@ row = cursor.fetchone()
 print (row)
 
 cursor.close()
+
+# Make sure connection is always closed in order to close and release
+# server connection into the pool:
+connection.close()
 
 
 

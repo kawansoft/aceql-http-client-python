@@ -36,7 +36,7 @@ class AceQLHttpApi(object):
     __stateless = False
     __timeout = 0
 
-    def __init__(self, server_url, database, username, password, proxies=None):
+    def __init__(self, server_url, database, username, password, proxies=None, auth=None):
 
         if server_url is None:
             raise TypeError("serverUrl is null!")
@@ -51,6 +51,7 @@ class AceQLHttpApi(object):
         self.__username = username
         self.__password = password
         self.__proxies = proxies
+        self.__auth = auth
 
         self.__http_status_code = requests.codes.ok
 
@@ -130,9 +131,9 @@ class AceQLHttpApi(object):
     def call_with_get_url(self, url):
 
         if AceQLHttpApi.__timeout == 0:
-            response = requests.get(url, self.__proxies)
+            response = requests.get(url, proxies=self.__proxies, auth=self.__auth)
         else:
-            response = requests.get(url, self.__proxies, timeout=AceQLHttpApi.__timeout)
+            response = requests.get(url, proxies=self.__proxies, auth=self.__auth, timeout=AceQLHttpApi.__timeout)
 
         self.__http_status_code = response.status_code
 
@@ -416,7 +417,7 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def execute_update(self, sql, is_prepared_statement, statementParameters):
+    def execute_update(self, sql, is_prepared_statement, statement_parameters):
 
         try:
 
@@ -440,25 +441,34 @@ class AceQLHttpApi(object):
             AceQLDebug.debug("url_withaction: " + url_withaction)
             AceQLDebug.debug("dict_params 1: " + str(dict_params))
 
-            if statementParameters is not None:
-                if not isinstance(statementParameters, dict):
-                    raise TypeError("statementParameters is not a dictionnary!")
+            if statement_parameters is not None:
+                if not isinstance(statement_parameters, dict):
+                    raise TypeError("statement_parameters is not a dictionnary!")
 
-                dict_params.update(statementParameters)
+                dict_params.update(statement_parameters)
 
             AceQLDebug.debug("dictParams 2: " + str(dict_params))
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
+            #print("Before update request")
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies)
+                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies,
+                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
                                          timeout=AceQLHttpApi.__timeout)
+
+            # if AceQLHttpApi.__timeout == 0:
+            #     response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+            # else:
+            #     response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
+            #                              timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
             result = response.text
 
+            #print("self.__http_status_code: " + str(self.__http_status_code ))
+            #print("result                 : " + str(result))
             AceQLDebug.debug("result: " + result)
 
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
@@ -539,9 +549,9 @@ class AceQLHttpApi(object):
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies)
+                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies,
+                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
                                          timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
@@ -599,9 +609,9 @@ class AceQLHttpApi(object):
             the_url = self._url + "/blob_download?blob_id=" + blob_id
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.get(the_url, proxies=self.__proxies)
+                response = requests.get(the_url, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.get(the_url, proxies=self.__proxies, timeout=AceQLHttpApi.__timeout)
+                response = requests.get(the_url, proxies=self.__proxies, auth=self.__auth, timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
 
@@ -684,9 +694,9 @@ class AceQLHttpApi(object):
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies)
+                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies,
+                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
                                          timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
@@ -734,15 +744,12 @@ class AceQLHttpApi(object):
         # fields={'field0': 'value', 'field1': 'value',
         #		'field2': ('filename', open('file.py', 'rb'), 'text/plain')}
 
-        the_fields = {}
+        the_fields = dict()
         the_fields["blob_id"] = blob_id
         the_fields["file"] = ("filename", fd, "application/octet-stream")
 
         e = encoder.MultipartEncoder(fields=the_fields)
-
         m = encoder.MultipartEncoderMonitor(e, self.my_callback)
 
         the_url = self._url + "blob_upload"
-
-        r = requests.post(the_url, data=m,
-                          headers={'Content-Type': m.content_type})
+        r = requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies, auth=self.__auth)

@@ -28,13 +28,15 @@ from aceql.progress_indicator import *
 from aceql.sql_null_type import *
 from aceql.cursor import *
 from aceql.error import *
+from aceql.proxy_auth import *
+from aceql.proxy_util import *
 
 from aceql.dbapi2 import *
 
-__all__ = ["Connection", "ProgressIndicator", "SqlNullType", "Cursor", "Error"]
+__all__ = ["Connection", "Cursor", "Error", "ProgressIndicator", "ProxyUtil", "ProxyAuth", "SqlNullType"]
 
 
-def connect(server_url, database, username, password, proxies=None):
+def connect(server_url, database, username, password, proxies=None, auth=None):
     """
     Creates a database connection to the remote AceQL HTTP server.
 
@@ -48,8 +50,10 @@ def connect(server_url, database, username, password, proxies=None):
         The authentication username.
     password : str
         the authentication password.
-    proxies : str
+    proxies : dict
         The proxy to use, can  be an authenticated proxy.
+    auth:   : ProxyAuth
+        aceql.ProxyAuth instance with proxy (username, password)
 
     Returns
     -------
@@ -58,5 +62,5 @@ def connect(server_url, database, username, password, proxies=None):
 
     """
 
-    the_connection = Connection(server_url, database, username, password, proxies=proxies)
+    the_connection = Connection(server_url, database, username, password, proxies=proxies, auth=auth)
     return the_connection

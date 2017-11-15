@@ -26,60 +26,60 @@ class AceQLHttpApiTest(object):
 
     def doIt(self):
         AceQLHttpApi.set_stateless(True)
-        isStateless = AceQLHttpApi.is_stateless()
-        print("isStateless: " + str(isStateless))
+        is_stateless = AceQLHttpApi.is_stateless()
+        print("isStateless: " + str(is_stateless))
 
         AceQLHttpApi.set_stateless(False)
-        isStateless = AceQLHttpApi.is_stateless()
-        print("isStateless: " + str(isStateless))
+        is_stateless = AceQLHttpApi.is_stateless()
+        print("isStateless: " + str(is_stateless))
 
-        aceQLHttpApi = AceQLHttpApi("http://localhost:9090/aceql", "kawansoft_example", "user1", "password1")
+        aceql_http_api = AceQLHttpApi("http://localhost:9090/aceql", "kawansoft_example", "user1", "password1")
         print("connect done!")
 
-        print("client version: " + aceQLHttpApi.get_client_version())
-        print("server version: " + aceQLHttpApi.get_server_version())
+        print("client version: " + aceql_http_api.get_client_version())
+        print("server version: " + aceql_http_api.get_server_version())
 
-        autoCommit = aceQLHttpApi.get_auto_commit()
-        print("autoCommit: " + str(autoCommit))
+        auto_commit = aceql_http_api.get_auto_commit()
+        print("auto_commit: " + str(auto_commit))
 
-        aceQLHttpApi.set_auto_commit(False)
-        autoCommit = aceQLHttpApi.get_auto_commit()
-        print("autoCommit: " + str(autoCommit))
+        aceql_http_api.set_auto_commit(False)
+        auto_commit = aceql_http_api.get_auto_commit()
+        print("auto_commit: " + str(auto_commit))
 
-        aceQLHttpApi.commit()
-        aceQLHttpApi.rollback()
-        aceQLHttpApi.set_auto_commit(True)
+        aceql_http_api.commit()
+        aceql_http_api.rollback()
+        aceql_http_api.set_auto_commit(True)
 
-        autoCommit = aceQLHttpApi.get_auto_commit()
-        print("autoCommit: " + str(autoCommit))
+        auto_commit = aceql_http_api.get_auto_commit()
+        print("auto_commit: " + str(auto_commit))
 
-        holdability = aceQLHttpApi.get_holdability()
+        holdability = aceql_http_api.get_holdability()
         print("holdability: " + holdability)
 
-        transactionIsolation = aceQLHttpApi.get_transaction_isolation()
-        print("transactionIsolation: " + transactionIsolation)
+        transaction_isolation = aceql_http_api.get_transaction_isolation()
+        print("transaction_isolation: " + transaction_isolation)
 
-        readOnly = aceQLHttpApi.is_read_only()
-        print("readOnly: " + str(readOnly))
+        read_only = aceql_http_api.is_read_only()
+        print("readOnly: " + str(read_only))
 
         print()
         sql = "update customer set fname = ? where customer_id = ?"
-        isPreparedStatement = True
+        is_prepared_statement = True
 
-        statementParameters = {}
-        statementParameters["param_type_1"] = "VARCHAR"
-        statementParameters["param_value_1"] = "Nicolas"
-        statementParameters["param_type_2"] = "INTEGER"
-        statementParameters["param_value_2"] = "1"
+        statement_parameters = {}
+        statement_parameters["param_type_1"] = "VARCHAR"
+        statement_parameters["param_value_1"] = "Nicolas"
+        statement_parameters["param_type_2"] = "INTEGER"
+        statement_parameters["param_value_2"] = "1"
 
-        result = aceQLHttpApi.execute_update(sql, isPreparedStatement, statementParameters)
+        result = aceql_http_api.execute_update(sql, is_prepared_statement, statement_parameters)
         print("result: " + str(result))
 
-        statusCode = aceQLHttpApi.get_http_status_code()
-        print("statusCode: " + str(statusCode))
+        status_code = aceql_http_api.get_http_status_code()
+        print("statusCode: " + str(status_code))
 
-        statusMessage = aceQLHttpApi.get_http_status_message()
-        print("statusMessage: " + str(statusMessage))
+        status_message = aceql_http_api.get_http_status_message()
+        print("status_message: " + str(status_message))
         print()
 
         print("UUID: " + FileUtil.get_unique_id())
@@ -87,12 +87,12 @@ class AceQLHttpApiTest(object):
         print("Tmp : " + FileUtil.get_kawansoft_temp_dir())
         print()
 
-        statementParameters2 = {}
-        statementParameters2["param_type_1"] = "INTEGER"
-        statementParameters2["param_value_1"] = "0"
+        statement_parameters2 = {}
+        statement_parameters2["param_type_1"] = "INTEGER"
+        statement_parameters2["param_value_1"] = "0"
         sql = "select * from customer where customer_id >= ? order by customer_id"
-        aceQLHttpApi.set_pretty_printing(True)
+        aceql_http_api.set_pretty_printing(True)
 
-        result = aceQLHttpApi.execute_query(sql, isPreparedStatement, statementParameters2)
+        result = aceql_http_api.execute_query(sql, is_prepared_statement, statement_parameters2)
         print("result: " + str(result))
         print()
