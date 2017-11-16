@@ -21,13 +21,13 @@ import winreg
 
 
 class ProxyUtil(object):
-    """ Proxy utilities """
+    """ Proxy utilities. """
 
     @staticmethod
-    def get_windows_proxy_proxy():
+    def get_windows__proxy():
         """ Returns the Windows proxy if set, else None """
         proxy = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
-                                "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings")
+                               "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings")
         server, type = winreg.QueryValueEx(proxy, "ProxyServer")
         enabled, type = winreg.QueryValueEx(proxy, "ProxyEnable")
         if enabled:

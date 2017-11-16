@@ -26,20 +26,16 @@ database = "kawansoft_example"
 username = "user1"
 password = "password1"
 
+# The Proxy to use:
 proxies = {
     "http": "http://localhost:8080",
+    "https": "http://localhost:8080",
 }
 
-with open ("I:\\neotunnel.txt", "rt") as fd:
-    content = fd.read()
+# The proxy authentication info
+auth = ProxyAuth("proxyUsername", "proxyPassword")
 
-lines = content.split()
-auth = ProxyAuth(lines[0].strip(), lines[1].strip())
-
-if ProxyUtil.get_windows_proxy_proxy() is not None:
-    connection = aceql.connect(host, database, username, password, proxies=proxies, auth=auth)
-else:
-    connection = aceql.connect(host, database, username, password)
+connection = aceql.connect(host, database, username, password, proxies=proxies, auth=auth)
 
 cursor = connection.cursor()
 try:

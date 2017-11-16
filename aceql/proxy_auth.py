@@ -21,10 +21,10 @@ from requests_toolbelt.auth.guess import GuessProxyAuth
 
 
 class ProxyAuth(GuessProxyAuth):
-    """Allows to set auth proxy username and password
+    """ Allows to set authenticated proxy username and password.
 
         Class inherits requests_toolbelt GuessProxyAuth and GuessAuth.
-        This allows to pass dans use directly parent instances if necessary.
+        This allows to pass and use directly parent instances if necessary.
     """
 
     def __init__(self,
