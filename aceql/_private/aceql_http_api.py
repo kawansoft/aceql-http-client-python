@@ -109,16 +109,11 @@ class AceQLHttpApi(object):
     set_stateless = staticmethod(set_stateless)
 
     # *
-    # * Sets the timeout.
+    # * Sets the timeout in seconds
     #
     def set_timeout(timeout):
         if timeout is None:
             raise TypeError("timeout is null!")
-
-        if isinstance(timeout, int):
-            __timeout = timeout
-        else:
-            raise Exception("timeout is not numeric!")
 
     set_timeout = staticmethod(set_timeout)
 

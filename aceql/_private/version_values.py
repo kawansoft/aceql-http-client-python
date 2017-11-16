@@ -90,6 +90,7 @@
 # 15/11/2017 19:55 NDP: Add class ProxyAuth for authenticated proxy usage
 # 15/11/2017 00:48 NDP: Add class ProxyUtil and Authenticated proxy tested on all operation
 # 16/11/2017 16:45 NDP: Clean ProxyUtil code
+# 17/11/2017 00:45 NDP: Connection.set_timeout() accepts now non integer values
 
 
 class VersionValues(object):

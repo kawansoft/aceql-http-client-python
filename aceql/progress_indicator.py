@@ -45,7 +45,7 @@ class ProgressIndicator(object):
     #
     # Public methods
     #
-
+    @property
     def get_percent(self):
         """ Allows to get transfer progress from 0 to 100 """
         return self.__percent

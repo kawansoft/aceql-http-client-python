@@ -26,16 +26,25 @@ database = "kawansoft_example"
 username = "user1"
 password = "password1"
 
-# The Proxy to use:
+# Define the proxies to use:
+
 proxies = {
-    "http": "http://localhost:8080",
-    "https": "http://localhost:8080",
+  'http': 'http://10.10.1.10:3128',
+  'https': 'http://10.10.1.10:1080',
 }
+
+# Create a Connection using a proxy:
+connection = aceql.connect(host, database,
+                           username, password, proxies=proxies)
+
 
 # The proxy authentication info
 auth = ProxyAuth("proxyUsername", "proxyPassword")
 
-connection = aceql.connect(host, database, username, password, proxies=proxies, auth=auth)
+# Create a Connection using an authenticated proxy
+connection = aceql.connect(host, database,
+                           username, password,
+                           proxies=proxies, auth=auth)
 
 cursor = connection.cursor()
 try:

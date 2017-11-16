@@ -89,10 +89,7 @@ class Connection(object):
         if timeout is None:
             raise TypeError("timeout is null!")
 
-        if isinstance(timeout, int):
-            AceQLHttpApi.set_timeout(timeout)
-        else:
-            raise Exception("timeout is not numeric!")
+        AceQLHttpApi.set_timeout(timeout)
 
     set_timeout = staticmethod(set_timeout)
 

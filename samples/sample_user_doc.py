@@ -21,6 +21,10 @@
 import aceql
 from aceql import *
 from contextlib import closing
+from datetime import datetime, time
+import os
+from os import sep
+from io import open
 
 # URL of the AceQL server, Remote SQL database name
 # & authentication info
@@ -33,6 +37,7 @@ password = "password1"
 
 print("aceql.apilevel: " + aceql.apilevel)
 
+Connection.set_timeout(0.1)
 connection = aceql.connect(host, database, username, password)
 cursor = connection.cursor()
 
@@ -145,6 +150,8 @@ cursor.execute(sql, params)
 sql = "select * from customer where customer_id = ? order by customer_id"
 params = (4,)
 cursor.execute(sql, params)
+row = cursor.fetchone()
+print (row)
 
 cursor.close()
 cursor = connection.cursor()
@@ -153,20 +160,74 @@ sql = "insert into customer_3 values (?, ?, ?, ?, ?, ?, ?, ?)"
 params = (4, 'Sir', 'William', 'Smith II', '1 Madison Ave', 'New York', (None, SqlNullType.INTEGER), '+1 212-586-7004')
 cursor.execute(sql, params)
 
+print()
 sql = "select * from customer_3 where customer_id = ? order by customer_id"
 params = (4,)
 cursor.execute(sql, params)
-
-print()
 row = cursor.fetchone()
 print (row)
 
 cursor.close()
 
+cursor = connection.cursor()
+print()
+sql = "delete from orderlog where item_id = ?"
+params = (1,)
+cursor.execute(sql, params)
+print (row)
+
+connection.set_auto_commit(False)
+
+with closing(connection.cursor()) as cursor:
+    filename = os.getcwd() + sep + "item_1_image.jpg"
+    file_length = os.stat(filename).st_size
+
+    fd = open(filename, "rb")
+    blob_tuple = (fd, file_length)
+
+    progress_indicator = ProgressIndicator()
+    connection.set_progress_indicator(progress_indicator)
+
+    sql = "insert into orderlog values ( ?, ?, ?, ?, ?, ?, ?, ?, ? )"
+
+    params = (1, 1, "Item 1 Description", 9999,
+              datetime.now() , datetime.now().date(),
+              blob_tuple, 1, 2)
+    cursor.execute(sql, params)
+
+connection.commit()
+cursor.close();
+
+with closing(connection.cursor()) as cursor:
+
+    sql = "select customer_id, item_id, jpeg_image from orderlog " \
+          "where customer_id = ? and item_id = ?"
+    params = (1, 1)
+    cursor.execute(sql, params)
+    row = cursor.fetchone()
+
+    # You can get BLOB length if you want to use a progress indicator
+    blob_length = cursor.get_blob_length(2)
+    print("blob length: " + str(blob_length))
+
+    # Get the stream to the remote BLOB
+    response = cursor.get_blob_stream(2)
+
+    # Download is streamed and writen into filename
+    filename = os.path.expanduser("~") + sep + "jpeg_image.jpg"
+    with open(filename, 'wb') as fd:
+        for chunk in response.iter_content(chunk_size=2048):
+            fd.write(chunk)
+
+    stat_info = os.stat(filename)
+    print("file length: " + str(stat_info.st_size))
+
+connection.commit()
+
+cursor.close();
 # Make sure connection is always closed in order to close and release
 # server connection into the pool:
 connection.close()
-
 
 
 
