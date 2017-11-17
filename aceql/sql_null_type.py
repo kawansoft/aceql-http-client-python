@@ -29,16 +29,17 @@ class SqlNullType(object):
     SMALLINT = 5
     INTEGER = 4
     BIGINT = -5
-    FLOAT = 6
-    REAL = 7
-    DOUBLE = 8
     NUMERIC = 2
-    DECIMAL = 3
+    REAL = 7
     CHAR = 1
     VARCHAR = 12
     DATE = 91
     TIME = 92
     TIMESTAMP = 93
     BLOB = 2004
-    CLOB = 2005
     BOOLEAN = 16
+
+    CLOB = 2005
+    # FLOAT = 6
+    # DOUBLE = 8
+    # DECIMAL = 3

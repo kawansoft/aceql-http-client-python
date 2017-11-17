@@ -85,6 +85,36 @@ The main server side JDBC data types for columns are supported:
 
 Note that the AceQL module does not allow you to specify data types to use; data types are implicitly chosen by the module.
 
+Parameter values are automatically converted to their SQL equivalent. The following Python types can thus be sent to remote server without any problem:
+
+| Python type / class                      | SQL type                                 |
+| ---------------------------------------- | ---------------------------------------- |
+| Tuple  (None, SqlNullType.&lt;SQL_TYPE&gt;) | NULL                                     |
+| str                                      | CHAR, VARCHAR                            |
+| int                                      | INTEGER, or BIGINT/NUMERIC,  <br />depending on size |
+| bool                                     | BIT, BOOL                                |
+| float                                    | REAL                                     |
+| date                                     | DATE                                     |
+| datetime                                 | TIMESTAMP                                |
+| time                                     | TIME                                     |
+| File Object                              | BLOB                                     |
+
+NULL and BLOB types are explained in Advanced Usage.
+
+This is how SQL types are converted to Python types by default:
+
+| SQL type         | Python type / class                |
+| ---------------- | ---------------------------------- |
+| NULL             | None                               |
+| CHAR, VARCHAR    | str                                |
+| TINYINT, INTEGER | int                                |
+| BIGINT, NUMERIC  | Python 2: long <br />Python 3: int |
+| BOOL, BIT        | bool                               |
+| DATE             | date                               |
+| TIMESTAMP        | datetime                           |
+| TIME             | time                               |
+| BLOB             | Response stream                    |
+
 ## State Management
 
 AceQL supports two state management modes:

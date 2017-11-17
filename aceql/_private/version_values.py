@@ -92,6 +92,8 @@
 # 16/11/2017 16:45 NDP: Clean ProxyUtil code
 # 17/11/2017 00:45 NDP: Connection.set_timeout() accepts now non integer values
 # 17/11/2017 10:38 NDP: New Readme.md
+# 17/11/2017 11:20 NDP: Update Readme.md with SQL types
+# 17/11/2017 14:26 NDP: SqlNullType: remove unused types
 
 
 class VersionValues(object):

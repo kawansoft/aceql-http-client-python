@@ -21,6 +21,7 @@
 from io import open
 from aceql._private.datetime_util import *
 from aceql._private.file_util import *
+from aceql.sql_null_type import *
 
 
 class CursorUtil(object):
@@ -110,6 +111,9 @@ class CursorUtil(object):
 
         if CursorUtil.get_class_name(x) == "tuple":
             if x[0] is None:
+                # HACK for BOOL that must be converted to BIT
+                if x[1] == SqlNullType.BLOB:
+                    x[1] = SqlNullType.BIT
                 sql_type = "TYPE_NULL" + str(x[1])
             elif CursorUtil.get_class_name(x[0]) == "_io.BufferedReader":
                 sql_type = "BLOB"
