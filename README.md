@@ -367,7 +367,7 @@ print (row)
 Execution will return:
 
 ```
-(4, 'Sir ', 'William', 'Smith II', '1 Madison Ave', 'New York', 'NY 10010  ', None)
+(4, 'Sir ', 'William', 'Smith IV', '1 Madison Ave', 'New York', 'NY 10010  ', None)
 ```
 
 In this AceQL module version: there is no difference for string columns between a real NULL in the database and the ''NULL" string.
