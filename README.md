@@ -79,7 +79,7 @@ All data reading commands are executed locally on the client side with forward-o
 
 ## Datatypes
 
-The main serverside JDBC data types for columns are supported:
+The main server side JDBC data types for columns are supported:
 
 `Boolean`, `Blob/Clob`, `Integer`, `Short`, `Double`,  `Float`, `BigDecimal`, `Long`, `String`, `Date`, `Time`, and `Timestamp`.
 
@@ -94,7 +94,7 @@ AceQL supports two state management modes:
 
  The Stateful Mode is the default when creating a session.
 
- State Management isdescribed in detail in:
+ State Management is described in detail in:
 
 [AceQL HTTP Server Installation and Configuration Guide](http://www.aceql.com/rest/soft/1.0/aceql-http1.0-user-guide-server.pdf).
 
