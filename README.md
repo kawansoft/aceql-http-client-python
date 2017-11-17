@@ -1,4 +1,4 @@
-# AceQL Python SDK
+# AceQL HTTP - Python Client SDK
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
 - [Fundamentals](#fundamentals)
@@ -38,7 +38,7 @@ On the remote side, like the AceQL Server access to the SQL database using Java 
 
 ## Python Versions & DB-API 2.0
 
-The SDK supports Python 2.6–2.7 & 3.4–3.7.
+The module supports Python 2.6–2.7 & 3.4–3.7.
 
 It provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 
@@ -155,7 +155,7 @@ connection = aceql.connect(host, database, username, password)
 
 The schema of the database is here:  [kawansoft_example](https://www.aceql.com/rest/soft/1.0/src/kawansoft_example_other_databases.txt)
 
-Once you have a Connection, you can create a `Cursor` object and call its execute() method to perform SQL commands.
+Once you have a `Connection`, you can create a `Cursor` object and call its execute() method to perform SQL commands.
 
 Following sample shows how to insert 3 new customers using prepared statements:
 
