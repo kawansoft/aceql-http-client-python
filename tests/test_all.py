@@ -61,6 +61,7 @@ class TestAll(unittest.TestCase):
 
         host = localhost
 
+        Connection.set_timeout(10)
         Connection.set_stateless(False)
         connection = aceql.connect(host, "kawansoft_example", "user1", "password1", proxies=proxies, auth=auth)
         connection.set_gzip_result(True)

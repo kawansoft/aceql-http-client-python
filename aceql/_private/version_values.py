@@ -94,6 +94,7 @@
 # 17/11/2017 10:38 NDP: New Readme.md
 # 17/11/2017 11:20 NDP: Update Readme.md with SQL types
 # 17/11/2017 14:26 NDP: SqlNullType: remove unused types
+# 17/11/2017 21:32 NDP: Timeout were not set. This has been fixed.
 
 
 class VersionValues(object):

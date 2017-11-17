@@ -138,7 +138,7 @@ Note that transactions and Connection modifiers calls are not allowed in Statele
 
 ## Quickstart
 
-To use the module, just create a Connection object that represents the database:
+To use the module, just create a `Connection` object that represents the database:
 
 ```python
 import aceql
@@ -155,13 +155,13 @@ connection = aceql.connect(host, database, username, password)
 
 The schema of the database is here:  [kawansoft_example](https://www.aceql.com/rest/soft/1.0/src/kawansoft_example_other_databases.txt)
 
-Once you have a `Connection`, you can create a `Cursor` object and call its execute() method to perform SQL commands.
+Once you have a `Connection`, you can create a `Cursor` object and call its `execute()` method to perform SQL commands.
 
 Following sample shows how to insert 3 new customers using prepared statements:
 
 ```python
 sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
-params = (1, 'Sir', 'John', 'Smith', '1 Madison Ave', 'New York',
+params = (1, 'Sir', 'John', 'Smith I', '1 Madison Ave', 'New York',
           'NY 10010', '+1 212-586-7001')
 cursor.execute(sql, params)
 rows_inserted = cursor.rowcount
@@ -201,7 +201,7 @@ print (row)
 
 which returns:
 
-```
+```bash
 (1, 'Sir ', 'John', 'Smith', '1 Madison Ave', 'New York', 'NY 10010  ', '+1 212-586-7000')
 ```
 
@@ -250,7 +250,7 @@ with closing(connection.cursor()) as cursor:
 
 Which returns:
 
-```python
+```bash
 (1, 'Sir ', 'John', 'Smith', '1 Madison Ave', 'New York', 'NY 10010  ', '+1 212-586-7001')
 (2, 'Sir ', 'William', 'Smith II', '1 Madison Ave', 'New York', 'NY 10010  ', '+1 212-586-7002')
 (3, 'Sir ', 'William', 'Smith III', '1 Madison Ave', 'New York', 'NY 10010  ', '+1 212-586-7003')
@@ -285,11 +285,11 @@ The error type allows you to get the type of error, and where the error occurred
 
 | Error Type  Value | Description                              |
 | :---------------: | :--------------------------------------- |
-|         0         | The error occurred locally on the client side.   See HttpStatusCode property for more info.  Typical cases: no Internet connection, proxy  authentication required. |
-|         1         | The error is due to a JDBC Exception.  It was raised by the remote JDBC Driver and is rerouted  by AceQL as is.  The JDBC error message is accessible via Reason property.  Typical case: an error in the SQL statement.  <br />Examples: wrong table or column name. |
-|         2         | The error was raised by the AceQL Server.  This means that the AceQL Server expected a value or  parameter that was not sent by the client side.  Typical cases: misspelling in URL parameter, missing  required request parameters,  JDBC  Connection expiration, etc.  The detailed error message is accessible via Reason property.  See below for most common AceQL Server error  messages. |
-|         3         | The AceQL Server forbade the execution of the SQL  statement for a security reason.  For security reasons, Reason property gives access to voluntarily vague  details. |
-|         4         | The AceQL Server is on failure and raised an  unexpected Java Exception.  The stack track is included and accessible via RemoteStackTrace property. |
+|         0         | The error occurred locally on the client side.   See `http_status_code` property for more info.  Typical cases: no Internet connection, proxy  authentication required. |
+|         1         | The error is due to a JDBC Exception.  It was raised by the remote JDBC Driver and is rerouted  by AceQL as is.  The JDBC error message is accessible via `reason` property.  Typical case: an error in the SQL statement.  <br />Examples: wrong table or column name. |
+|         2         | The error was raised by the AceQL Server.  This means that the AceQL Server expected a value or  parameter that was not sent by the client side.  Typical cases: misspelling in URL parameter, missing  required request parameters,  JDBC  Connection expiration, etc.  The detailed error message is accessible via `reason` property.  See below for most common AceQL Server error  messages. |
+|         3         | The AceQL Server forbade the execution of the SQL  statement for a security reason.  For security reasons, `reason` property gives access to voluntarily vague  details. |
+|         4         | The AceQL Server is on failure and raised an  unexpected Java Exception.  The stack track is included and accessible via `remote_stack_trace` property. |
 
 ###  Most common AceQL server messages
 
@@ -312,7 +312,7 @@ The error type allows you to get the type of error, and where the error occurred
 
 ### HTTP Status Codes
 
-The Http Status Code is accessible with the `Error.http_status_code` property.
+The HTTP Status Code is accessible with the `Error.http_status_code` property.
 The HTTP Status Code is 200 (OK) on successful completion calls.
 
 When an error occurs:
@@ -338,7 +338,12 @@ When an error occurs:
 
 `NULL` values are handled in a specific way, because the remote server must know the type of the `NULL` value.
 
-We create a tuple with `None` and a `SqlNullType` constant value to pass the type of the `NULL` value. This 2 elements tuple is then inserted in the tuple of the prepared statement parameters:
+To create a `NULL` value parameter, create a tuple of 2 elements:
+
+- First value is `None` .
+- Second value is a one of the`SqlNullType` constants that defines the type of the parameter.
+
+This 2 elements tuple is then inserted in the tuple of the prepared statement parameters:
 
 ```python
 sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
@@ -365,13 +370,13 @@ Execution will return:
 (4, 'Sir ', 'William', 'Smith II', '1 Madison Ave', 'New York', 'NY 10010  ', None)
 ```
 
-In this version for string columns, there is no difference between a real NULL in the database and the ''NULL" string.
+In this AceQL module version: there is no difference for string columns between a real NULL in the database and the ''NULL" string.
 
 ### Transactions
 
-Transactions are supported by the module. Because the remote server executes JDBC code, client code must follow the requirement to set the auto commit mode to false prior executing a transaction.
+Transactions are supported by the module. Because the remote server executes JDBC code, client code must follow the JDBC requirement to set the auto commit mode to false prior executing a transaction.
 
-This is done with `Cursor.set_auto_commit(True)`. It is good practice to always reset auto commit mode to false at end of your transactions. Not that auto commit mode state is undefined when a `Connection` is created with `aceql.connect()` call.
+This is done with `Cursor.set_auto_commit(False)`. It is good practice to always reset auto commit mode to true at end of your transactions. Not that it auto commit mode state is undefined when a `Connection` is created with `aceql.connect()` call.
 
 Transaction example:
 
@@ -412,7 +417,7 @@ finally:
 
 ### Proxies
 
-The AceQL module support proxies, using  the [proxy](http://docs.python-requests.org/en/master/user/advanced/#proxies) syntax of [Requests](http://docs.python-requests.org/en/master/). (The aceql module uses Requests for HTTP communications with the remote server):
+The AceQL module support proxies, using  the [proxy](http://docs.python-requests.org/en/master/user/advanced/#proxies) syntax of [Requests](http://docs.python-requests.org/en/master/). The aceql module uses Requests for HTTP communications with the remote server:
 
 ```python
 import aceql
@@ -448,7 +453,7 @@ connection = aceql.connect(host, database,
                            proxies=proxies, auth=auth)
 ```
 
-(The AceQL module uses  [requests-toolbelt](https://pypi.python.org/pypi/requests-toolbelt)  for authenticated proxy management).
+The AceQL module uses  [requests-toolbelt](https://pypi.python.org/pypi/requests-toolbelt)  for authenticated proxy management.
 
 ### Timeouts
 
@@ -463,7 +468,7 @@ Methods are implemented using streaming techniques to keep low memory consumptio
 
 #### BLOB creation
 
-BLOB creation is supported by passing a File Object tuple as parameter in the tuple of the prepared statement parameters:
+BLOB creation is supported by passing a tuple with a File Object as parameter of a prepared statement:
 
 ```python
 sql = "insert into orderlog values ( ?, ?, ?, ?, ?, ?, ?, ?, ? )"
@@ -479,7 +484,7 @@ cursor.execute(sql, params)
 
 #### BLOB reading
 
-BLOB reading is supported through `Cursor.get_blob_stream(column_index)`:
+BLOB reading is supported through `Cursor.get_blob_stream(column_index`). The stream can then be read with a `for` loop that iterates on the `respsonse`, using syntax provided by [Requests](http://docs.python-requests.org/en/master/user/quickstart/#raw-response-content):
 
 ```python
 sql = "select customer_id, item_id, jpeg_image from orderlog " \
@@ -513,7 +518,7 @@ The `ProgressIndicator.Percent` property allows you to get the current percent o
 
 To activate the update mechanism:
 
-1/ Set the long BLOB length along the File Object in the tuple:
+1/ Set the long BLOB length along the File Object in the tuple of the BLOB prepared statement parameter:
 
 ```python
 file_length = os.stat(filename).st_size
@@ -549,6 +554,9 @@ with closing(connection.cursor()) as cursor:
     params = (1, 1, "Item 1 Description", 9999,
               datetime.now() , datetime.now().date(),
               blob_tuple, 1, 2)
+    
+    # cursor.execute() uploads BLOB by chunks and increments 
+    # ProgressIndicator.percent property
     cursor.execute(sql, params)
 ```
 
