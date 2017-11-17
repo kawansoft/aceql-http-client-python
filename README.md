@@ -1,7 +1,30 @@
 # AceQL Python SDK
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
-[TOC]
+- [Fundamentals](#fundamentals)
+  * [Python Versions & DB-API 2.0](#python-versions---db-api-20)
+  * [Installation](#installation)
+  * [Data transport](#data-transport)
+  * [Best practices for fast response time](#best-practices-for-fast-response-time)
+  * [Datatypes](#datatypes)
+  * [State Management](#state-management)
+- [Usage](#usage)
+  * [Quickstart](#quickstart)
+  * [Handling Exceptions](#handling-exceptions)
+    + [The error type](#the-error-type)
+    + [Most common AceQL server messages](#most-common-aceql-server-messages)
+    + [HTTP Status Codes](#http-status-codes)
+  * [Advanced Usage](#advanced-usage)
+    + [Managing NULL values](#managing-null-values)
+      - [Setting NULL values](#setting-null-values)
+      - [Reading NULL values](#reading-null-values)
+    + [Transactions](#transactions)
+    + [Proxies](#proxies)
+    + [Timeouts](#timeouts)
+    + [BLOB management](#blob-management)
+      - [BLOB creation](#blob-creation)
+      - [BLOB reading](#blob-reading)
+      - [Managing BLOB upload progress](#managing-blob-upload-progress)
 
 # Fundamentals
 
