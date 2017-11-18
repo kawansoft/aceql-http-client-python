@@ -96,6 +96,7 @@
 # 17/11/2017 14:26 NDP: SqlNullType: remove unused types
 # 17/11/2017 21:32 NDP: Timeout were not set. This has been fixed.
 # 17/11/2017 22:51 NDP: Version update to 1.0.1
+# 18/11/2017 17:58 NDP: Version comments
 
 class VersionValues(object):
     NAME = "AceQL HTTP SDK"
