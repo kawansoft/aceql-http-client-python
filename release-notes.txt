@@ -1,0 +1,33 @@
+
+                 AceQL Python Client SDK
+                     Version 1.0.1
+                    Release Notes
+
+
+Introduction
+------------
+
+The AceQL Python Client SDK allows to wrap the AceQL HTTP APIs and 
+eliminate the tedious works of handling communications errors and 
+parsing JSON results.
+
+Android and Python Desktop application developers can access 
+remote SQL databases and/or SQL databases in the cloud by simply 
+including standard JDBC calls in their code, just like 
+they would for a local database.
+
+The AceQL Python Client SDK is licensed under the Apache 2.0
+License.
+    
+
+AceQL Python Client SDK - Version 1.0.1 - 17-nov-2017
+-----------------------------------------------------
+
+What's New:
+- First public release.
+  
+
+
+
+
+
