@@ -312,8 +312,7 @@ The error type allows you to get the type of error, and where the error occurred
 
 ### HTTP Status Codes
 
-The HTTP Status Code is accessible with the `Error.http_status_code` property.
-The HTTP Status Code is 200 (OK) on successful completion calls.
+The HTTP Status Code is accessible with the `Error.http_status_code` property. The HTTP Status Code is 200 (OK) on successful completion calls.
 
 When an error occurs:
 
@@ -340,8 +339,8 @@ When an error occurs:
 
 To create a `NULL` value parameter, create a tuple of 2 elements:
 
-- First value is `None` .
-- Second value is a one of the`SqlNullType` constants that defines the type of the parameter.
+- First value is `None`.
+- Second value is a one of the `SqlNullType` constants that defines the type of the parameter.
 
 This 2 elements tuple is then inserted in the tuple of the prepared statement parameters:
 
@@ -457,14 +456,13 @@ The AceQL module uses  [requests-toolbelt](https://pypi.python.org/pypi/requests
 
 ### Timeouts
 
-Use static method`Connection.set_timeout(timeout)`to define a timeout in seconds
+Use static method `Connection.set_timeout(timeout)`to define a timeout in seconds
 
 If no timeout is specified explicitly, requests do not time out. (For more info: timeouts are implemented with [Requests Timeouts](http://docs.python-requests.org/en/master/user/quickstart/#timeouts).)
 
 ### BLOB management
 
-The AceQL module supports BLOB creation and reading.
-Methods are implemented using streaming techniques to keep low memory consumption. CLOBs are not supported in this version.
+The AceQL module supports BLOB creation and reading. Methods are implemented using streaming techniques to keep low memory consumption. CLOBs are not supported in this version.
 
 #### BLOB creation
 
