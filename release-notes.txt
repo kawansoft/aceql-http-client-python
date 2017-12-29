@@ -18,7 +18,16 @@ they would for a local database.
 
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
-    
+
+
+AceQL Python Client SDK - Version 1.0.1 - 17-nov-2017
+-----------------------------------------------------
+
+What's New:
+ - Authentication using AceQL /connect API is now done
+   with POST method - instead of GET - for better security and
+   to avoid password presence in URL.
+.
 
 AceQL Python Client SDK - Version 1.0.1 - 17-nov-2017
 -----------------------------------------------------

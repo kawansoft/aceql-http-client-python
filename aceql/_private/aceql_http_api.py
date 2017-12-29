@@ -62,12 +62,18 @@ class AceQLHttpApi(object):
         self.__total_length = 0
         self.__progress_indicator = None
 
+        # url = server_url + "/database/" + database + "/username/" \
+        #       + username + "/connect" + "?password=" \
+        #       + password + "&stateless=" + str(AceQLHttpApi.__stateless)
+
         url = server_url + "/database/" + database + "/username/" \
-              + username + "/connect" + "?password=" \
-              + password + "&stateless=" + str(AceQLHttpApi.__stateless)
+              + username + "/connect"
+
+        dict_params = {"password": password, "stateless": str(AceQLHttpApi.__stateless)}
 
         try:
-            result = self.call_with_get_url(url)
+            result = self.call_with_post_url(url, dict_params)
+
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
             if not result_analyzer.is_status_ok():
                 raise Error(result_analyzer.get_error_message(),
@@ -130,6 +136,18 @@ class AceQLHttpApi(object):
             response = requests.get(url, proxies=self.__proxies, auth=self.__auth)
         else:
             response = requests.get(url, proxies=self.__proxies, auth=self.__auth, timeout=AceQLHttpApi.__timeout)
+
+        self.__http_status_code = response.status_code
+
+        return response.text
+
+    def call_with_post_url(self, url, dict_params):
+
+        if AceQLHttpApi.__timeout == 0:
+            response = requests.post(url, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+        else:
+            response = requests.post(url, data=dict_params, proxies=self.__proxies, auth=self.__auth,
+                                     timeout=AceQLHttpApi.__timeout)
 
         self.__http_status_code = response.status_code
 
