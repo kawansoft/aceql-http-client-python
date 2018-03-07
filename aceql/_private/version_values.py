@@ -17,7 +17,8 @@
 # limitations under the License. 
 ##
 
+
 class VersionValues(object):
     NAME = "AceQL HTTP SDK"
-    VERSION = "v1.0.2"
-    DATE = "29-dec-2017"
+    VERSION = "v2.0"
+    DATE = "07-mar-2018"

@@ -26,6 +26,7 @@ from aceql._private.result_set_info import *
 from aceql._private.row_counter import *
 from aceql._private.stream_result_analyzer import *
 from aceql._private.version_values import *
+from aceql._private.user_login_store import *
 
 
 class AceQLHttpApi(object):
@@ -39,7 +40,7 @@ class AceQLHttpApi(object):
     def __init__(self, server_url, database, username, password, proxies=None, auth=None):
 
         if server_url is None:
-            raise TypeError("serverUrl is null!")
+            raise TypeError("server_url is null!")
         if database is None:
             raise TypeError("database is null!")
         if username is None:
@@ -47,6 +48,7 @@ class AceQLHttpApi(object):
         if password is None:
             raise TypeError("password is null!")
 
+        self.__server_url = server_url
         self.__database = database
         self.__username = username
         self.__password = password
@@ -62,26 +64,45 @@ class AceQLHttpApi(object):
         self.__total_length = 0
         self.__progress_indicator = None
 
-        # url = server_url + "/database/" + database + "/username/" \
+        # url = c + "/database/" + database + "/username/" \
         #       + username + "/connect" + "?password=" \
         #       + password + "&stateless=" + str(AceQLHttpApi.__stateless)
 
-        url = server_url + "/database/" + database + "/username/" \
-              + username + "/connect"
-
-        dict_params = {"password": password, "stateless": str(AceQLHttpApi.__stateless)}
+        user_login_store = UserLoginStore(server_url, username, database)
 
         try:
-            result = self.call_with_post_url(url, dict_params)
+            if user_login_store.is_already_logged():
+                session_id = user_login_store.get_session_id()
+                the_url = server_url + "/session/" + session_id + "/get_connection";
 
-            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
+                result = self.call_with_get_url(the_url)
 
-            session_id = result_analyzer.get_value("session_id")
-            self._url = server_url + "/session/" + session_id + "/"
+                result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+                if not result_analyzer.is_status_ok():
+                    raise Error(result_analyzer.get_error_message(),
+                                result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
+                connection_id = result_analyzer.get_value("connection_id");
+                self._url = server_url + "/session/" + session_id + "/connection/" + connection_id + "/";
+
+            else:
+                url = server_url + "/database/" + database + "/username/" \
+                      + username + "/login"
+
+                dict_params = {"password": password, "stateless": str(AceQLHttpApi.__stateless)}
+
+                result = self.call_with_post_url(url, dict_params)
+
+                result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+                if not result_analyzer.is_status_ok():
+                    raise Error(result_analyzer.get_error_message(),
+                                result_analyzer.get_error_type(), None, None, self.__http_status_code)
+
+                session_id = result_analyzer.get_value("session_id")
+                connection_id = result_analyzer.get_value("connection_id");
+                self._url = server_url + "/session/" + session_id + "/" + connection_id + "/" + connection_id + "/"
+
+                user_login_store.set_session_id(session_id);
         except Exception as e:
             if type(e) == Error:
                 raise
@@ -307,13 +328,24 @@ class AceQLHttpApi(object):
         return VersionValues.NAME + " - " + VersionValues.VERSION + " - " + VersionValues.DATE
 
     # *
-    # * Calls /disconnect API
+    # * Calls /close API
     # *
     # * @
     # * if any Exception occurs
     #
-    def disconnect(self):
-        self.call_api_no_result("disconnect", None)
+    def close(self):
+        self.call_api_no_result("close", None)
+
+    # *
+    # * Calls /logout API
+    # *
+    # * @
+    # * if any Exception occurs
+    #
+    def logout(self):
+        user_login_store = UserLoginStore(self.__server_url, self.__username, self.__database)
+        user_login_store.remove()
+        self.call_api_no_result("logout", None)
 
     # *
     # * Calls /get_transaction_isolation_level API

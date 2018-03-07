@@ -59,7 +59,7 @@ class TestAll(unittest.TestCase):
         server_host = "https://www.aceql.com:9443/aceql"
         server_host_no_ssl = "http://www.aceql.com:9090/aceql"
 
-        host = localhost
+        host = server_host
 
         Connection.set_timeout(10)
         Connection.set_stateless(False)
@@ -282,9 +282,14 @@ class TestAll(unittest.TestCase):
                     fd.write(chunk)
 
         cursor.close()
-        print()
 
         connection.close()
+        connection2 = aceql.connect(host, "kawansoft_example", "user1", "password1", proxies=proxies, auth=auth)
+        print("connection2.get_auto_commit(): " + str(connection2.get_auto_commit()))
+        print()
+        connection2.logout()
+        print()
+
 
     @staticmethod
     def getProxyAuth():

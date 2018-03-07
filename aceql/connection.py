@@ -154,8 +154,12 @@ class Connection(object):
         return self.__aceQLHttpApi.get_client_version()
 
     def close(self):
-        """Closes the connection to the remote database and closes the HTTP session."""
-        self.__aceQLHttpApi.disconnect()
+        """Closes the connection to the remote database but keeps the HTTP session."""
+        self.__aceQLHttpApi.close()
+
+    def logout(self):
+        """Closes all the connection to the remote database and closes the HTTP session."""
+        self.__aceQLHttpApi.logout()
 
     def get_transaction_isolation(self):
         """Returns the current transaction isolation level."

@@ -1,4 +1,4 @@
-# AceQL HTTP 1.0 - Python Client SDK
+# AceQL HTTP 2.0 - Python Client SDK
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
 - [Fundamentals](#fundamentals)
@@ -126,7 +126,7 @@ AceQL supports two state management modes:
 
  State Management is described in detail in:
 
-[AceQL HTTP Server Installation and Configuration Guide](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-1.0-user-guide-server.md).
+[AceQL HTTP Server Installation and Configuration Guide](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-2.0-user-guide-server.md).
 
 You can set the session State with the static method:
 
@@ -153,7 +153,7 @@ password = "password1"
 connection = aceql.connect(host, database, username, password)
 ```
 
-The schema of the database is here:  [kawansoft_example](https://www.aceql.com/rest/soft/1.0/src/kawansoft_example_other_databases.txt)
+The schema of the database is here:  [kawansoft_example](https://www.aceql.com/rest/soft/2.0/src/kawansoft_example_other_databases.txt)
 
 Once you have a `Connection`, you can create a `Cursor` object and call its `execute()` method to perform SQL commands.
 

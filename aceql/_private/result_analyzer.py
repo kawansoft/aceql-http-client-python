@@ -115,6 +115,8 @@ class ResultAnalyzer(object):
 
             if name == "session_id":
                 value = j[name]
+            elif name == "connection_id":
+                value = j[name]
             elif name == "length":
                 value = j[name]
             elif name == "result":
