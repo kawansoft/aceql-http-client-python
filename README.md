@@ -3,7 +3,7 @@
 
 - [Fundamentals](#fundamentals)
   * [Python Versions & DB-API 2.0](#python-versions---db-api-20)
-  * [AceQL Server Side compatiblity](#aceql-server-side-compatiblity)
+  * [AceQL Server side compatiblity](#aceql-server-side-compatiblity)
   * [Installation](#installation)
   * [Data transport](#data-transport)
   * [Best practices for fast response time](#best-practices-for-fast-response-time)
@@ -43,7 +43,7 @@ The module supports Python 2.6–2.7 & 3.4–3.7.
 
 It provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 
-## AceQL Server Side compatiblity
+## AceQL Server side compatiblity
 
 This 2.0 SDK version is compatible with AceQL HTTP server side v2.0. It is not compatible with AceQL HTTP server side v1.0.
 
