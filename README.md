@@ -3,6 +3,7 @@
 
 - [Fundamentals](#fundamentals)
   * [Python Versions & DB-API 2.0](#python-versions---db-api-20)
+  * [AceQL Server Side compatiblity](#aceql-server-side-compatiblity)
   * [Installation](#installation)
   * [Data transport](#data-transport)
   * [Best practices for fast response time](#best-practices-for-fast-response-time)
@@ -30,9 +31,9 @@
 
 This document describes how to use the AceQL SDK / module and gives some details about how it operates with the AceQL Server side.
 
-The AceQL SDK / module allows you to wrap the [AceQL HTTP APIs](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-1.0-user-guide-api.md)  to access remote SQL databases and/or SQL databases in the cloud by simply including standard Python SQL calls in your code, just like you would do for any local database. There is zero learning curve and usage is straightforward.
+The AceQL SDK / module allows you to wrap the [AceQL HTTP APIs](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-2.0-user-guide-api.md)  to access remote SQL databases and/or SQL databases in the cloud by simply including standard Python SQL calls in your code, just like you would do for any local database. There is zero learning curve and usage is straightforward.
 
-The AceQL Server operation is described in [AceQL HTTP Server Installation and Configuration Guide](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-1.0-user-guide-server.md), whose content is sometimes referred to in his User Guide.
+The AceQL Server operation is described in [AceQL HTTP Server Installation and Configuration Guide](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-2.0-user-guide-server.md), whose content is sometimes referred to in his User Guide.
 
 On the remote side, like the AceQL Server access to the SQL database using Java JDBC, we will sometimes use the JDBC terminology (ResultSet, etc.) in this document. Nevertheless, knowledge of Java or JDBC is *not* a requirement.
 
@@ -41,6 +42,10 @@ On the remote side, like the AceQL Server access to the SQL database using Java 
 The module supports Python 2.6–2.7 & 3.4–3.7.
 
 It provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
+
+## AceQL Server Side compatiblity
+
+This 2.0 SDK version is compatible with AceQL HTTP server side v2.0. It is not compatible with AceQL HTTP server side v1.0.
 
 ## Installation
 
