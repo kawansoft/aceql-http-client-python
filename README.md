@@ -8,7 +8,6 @@
   * [Data transport](#data-transport)
   * [Best practices for fast response time](#best-practices-for-fast-response-time)
   * [Datatypes](#datatypes)
-  * [State Management](#state-management)
 - [Usage](#usage)
   * [Quickstart](#quickstart)
   * [Handling Exceptions](#handling-exceptions)
@@ -119,25 +118,6 @@ This is how SQL types are converted to Python types by default:
 | TIMESTAMP        | datetime                           |
 | TIME             | time                               |
 | BLOB             | Response stream                    |
-
-## State Management
-
-AceQL supports two state management modes:
-
-- The Stateful Mode
-- The Stateless Mode
-
- The Stateful Mode is the default when creating a session.
-
- State Management is described in detail in:
-
-[AceQL HTTP Server Installation and Configuration Guide](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-2.0-user-guide-server.md).
-
-You can set the session State with the static method:
-
-`Connection.set_stateless(bool value)`
-
-Note that transactions and Connection modifiers calls are not allowed in Stateless mode and will raise an Error exception.
 
 # Usage
 
@@ -298,22 +278,21 @@ The error type allows you to get the type of error, and where the error occurred
 
 ###  Most common AceQL server messages
 
-| AceQL Sever  Error Messages   (Error.error_type  = 2) |
-| ---------------------------------------- |
-| AceQL main  servlet not found in path    |
-| An error occurred  during Blob download  |
-| An error occurred  during Blob upload    |
+| AceQL Sever  Error Messages   (Error.error_type  = 2)        |
+| ------------------------------------------------------------ |
+| AceQL main  servlet not found in path                        |
+| An error occurred  during Blob download                      |
+| An error occurred  during Blob upload                        |
 | Blob directory  defined in DatabaseConfigurator.getBlobDirectory() does not exist |
-| Connection is  invalidated (probably expired) |
-| Database does not  exist                 |
-| Invalid blob_id.  Cannot be used to create a file |
-| Invalid blob_id.  No Blob corresponding to blob_id |
-| Invalid  session_id                      |
-| Invalid username  or password            |
-| No action found  in request              |
-| Operation not  allowed in stateless mode |
-| Unable to get a  Connection              |
-| Unknown SQL  action or not supported by software |
+| Connection is  invalidated (probably expired)                |
+| Database does not  exist                                     |
+| Invalid blob_id.  Cannot be used to create a file            |
+| Invalid blob_id.  No Blob corresponding to blob_id           |
+| Invalid  session_id                                          |
+| Invalid username  or password                                |
+| No action found  in request                                  |
+| Unable to get a  Connection                                  |
+| Unknown SQL  action or not supported by software             |
 
 ### HTTP Status Codes
 
