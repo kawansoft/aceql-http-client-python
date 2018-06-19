@@ -1,4 +1,4 @@
-# AceQL HTTP 2.0 - Python Client SDK
+# AceQL HTTP - Python Client SDK v2.0
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
 - [Fundamentals](#fundamentals)
