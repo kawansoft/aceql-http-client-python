@@ -1,4 +1,7 @@
-# AceQL HTTP - Python Client SDK v2.0
+# AceQL HTTP 
+
+## Python Client SDK v2.0 - March 7, 2018
+
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
 - [Fundamentals](#fundamentals)
@@ -49,7 +52,7 @@ It provides a SQL interface compliant with the DB-API 2.0 specification describe
 
 ## AceQL Server side compatiblity
 
-This 2.0 SDK version is compatible with AceQL HTTP server side v2.0, v3.0 and v3.1. It is not compatible with AceQL HTTP server side v1.0.
+This 2.0 SDK version is compatible with AceQL HTTP server side v2.0. It is not compatible with AceQL HTTP server side v1.0.
 
 ## Installation
 
@@ -548,3 +551,35 @@ with closing(connection.cursor()) as cursor:
 ```
 
 ------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
