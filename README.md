@@ -46,13 +46,15 @@ The SDK is licensed with the liberal [Apache 2.0](https://www.apache.org/license
 
 ## Python Versions & DB-API 2.0
 
-The module supports Python 2.6–2.7 & 3.4–3.7.
+The module supports Python 3.4–3.8.
 
-It provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
+*As of January 2020, Python 2 is no longer officially supported.*
+
+The module provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 
 ## AceQL Server side compatiblity
 
-This 2.0.1 SDK version is compatible with AceQL HTTP server side v2.0+. It is not compatible with AceQL HTTP server side v1.0.
+This 2.0.2 SDK version is compatible with AceQL HTTP server side v2.0+. It is not compatible with AceQL HTTP server side v1.0.
 
 ## Installation
 
