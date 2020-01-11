@@ -1,6 +1,6 @@
 # AceQL HTTP 
 
-## Python Client SDK v2.0.1 - January 11, 2020
+## Python Client SDK v2.0.2 - January 11, 2020
 
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 

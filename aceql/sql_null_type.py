@@ -36,9 +36,9 @@ class SqlNullType(object):
     DATE = 91
     TIME = 92
     TIMESTAMP = 93
-    BLOB = 2004
     BOOLEAN = 16
 
+    BLOB = 2004
     CLOB = 2005
     # FLOAT = 6
     # DOUBLE = 8

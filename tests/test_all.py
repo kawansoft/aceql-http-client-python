@@ -202,6 +202,11 @@ class TestAll(unittest.TestCase):
 
                 sql = "insert into orderlog values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
+                do_use_blob = True
+                if not do_use_blob:
+                    blob_tuple = (None, SqlNullType.BLOB)
+                    print("NULL BLOB INSERT")
+
                 params = (cpt, cpt, u"intitulé_" + str(cpt), cpt * 1000,
                           the_date, datetime.now(), blob_tuple, 1, cpt * 1000)
                 print("insert: " + str(params))

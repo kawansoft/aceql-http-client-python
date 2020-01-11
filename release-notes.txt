@@ -1,6 +1,6 @@
 
                  AceQL Python Client SDK
-                     Version 2.0.0
+                     Version 2.0.2
                      Release Notes
 
 
@@ -19,14 +19,16 @@ they would for a local database.
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
-AceQL Python Client SDK - Version 2.0.1 - 11-Jan-2020
+AceQL Python Client SDK - Version 2.0.2 - 11-Jan-2020
 -----------------------------------------------------
 
 What's New:
  - The ProxyUtil class has been removed because
    it was Windows specific.
  - The setup.py requests requirement has been
-   changed to 'requests>=2.18.4,<3.0.0',
+   changed to 'requests>=2.18.4,<3.0.0
+ - Bug Fix: Truing to set a null value for a BLOB
+   would raise an Exception. This has been fixed.
 
 
 AceQL Python Client SDK - Version 2.0 - 07-mar-2018
