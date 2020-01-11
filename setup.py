@@ -7,7 +7,7 @@ def readme():
 
 setup(
     name='aceql',
-    version='2.0.0',
+    version='2.0.1',
     packages=['aceql', 'aceql._private', 'tests'],
     url='https://github.com/kawansoft/aceql-py',
     license='Apache 2.0',
@@ -27,7 +27,7 @@ setup(
 
     keywords='SQL HTTP',
     install_requires=[
-        'requests>=2.18.4',
+        'requests>=2.18.4,<3.0.0',
         'requests_toolbelt>=0.8.0',
         'pytz>=2017.3'
     ],

@@ -38,16 +38,11 @@ class TestAll(unittest.TestCase):
         print("aceql.apilevel    : " + aceql.apilevel)
         print("aceql.threadsafety: " + str(aceql.threadsafety))
         print("aceql.paramstyle  : " + aceql.paramstyle)
-        print("Proxy             : " + str(ProxyUtil.get_windows__proxy()))
-
-        if ProxyUtil.get_windows__proxy() is None:
-            use_proxy = False
-        else:
-            use_proxy = True
 
         proxies = None
         auth = None
 
+        use_proxy  = False
         if use_proxy:
             proxies = {
                 "http": "http://localhost:8080",
@@ -59,7 +54,7 @@ class TestAll(unittest.TestCase):
         server_host = "https://www.aceql.com:9443/aceql"
         server_host_no_ssl = "http://www.aceql.com:9090/aceql"
 
-        host = server_host
+        host = localhost
 
         Connection.set_timeout(10)
         Connection.set_stateless(False)

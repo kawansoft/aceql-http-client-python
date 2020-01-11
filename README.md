@@ -1,6 +1,6 @@
 # AceQL HTTP 
 
-## Python Client SDK v2.0 - March 7, 2018
+## Python Client SDK v2.0.1 - January 11, 2020
 
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
@@ -52,7 +52,7 @@ It provides a SQL interface compliant with the DB-API 2.0 specification describe
 
 ## AceQL Server side compatiblity
 
-This 2.0 SDK version is compatible with AceQL HTTP server side v2.0. It is not compatible with AceQL HTTP server side v1.0.
+This 2.0.1 SDK version is compatible with AceQL HTTP server side v2.0+. It is not compatible with AceQL HTTP server side v1.0.
 
 ## Installation
 
@@ -146,7 +146,7 @@ password = "password1"
 connection = aceql.connect(host, database, username, password)
 ```
 
-The schema of the database is here:  [kawansoft_example](https://www.aceql.com/rest/soft/2.0/src/kawansoft_example_other_databases.txt)
+The schema of the database is here:  [kawansoft_example](https://www.aceql.com/rest/soft/4.0/src/kawansoft_example_other_databases.txt)
 
 Once you have a `Connection`, you can create a `Cursor` object and call its `execute()` method to perform SQL commands.
 

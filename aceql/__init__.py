@@ -29,11 +29,10 @@ from aceql.sql_null_type import *
 from aceql.cursor import *
 from aceql.error import *
 from aceql.proxy_auth import *
-from aceql.proxy_util import *
 
 from aceql.dbapi2 import *
 
-__all__ = ["Connection", "Cursor", "Error", "ProgressIndicator", "ProxyUtil", "ProxyAuth", "SqlNullType"]
+__all__ = ["Connection", "Cursor", "Error", "ProgressIndicator", "ProxyAuth", "SqlNullType"]
 
 
 def connect(server_url, database, username, password, proxies=None, auth=None):
