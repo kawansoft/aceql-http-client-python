@@ -27,7 +27,7 @@ What's New:
    it was Windows specific.
  - The setup.py requests requirement has been
    changed to 'requests>=2.18.4,<3.0.0
- - Bug Fix: Truing to set a null value for a BLOB
+ - Bug Fix: trying to set a null value for a BLOB
    would raise an Exception. This has been fixed.
 
 
