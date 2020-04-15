@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License. 
 ##
-
+import marshmallow_dataclass
 import requests
 from requests_toolbelt.multipart import encoder
 
@@ -27,6 +27,7 @@ from aceql._private.row_counter import *
 from aceql._private.stream_result_analyzer import *
 from aceql._private.version_values import *
 from aceql._private.user_login_store import *
+from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData, HolderJdbcDatabaseMetaData
 
 
 class AceQLHttpApi(object):
@@ -831,3 +832,31 @@ class AceQLHttpApi(object):
 
         the_url = self._url + "blob_upload"
         r = requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies, auth=self.__auth)
+
+    def get_db_metadata(self):
+        try:
+            url_withaction = self._url + "metadata_query/get_db_metadata"
+            result = self.call_with_get_url(url_withaction)
+
+            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
+
+            __debug = True
+            # if __debug:
+            #     print(result)
+
+            holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(HolderJdbcDatabaseMetaData)
+            jdbc_database_meta_data_holder = holder_jdbc_database_meta_data_schema().loads(result)
+
+            #if __debug:
+            #    print(jdbc_database_meta_data_holder)
+
+            return jdbc_database_meta_data_holder;
+
+        except Exception as e:
+            if type(e) == Error:
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__http_status_code)

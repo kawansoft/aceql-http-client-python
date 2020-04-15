@@ -25,7 +25,8 @@ import unittest
 import sys
 
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
-
+import webbrowser
+import os
 
 class TestAll(unittest.TestCase):
     def test_A(self):
@@ -64,21 +65,30 @@ class TestAll(unittest.TestCase):
         print("aceql version: " + connection.get_client_version())
         print()
 
+        the_file = "c:\\test\\python_schema.html";
+        if os.path.exists(the_file):
+            os.remove(the_file)
+
         remote_database_meta_data = RemoteDatabaseMetaData(connection)
-        remote_database_meta_data.db_schema_download("c:\\test\\python_schema.html", file_format=None, table_name=None)
+        remote_database_meta_data.db_schema_download(the_file, "html",)
+        print("Done db_schema_download!")
 
-        print("Done!")
+        jdbc_database_meta_data = remote_database_meta_data.get_jdbc_database_meta_data()
+        print(jdbc_database_meta_data)
 
+        # f = open("C:\\test\\dump.txt", "r")
+        # jsonString = f.read()
+        # f.close()
+        # print()
+        # print(jsonString)
+        #
+        # jdbc_database_meta_data_schema = aceql.marshmallow_dataclass.class_schema(aceql.JdbcDatabaseMetaData)
+        # jdbc_database_meta_data = jdbc_database_meta_data_schema().loads(jsonString)
+        # print(jdbc_database_meta_data)
 
-    @staticmethod
-    def getProxyAuth():
-        """Get proxy auth info from a filename"""
-        with open("I:\\neotunnel.txt", "rt") as fd:
-            content = fd.read()
-        lines = content.split()
-        auth = ProxyAuth(lines[0].strip(), lines[1].strip())
-        return auth
+        print("Done get_jdbc_database_meta_data!")
 
+        #webbrowser.open('file://' + os.path.realpath(the_file))
 
 if __name__ == '__main__':
     unittest.main()

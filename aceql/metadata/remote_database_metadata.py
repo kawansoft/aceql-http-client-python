@@ -25,8 +25,20 @@ class RemoteDatabaseMetaData(object):
         self.__connection = connection
         self.__aceql_http_api = self.__connection.get_aceql_http_api
 
-    def db_schema_download(self, file, file_format, table_name):
-        """  Downloads the schema extract for a table name in the specified HTML or Text format."""
+    def db_schema_download(self, file, file_format = None, table_name= None):
+        """
+        Downloads the schema extract for a table name in the specified HTML or Text format.
+
+        Parameters
+        ----------
+        file : str
+            The filename to store the output schema in
+        file_format
+            the format of the output "html" or "text". Defaults to "html"
+        table_name
+            if specified, output will be done only for the table
+        """
+
         if file is None:
             raise TypeError("file is null!")
 
@@ -34,7 +46,7 @@ class RemoteDatabaseMetaData(object):
             file_format = "html"
 
         if file_format != "html" and file_format != "text":
-            raise TypeError("Invalid format value. Must be file or text. Is: " + file_format)
+            raise TypeError("Invalid format value. Must be \"file\" or \"text\". Is: " + file_format)
 
         response = self.__aceql_http_api.db_schema_download(file_format, table_name)
 
@@ -42,10 +54,11 @@ class RemoteDatabaseMetaData(object):
             for chunk in response.iter_content(chunk_size=2048):
                 fd.write(chunk)
 
-    def db_schema_download(self, file, file_format):
-        """  Downloads the schema in the specified HTML or Text format."""
-        self.db_schema_download(self, file, file_format, table_name = None)
-
-    def db_schema_download(self, file,):
-        """  Downloads the schema in HTML format."""
-        self.db_schema_download(self, file, file_format=None, table_name=None)
+    def get_jdbc_database_meta_data(self):
+        """
+        Returns the basic meta data values of the remote database, as sent by the the remote JDBC Driver of the remote database.
+        :return:
+        the basic meta data values sent by the the remote JDBC Driver of the remote database.
+        """
+        jdbc_database_meta_data_holder = self.__aceql_http_api.get_db_metadata()
+        return jdbc_database_meta_data_holder.jdbcDatabaseMetaData
