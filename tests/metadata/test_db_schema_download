@@ -23,11 +23,8 @@ from aceql import *
 
 import unittest
 import sys
-import os
-from os import sep
-from datetime import datetime, date
 
-from aceql.remote_database_metadata import RemoteDatabaseMetaData
+from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 
 
 class TestAll(unittest.TestCase):
