@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: aceql
+Version: 2.0.2
+Summary: Python 2 & 3 Client toolkit for easy access of remote SQL databases managed with AceQL HTTP.
+Home-page: https://github.com/kawansoft/aceql-py
+Author: KawanSoft
+Author-email: contact@kawansoft.com
+License: Apache 2.0
+Description: UNKNOWN
+Keywords: SQL HTTP
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Database
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks

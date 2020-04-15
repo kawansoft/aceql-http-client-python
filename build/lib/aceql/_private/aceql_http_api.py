@@ -669,38 +669,6 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def db_schema_download(self, file_format, table_name):
-        """ returns a schema stream as a Requests response """
-        try:
-
-            if file_format is None:
-                raise TypeError("format is null!")
-
-            the_url = self._url + "/metadata_query/db_schema_download"
-
-            dict_params = {}
-            dict_params["format"] = file_format
-
-            if table_name is not None:
-                table_name = table_name.lower()
-                dict_params["table_name"] = table_name
-
-            if AceQLHttpApi.__timeout == 0:
-                response = requests.post(the_url, data=dict_params, proxies=self.__proxies, auth=self.__auth)
-            else:
-                response = requests.post(the_url, data=dict_params, proxies=self.__proxies, auth=self.__auth,
-                                         timeout=AceQLHttpApi.__timeout)
-
-            self.__http_status_code = response.status_code
-
-            return response
-
-        except Exception as e:
-            if type(e) == Error:
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
-
     # def blob_download(self, blob_id, filename, total_length=0,
     # progress_holder=None):
     #	""" Allows to download a blob.  """
