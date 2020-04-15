@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+from aceql import HolderJdbcDatabaseMetaData
 
 
 class RemoteDatabaseMetaData(object):
@@ -60,5 +61,5 @@ class RemoteDatabaseMetaData(object):
         :return:
         the basic meta data values sent by the the remote JDBC Driver of the remote database.
         """
-        jdbc_database_meta_data_holder = self.__aceql_http_api.get_db_metadata()
+        jdbc_database_meta_data_holder : HolderJdbcDatabaseMetaData = self.__aceql_http_api.get_db_metadata()
         return jdbc_database_meta_data_holder.jdbcDatabaseMetaData

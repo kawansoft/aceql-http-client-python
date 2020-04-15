@@ -74,7 +74,7 @@ class TestAll(unittest.TestCase):
         print("Done db_schema_download!")
 
         jdbc_database_meta_data = remote_database_meta_data.get_jdbc_database_meta_data()
-        print(jdbc_database_meta_data)
+        print(jdbc_database_meta_data.__str__())
 
         # f = open("C:\\test\\dump.txt", "r")
         # jsonString = f.read()
