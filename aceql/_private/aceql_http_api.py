@@ -27,7 +27,8 @@ from aceql._private.row_counter import *
 from aceql._private.stream_result_analyzer import *
 from aceql._private.version_values import *
 from aceql._private.user_login_store import *
-from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData, HolderJdbcDatabaseMetaData
+from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
+from aceql.metadata.holder_jdbc_database_meta_data import HolderJdbcDatabaseMetaData
 
 
 class AceQLHttpApi(object):
