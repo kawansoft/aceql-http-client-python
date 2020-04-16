@@ -143,7 +143,8 @@ class JdbcDatabaseMetaData(object):
         """ The string representation."""
         return str(self.getURL) + ", " + str(self.isReadOnly) + ", " + str(
             self.allProceduresAreCallable) + ", " + str(
-            self.allTablesAreSelectable) + ", " + str(self.getUserName) + ", " + str(self.nullsAreSortedHigh) + ", " + str(
+            self.allTablesAreSelectable) + ", " + str(self.getUserName) + ", " + str(
+            self.nullsAreSortedHigh) + ", " + str(
             self.nullsAreSortedLow) + ", " + str(self.nullsAreSortedAtStart) + ", " + str(
             self.nullsAreSortedAtEnd) + ", " + str(self.getDatabaseProductName) + ", " + str(
             self.getDatabaseProductVersion) + ", " + str(self.getDriverName) + ", " + str(
@@ -154,7 +155,8 @@ class JdbcDatabaseMetaData(object):
             self.storesMixedCaseIdentifiers) + ", " + str(self.supportsMixedCaseQuotedIdentifiers) + ", " + str(
             self.storesUpperCaseQuotedIdentifiers) + ", " + str(self.storesLowerCaseQuotedIdentifiers) + ", " + str(
             self.storesMixedCaseQuotedIdentifiers) + ", " + str(self.getIdentifierQuoteString) + ", " + str(
-            self.getSQLKeywords) + ", " + str(self.getNumericFunctions) + ", " + str(self.getStringFunctions) + ", " + str(
+            self.getSQLKeywords) + ", " + str(self.getNumericFunctions) + ", " + str(
+            self.getStringFunctions) + ", " + str(
             self.getSystemFunctions) + ", " + str(self.getTimeDateFunctions) + ", " + str(
             self.getSearchStringEscape) + ", " + str(self.getExtraNameCharacters) + ", " + str(
             self.supportsAlterTableWithAddColumn) + ", " + str(self.supportsAlterTableWithDropColumn) + ", " + str(
@@ -174,9 +176,11 @@ class JdbcDatabaseMetaData(object):
             self.isCatalogAtStart) + ", " + str(self.getCatalogSeparator) + ", " + str(
             self.supportsSchemasInDataManipulation) + ", " + str(self.supportsSchemasInProcedureCalls) + ", " + str(
             self.supportsSchemasInTableDefinitions) + ", " + str(self.supportsSchemasInIndexDefinitions) + ", " + str(
-            self.supportsSchemasInPrivilegeDefinitions) + ", " + str(self.supportsCatalogsInDataManipulation) + ", " + str(
+            self.supportsSchemasInPrivilegeDefinitions) + ", " + str(
+            self.supportsCatalogsInDataManipulation) + ", " + str(
             self.supportsCatalogsInProcedureCalls) + ", " + str(self.supportsCatalogsInTableDefinitions) + ", " + str(
-            self.supportsCatalogsInIndexDefinitions) + ", " + str(self.supportsCatalogsInPrivilegeDefinitions) + ", " + str(
+            self.supportsCatalogsInIndexDefinitions) + ", " + str(
+            self.supportsCatalogsInPrivilegeDefinitions) + ", " + str(
             self.supportsPositionedDelete) + ", " + str(self.supportsPositionedUpdate) + ", " + str(
             self.supportsSelectForUpdate) + ", " + str(self.supportsStoredProcedures) + ", " + str(
             self.supportsSubqueriesInComparisons) + ", " + str(self.supportsSubqueriesInExists) + ", " + str(
@@ -198,13 +202,13 @@ class JdbcDatabaseMetaData(object):
             self.getDefaultTransactionIsolation) + ", " + str(self.supportsTransactions) + ", " + str(
             self.supportsDataDefinitionAndDataManipulationTransactions) + ", " + str(
             self.supportsDataManipulationTransactionsOnly) + ", " + str(
-            self.dataDefinitionCausesTransactionCommit) + ", " + str(self.dataDefinitionIgnoredInTransactions) + ", " + str(
+            self.dataDefinitionCausesTransactionCommit) + ", " + str(
+            self.dataDefinitionIgnoredInTransactions) + ", " + str(
             self.supportsBatchUpdates) + ", " + str(self.supportsSavepoints) + ", " + str(
             self.supportsNamedParameters) + ", " + str(self.supportsMultipleOpenResults) + ", " + str(
             self.supportsGetGeneratedKeys) + ", " + str(self.getDatabaseMajorVersion) + ", " + str(
             self.getDatabaseMinorVersion) + ", " + str(self.getJDBCMajorVersion) + ", " + str(
-            self.getJDBCMinorVersion) + ", " + str(self.getSQLStateType) + ", " + str(self.locatorsUpdateCopy) + ", " + str(
+            self.getJDBCMinorVersion) + ", " + str(self.getSQLStateType) + ", " + str(
+            self.locatorsUpdateCopy) + ", " + str(
             self.supportsStatementPooling) + ", " + str(self.supportsStoredFunctionsUsingCallSyntax) + ", " + str(
             self.autoCommitFailureClosesAllResultSets) + ", " + str(self.getResultSetHoldability)
-
-

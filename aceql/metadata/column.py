@@ -27,4 +27,9 @@ class Column:
 
 def __str__(self):
     """ The string representation."""
-    return str(self.columnName) + ", " + str(self.tableName) + ", " + str(self.typeName) + ", " + str(self.size) + ", " + str(self.decimalDigits) + ", " + str(self.radix) + ", " + str(self.nullable) + ", " + str(self.remarks) + ", " + str(self.defaultValue) + ", " + str(self.charOctetLength) + ", " + str(self.ordinalPosition) + ", " + str(self.isNullable) + ", " + str(self.scopeCatalog) + ", " + str(self.scopeSchema) + ", " + str(self.scopeTable) + ", " + str(self.sourceDataType) + ", " + str(self.isAutoincrement)
+    return str(self.columnName) + ", " + str(self.tableName) + ", " + str(self.typeName) + ", " + str(
+        self.size) + ", " + str(self.decimalDigits) + ", " + str(self.radix) + ", " + str(self.nullable) + ", " + str(
+        self.remarks) + ", " + str(self.defaultValue) + ", " + str(self.charOctetLength) + ", " + str(
+        self.ordinalPosition) + ", " + str(self.isNullable) + ", " + str(self.scopeCatalog) + ", " + str(
+        self.scopeSchema) + ", " + str(self.scopeTable) + ", " + str(self.sourceDataType) + ", " + str(
+        self.isAutoincrement)
