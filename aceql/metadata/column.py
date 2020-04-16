@@ -4,8 +4,6 @@ import marshmallow_dataclass
 
 @dataclass
 class Column:
-    catalog: str
-    schema: str
     columnName: str
     tableName: str
     typeName: str
@@ -24,12 +22,17 @@ class Column:
     sourceDataType: int
     isAutoincrement: str
 
+    class Meta:
+        ordered = True
 
-def __str__(self):
-    """ The string representation."""
-    return str(self.columnName) + ", " + str(self.tableName) + ", " + str(self.typeName) + ", " + str(
-        self.size) + ", " + str(self.decimalDigits) + ", " + str(self.radix) + ", " + str(self.nullable) + ", " + str(
-        self.remarks) + ", " + str(self.defaultValue) + ", " + str(self.charOctetLength) + ", " + str(
-        self.ordinalPosition) + ", " + str(self.isNullable) + ", " + str(self.scopeCatalog) + ", " + str(
-        self.scopeSchema) + ", " + str(self.scopeTable) + ", " + str(self.sourceDataType) + ", " + str(
-        self.isAutoincrement)
+    def __str__(self):
+        """ The string representation."""
+        return "Column [columnName=" + str(self.columnName) + ", tableName=" + str(
+            self.tableName) + ", typeName=" + str(self.typeName) + ", size=" + str(
+            self.size) + ", decimalDigits=" + str(self.decimalDigits) + ", radix=" + str(
+            self.radix) + ", nullable=" + str(self.nullable) + ", remarks=" + str(
+            self.remarks) + ", defaultValue=" + str(self.defaultValue) + ", charOctetLength=" + str(
+            self.charOctetLength) + ", ordinalPosition=" + str(self.ordinalPosition) + ", isNullable=" + str(
+            self.isNullable) + ", scopeCatalog=" + str(self.scopeCatalog) + ", scopeSchema=" + str(
+            self.scopeSchema) + ", scopeTable=" + str(self.scopeTable) + ", sourceDataType=" + str(
+            self.sourceDataType) + ", isAutoincrement=" + str(self.isAutoincrement) + "]"
