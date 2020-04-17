@@ -19,7 +19,7 @@
 
 """aceql library. Allows to wrap the AceQL HTTP APIs to access remote SQL databases.
 
-    The library supports Python 2.6 to 2.7 and 3.4 to 3.7.
+    The library supports Python 3.6 to 3.8.
     It provides a SQL interface compliant with the DB-API 2.0 specification described by PEP 249.
 """
 

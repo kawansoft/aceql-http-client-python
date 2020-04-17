@@ -5,22 +5,20 @@ def readme():
     with open('README.rst') as f:
         return f.read()
 
+
 setup(
     name='aceql',
-    version='2.0.2',
-    packages=['aceql', 'aceql._private', 'tests'],
+    version='3.0',
+    packages=['aceql', 'aceql._private', 'aceql.metadata','tests', 'tests.metadata'],
     url='https://github.com/kawansoft/aceql-py',
     license='Apache 2.0',
 
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Database',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
@@ -39,5 +37,5 @@ setup(
 
     author='KawanSoft',
     author_email='contact@kawansoft.com',
-    description='Python 2 & 3 Client toolkit for easy access of remote SQL databases managed with AceQL HTTP.'
+    description='Python 3 Client toolkit for easy access of remote SQL databases managed with AceQL HTTP.'
 )
