@@ -18,20 +18,24 @@
 ##
 
 from dataclasses import dataclass
+from typing import Optional
 import marshmallow_dataclass
-
-from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
 
 
 @dataclass
-class HolderJdbcDatabaseMetaData(object):
-    status: str
-    jdbcDatabaseMetaData: JdbcDatabaseMetaData
+class PrimaryKey:
+    catalog: Optional[str]
+    schema: Optional[str]
+    tableName: Optional[str]
+    columnName: Optional[str]
+    keySequence: Optional[int]
+    primaryKeyName: Optional[str]
 
     class Meta:
         ordered = True
 
     def __str__(self):
         """ The string representation."""
-        return str(self.status) + ", " + str(self.jdbcDatabaseMetaData)
-
+        return "PrimaryKey [tableName=" + str(self.tableName) + ", columnName=" + str(
+            self.columnName) + ", keySequence=" + str(self.keySequence) + ", primaryKeyName=" + str(
+            self.primaryKeyName) + "]"

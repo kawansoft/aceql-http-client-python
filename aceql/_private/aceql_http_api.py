@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2017,  KawanSoft SAS
+# Copyright (C) 2020,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.                                
 #                                                                               
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -844,15 +844,15 @@ class AceQLHttpApi(object):
                 raise Error(result_analyzer.get_error_message(),
                             result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            __debug = True
-            # if __debug:
-            #     print(result)
+            __debug = False
+            if __debug:
+                print(result)
 
             holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(HolderJdbcDatabaseMetaData)
-            jdbc_database_meta_data_holder = holder_jdbc_database_meta_data_schema().loads(result)
+            jdbc_database_meta_data_holder : HolderJdbcDatabaseMetaData = holder_jdbc_database_meta_data_schema().loads(result)
 
-            #if __debug:
-            #    print(jdbc_database_meta_data_holder)
+            if __debug:
+               print(jdbc_database_meta_data_holder)
 
             return jdbc_database_meta_data_holder;
 
