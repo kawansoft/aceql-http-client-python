@@ -55,11 +55,17 @@ class RowParser(object):
 
         # Go to row_1
         while True:
+            #hack
+            print("in while true")
             s = self.__fd.readline()
             if s == '':
                 break
             s = s.strip()
-            if s == "\"row_1\":[":
+            #hack
+            #if s == "\"row_1\":[":
+            #    break
+            print("s: " + s)
+            if s == "\"row_1\":[" or s == "\"row_1\" :[":
                 break
 
     def build_next_row(self):

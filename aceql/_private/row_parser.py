@@ -28,6 +28,10 @@ from aceql._private.aceal_debug import *
 from aceql._private.cursor_util import *
 
 
+def is_row_one(s):
+    return s == "\"row_1\":[" or s == "\"row_1\": ["
+
+
 class RowParser(object):
     """Allows to parse rows in retrieved JSON result set and return each row content dictionaries"""
 
@@ -59,7 +63,7 @@ class RowParser(object):
             if s == '':
                 break
             s = s.strip()
-            if s == "\"row_1\":[":
+            if is_row_one(s):
                 break
 
     def build_next_row(self):
@@ -81,7 +85,8 @@ class RowParser(object):
             if line == '':
                 break
             line = line.strip()
-            if line == ("\"row_" + str(self.__last_row + 1) + "\":["):
+            #if line == ("\"row_" + str(self.__last_row + 1) + "\":["):
+            if self.is_last_row(line):
                 self.__last_row += 1
                 break
 
@@ -124,6 +129,10 @@ class RowParser(object):
 
         self.__rows_parsed += 1
         return True
+
+    def is_last_row(self, line):
+        return line == ("\"row_" + str(self.__last_row + 1) + "\":[") or line == (
+                    "\"row_" + str(self.__last_row + 1) + "\": [")
 
     def column_names_per_index(self):
         """Returns the dictionary of column names per column index, starting at 0 """

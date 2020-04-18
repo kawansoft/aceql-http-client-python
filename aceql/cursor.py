@@ -138,7 +138,7 @@ class Cursor(object):
         AceQLDebug.debug("self.rowcount: " + str(self.__rowcount))
         AceQLDebug.debug("filename    : " + self.__result_set_info.get_filename())
 
-        # first build the description for Curose.description
+        # first build the description for Cursor.description
         self.__build_description()
 
         self.__row_parser = RowParser(self.__result_set_info.get_filename(), self.__result_set_info.get_row_count())
@@ -155,6 +155,10 @@ class Cursor(object):
 
         values_per_column_index = self.__row_parser.get_values_per_col_index()
         types_per_column_index = self.__row_parser.get_types_per_col_index()
+
+        #HACK
+        print("values_per_column_index: " + str(values_per_column_index))
+        print("types_per_column_index : " + str(types_per_column_index))
 
         the_list = []
         index = 0
@@ -252,8 +256,15 @@ class Cursor(object):
 
             while index < len(aceql_types):
                 name_and_type = list()
-                name_and_type.append(aceql_names[index])
-                name_and_type.append(aceql_types[index])
+
+                #name_and_type.append(aceql_names[index])
+                #name_and_type.append(aceql_types[index])
+
+                aceql_name = aceql_names.get(index)
+                if aceql_name is not None:
+                    name_and_type.append(aceql_name)
+
+                name_and_type.append(aceql_types.get(index))
 
                 # Append 5 non set values
                 name_and_type.append(None)

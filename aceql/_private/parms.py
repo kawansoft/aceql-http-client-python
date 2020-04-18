@@ -20,6 +20,6 @@
 
 class Parms(object):
     """Parameters for behavior."""
-    DEBUG_ON = False
+    DEBUG_ON = True
     DELETE_FILES = True
     PRINT_PROGRESS_INDICATOR = True

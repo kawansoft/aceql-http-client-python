@@ -29,6 +29,8 @@ class RowParserTest(unittest.TestCase):
     def test_A(self):
         filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
 
+        print("filename: " + filename)
+
         row_counter = RowCounter(filename)
         row_cout = row_counter.count()
         print("row_count: " + str(row_cout))
@@ -51,7 +53,7 @@ class RowParserTest(unittest.TestCase):
             self.assertEqual(values_per_col_index[4], "0, road 66")
             self.assertEqual(values_per_col_index[5], "Town_0")
             self.assertEqual(str(values_per_col_index[6]).strip(), "01111")
-            self.assertEqual(values_per_col_index[7], "NULL")
+            self.assertEqual(values_per_col_index[7], None)
 
             self.assertEqual(types_per_col_index[0], "INTEGER")
             self.assertEqual(types_per_col_index[1], "CHAR")
