@@ -96,7 +96,7 @@ class TestAll(unittest.TestCase):
 
         sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
         cpt = 0
-        while cpt < 2:
+        while cpt < 10:
             customer_id = cpt
             params = (customer_id, (None, SqlNullType.VARCHAR), u"André_" + str(customer_id),
                       u"Smith_" + str(customer_id), str(customer_id) + u" César Avenue",
@@ -107,12 +107,12 @@ class TestAll(unittest.TestCase):
             cpt += 1
 
 
-        # sql = "select count(customer_id) from customer where customer_id >= ?"
-        # params = (0,)
-        # cursor.execute(sql, params)
-        # the_tup = cursor.fetchone()
-        # print("count(customer_id): " + str(the_tup[0]))
-        # self.assertEqual(the_tup[0], 10)
+        sql = "select count(customer_id) from customer where customer_id >= ?"
+        params = (0,)
+        cursor.execute(sql, params)
+        the_tup = cursor.fetchone()
+        print("count(customer_id): " + str(the_tup[0]))
+        self.assertEqual(the_tup[0], 10)
 
         sql = "update customer set lname = ? where customer_id = ?"
         params = ("Python3.6", 1)
