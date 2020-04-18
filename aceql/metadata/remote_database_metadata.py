@@ -16,8 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+from typing import List
 
-from aceql import HolderJdbcDatabaseMetaData
+from aceql import HolderJdbcDatabaseMetaData, TableNamesDto
 
 
 class RemoteDatabaseMetaData(object):
@@ -64,3 +65,15 @@ class RemoteDatabaseMetaData(object):
         """
         jdbc_database_meta_data_holder : HolderJdbcDatabaseMetaData = self.__aceql_http_api.get_db_metadata()
         return jdbc_database_meta_data_holder.jdbcDatabaseMetaData
+
+    def get_table_names(self, table_type=None):
+        """
+        The list of tables
+        :param table_type:
+        the table type. Possible values: "table","view", etc. Defaults to all types if null.
+
+        :return:
+        The list of tables
+        """
+        table_names_dto : TableNamesDto = self.__aceql_http_api.get_table_names(table_type)
+        return table_names_dto.tableNames

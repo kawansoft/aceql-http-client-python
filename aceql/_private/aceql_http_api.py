@@ -29,6 +29,7 @@ from aceql._private.version_values import *
 from aceql._private.user_login_store import *
 from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
 from aceql.metadata.holder_jdbc_database_meta_data import HolderJdbcDatabaseMetaData
+from aceql.metadata.table_names_dto import TableNamesDto
 
 
 class AceQLHttpApi(object):
@@ -38,6 +39,7 @@ class AceQLHttpApi(object):
     __trace_on = False
     __stateless = False
     __timeout = 0
+    __debug = False
 
     def __init__(self, server_url, database, username, password, proxies=None, auth=None):
 
@@ -844,17 +846,48 @@ class AceQLHttpApi(object):
                 raise Error(result_analyzer.get_error_message(),
                             result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            __debug = False
-            if __debug:
+            if AceQLHttpApi.__debug:
                 print(result)
 
             holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(HolderJdbcDatabaseMetaData)
             jdbc_database_meta_data_holder : HolderJdbcDatabaseMetaData = holder_jdbc_database_meta_data_schema().loads(result)
 
-            if __debug:
+            if AceQLHttpApi.__debug:
                print(jdbc_database_meta_data_holder)
 
             return jdbc_database_meta_data_holder;
+
+        except Exception as e:
+            if type(e) == Error:
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__http_status_code)
+
+    def get_table_names(self, table_type):
+        try:
+            url_withaction = self._url + "metadata_query/get_table_names"
+
+            if table_type is not None:
+                url_withaction += "?table_type=" + table_type
+
+            result = self.call_with_get_url(url_withaction)
+
+            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
+
+            #AceQLHttpApi.__debug = True
+            if AceQLHttpApi.__debug:
+                print(result)
+
+            table_names_dto_schema = marshmallow_dataclass.class_schema(TableNamesDto)
+            table_names_dto : TableNamesDto = table_names_dto_schema().loads(result)
+
+            if AceQLHttpApi.__debug:
+               print(table_names_dto)
+
+            return table_names_dto;
 
         except Exception as e:
             if type(e) == Error:

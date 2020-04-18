@@ -71,24 +71,17 @@ class TestAll(unittest.TestCase):
 
         remote_database_meta_data = RemoteDatabaseMetaData(connection)
         remote_database_meta_data.db_schema_download(the_file, "html",)
+        #webbrowser.open('file://' + os.path.realpath(the_file))
         print("Done db_schema_download!")
 
         jdbc_database_meta_data = remote_database_meta_data.get_jdbc_database_meta_data()
+        print(jdbc_database_meta_data.getURL)
         print(jdbc_database_meta_data)
-
-        # f = open("C:\\test\\dump.txt", "r")
-        # jsonString = f.read()
-        # f.close()
-        # print()
-        # print(jsonString)
-        #
-        # jdbc_database_meta_data_schema = aceql.marshmallow_dataclass.class_schema(aceql.JdbcDatabaseMetaData)
-        # jdbc_database_meta_data = jdbc_database_meta_data_schema().loads(jsonString)
-        # print(jdbc_database_meta_data)
-
         print("Done get_jdbc_database_meta_data!")
 
-        #webbrowser.open('file://' + os.path.realpath(the_file))
+        table_names = remote_database_meta_data.get_table_names()
+        print(table_names)
+
 
 if __name__ == '__main__':
     unittest.main()
