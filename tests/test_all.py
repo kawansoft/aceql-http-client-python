@@ -31,6 +31,8 @@ from datetime import datetime, date
 class TestAll(unittest.TestCase):
     def test_A(self):
 
+        #aceql.Parms.DEBUG = True
+
         print(sys.version)
         # assert sys.version_info >= (2,5)
         print()
@@ -58,7 +60,7 @@ class TestAll(unittest.TestCase):
 
         Connection.set_timeout(10)
         Connection.set_stateless(False)
-        connection = aceql.connect(host, "kawansoft_example", "user1", "password1", proxies=proxies, auth=auth)
+        connection = aceql.connect(host, "sampledb", "user1", "password1", proxies=proxies, auth=auth)
         connection.set_gzip_result(True)
 
         print()
