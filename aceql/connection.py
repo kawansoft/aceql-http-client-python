@@ -61,7 +61,7 @@ class Connection(object):
         self.__aceQLHttpApi = AceQLHttpApi(server_url, database, username, password, proxies=proxies, auth=auth)
 
     @property
-    def get_aceql_http_api(self):
+    def _get_aceql_http_api(self):
         return self.__aceQLHttpApi
 
     def cursor(self):

@@ -25,7 +25,7 @@ class RemoteDatabaseMetaData(object):
 
     def __init__(self, connection):
         self.__connection = connection
-        self.__aceql_http_api = self.__connection.get_aceql_http_api
+        self.__aceql_http_api = self.__connection._get_aceql_http_api
 
     def db_schema_download(self, file, file_format = None, table_name= None):
         """
