@@ -18,7 +18,8 @@
 ##
 from typing import List
 
-from aceql import HolderJdbcDatabaseMetaData, TableNamesDto
+from aceql import HolderJdbcDatabaseMetaData, TableNamesDto, Table
+from aceql.metadata.table_dto import TableDto
 
 
 class RemoteDatabaseMetaData(object):
@@ -68,7 +69,7 @@ class RemoteDatabaseMetaData(object):
 
     def get_table_names(self, table_type=None):
         """
-        The list of tables
+        Returns The list of tables
         :param table_type:
         the table type. Possible values: "table","view", etc. Defaults to all types if null.
 
@@ -76,4 +77,19 @@ class RemoteDatabaseMetaData(object):
         The list of tables
         """
         table_names_dto : TableNamesDto = self.__aceql_http_api.get_table_names(table_type)
-        return table_names_dto.tableNames
+        table_names : List[str] = table_names_dto.tableNames
+
+    def get_table(self, name):
+        """
+        Returns the Table details
+        :param name:
+        the name table to get without any prefix/dot
+
+        :return:
+        the Table
+        """
+        if name is None:
+            raise TypeError("table name is null!")
+
+        table_dto : TableDto = self.__aceql_http_api.get_table(name)
+        table: Table = table_dto.table

@@ -71,7 +71,10 @@ class TestAll(unittest.TestCase):
 
         remote_database_meta_data = RemoteDatabaseMetaData(connection)
         remote_database_meta_data.db_schema_download(the_file, "html",)
-        #webbrowser.open('file://' + os.path.realpath(the_file))
+
+        do_webbrowser = False
+        if do_webbrowser is True:
+            webbrowser.open('file://' + os.path.realpath(the_file))
         print("Done db_schema_download!")
 
         jdbc_database_meta_data = remote_database_meta_data.get_jdbc_database_meta_data()
@@ -81,6 +84,9 @@ class TestAll(unittest.TestCase):
 
         table_names = remote_database_meta_data.get_table_names()
         print(table_names)
+
+        table = remote_database_meta_data.get_table("customer")
+        print(table)
 
 
 if __name__ == '__main__':

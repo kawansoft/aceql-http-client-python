@@ -29,6 +29,8 @@ from aceql._private.version_values import *
 from aceql._private.user_login_store import *
 from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
 from aceql.metadata.holder_jdbc_database_meta_data import HolderJdbcDatabaseMetaData
+from aceql.metadata.table import Table
+from aceql.metadata.table_dto import TableDto
 from aceql.metadata.table_names_dto import TableNamesDto
 
 
@@ -877,7 +879,7 @@ class AceQLHttpApi(object):
                 raise Error(result_analyzer.get_error_message(),
                             result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            #AceQLHttpApi.__debug = True
+            AceQLHttpApi.__debug = False
             if AceQLHttpApi.__debug:
                 print(result)
 
@@ -888,6 +890,39 @@ class AceQLHttpApi(object):
                print(table_names_dto)
 
             return table_names_dto;
+
+        except Exception as e:
+            if type(e) == Error:
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__http_status_code)
+
+    def get_table(self, name):
+        try:
+            url_withaction = self._url + "metadata_query/get_table"
+
+            if name is None:
+                raise TypeError("name is null!")
+            url_withaction += "?table_name=" + name
+
+            result = self.call_with_get_url(url_withaction)
+
+            AceQLHttpApi.__debug = True
+            if AceQLHttpApi.__debug:
+                print(result)
+
+            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
+
+            table_dto_schema = marshmallow_dataclass.class_schema(TableDto)
+            table_dto : TableDto = table_dto_schema().loads(result)
+
+            if AceQLHttpApi.__debug:
+               print(table_dto)
+
+            return table_dto;
 
         except Exception as e:
             if type(e) == Error:
