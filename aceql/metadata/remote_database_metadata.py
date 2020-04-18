@@ -78,18 +78,20 @@ class RemoteDatabaseMetaData(object):
         """
         table_names_dto : TableNamesDto = self.__aceql_http_api.get_table_names(table_type)
         table_names : List[str] = table_names_dto.tableNames
+        return table_names
 
     def get_table(self, name):
         """
         Returns the Table details
         :param name:
-        the name table to get without any prefix/dot
+        The name table to get without any prefix/dot
 
         :return:
-        the Table
+        The Table details
         """
         if name is None:
             raise TypeError("table name is null!")
 
-        table_dto : TableDto = self.__aceql_http_api.get_table(name)
+        table_dto: TableDto = self.__aceql_http_api.get_table(name)
         table: Table = table_dto.table
+        return table

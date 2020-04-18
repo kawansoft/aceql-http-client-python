@@ -85,7 +85,6 @@ class RowParser(object):
             if line == '':
                 break
             line = line.strip()
-            #if line == ("\"row_" + str(self.__last_row + 1) + "\":["):
             if self.is_last_row(line):
                 self.__last_row += 1
                 break
@@ -131,6 +130,7 @@ class RowParser(object):
         return True
 
     def is_last_row(self, line):
+        # if line == ("\"row_" + str(self.__last_row + 1) + "\":["):
         return line == ("\"row_" + str(self.__last_row + 1) + "\":[") or line == (
                     "\"row_" + str(self.__last_row + 1) + "\": [")
 

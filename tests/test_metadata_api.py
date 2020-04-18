@@ -28,6 +28,7 @@ from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 import webbrowser
 import os
 
+
 class TestAll(unittest.TestCase):
     def test_A(self):
 
@@ -42,7 +43,7 @@ class TestAll(unittest.TestCase):
         proxies = None
         auth = None
 
-        use_proxy  = False
+        use_proxy = False
         if use_proxy:
             proxies = {
                 "http": "http://localhost:8080",
@@ -70,7 +71,7 @@ class TestAll(unittest.TestCase):
             os.remove(the_file)
 
         remote_database_meta_data = RemoteDatabaseMetaData(connection)
-        remote_database_meta_data.db_schema_download(the_file, "html",)
+        remote_database_meta_data.db_schema_download(the_file, "html", )
 
         do_webbrowser = False
         if do_webbrowser is True:
@@ -82,10 +83,15 @@ class TestAll(unittest.TestCase):
         print(jdbc_database_meta_data)
         print("Done get_jdbc_database_meta_data!")
 
+        print()
+        print("Printing table names:")
         table_names = remote_database_meta_data.get_table_names()
         print(table_names)
 
-        table = remote_database_meta_data.get_table("customer")
+        print()
+        the_table = "customer"
+        print("Printing table details for : " + the_table)
+        table = remote_database_meta_data.get_table(the_table)
         print(table)
 
 

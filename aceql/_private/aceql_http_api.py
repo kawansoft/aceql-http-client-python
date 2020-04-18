@@ -502,7 +502,7 @@ class AceQLHttpApi(object):
             AceQLDebug.debug("dictParams 2: " + str(dict_params))
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
-            #print("Before update request")
+            # print("Before update request")
 
             if AceQLHttpApi.__timeout == 0:
                 response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
@@ -519,8 +519,8 @@ class AceQLHttpApi(object):
             self.__http_status_code = response.status_code
             result = response.text
 
-            #print("self.__http_status_code: " + str(self.__http_status_code ))
-            #print("result                 : " + str(result))
+            # print("self.__http_status_code: " + str(self.__http_status_code ))
+            # print("result                 : " + str(result))
             AceQLDebug.debug("result: " + result)
 
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
@@ -663,7 +663,8 @@ class AceQLHttpApi(object):
             if AceQLHttpApi.__timeout == 0:
                 response = requests.get(the_url, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.get(the_url, proxies=self.__proxies, auth=self.__auth, timeout=AceQLHttpApi.__timeout)
+                response = requests.get(the_url, proxies=self.__proxies, auth=self.__auth,
+                                        timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
 
@@ -678,7 +679,6 @@ class AceQLHttpApi(object):
     def db_schema_download(self, file_format, table_name):
         """ returns a schema stream as a Requests response """
         try:
-
             if file_format is None:
                 raise TypeError("format is null!")
 
@@ -706,57 +706,6 @@ class AceQLHttpApi(object):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
-
-    # def blob_download(self, blob_id, filename, total_length=0,
-    # progress_holder=None):
-    #	""" Allows to download a blob.  """
-
-    #	try:
-
-    #		if blob_id is None:
-    #			raise TypeError("blob_id is null!")
-
-    #		if filename is None:
-    #			raise TypeError("filename is null!")
-
-    #		theUrl = self._url + "/blob_download?blob_id=" + blob_id
-
-    #		#Stream input = await CallWithGetReturnStreamAsync(theUrl);
-    #		#return input;
-    #		if (AceQLHttpApi.__timeout == 0):
-    #			response = requests.get(theUrl, proxies = self.__proxies)
-    #		else:
-    #			response = requests.get(urlWithaction, proxies = self.__proxies,
-    #			timeout=AceQLHttpApi.__timeout)
-
-    #		self._http_status = response.status_code
-
-    #		# We dump the blob into file
-    #		with open(filename, 'wb') as fd:
-
-    #			the_chunk_size = 2048
-
-    #			if total_length == 0 or progress_holder == None:
-    #				for chunk in response.iter_content(chunk_size=the_chunk_size):
-    #					fd.write(chunk)
-    #			else:
-    #				temp_length = 0
-    #				for chunk in response.iter_content(chunk_size=the_chunk_size):
-    #					if progress_holder.is_cancelled():
-    #						break
-    #					fd.write(chunk)
-    #					temp_length += the_chunk_size
-    #					if temp_length > total_length / 100:
-    #						progress_holder.increment()
-    #						temp_length = 0
-
-    #				progress_holder.set_complete()
-
-    #	except Exception as e:
-    #		if type(e) == Error:
-    #			raise
-    #		else:
-    #			raise Error(str(e), 0, e, None, self.__http_status_code)
 
     def get_blob_length(self, blob_id):
         """ Gets the blob length. """
@@ -836,7 +785,8 @@ class AceQLHttpApi(object):
         m = encoder.MultipartEncoderMonitor(e, self.my_callback)
 
         the_url = self._url + "blob_upload"
-        r = requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies, auth=self.__auth)
+        r = requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
+                          auth=self.__auth)
 
     def get_db_metadata(self):
         try:
@@ -852,10 +802,11 @@ class AceQLHttpApi(object):
                 print(result)
 
             holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(HolderJdbcDatabaseMetaData)
-            jdbc_database_meta_data_holder : HolderJdbcDatabaseMetaData = holder_jdbc_database_meta_data_schema().loads(result)
+            jdbc_database_meta_data_holder: HolderJdbcDatabaseMetaData = holder_jdbc_database_meta_data_schema().loads(
+                result)
 
             if AceQLHttpApi.__debug:
-               print(jdbc_database_meta_data_holder)
+                print(jdbc_database_meta_data_holder)
 
             return jdbc_database_meta_data_holder;
 
@@ -879,15 +830,14 @@ class AceQLHttpApi(object):
                 raise Error(result_analyzer.get_error_message(),
                             result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            AceQLHttpApi.__debug = False
             if AceQLHttpApi.__debug:
                 print(result)
 
             table_names_dto_schema = marshmallow_dataclass.class_schema(TableNamesDto)
-            table_names_dto : TableNamesDto = table_names_dto_schema().loads(result)
+            table_names_dto: TableNamesDto = table_names_dto_schema().loads(result)
 
             if AceQLHttpApi.__debug:
-               print(table_names_dto)
+                print(table_names_dto)
 
             return table_names_dto;
 
@@ -907,7 +857,6 @@ class AceQLHttpApi(object):
 
             result = self.call_with_get_url(url_withaction)
 
-            AceQLHttpApi.__debug = True
             if AceQLHttpApi.__debug:
                 print(result)
 
@@ -917,10 +866,10 @@ class AceQLHttpApi(object):
                             result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
             table_dto_schema = marshmallow_dataclass.class_schema(TableDto)
-            table_dto : TableDto = table_dto_schema().loads(result)
+            table_dto: TableDto = table_dto_schema().loads(result)
 
             if AceQLHttpApi.__debug:
-               print(table_dto)
+                print(table_dto)
 
             return table_dto;
 

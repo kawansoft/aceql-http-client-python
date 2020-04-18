@@ -156,9 +156,9 @@ class Cursor(object):
         values_per_column_index = self.__row_parser.get_values_per_col_index()
         types_per_column_index = self.__row_parser.get_types_per_col_index()
 
-        #HACK
-        print("values_per_column_index: " + str(values_per_column_index))
-        print("types_per_column_index : " + str(types_per_column_index))
+        if Parms.DEBUG_ON:
+            print("values_per_column_index: " + str(values_per_column_index))
+            print("types_per_column_index : " + str(types_per_column_index))
 
         the_list = []
         index = 0
