@@ -31,6 +31,7 @@ from aceql.metadata.primarykey import PrimaryKey
 
 @dataclass
 class Table:
+    """A SQL Table with it's defining elements."""
     TABLE = "TABLE";
     VIEW = "VIEW";
     tableName: Optional[str]

@@ -18,7 +18,7 @@
 ##
 from typing import List
 
-from aceql import HolderJdbcDatabaseMetaData, TableNamesDto, Table
+from aceql import JdbcDatabaseMetaDataDto, TableNamesDto, Table
 from aceql.metadata.table_dto import TableDto
 
 
@@ -64,7 +64,7 @@ class RemoteDatabaseMetaData(object):
         :return:
         the basic meta data values sent by the the remote JDBC Driver of the remote database.
         """
-        jdbc_database_meta_data_holder : HolderJdbcDatabaseMetaData = self.__aceql_http_api.get_db_metadata()
+        jdbc_database_meta_data_holder : JdbcDatabaseMetaDataDto = self.__aceql_http_api.get_db_metadata()
         return jdbc_database_meta_data_holder.jdbcDatabaseMetaData
 
     def get_table_names(self, table_type=None):

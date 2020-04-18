@@ -25,6 +25,10 @@ import marshmallow_dataclass
 
 @dataclass
 class JdbcDatabaseMetaData:
+    """
+    Contains main SQL meta info sent by remote JDBC Driver. The info matches the JDBC DatabaseMetaData [1] main values.
+    [1]: https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html
+    """
     getURL: Optional[str]
     isReadOnly: Optional[bool]
     allProceduresAreCallable: Optional[bool]

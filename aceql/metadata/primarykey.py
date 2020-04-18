@@ -24,6 +24,7 @@ import marshmallow_dataclass
 
 @dataclass
 class PrimaryKey:
+    """A SQL Primary Key with it's defining elements."""
     catalog: Optional[str]
     schema: Optional[str]
     tableName: Optional[str]

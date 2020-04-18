@@ -28,7 +28,7 @@ from aceql._private.stream_result_analyzer import *
 from aceql._private.version_values import *
 from aceql._private.user_login_store import *
 from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
-from aceql.metadata.holder_jdbc_database_meta_data import HolderJdbcDatabaseMetaData
+from aceql.metadata.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
 from aceql.metadata.table import Table
 from aceql.metadata.table_dto import TableDto
 from aceql.metadata.table_names_dto import TableNamesDto
@@ -801,8 +801,8 @@ class AceQLHttpApi(object):
             if AceQLHttpApi.__debug:
                 print(result)
 
-            holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(HolderJdbcDatabaseMetaData)
-            jdbc_database_meta_data_holder: HolderJdbcDatabaseMetaData = holder_jdbc_database_meta_data_schema().loads(
+            holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(JdbcDatabaseMetaDataDto)
+            jdbc_database_meta_data_holder: JdbcDatabaseMetaDataDto = holder_jdbc_database_meta_data_schema().loads(
                 result)
 
             if AceQLHttpApi.__debug:

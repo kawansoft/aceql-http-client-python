@@ -36,4 +36,3 @@ class TableNamesDto(object):
     def __str__(self):
         """ The string representation."""
         return str(self.status) + ", " + str(self.tableNames)
-

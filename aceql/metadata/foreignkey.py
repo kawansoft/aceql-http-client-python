@@ -24,6 +24,7 @@ import marshmallow_dataclass
 
 @dataclass
 class ForeignKey:
+    """A SQL Foreign Key."""
     catalog: Optional[str]
     schema: Optional[str]
     primaryKeyTable: Optional[str]

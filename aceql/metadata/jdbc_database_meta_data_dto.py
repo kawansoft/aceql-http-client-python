@@ -24,7 +24,7 @@ from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
 
 
 @dataclass
-class HolderJdbcDatabaseMetaData(object):
+class JdbcDatabaseMetaDataDto(object):
     status: str
     jdbcDatabaseMetaData: JdbcDatabaseMetaData
 

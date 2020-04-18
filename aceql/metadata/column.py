@@ -24,6 +24,7 @@ import marshmallow_dataclass
 
 @dataclass
 class Column:
+    """A SQL Column with it's defining elements."""
     catalog: Optional[str]
     schema: Optional[str]
     columnName: Optional[str]

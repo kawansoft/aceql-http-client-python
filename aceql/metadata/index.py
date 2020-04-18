@@ -24,6 +24,7 @@ import marshmallow_dataclass
 
 @dataclass
 class Index:
+    """A SQL Index with it's defining elements."""
     catalog: Optional[str]
     schema: Optional[str]
     indexName: Optional[str]
