@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License. 
 ##
+from typing import List
 
 import aceql
 from aceql import *
@@ -24,6 +25,7 @@ from aceql import *
 import unittest
 import sys
 
+from aceql.metadata.column import Column
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 import webbrowser
 import os
@@ -90,9 +92,15 @@ class TestAll(unittest.TestCase):
 
         print()
         the_table = "customer"
-        print("Printing table details for : " + the_table)
+        print("Printing table details for: " + the_table)
         table = remote_database_meta_data.get_table(the_table)
-        print(table)
+        print("table: " + str(table))
+
+        columns: List[Column] = table.columns
+
+        print()
+        for column in columns:
+            print ("column: " + str(column))
 
 
 if __name__ == '__main__':

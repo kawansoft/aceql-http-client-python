@@ -17,21 +17,11 @@
 # limitations under the License. 
 ##
 import marshmallow_dataclass
-import requests
-from requests_toolbelt.multipart import encoder
 
-from aceql.error import *
-from aceql._private.result_analyzer import *
-from aceql._private.result_set_info import *
-from aceql._private.row_counter import *
-from aceql._private.stream_result_analyzer import *
-from aceql._private.version_values import *
 from aceql._private.user_login_store import *
-from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
-from aceql.metadata.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
-from aceql.metadata.table import Table
-from aceql.metadata.table_dto import TableDto
-from aceql.metadata.table_names_dto import TableNamesDto
+from aceql._private.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
+from aceql._private.table_dto import TableDto
+from aceql._private.table_names_dto import TableNamesDto
 
 
 class AceQLHttpApi(object):

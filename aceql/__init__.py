@@ -32,7 +32,19 @@ from aceql.proxy_auth import *
 
 from aceql.dbapi2 import *
 
-__all__ = ["Connection", "Cursor", "Error", "ProgressIndicator", "ProxyAuth", "SqlNullType"]
+from aceql.metadata.exportedkey import *
+from aceql.metadata.foreignkey import *
+from aceql.metadata.importedkey import *
+from aceql.metadata.index import *
+from aceql.metadata.jdbc_database_meta_data import *
+from aceql.metadata.primarykey import *
+from aceql.metadata.remote_database_metadata import *
+from aceql.metadata.table import *
+from aceql.metadata.column import *
+
+__all__ = ["Connection", "Cursor", "Error", "ProgressIndicator", "ProxyAuth", "SqlNullType", "Column", "ExportedKey",
+           "ForeignKey", "ImportedKey", "Index", "JdbcDatabaseMetaData", "PrimaryKey", "RemoteDatabaseMetaData",
+           "Table"]
 
 
 def connect(server_url, database, username, password, proxies=None, auth=None):
