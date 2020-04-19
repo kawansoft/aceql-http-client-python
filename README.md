@@ -4,31 +4,35 @@
 
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
-- [Fundamentals](#fundamentals)
-  * [License](#license)
-  * [Python Versions & DB-API 2.0](#python-versions---db-api-20)
-  * [AceQL Server side compatiblity](#aceql-server-side-compatiblity)
-  * [Installation](#installation)
-  * [Data transport](#data-transport)
-  * [Best practices for fast response time](#best-practices-for-fast-response-time)
-  * [Datatypes](#datatypes)
-- [Usage](#usage)
-  * [Quickstart](#quickstart)
-  * [Handling Exceptions](#handling-exceptions)
-    + [The error type](#the-error-type)
-    + [Most common AceQL server messages](#most-common-aceql-server-messages)
-    + [HTTP Status Codes](#http-status-codes)
-  * [Advanced Usage](#advanced-usage)
-    + [Managing NULL values](#managing-null-values)
-      - [Setting NULL values](#setting-null-values)
-      - [Reading NULL values](#reading-null-values)
-    + [Transactions](#transactions)
-    + [Proxies](#proxies)
-    + [Timeouts](#timeouts)
-    + [BLOB management](#blob-management)
-      - [BLOB creation](#blob-creation)
-      - [BLOB reading](#blob-reading)
-      - [Managing BLOB upload progress](#managing-blob-upload-progress)
+  * [Fundamentals](#fundamentals)
+      * [License](#license)
+      * [Python Versions &amp; DB-API 2.0](#python-versions--db-api-20)
+      * [AceQL Server side compatiblity](#aceql-server-side-compatiblity)
+      * [Installation](#installation)
+      * [Data transport](#data-transport)
+      * [Best practices for fast response time](#best-practices-for-fast-response-time)
+      * [Datatypes](#datatypes)
+   * [Usage](#usage)
+      * [Quickstart](#quickstart)
+      * [Handling Exceptions](#handling-exceptions)
+         * [The error type](#the-error-type)
+         * [Most common AceQL server messages](#most-common-aceql-server-messages)
+         * [HTTP Status Codes](#http-status-codes)
+      * [Advanced Usage](#advanced-usage)
+         * [Managing NULL values](#managing-null-values)
+            * [Setting NULL values](#setting-null-values)
+            * [Reading NULL values](#reading-null-values)
+         * [Transactions](#transactions)
+         * [Proxies](#proxies)
+         * [Timeouts](#timeouts)
+         * [BLOB management](#blob-management)
+            * [BLOB creation](#blob-creation)
+            * [BLOB reading](#blob-reading)
+            * [Managing BLOB upload progress](#managing-blob-upload-progress)
+      * [Using the Metadata Query API](#using-the-metadata-query-api)
+         * [Downloading database schema into a file](#downloading-database-schema-into-a-file)
+         * [Accessing remote database main properties](#accessing-remote-database-main-properties)
+         * [Getting Details of Tables and Columns](#getting-details-of-tables-and-columns)
 
 # Fundamentals
 
@@ -571,7 +575,7 @@ remote_database_meta_data = RemoteDatabaseMetaData(connection)
 
 ### Downloading database schema into a file
 
-Downloading a schema into a  `File` is done through the method. See the `RemoteDatabaseMetaData` Documentation:
+Downloading a schema into a  `File` is done through the method. See the `RemoteDatabaseMetaData` documentation:
 
 ```python
 filename = os.path.expanduser("~") + os.sep + "db_schema.html"
@@ -593,20 +597,22 @@ print("IsReadOnly   : " + str(jdbc_meta_data.isReadOnly))
 
 ### Getting Details of Tables and Columns
 
-See the `RemoteDatabaseMetaData` Documentation:
+See the `RemoteDatabaseMetaData` documentation:
 
 ```python
 print("Get the table names:");
 table_names = remote_database_meta_data.get_table_names()
 
-    print("Print the column details of each table:");
+print("Print the column details of each table:");
 for table_name in table_names:
-table = remote_database_meta_data.get_table(table_name)
+    table = remote_database_meta_data.get_table(table_name)
 
     print("Columns:")
     for column in table.columns:
-print(column)
+        print(column)
 ```
+
+____________
 
 
 
