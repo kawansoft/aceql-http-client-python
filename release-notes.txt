@@ -27,7 +27,7 @@ What's New:
   in HTML or text format, to get a remote database main properties,
   to get the list of tables, and to get the details of each table.
   It also allows wrapping remote tables, columns, indexes, etc into
-  easy to use provided Pythons classes: Table, Index, Column, etc.
+  easy to use provided Python classes: Table, Index, Column, etc.
   The metadata API allows exposing more easily the databases along with the
   schemas, without any need to communicate or synchronize separated
   documentation for the API users. Users are thus autonomous to explore
