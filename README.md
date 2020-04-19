@@ -1,6 +1,6 @@
 # AceQL HTTP 
 
-## Python Client SDK v2.0.2 - January 11, 2020
+## Python Client SDK v3.0 - April 18, 2020
 
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
@@ -34,9 +34,9 @@
 
 This document describes how to use the AceQL SDK / module and gives some details about how it operates with the AceQL Server side.
 
-The AceQL SDK / module allows you to wrap the [AceQL HTTP APIs](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-4.0-user-guide-api.md)  to access remote SQL databases and/or SQL databases in the cloud by simply including standard Python SQL calls in your code, just like you would do for any local database. There is zero learning curve and usage is straightforward.
+The AceQL SDK / module allows you to wrap the [AceQL HTTP APIs](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-5.0.1-user-guide-api.md)  to access remote SQL databases and/or SQL databases in the cloud by simply including standard Python SQL calls in your code, just like you would do for any local database. There is zero learning curve and usage is straightforward.
 
-The AceQL Server operation is described in [AceQL HTTP Server Installation and Configuration Guide](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-4.0-user-guide-server.md), whose content is sometimes referred to in his User Guide.
+The AceQL Server operation is described in [AceQL HTTP Server Installation and Configuration Guide](https://github.com/kawansoft/aceql-http/blob/master/README.md), whose content is sometimes referred to in his User Guide.
 
 On the remote side, like the AceQL Server access to the SQL database using Java JDBC, we will sometimes use the JDBC terminology (ResultSet, etc.) in this document. Nevertheless, knowledge of Java or JDBC is *not* a requirement.
 
@@ -46,9 +46,7 @@ The SDK is licensed with the liberal [Apache 2.0](https://www.apache.org/license
 
 ## Python Versions & DB-API 2.0
 
-The module supports Python 3.4–3.8.
-
-*As of January 2020, Python 2 is no longer officially supported.*
+The module supports Python 3.6–3.8.
 
 The module provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 
@@ -148,7 +146,7 @@ password = "password1"
 connection = aceql.connect(host, database, username, password)
 ```
 
-The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/4.0/src/kawansoft_example_other_databases.txt)
+The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/5.0.1/src/sampledb_other_databases.txt)
 
 Once you have a `Connection`, you can create a `Cursor` object and call its `execute()` method to perform SQL commands.
 
@@ -410,7 +408,7 @@ finally:
 
 ### Proxies
 
-The AceQL module support proxies, using  the [proxy](http://docs.python-requests.org/en/master/user/advanced/#proxies) syntax of [Requests](http://docs.python-requests.org/en/master/). The aceql module uses Requests for HTTP communications with the remote server:
+The AceQL module support proxies, using  the [proxy](https://requests.readthedocs.io/en/master/user/advanced/#proxies) syntax of [Requests](https://requests.readthedocs.io/en/master/) The aceql module uses Requests for HTTP communications with the remote server:
 
 ```python
 import aceql
@@ -452,7 +450,7 @@ The AceQL module uses  [requests-toolbelt](https://pypi.python.org/pypi/requests
 
 Use static method `Connection.set_timeout(timeout)`to define a timeout in seconds
 
-If no timeout is specified explicitly, requests do not time out. (For more info: timeouts are implemented with [Requests Timeouts](http://docs.python-requests.org/en/master/user/quickstart/#timeouts).)
+If no timeout is specified explicitly, requests do not time out. (For more info: timeouts are implemented with [Requests Timeouts](https://requests.readthedocs.io/en/master/user/advanced/#timeouts).)
 
 ### BLOB management
 
@@ -476,7 +474,7 @@ cursor.execute(sql, params)
 
 #### BLOB reading
 
-BLOB reading is supported through `Cursor.get_blob_stream(column_index`). The stream can then be read with a `for` loop that iterates on the `respsonse`, using syntax provided by [Requests](http://docs.python-requests.org/en/master/user/quickstart/#raw-response-content):
+BLOB reading is supported through `Cursor.get_blob_stream(column_index`). The stream can then be read with a `for` loop that iterates on the `respsonse`, using syntax provided by [Requests](https://requests.readthedocs.io/en/master/user/quickstart/#raw-response-content):
 
 ```python
 sql = "select customer_id, item_id, jpeg_image from orderlog " \
@@ -552,7 +550,67 @@ with closing(connection.cursor()) as cursor:
     cursor.execute(sql, params)
 ```
 
-------
+## Using the Metadata Query API 
+
+The metadata API allows:
+
+- downloading a remote database schema
+  in HTML or text format,
+- to get a remote database main properties,
+- to get the list of tables, 
+- to get the details of each table. 
+
+It also allows wrapping remote tables, columns, indexes, etc. into
+easy to use provided Python classes: Table, Index, Column, etc.
+
+First step is to get an instance of `RemoteDatabaseMetaData`:
+
+```python
+remote_database_meta_data = RemoteDatabaseMetaData(connection)
+```
+
+### Downloading database schema into a file
+
+Downloading a schema into a  `File` is done through the method. See the `RemoteDatabaseMetaData` Documentation:
+
+```python
+filename = os.path.expanduser("~") + os.sep + "db_schema.html"
+remote_database_meta_data.db_schema_download(filename, "html", )
+```
+
+See an example of the built HTML schema:  [db_schema.out.html](https://www.aceql.com/rest/soft/5.0.1/src/db_schema.out.html)
+
+### Accessing remote database main properties
+
+The `JdbcDatabaseMetaData` class wraps instance the main value retrieved by a remote server JDBC call to `java.sql.Connection.getMetaData`():
+
+```python
+jdbc_meta_data = remote_database_meta_data.get_jdbc_database_meta_data()
+print("Major Version: " + str(jdbc_meta_data.getJDBCMajorVersion))
+print("Minor Version: " + str(jdbc_meta_data.getJDBCMinorVersion))
+print("IsReadOnly   : " + str(jdbc_meta_data.isReadOnly))
+```
+
+### Getting Details of Tables and Columns
+
+See the `RemoteDatabaseMetaData` Documentation:
+
+```python
+print("Get the table names:");
+table_names = remote_database_meta_data.get_table_names()
+
+    print("Print the column details of each table:");
+for table_name in table_names:
+table = remote_database_meta_data.get_table(table_name)
+
+    print("Columns:")
+    for column in table.columns:
+print(column)
+```
+
+
+
+
 
 
 

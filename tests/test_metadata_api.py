@@ -68,39 +68,37 @@ class TestAll(unittest.TestCase):
         print("aceql version: " + connection.get_client_version())
         print()
 
-        the_file = "c:\\test\\python_schema.html";
-        if os.path.exists(the_file):
-            os.remove(the_file)
-
         remote_database_meta_data = RemoteDatabaseMetaData(connection)
-        remote_database_meta_data.db_schema_download(the_file, "html", )
+
+        filename = os.path.expanduser("~") + os.sep + "db_schema.html"
+        remote_database_meta_data.db_schema_download(filename, "html", )
 
         do_webbrowser = True
         if do_webbrowser is True:
-            webbrowser.open('file://' + os.path.realpath(the_file))
+            webbrowser.open('file://' + os.path.realpath(filename))
         print("Done db_schema_download!")
 
-        jdbc_database_meta_data = remote_database_meta_data.get_jdbc_database_meta_data()
-        print(jdbc_database_meta_data.getURL)
-        print(jdbc_database_meta_data)
+        jdbc_meta_data = remote_database_meta_data.get_jdbc_database_meta_data()
+        print("Major Version: " + str(jdbc_meta_data.getJDBCMajorVersion))
+        print("Minor Version: " + str(jdbc_meta_data.getJDBCMinorVersion))
+        print("IsReadOnly   : " + str(jdbc_meta_data.isReadOnly))
+
+        print(jdbc_meta_data.getURL)
+        print(jdbc_meta_data)
         print("Done get_jdbc_database_meta_data!")
 
         print()
-        print("Printing table names:")
+
+        print("Get the table names:");
         table_names = remote_database_meta_data.get_table_names()
-        print(table_names)
 
-        print()
-        the_table = "customer"
-        print("Printing table details for: " + the_table)
-        table = remote_database_meta_data.get_table(the_table)
-        print("table: " + str(table))
+        print("Print the column details of each table:");
+        for table_name in table_names:
+            table = remote_database_meta_data.get_table(table_name)
 
-        columns: List[Column] = table.columns
-
-        print()
-        for column in columns:
-            print ("column: " + str(column))
+        print("Columns:")
+        for column in table.columns:
+            print(column)
 
 
 if __name__ == '__main__':
