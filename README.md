@@ -586,7 +586,7 @@ See an example of the built HTML schema:  [db_schema.out.html](https://www.aceql
 
 ### Accessing remote database main properties
 
-The `JdbcDatabaseMetaData` class wraps instance the main value retrieved by a remote server JDBC call to `java.sql.Connection.getMetaData`():
+The `JdbcDatabaseMetaData` class wraps instance the main value retrieved by a remote server JDBC call to `java.sql.Connection.getMetaData()`:
 
 ```python
 jdbc_meta_data = remote_database_meta_data.get_jdbc_database_meta_data()

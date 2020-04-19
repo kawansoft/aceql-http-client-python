@@ -1,1 +1,5 @@
 /dist/aceql-3.0.tar.gz
+/aceql.egg-info/
+/result-set.txt
+/venv/
+/build/
