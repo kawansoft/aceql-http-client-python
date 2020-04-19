@@ -25,7 +25,7 @@ from aceql.metadata.table import Table
 
 
 class RemoteDatabaseMetaData(object):
-    """Allows to retrieve metadata info of the remote SQL database."""
+    """Allows to retrieve metadata info from the remote SQL database."""
 
     def __init__(self, connection):
         self.__connection = connection
