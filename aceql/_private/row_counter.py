@@ -20,6 +20,8 @@
 import os
 from io import open
 
+import ijson
+
 from aceql._private.aceal_debug import *
 
 
@@ -37,16 +39,27 @@ class RowCounter(object):
 
     def count(self):
         """Returns the number of rows in JSON file (key "row_count") """
-        with open(self.__filename, mode="r", encoding="utf-8") as fd:
-            rows = 0
-            while True:
-                s = fd.readline()
-                if s == '':
-                    break
-                s = s.strip()
-                if s.startswith("\"row_count\":"):
-                    count_str = s[12:]
-                    AceQLDebug.debug("countStr: " + count_str + "!")
-                    rows = int(count_str)
-                AceQLDebug.debug(s)
+        rows = 0
+        with open(self.__filename, 'rb') as input_file:
+            objects = ijson.items(input_file, 'row_count')
+            elements = (o for o in objects)
+            for element in elements:
+                rows = int(element)
+                break
             return rows
+
+    # def count_old(self):
+    #     """Returns the number of rows in JSON file (key "row_count") """
+    #     with open(self.__filename, mode="r", encoding="utf-8") as fd:
+    #         rows = 0
+    #         while True:
+    #             s = fd.readline()
+    #             if s == '':
+    #                 break
+    #             s = s.strip()
+    #             if s.startswith("\"row_count\":"):
+    #                 count_str = s[12:]
+    #                 AceQLDebug.debug("countStr: " + count_str + "!")
+    #                 rows = int(count_str)
+    #             AceQLDebug.debug(s)
+    #         return rows
