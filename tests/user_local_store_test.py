@@ -19,7 +19,7 @@
 
 from aceql._private.user_login_store import *
 
-user_login_store= UserLoginStore("http://localhost:9090/aceql", "username", "kawansoft_example")
+user_login_store= UserLoginStore("http://localhost:9090/aceql", "username", "sampledb")
 user_login_store.set_session_id("session_id_value")
 
 if user_login_store.is_already_logged():

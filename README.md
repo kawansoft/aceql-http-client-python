@@ -141,14 +141,14 @@ import aceql
 # URL of the AceQL server, Remote SQL database name
 # & authentication info
 host = "https://www.acme.com:9443/aceql"
-database = "kawansoft_example"
+database = "sampledb"
 username = "user1"
 password = "password1"
 
 connection = aceql.connect(host, database, username, password)
 ```
 
-The schema of the database is here:  [kawansoft_example](https://www.aceql.com/rest/soft/4.0/src/kawansoft_example_other_databases.txt)
+The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/4.0/src/kawansoft_example_other_databases.txt)
 
 Once you have a `Connection`, you can create a `Cursor` object and call its `execute()` method to perform SQL commands.
 

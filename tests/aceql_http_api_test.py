@@ -33,7 +33,7 @@ class AceQLHttpApiTest(object):
         is_stateless = AceQLHttpApi.is_stateless()
         print("isStateless: " + str(is_stateless))
 
-        aceql_http_api = AceQLHttpApi("http://localhost:9090/aceql", "kawansoft_example", "user1", "password1")
+        aceql_http_api = AceQLHttpApi("http://localhost:9090/aceql", "sampledb", "user1", "password1")
         print("connect done!")
 
         print("client version: " + aceql_http_api.get_client_version())

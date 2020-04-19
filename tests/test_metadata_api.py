@@ -75,7 +75,7 @@ class TestAll(unittest.TestCase):
         remote_database_meta_data = RemoteDatabaseMetaData(connection)
         remote_database_meta_data.db_schema_download(the_file, "html", )
 
-        do_webbrowser = False
+        do_webbrowser = True
         if do_webbrowser is True:
             webbrowser.open('file://' + os.path.realpath(the_file))
         print("Done db_schema_download!")
