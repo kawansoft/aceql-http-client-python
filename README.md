@@ -579,7 +579,7 @@ Downloading a schema into a  `File` is done through the method. See the `RemoteD
 
 ```python
 filename = os.path.expanduser("~") + os.sep + "db_schema.html"
-remote_database_meta_data.db_schema_download(filename, "html", )
+remote_database_meta_data.db_schema_download(filename)
 ```
 
 See an example of the built HTML schema:  [db_schema.out.html](https://www.aceql.com/rest/soft/5.0.1/src/db_schema.out.html)
@@ -603,7 +603,7 @@ See the `RemoteDatabaseMetaData` documentation:
 print("Get the table names:");
 table_names = remote_database_meta_data.get_table_names()
 
-print("Print the column details of each table:");
+print("Print the column details of each table:")
 for table_name in table_names:
     table = remote_database_meta_data.get_table(table_name)
 

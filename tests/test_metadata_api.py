@@ -71,7 +71,7 @@ class TestAll(unittest.TestCase):
         remote_database_meta_data = RemoteDatabaseMetaData(connection)
 
         filename = os.path.expanduser("~") + os.sep + "db_schema.html"
-        remote_database_meta_data.db_schema_download(filename, "html", )
+        remote_database_meta_data.db_schema_download(filename)
 
         do_webbrowser = True
         if do_webbrowser is True:
@@ -92,13 +92,13 @@ class TestAll(unittest.TestCase):
         print("Get the table names:");
         table_names = remote_database_meta_data.get_table_names()
 
-        print("Print the column details of each table:");
+        print("Print the column details of each table:")
         for table_name in table_names:
             table = remote_database_meta_data.get_table(table_name)
 
-        print("Columns:")
-        for column in table.columns:
-            print(column)
+            print("Columns:")
+            for column in table.columns:
+                print(column)
 
 
 if __name__ == '__main__':
