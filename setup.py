@@ -28,12 +28,14 @@ setup(
     install_requires=[
         'requests>=2.18.4,<3.0.0',
         'requests_toolbelt>=0.8.0',
-        'pytz>=2017.3', 'marshmallow'
+        'pytz>=2017.3',
+        'marshmallow',
+        'ijson'
     ],
 
     package_data={
         # If any package contains *.txt or *.png or s*.rst files, include them:
-        '': ['*.txt', '*.png', '*.rst']
+        '': ['*.txt', '*.png', '*.md', '*.rst']
     },
 
     author='KawanSoft',
