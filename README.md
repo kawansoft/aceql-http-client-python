@@ -1,6 +1,6 @@
 # AceQL HTTP 
 
-## Python Client SDK v3.0 - April 18, 2020
+## Python Client SDK v3.0.1 - April 20, 2020
 
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
@@ -600,14 +600,12 @@ print("IsReadOnly   : " + str(jdbc_meta_data.isReadOnly))
 See the `RemoteDatabaseMetaData` documentation:
 
 ```python
-print("Get the table names:");
-table_names = remote_database_meta_data.get_table_names()
-
 print("Print the column details of each table:")
 for table_name in table_names:
     table = remote_database_meta_data.get_table(table_name)
 
-    print("Columns:")
+    print()
+    print("Columns of table: " + table_name)
     for column in table.columns:
         print(column)
 ```
