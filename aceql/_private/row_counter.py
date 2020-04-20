@@ -48,18 +48,3 @@ class RowCounter(object):
                 break
             return rows
 
-    # def count_old(self):
-    #     """Returns the number of rows in JSON file (key "row_count") """
-    #     with open(self.__filename, mode="r", encoding="utf-8") as fd:
-    #         rows = 0
-    #         while True:
-    #             s = fd.readline()
-    #             if s == '':
-    #                 break
-    #             s = s.strip()
-    #             if s.startswith("\"row_count\":"):
-    #                 count_str = s[12:]
-    #                 AceQLDebug.debug("countStr: " + count_str + "!")
-    #                 rows = int(count_str)
-    #             AceQLDebug.debug(s)
-    #         return rows

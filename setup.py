@@ -24,7 +24,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
 
-    keywords='SQL HTTP',
+    keywords='DATABASE SQL HTTP CLIENT-SERVER',
     install_requires=[
         'requests>=2.18.4,<3.0.0',
         'requests_toolbelt>=0.8.0',
