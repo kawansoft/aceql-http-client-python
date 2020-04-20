@@ -101,6 +101,7 @@ class TestAll(unittest.TestCase):
             for column in table.columns:
                 print(column)
 
+        connection.close()
 
 if __name__ == '__main__':
     unittest.main()
