@@ -1,14 +1,15 @@
 from setuptools import setup
+from os import path
 
-
-def readme():
-    with open('README.rst') as f:
-        return f.read()
-
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='aceql',
-    version='3.0',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    version='3.0.1',
     packages=['aceql', 'aceql._private', 'aceql.metadata', 'tests'],
     url='https://github.com/kawansoft/aceql-py',
     license='Apache 2.0',
@@ -23,16 +24,18 @@ setup(
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
 
-    keywords='SQL HTTP',
+    keywords='DATABASE SQL HTTP CLIENT-SERVER',
     install_requires=[
         'requests>=2.18.4,<3.0.0',
         'requests_toolbelt>=0.8.0',
-        'pytz>=2017.3', 'marshmallow'
+        'pytz>=2017.3',
+        'marshmallow',
+        'ijson'
     ],
 
     package_data={
         # If any package contains *.txt or *.png or s*.rst files, include them:
-        '': ['*.txt', '*.png', '*.rst']
+        '': ['*.txt', '*.png', '*.md', '*.rst']
     },
 
     author='KawanSoft',
