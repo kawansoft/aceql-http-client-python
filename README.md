@@ -1,10 +1,10 @@
 # AceQL HTTP 
 
-## Python Client SDK v3.0.1 - April 20, 2020
+## Python Client SDK v3.1 - June 3, 2020
 
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
-  * [Fundamentals](#fundamentals)
+   * [Fundamentals](#fundamentals)
       * [License](#license)
       * [Python Versions &amp; DB-API 2.0](#python-versions--db-api-20)
       * [AceQL Server side compatiblity](#aceql-server-side-compatiblity)
@@ -29,10 +29,12 @@
             * [BLOB creation](#blob-creation)
             * [BLOB reading](#blob-reading)
             * [Managing BLOB upload progress](#managing-blob-upload-progress)
+         * [Using outer authentication without a password  and with an AceQL Session ID](#using-outer-authentication-without-a-password-and-with-an-aceql-session-id)
       * [Using the Metadata Query API](#using-the-metadata-query-api)
          * [Downloading database schema into a file](#downloading-database-schema-into-a-file)
          * [Accessing remote database main properties](#accessing-remote-database-main-properties)
          * [Getting Details of Tables and Columns](#getting-details-of-tables-and-columns)
+
 
 # Fundamentals
 
@@ -56,7 +58,7 @@ The module provides a SQL interface compliant with the DB-API 2.0 specification 
 
 ## AceQL Server side compatiblity
 
-This 2.0.2 SDK version is compatible with AceQL HTTP server side v2.0+. It is not compatible with AceQL HTTP server side v1.0.
+This  SDK version is compatible with AceQL HTTP server side v5.0.2+.
 
 ## Installation
 
@@ -553,6 +555,32 @@ with closing(connection.cursor()) as cursor:
     # ProgressIndicator.percent property
     cursor.execute(sql, params)
 ```
+
+
+
+### Using outer authentication without a password and with an AceQL Session ID
+
+Some working environments (Intranet, etc.) require that the client user authenticates himself without a password. Thus, it is not possible for this users to authenticate though the AceQL client SDK.
+
+In this case, you may use directly the native HTTP [login](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-5.0.2-user-guide-api.md#login) API to authenticate the users and retrieve the `session_id` returned by the API.
+
+The `session_id` value will be set directly into the `connectionString`  or passed to an `AceQLCredential`:
+
+```python
+import aceql
+
+# URL of the AceQL server, Remote SQL database name
+# & authentication info
+host = "https://www.acme.com:9443/aceql"
+database = "sampledb"
+username = "user1"
+session_id = my_get_session_id_from_login_api()
+
+#Authentication will be done without password and using the sessionId.
+connection = aceql.connect(host, database, username, None, session_id)
+```
+
+### 
 
 ## Using the Metadata Query API 
 

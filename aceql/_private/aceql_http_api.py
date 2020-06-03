@@ -33,7 +33,7 @@ class AceQLHttpApi(object):
     __timeout = 0
     __debug = False
 
-    def __init__(self, server_url, database, username, password, proxies=None, auth=None):
+    def __init__(self, server_url, database, username, password, session_id=None, proxies=None, auth=None):
 
         if server_url is None:
             raise TypeError("server_url is null!")
@@ -41,8 +41,9 @@ class AceQLHttpApi(object):
             raise TypeError("database is null!")
         if username is None:
             raise TypeError("username is null!")
-        if password is None:
-            raise TypeError("password is null!")
+
+        if password is None and session_id is None:
+            raise TypeError("password and session_id are both null!")
 
         self.__server_url = server_url
         self.__database = database
@@ -65,6 +66,9 @@ class AceQLHttpApi(object):
         #       + password + "&stateless=" + str(AceQLHttpApi.__stateless)
 
         user_login_store = UserLoginStore(server_url, username, database)
+
+        if session_id is not None:
+            user_login_store.set_session_id(session_id);
 
         try:
             if user_login_store.is_already_logged():

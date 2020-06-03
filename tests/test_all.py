@@ -54,10 +54,17 @@ class TestAll(unittest.TestCase):
         server_host_no_ssl = "http://www.aceql.com:9090/aceql"
 
         host = localhost
+        database = "sampledb"
+        username= "user1"
+
+        password= "password1"
+        session_id = None
+        #password= None
+        #session_id = "3j7aoduuekz3r8qdzyb2lc9plj"
 
         Connection.set_timeout(10)
         Connection.set_stateless(False)
-        connection = aceql.connect(host, "sampledb", "user1", "password1", proxies=proxies, auth=auth)
+        connection = aceql.connect(host, database, username, password, session_id, proxies=proxies, auth=auth)
         connection.set_gzip_result(True)
 
         print()
