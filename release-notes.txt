@@ -1,7 +1,7 @@
 
                  AceQL Python Client SDK
-                      Version 3.1
-                     Release Notes
+                      Version 3.1.1
+                      Release Notes
 
 
 Introduction
@@ -19,15 +19,23 @@ they would for a local database.
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
+
+AceQL Python Client SDK - Version 3.1.1 - 09-Jun-2020
+----------------------------------------------------
+
+Bugs fixed:
+- On SELECT, a SQL type to be decoded as float value would be rendered
+  as a string value. This has been fixed.
+
 AceQL Python Client SDK - Version 3.1. - 03-Jun-2020
 ----------------------------------------------------
 
 What's New:
-  - AceQL allows now client supplementary authentication without a password
-    using directly an existing AceQL Session ID.
-    This has been asked by our users, because some working environments
-    (Intranet, etc.) may require that the client user authenticates himself
-    without a password.
+- AceQL allows now client supplementary authentication without a password
+  using directly an existing AceQL Session ID.
+   his has been asked by our users, because some working environments
+  (Intranet, etc.) may require that the client user authenticates himself
+  without a password.
 
 
 AceQL Python Client SDK - Version 3.0.1 - 20-Apr-2020
@@ -58,23 +66,23 @@ AceQL Python Client SDK - Version 2.0.2 - 11-Jan-2020
 -----------------------------------------------------
 
 What's New:
- - The setup.py requests requirement has been
-   changed to 'requests>=2.18.4,<3.0.0'
- - The ProxyUtil class has been removed because
-   it was Windows specific.
- - Bug Fix: trying to set a null value for a BLOB
-   would raise an Exception. This has been fixed.
+- The setup.py requests requirement has been
+  changed to 'requests>=2.18.4,<3.0.0'
+- The ProxyUtil class has been removed because
+   t was Windows specific.
+- Bug Fix: trying to set a null value for a BLOB
+  would raise an Exception. This has been fixed.
 
 
 AceQL Python Client SDK - Version 2.0 - 07-mar-2018
 ---------------------------------------------------
 
 What's New:
- - This version is designed to operate with AceQL HTTP v2.0
-   on server  side.
- - Creating a new Connection on same database is faster
-   because done without server authentication.
- - This version is not compatible with AceQL HTTP v1.0 server
+- This version is designed to operate with AceQL HTTP v2.0
+  on server  side.
+- Creating a new Connection on same database is faster
+  because done without server authentication.
+- This version is not compatible with AceQL HTTP v1.0 server
    side.
 
 
@@ -82,21 +90,21 @@ AceQL Python Client SDK - Version 2.0 - 07-mar-2018
 ---------------------------------------------------
 
 What's New:
- - This version is designed to operate with AceQL HTTP v2.0
-   on server  side.
- - Creating a new Connection on same database is faster
-   because done without server authentication.
- - This version is not compatible with AceQL HTTP v1.0 server
-   side.
+- This version is designed to operate with AceQL HTTP v2.0
+  on server  side.
+- Creating a new Connection on same database is faster
+  because done without server authentication.
+- This version is not compatible with AceQL HTTP v1.0 server
+  side.
 
 
 AceQL Python Client SDK - Version 1.0.2 - 29-dec-2017
 -----------------------------------------------------
 
 What's New:
- - Authentication using AceQL /connect API is now done
-   with POST method - instead of GET - for better security and
-   to avoid password presence in URL.
+- Authentication using AceQL /connect API is now done
+  with POST method - instead of GET - for better security and
+  to avoid password presence in URL.
 .
 
 AceQL Python Client SDK - Version 1.0.1 - 17-nov-2017

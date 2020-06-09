@@ -1,6 +1,6 @@
 # AceQL HTTP 
 
-## Python Client SDK v3.1 - June 3, 2020
+## Python Client SDK v3.1.1 - June 9, 2020
 
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 
@@ -105,34 +105,34 @@ Note that the AceQL module does not allow you to specify data types to use; data
 
 Parameter values are automatically converted to their SQL equivalent. The following Python types can thus be sent to remote server without any problem:
 
-| Python type / class                      | SQL type                                 |
-| ---------------------------------------- | ---------------------------------------- |
-| Tuple  (None, SqlNullType.&lt;SQL_TYPE&gt;) | NULL                                     |
-| str                                      | CHAR, VARCHAR                            |
-| int                                      | INTEGER, or BIGINT/NUMERIC,  <br />depending on size |
-| bool                                     | BIT, BOOL                                |
-| float                                    | REAL                                     |
-| date                                     | DATE                                     |
-| datetime                                 | TIMESTAMP                                |
-| time                                     | TIME                                     |
-| File Object                              | BLOB                                     |
+| Python type / class                         | SQL type                                     |
+| ------------------------------------------- | -------------------------------------------- |
+| Tuple  (None, SqlNullType.&lt;SQL_TYPE&gt;) | NULL                                         |
+| str                                         | CHAR, VARCHAR                                |
+| int                                         | INTEGER, or BIGINT,  <br />depending on size |
+| bool                                        | BIT, BOOL                                    |
+| float                                       | REAL                                         |
+| date                                        | DATE                                         |
+| datetime                                    | TIMESTAMP                                    |
+| time                                        | TIME                                         |
+| File Object                                 | BLOB                                         |
 
 NULL and BLOB types are explained in Advanced Usage.
 
 This is how SQL types are converted to Python types by default:
 
-| SQL type         | Python type / class |
-| ---------------- | ------------------- |
-| NULL             | None                |
-| CHAR, VARCHAR    | str                 |
-| TINYINT, INTEGER | int                 |
-| BIGINT, NUMERIC  | int                 |
-| BOOL, BIT        | bool                |
-| DATE             | date                |
-| REAL             | float               |
-| TIMESTAMP        | datetime            |
-| TIME             | time                |
-| BLOB             | Response stream     |
+| SQL type                                        | Python type / class |
+| ----------------------------------------------- | ------------------- |
+| NULL                                            | None                |
+| CHAR, VARCHAR                                   | str                 |
+| TINYINT, INTEGER                                | int                 |
+| BIGINT                                          | int                 |
+| BOOL, BIT                                       | bool                |
+| DATE                                            | date                |
+| DECIMAL, DOUBLE_PRECISION, FLOAT, NUMERIC, REAL | float               |
+| TIMESTAMP                                       | datetime            |
+| TIME                                            | time                |
+| BLOB                                            | Response stream     |
 
 # Usage
 
