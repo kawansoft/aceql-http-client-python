@@ -172,6 +172,17 @@ class Cursor(object):
                 the_list.append(DateTimeUtil.get_date_from_timestamp(v))
             elif types_per_column_index[index] == "TIME":
                 the_list.append(DateTimeUtil.get_time_from_timestamp(v))
+            # DECIMAL, DOUBLE_PRECISION, FLOAT, NUMERIC, REAL
+            elif types_per_column_index[index] == "DECIMAL":
+                the_list.append(float(v))
+            elif types_per_column_index[index] == "DOUBLE_PRECISION":
+                the_list.append(float(v))
+            elif types_per_column_index[index] == "FLOAT":
+                the_list.append(float(v))
+            elif types_per_column_index[index] == "NUMERIC":
+                the_list.append(float(v))
+            elif types_per_column_index[index] == "REAL":
+                the_list.append(float(v))
             else:
                 the_list.append(v)
 
