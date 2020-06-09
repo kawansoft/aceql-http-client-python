@@ -217,7 +217,6 @@ class TestAll(unittest.TestCase):
         connection2.logout()
         print()
 
-
     @staticmethod
     def getProxyAuth():
         """Get proxy auth info from a filename"""
