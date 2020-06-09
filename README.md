@@ -121,17 +121,18 @@ NULL and BLOB types are explained in Advanced Usage.
 
 This is how SQL types are converted to Python types by default:
 
-| SQL type         | Python type / class                |
-| ---------------- | ---------------------------------- |
-| NULL             | None                               |
-| CHAR, VARCHAR    | str                                |
-| TINYINT, INTEGER | int                                |
-| BIGINT, NUMERIC  | Python 2: long <br />Python 3: int |
-| BOOL, BIT        | bool                               |
-| DATE             | date                               |
-| TIMESTAMP        | datetime                           |
-| TIME             | time                               |
-| BLOB             | Response stream                    |
+| SQL type         | Python type / class |
+| ---------------- | ------------------- |
+| NULL             | None                |
+| CHAR, VARCHAR    | str                 |
+| TINYINT, INTEGER | int                 |
+| BIGINT, NUMERIC  | int                 |
+| BOOL, BIT        | bool                |
+| DATE             | date                |
+| REAL             | float               |
+| TIMESTAMP        | datetime            |
+| TIME             | time                |
+| BLOB             | Response stream     |
 
 # Usage
 

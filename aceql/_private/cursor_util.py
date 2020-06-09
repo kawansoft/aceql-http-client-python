@@ -53,6 +53,8 @@ class CursorUtil(object):
             param_type = CursorUtil.get_sql_type(x)
             parms_dict["param_type_" + str(param_index)] = param_type
 
+            #print(str(param_index) + " param_type: " + str(param_type))
+
             # NULL values are defined in a (None, SqlNullType.TYPE) typle
             # BLOB values are defined in a (fd,) or (fd, length) tuple where
             # fd = open(filename)
@@ -84,6 +86,7 @@ class CursorUtil(object):
             else:
                 parms_dict["param_value_" + str(param_index)] = str(x)
 
+        print("parms_dict: " + str(parms_dict))
         return parms_dict
 
     def get_utf8_value(x):

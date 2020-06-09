@@ -31,7 +31,7 @@ class AceQLHttpApi(object):
     __trace_on = False
     __stateless = False
     __timeout = 0
-    __debug = False
+    __debug = True
 
     def __init__(self, server_url, database, username, password, session_id=None, proxies=None, auth=None):
 
