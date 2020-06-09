@@ -133,7 +133,6 @@ class TestAll(unittest.TestCase):
 
             theFloat = float((cpt * 1000) + 44.44)
             print("theFloat: " + str(theFloat))
-
             params = (cpt, cpt, u"intitulé_" + str(cpt), theFloat,
                       the_date, datetime.now(), blob_tuple, 1, cpt * 1000)
             print("insert: " + str(params))
