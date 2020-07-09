@@ -1,3 +1,18 @@
+![GitHub top language](https://img.shields.io/github/languages/top/kawansoft/aceql-http-client-python) 
+![GitHub issues](https://img.shields.io/github/issues/kawansoft/aceql-http-client-python) 
+
+![PyPI - Downloads](https://img.shields.io/pypi/dm/aceql)
+![GitHub](https://img.shields.io/github/license/kawansoft/aceql-http-client-python) 
+
+![PyPI](https://img.shields.io/pypi/v/aceql)
+![PyPI - Implementation](https://img.shields.io/pypi/implementation/aceql)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aceql)
+![PyPI - Format](https://img.shields.io/pypi/format/aceql)
+![PyPI - Status](https://img.shields.io/pypi/status/aceql)
+
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/kawansoft/aceql-http-client-python/master) 
+![GitHub contributors](https://img.shields.io/github/contributors/kawansoft/aceql-http-client-python)
+
 # AceQL HTTP 
 
 ## Python Client SDK v3.1.1 - June 9, 2020
