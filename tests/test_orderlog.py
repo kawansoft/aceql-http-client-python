@@ -19,7 +19,9 @@
 ##
 
 import aceql
-from aceql import *
+from aceql import Connection
+from aceql import SqlNullType
+from aceql import ProxyAuth
 
 import unittest
 import sys
@@ -50,8 +52,8 @@ class TestAll(unittest.TestCase):
             auth = TestAll.getProxyAuth()
 
         localhost = "http://localhost:9090/aceql"
-        server_host = "https://www.aceql.com:9443/aceql"
-        server_host_no_ssl = "http://www.aceql.com:9090/aceql"
+        #server_host = "https://www.aceql.com:9443/aceql"
+        #server_host_no_ssl = "http://www.aceql.com:9090/aceql"
 
         host = localhost
         database = "sampledb"

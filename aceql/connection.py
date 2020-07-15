@@ -7,9 +7,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,7 @@
 # limitations under the License.
 ##
 from aceql._private.aceql_http_api import AceQLHttpApi
-from aceql.cursor import *
+from aceql.cursor import Cursor
 
 
 class Connection(object):
@@ -72,12 +72,12 @@ class Connection(object):
         cursor = Cursor(self, self.__aceQLHttpApi)
         return cursor
 
+    @staticmethod
     def is_stateless():
         """Says if session is stateless."""
         return AceQLHttpApi.is_stateless()
 
-    is_stateless = staticmethod(is_stateless)
-
+    @staticmethod
     def set_stateless(stateless):
         """Sets the session mode. if true, the session will be stateless, else stateful."""
         if stateless is None:
@@ -87,8 +87,7 @@ class Connection(object):
         else:
             AceQLHttpApi.set_stateless(False)
 
-    set_stateless = staticmethod(set_stateless)
-
+    @staticmethod
     def set_timeout(timeout):
         """ Sets the HTTP connection timeout in seconds.
         0 means not timeout is used (default value)."""
@@ -97,8 +96,6 @@ class Connection(object):
             raise TypeError("timeout is null!")
 
         AceQLHttpApi.set_timeout(timeout)
-
-    set_timeout = staticmethod(set_timeout)
 
     def set_progress_indicator(self, progress_indicator):
         """ Allows to set a progress indicator."""
@@ -132,17 +129,15 @@ class Connection(object):
         """Prints the string on trace."""
         self.__aceQLHttpApi.trace(s)
 
+    @staticmethod
     def _is_trace_on():
         """Says if trace is on."""
         return AceQLHttpApi.is_trace_on()
 
-    _is_trace_on = staticmethod(_is_trace_on)
-
+    @staticmethod
     def _set_trace_on(trace_on):
         """Sets the trace on/off."""
         AceQLHttpApi.set_trace_on(trace_on)
-
-    _set_trace_on = staticmethod(_set_trace_on)
 
     def is_gzip_result(self):
         """Says if the query result is returned compressed with the GZIP file format."""

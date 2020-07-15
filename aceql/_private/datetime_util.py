@@ -7,9 +7,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,7 @@
 # limitations under the License.
 ##
 
-from datetime import datetime, time
+from datetime import datetime
 import time
 import pytz
 
@@ -42,6 +42,7 @@ class DateTimeUtil(object):
 
     # get_timestamp_from_datetime = staticmethod(get_timestamp_from_datetime)
 
+    @staticmethod
     def to_timestamp(a_date):
         if a_date.tzinfo:
             epoch = datetime(1970, 1, 1, tzinfo=pytz.UTC)
@@ -51,8 +52,7 @@ class DateTimeUtil(object):
             diff = a_date - epoch
         return int(diff.total_seconds())
 
-    to_timestamp = staticmethod(to_timestamp)
-
+    @staticmethod
     def get_timestamp_from_date(the_date):
         """"Returns an Epoch for date."""
         unix_time = time.mktime(the_date.timetuple())
@@ -61,8 +61,7 @@ class DateTimeUtil(object):
         unix_time_str = unix_time_str[0:len(unix_time_str) - 2]
         return unix_time_str + "000"
 
-    get_timestamp_from_date = staticmethod(get_timestamp_from_date)
-
+    @staticmethod
     def get_datetime_from_timestamp(ts_str):
         """Returns a datetime from Unix Epoch."""
 
@@ -70,8 +69,7 @@ class DateTimeUtil(object):
         ts_int = ts / 1000  # we want in seconds
         return datetime.fromtimestamp(ts_int)
 
-    get_datetime_from_timestamp = staticmethod(get_datetime_from_timestamp)
-
+    @staticmethod
     def get_date_from_timestamp(ts_str):
         """Returns a date from Unix Epoch."""
 
@@ -80,8 +78,7 @@ class DateTimeUtil(object):
         the_datetime = datetime.fromtimestamp(ts_int)
         return the_datetime.date()
 
-    get_date_from_timestamp = staticmethod(get_date_from_timestamp)
-
+    @staticmethod
     def get_time_from_timestamp(ts_str):
         """Returns a date from Unix Epoch."""
 
@@ -90,4 +87,3 @@ class DateTimeUtil(object):
         the_datetime = datetime.fromtimestamp(ts_int)
         return the_datetime.time()
 
-        get_time_from_timestamp = staticmethod(get_time_from_timestamp)

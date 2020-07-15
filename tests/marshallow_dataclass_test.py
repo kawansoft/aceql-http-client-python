@@ -1,9 +1,8 @@
-from dataclasses import dataclass, field
-from typing import List, Optional, ClassVar
-from typing import ClassVar, Type
+from dataclasses import dataclass
+from typing import List, Optional
+from typing import ClassVar
 
 import marshmallow_dataclass
-import marshmallow.validate
 from marshmallow import Schema
 from typing_extensions import Type
 

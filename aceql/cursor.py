@@ -7,9 +7,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -271,8 +271,8 @@ class Cursor(object):
             while index < len(aceql_types):
                 name_and_type = list()
 
-                #name_and_type.append(aceql_names[index])
-                #name_and_type.append(aceql_types[index])
+                # name_and_type.append(aceql_names[index])
+                # name_and_type.append(aceql_types[index])
 
                 aceql_name = aceql_names.get(index)
                 if aceql_name is not None:

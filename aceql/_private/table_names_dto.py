@@ -20,10 +20,6 @@
 from dataclasses import dataclass
 from typing import List
 
-import marshmallow_dataclass
-
-from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
-
 
 @dataclass
 class TableNamesDto(object):

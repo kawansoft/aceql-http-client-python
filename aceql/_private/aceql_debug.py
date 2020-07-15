@@ -17,7 +17,7 @@
 # limitations under the License.
 ##
 
-from aceql._private.parms import *
+from aceql._private.parms import Parms
 
 
 class AceQLDebug(object):
@@ -31,14 +31,13 @@ class AceQLDebug(object):
     # calling_code_name))
     ## => I was called by A.a()
 
+    @staticmethod
     def debug():
         if Parms.DEBUG_ON:
             print("debug> ")
 
-    debug = staticmethod(debug)
-
+    @staticmethod
     def debug(s):
         if Parms.DEBUG_ON:
             print("debug> " + str(s))
 
-    debug = staticmethod(debug)
