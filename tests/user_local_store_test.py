@@ -17,7 +17,7 @@
 # limitations under the License.
 ##
 
-from aceql._private.user_login_store import *
+from aceql._private.user_login_store import UserLoginStore
 
 user_login_store= UserLoginStore("http://localhost:9090/aceql", "username", "sampledb")
 user_login_store.set_session_id("session_id_value")

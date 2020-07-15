@@ -7,9 +7,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,15 +17,14 @@
 # limitations under the License.
 ##
 
-from tests.cursor_util_test import *
-from tests.daterime_util_test import *
-from tests.column_types_builder_test import *
+from tests.cursor_util_test import CursorUtilTest
+from tests.daterime_util_test import DateTimeUtilTest
+from tests.column_types_builder_test import ColumnTypesBuilderTest
 from tests.result_analyzer_test import *
 
-from tests.row_counter_test import *
-from tests.stream_result_analyzer_test import *
+from tests.row_counter_test import RowCounterTest
+from tests.stream_result_analyzer_test import StreamResultAnalyzerTest
 
-import sys
 
 cursorUtilTest = CursorUtilTest()
 cursorUtilTest.test_A()
