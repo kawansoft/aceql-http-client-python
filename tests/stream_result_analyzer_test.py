@@ -21,7 +21,8 @@
 import unittest
 
 from aceql._private.stream_result_analyzer import *
-from os import sep
+from aceql._private.file_util import os
+from aceql._private.file_util import sep
 
 
 class StreamResultAnalyzerTest(unittest.TestCase):

@@ -21,6 +21,7 @@ import unittest
 
 from aceql._private.row_counter import RowCounter
 from aceql._private.file_util import sep
+from aceql._private.file_util import os
 
 
 class RowCounterTest(unittest.TestCase):

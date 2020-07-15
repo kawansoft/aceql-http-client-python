@@ -22,6 +22,7 @@ import aceql
 from aceql import Connection
 from aceql import SqlNullType
 from aceql import ProxyAuth
+from aceql import ProgressIndicator
 
 import unittest
 import sys
@@ -59,14 +60,13 @@ class TestAll(unittest.TestCase):
         database = "sampledb"
         username= "user1"
 
-        password= "password1"
         session_id = None
         #password= None
         #session_id = "3j7aoduuekz3r8qdzyb2lc9plj"
 
         Connection.set_timeout(10)
         Connection.set_stateless(False)
-        connection = aceql.connect(host, database, username, password, session_id, proxies=proxies, auth=auth)
+        connection = aceql.connect(host, database, username, "password1", session_id, proxies=proxies, auth=auth)
         connection.set_gzip_result(True)
 
         print()
