@@ -52,6 +52,5 @@ class TestAll(unittest.TestCase):
                 print(str(value))
 
 
-
 if __name__ == '__main__':
     unittest.main()

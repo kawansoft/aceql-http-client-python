@@ -17,11 +17,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+from typing import List
 
 import aceql
-from aceql import Connection
+from aceql import *
+
 import unittest
 import sys
+
+from aceql.metadata.column import Column
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 import webbrowser
 import os
@@ -50,8 +54,8 @@ class TestAll(unittest.TestCase):
             auth = TestAll.getProxyAuth()
 
         localhost = "http://localhost:9090/aceql"
-        #server_host = "https://www.aceql.com:9443/aceql"
-        #server_host_no_ssl = "http://www.aceql.com:9090/aceql"
+        server_host = "https://www.aceql.com:9443/aceql"
+        server_host_no_ssl = "http://www.aceql.com:9090/aceql"
 
         host = localhost
 

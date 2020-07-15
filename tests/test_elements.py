@@ -20,7 +20,7 @@
 from tests.cursor_util_test import CursorUtilTest
 from tests.daterime_util_test import DateTimeUtilTest
 from tests.column_types_builder_test import ColumnTypesBuilderTest
-from tests.result_analyzer_test import *
+from tests.result_analyzer_test import ResultAnalyzerTest
 
 from tests.row_counter_test import RowCounterTest
 from tests.stream_result_analyzer_test import StreamResultAnalyzerTest
