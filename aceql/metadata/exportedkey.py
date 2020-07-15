@@ -20,37 +20,9 @@
 from dataclasses import dataclass
 from typing import Optional
 
+from aceql.metadata.foreignkey import ForeignKey
+
 
 @dataclass
-class ExportedKey:
-
-    """A SQL Foreign Key."""
-    catalog: Optional[str]
-    schema: Optional[str]
-    primaryKeyTable: Optional[str]
-    primaryKeyColumn: Optional[str]
-    foreignKeyCatalog: Optional[str]
-    foreignKeySchema: Optional[str]
-    foreignKeyTable: Optional[str]
-    foreignKeyColumn: Optional[str]
-    keySequence: Optional[int]
-    updateRule: Optional[str]
-    deleteRule: Optional[str]
-    foreignKeyName: Optional[str]
-    primaryKeyName: Optional[str]
-    deferrability: Optional[int]
-
-    class Meta:
-
-        """Meta class is required."""
-        ordered = True
-
-    def __str__(self):
-        """The string representation."""
-        return "ExportedKey [primaryKeyTable=" + str(self.primaryKeyTable) + ", primaryKeyColumn=" + str(
-            self.primaryKeyColumn) + ", foreignKeyCatalog=" + str(self.foreignKeyCatalog) + ", foreignKeySchema=" + str(
-            self.foreignKeySchema) + ", foreignKeyTable=" + str(self.foreignKeyTable) + ", foreignKeyColumn=" + str(
-            self.foreignKeyColumn) + ", keySequence=" + str(self.keySequence) + ", updateRule=" + str(
-            self.updateRule) + ", deleteRule=" + str(self.deleteRule) + ", foreignKeyName=" + str(
-            self.foreignKeyName) + ", primaryKeyName=" + str(self.primaryKeyName) + ", deferrability=" + str(
-            self.deferrability) + "]"
+class ExportedKey(ForeignKey):
+    """ See ForeignKey """
