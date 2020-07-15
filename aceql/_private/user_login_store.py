@@ -17,16 +17,6 @@
 # limitations under the License.
 ##
 
-import requests
-from requests_toolbelt.multipart import encoder
-
-from aceql.error import *
-from aceql._private.result_analyzer import *
-from aceql._private.result_set_info import *
-from aceql._private.row_counter import *
-from aceql._private.stream_result_analyzer import *
-from aceql._private.version_values import *
-
 
 class UserLoginStore(object):
     """ Stores the session Id per server_url/username/database triplet in order to

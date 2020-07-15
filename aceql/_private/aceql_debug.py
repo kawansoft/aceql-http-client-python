@@ -32,7 +32,7 @@ class AceQLDebug(object):
     ## => I was called by A.a()
 
     @staticmethod
-    def debug():
+    def debug_empty():
         if Parms.DEBUG_ON:
             print("debug> ")
 

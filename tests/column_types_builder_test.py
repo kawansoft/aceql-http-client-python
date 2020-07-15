@@ -16,16 +16,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-
+import os
 import unittest
 
-from aceql._private.column_types_builder import *
-from aceql._private.file_util import *
+from aceql._private.column_types_builder import ColumnTypesBuilder
 
 
 class ColumnTypesBuilderTest(unittest.TestCase):
     def test_A(self):
-        filename = os.getcwd() + sep + "files" + sep + "result-set.txt"
+        filename = os.getcwd() + os.sep + "files" + os.sep + "result-set.txt"
         column_types_builder = ColumnTypesBuilder(filename)
         dict_column_types = column_types_builder.get_types_per_col_index()
         print(dict_column_types)
