@@ -41,6 +41,7 @@ class ExportedKey:
     deferrability: Optional[int]
 
     class Meta:
+
         """Meta class is required."""
         ordered = True
 
