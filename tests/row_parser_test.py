@@ -20,9 +20,9 @@
 
 import unittest
 
-from aceql._private.row_parser import *
-from aceql._private.row_counter import *
-from aceql._private.file_util import *
+from aceql._private.row_parser import RowParser
+from aceql._private.row_counter import RowCounter
+from aceql._private.file_util import FileUtil
 
 
 class RowParserTest(unittest.TestCase):

@@ -24,7 +24,7 @@ from io import open
 
 from aceql._private import cursor_util
 from aceql._private.column_types_builder import *
-from aceql._private.aceal_debug import *
+from aceql._private.aceql_debug import *
 from aceql._private.cursor_util import *
 
 
