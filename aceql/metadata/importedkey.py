@@ -23,7 +23,6 @@ from typing import Optional
 
 @dataclass
 class ImportedKey:
-
     """A SQL Foreign Key."""
     catalog: Optional[str]
     schema: Optional[str]
@@ -41,7 +40,6 @@ class ImportedKey:
     deferrability: Optional[int]
 
     class Meta:
-
         """Meta class is required."""
         ordered = True
 
