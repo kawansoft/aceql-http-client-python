@@ -617,6 +617,7 @@ class AceQLHttpApi(object):
             if self.is_gzip_result():
                 file_out = filename[0: len(filename) - 4] + ".ungzipped.txt"
                 FileUtil.decompress(filename, file_out)
+                from aceql import Parms
                 if Parms.DELETE_FILES:
                     os.remove(filename)
             else:
