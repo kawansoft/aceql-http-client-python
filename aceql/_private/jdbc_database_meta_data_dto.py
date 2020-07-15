@@ -18,8 +18,6 @@
 ##
 
 from dataclasses import dataclass
-import marshmallow_dataclass
-
 from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
 
 
