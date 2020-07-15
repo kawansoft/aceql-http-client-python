@@ -7,9 +7,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,10 +22,9 @@ import json
 import os
 from io import open
 
-from aceql._private import cursor_util
-from aceql._private.column_types_builder import *
-from aceql._private.aceql_debug import *
-from aceql._private.cursor_util import *
+from aceql._private.column_types_builder import ColumnTypesBuilder
+from aceql._private.aceql_debug import AceQLDebug
+from aceql._private.cursor_util import CursorUtil
 
 
 def is_row_one(s):
@@ -132,7 +131,7 @@ class RowParser(object):
     def is_last_row(self, line):
         # if line == ("\"row_" + str(self.__last_row + 1) + "\":["):
         return line == ("\"row_" + str(self.__last_row + 1) + "\":[") or line == (
-                    "\"row_" + str(self.__last_row + 1) + "\": [")
+                "\"row_" + str(self.__last_row + 1) + "\": [")
 
     def column_names_per_index(self):
         """Returns the dictionary of column names per column index, starting at 0 """

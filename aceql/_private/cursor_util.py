@@ -8,9 +8,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,9 +18,9 @@
 # limitations under the License.
 ##
 
-from io import open
-from aceql._private.datetime_util import *
-from aceql._private.file_util import *
+from aceql._private.datetime_util import DateTimeUtil
+from aceql._private.datetime_util import datetime
+from aceql._private.file_util import FileUtil
 from aceql.sql_null_type import *
 
 
@@ -53,7 +53,7 @@ class CursorUtil(object):
             param_type = CursorUtil.get_sql_type(x)
             parms_dict["param_type_" + str(param_index)] = param_type
 
-            #print(str(param_index) + " param_type: " + str(param_type))
+            # print(str(param_index) + " param_type: " + str(param_type))
 
             # NULL values are defined in a (None, SqlNullType.TYPE) typle
             # BLOB values are defined in a (fd,) or (fd, length) tuple where
@@ -89,13 +89,12 @@ class CursorUtil(object):
         print("parms_dict: " + str(parms_dict))
         return parms_dict
 
+    @staticmethod
     def get_utf8_value(x):
         """ For python 2: string values with special chars must be UTF-8 encoded """
         if FileUtil.is_python_2() and CursorUtil.get_class_name(x) == "unicode":
             x = x.encode('utf-8')
         return x
-
-    get_utf8_value = staticmethod(get_utf8_value)
 
     # None / <class 'NoneType'>
     # 1 / <class 'int'>
@@ -106,6 +105,7 @@ class CursorUtil(object):
     # 2005-07-14 / <class 'datetime.date'>
     # 12:30:00 / <class 'datetime.time'>
 
+    @staticmethod
     def get_sql_type(x):
         """get the SQL type of the passed param value. """
 
@@ -116,7 +116,7 @@ class CursorUtil(object):
             if x[0] is None:
                 # HACK for BOOL that must be converted to BIT
                 # NO! Do not know why. Comment it:
-                #if x[1] == SqlNullType.BLOB:
+                # if x[1] == SqlNullType.BLOB:
                 #   x[1] = SqlNullType.BIT
                 sql_type = "TYPE_NULL" + str(x[1])
             elif CursorUtil.get_class_name(x[0]) == "_io.BufferedReader":
@@ -127,7 +127,7 @@ class CursorUtil(object):
                 raise TypeError("Invalid tuple parameter. Not a NULL Type nor a BLOB: " + str(x))
         # Because P2 int and long are different, and p3 int and long are awlays int, special treatment:
         elif CursorUtil.get_class_name(x) == "int" or CursorUtil.get_class_name(x) == "long":
-            if x < CursorUtil.JAVA_MAX_INT_VALUE * -1 or x >  CursorUtil.JAVA_MAX_INT_VALUE:
+            if x < CursorUtil.JAVA_MAX_INT_VALUE * -1 or x > CursorUtil.JAVA_MAX_INT_VALUE:
                 sql_type = "BIGINT"
             else:
                 sql_type = "INTEGER"
@@ -152,8 +152,7 @@ class CursorUtil(object):
 
         return sql_type
 
-    get_sql_type = staticmethod(get_sql_type)
-
+    @staticmethod
     def get_class_name(x):
         """ Parse <class 'class_name'> to get only class_name. """
 
@@ -162,5 +161,3 @@ class CursorUtil(object):
         s = s.replace("<type '", "")  # Python2 syntax
         s = s[0:len(s) - 2]
         return s
-
-    get_class_name = staticmethod(get_class_name)

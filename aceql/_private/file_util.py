@@ -34,12 +34,12 @@ class FileUtil(object):
     UNZIP_MODE_PY_3 = "rt"
     WRITE_MODE_PY_3 = "wt"
 
+    @staticmethod
     def get_unique_id():
         x = uuid.uuid4()
         return str(x)
 
-    get_unique_id = staticmethod(get_unique_id)
-
+    @staticmethod
     def get_user_home_dot_kawansoft_dir():
         # user.home
         # home = str(Path.home())
@@ -54,8 +54,7 @@ class FileUtil(object):
 
         return home_kawan_soft
 
-    get_user_home_dot_kawansoft_dir = staticmethod(get_user_home_dot_kawansoft_dir)
-
+    @staticmethod
     def get_kawansoft_temp_dir():
         home_kawan_soft = FileUtil.get_user_home_dot_kawansoft_dir()
 
@@ -67,14 +66,12 @@ class FileUtil(object):
 
         return home_kawan_soft_tmp
 
-    get_kawansoft_temp_dir = staticmethod(get_kawansoft_temp_dir)
-
+    @staticmethod
     def build_result_set_file():
         the_file = FileUtil.get_kawansoft_temp_dir() + sep + "pc-result-set-" + FileUtil.get_unique_id() + ".txt"
         return the_file
 
-    build_result_set_file = staticmethod(build_result_set_file)
-
+    @staticmethod
     def decompress(file_in, file_out):
         """Decompress GZIP text file into a text file."""
 
@@ -98,32 +95,27 @@ class FileUtil(object):
                         # print(line)
                     out.write(line)
 
-    decompress = staticmethod(decompress)
-
+    @staticmethod
     def get_unzip_mode():
         if FileUtil.is_python_3():
             return FileUtil.UNZIP_MODE_PY_3
         else:
             return FileUtil.UNZIP_MODE_PY_2
 
-    get_unzip_mode = staticmethod(get_unzip_mode)
-
+    @staticmethod
     def get_write_mode():
         if FileUtil.is_python_3():
             return FileUtil.WRITE_MODE_PY_3
         else:
             return FileUtil.WRITE_MODE_PY_2
 
-    get_write_mode = staticmethod(get_write_mode)
-
+    @staticmethod
     def is_python_2():
         if sys.version_info[0] < 3:
             return True
 
-    is_python_2 = staticmethod(is_python_2)
-
+    @staticmethod
     def is_python_3():
         if sys.version_info[0] >= 3:
             return True
 
-    is_python_3 = staticmethod(is_python_3)

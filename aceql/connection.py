@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-
+from aceql._private.aceql_http_api import AceQLHttpApi
 from aceql.cursor import *
 
 

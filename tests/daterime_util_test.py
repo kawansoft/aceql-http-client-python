@@ -19,7 +19,28 @@
 
 import unittest
 
-from aceql._private.datetime_util import *
+from aceql._private.datetime_util import DateTimeUtil
+from aceql._private.datetime_util import datetime
+
+
+def print_datetime_values():
+    the_datetime = datetime.now()
+    the_date = the_datetime.date()
+    the_time = the_datetime.time()
+
+    print()
+    print("the_datetime: " + str(type(the_datetime)))
+    print("the_date    : " + str(type(the_date)))
+    print("the_time    : " + str(type(the_time)))
+    print()
+    print("the_datetime: " + str(the_datetime))
+    print("the_date    : " + str(the_date))
+    print("the_time    : " + str(the_time))
+    print()
+    print("the_time hour   : " + str(the_time.hour))
+    print("the_time minute : " + str(the_time.minute))
+    print("the_time second : " + str(the_time.second))
+    print("the_time micros : " + str(the_time.microsecond))
 
 
 class DateTimeUtilTest(unittest.TestCase):
@@ -39,24 +60,6 @@ class DateTimeUtilTest(unittest.TestCase):
 
         self.assertEqual(timestamp_str, timestamp_str_new)
 
-    def print_datetime_values(self):
-        the_datetime = datetime.now()
-        the_date = the_datetime.date()
-        the_time = the_datetime.time()
-
-        print()
-        print("the_datetime: " + str(type(the_datetime)))
-        print("the_date    : " + str(type(the_date)))
-        print("the_time    : " + str(type(the_time)))
-        print()
-        print("the_datetime: " + str(the_datetime))
-        print("the_date    : " + str(the_date))
-        print("the_time    : " + str(the_time))
-        print()
-        print("the_time hour   : " + str(the_time.hour))
-        print("the_time minute : " + str(the_time.minute))
-        print("the_time second : " + str(the_time.second))
-        print("the_time micros : " + str(the_time.microsecond))
 
 if __name__ == '__main__':
     unittest.main()

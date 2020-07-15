@@ -17,8 +17,9 @@
 # limitations under the License.
 ##
 
-from aceql._private.row_parser import *
-from aceql._private.aceql_http_api import *
+from aceql._private.row_parser import RowParser
+from aceql._private.aceql_http_api import CursorUtil
+from aceql._private.aceql_http_api import AceQLDebug, Error, DateTimeUtil, os
 
 
 class Cursor(object):
@@ -156,6 +157,7 @@ class Cursor(object):
         values_per_column_index = self.__row_parser.get_values_per_col_index()
         types_per_column_index = self.__row_parser.get_types_per_col_index()
 
+        from aceql import Parms
         if Parms.DEBUG_ON:
             print("values_per_column_index: " + str(values_per_column_index))
             print("types_per_column_index : " + str(types_per_column_index))
@@ -163,7 +165,8 @@ class Cursor(object):
         the_list = []
         index = 0
         for k, v in values_per_column_index.items():
-            # print(k, v)
+            if Parms.DEBUG_ON:
+                print(k, v)
             # detect Epoch timestamp and convert them to date for DATE and datetime for
             # TIMESTAMP
             if types_per_column_index[index] == "TIMESTAMP":
@@ -385,6 +388,7 @@ class Cursor(object):
         if self.__row_parser is not None:
             self.__row_parser.close()  # very important
 
+        from aceql import Parms
         if Parms.DELETE_FILES:
             for filename in self.__filelist:
                 os.remove(filename)
