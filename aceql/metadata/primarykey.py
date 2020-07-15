@@ -19,11 +19,11 @@
 
 from dataclasses import dataclass
 from typing import Optional
-import marshmallow_dataclass
 
 
 @dataclass
 class PrimaryKey:
+
     """A SQL Primary Key with it's defining elements."""
     catalog: Optional[str]
     schema: Optional[str]
@@ -33,10 +33,12 @@ class PrimaryKey:
     primaryKeyName: Optional[str]
 
     class Meta:
+
+        """Meta class is required."""
         ordered = True
 
     def __str__(self):
-        """ The string representation."""
+        """The string representation."""
         return "PrimaryKey [tableName=" + str(self.tableName) + ", columnName=" + str(
             self.columnName) + ", keySequence=" + str(self.keySequence) + ", primaryKeyName=" + str(
             self.primaryKeyName) + "]"

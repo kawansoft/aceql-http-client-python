@@ -19,11 +19,11 @@
 
 from dataclasses import dataclass
 from typing import Optional
-import marshmallow_dataclass
 
 
 @dataclass
 class Column:
+
     """A SQL Column with it's defining elements."""
     catalog: Optional[str]
     schema: Optional[str]
@@ -46,10 +46,12 @@ class Column:
     isAutoincrement: Optional[str]
 
     class Meta:
+
+        """Meta class is required."""
         ordered = True
 
     def __str__(self):
-        """ The string representation."""
+        """The string representation."""
         return "Column [columnName=" + str(self.columnName) + ", tableName=" + str(
             self.tableName) + ", typeName=" + str(self.typeName) + ", size=" + str(
             self.size) + ", decimalDigits=" + str(self.decimalDigits) + ", radix=" + str(

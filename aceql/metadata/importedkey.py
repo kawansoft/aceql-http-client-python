@@ -19,11 +19,11 @@
 
 from dataclasses import dataclass
 from typing import Optional
-import marshmallow_dataclass
 
 
 @dataclass
 class ImportedKey:
+
     """A SQL Foreign Key."""
     catalog: Optional[str]
     schema: Optional[str]
@@ -41,10 +41,12 @@ class ImportedKey:
     deferrability: Optional[int]
 
     class Meta:
+
+        """Meta class is required."""
         ordered = True
 
     def __str__(self):
-        """ The string representation."""
+        """The string representation."""
         return "ImportedKey [primaryKeyTable=" + str(self.primaryKeyTable) + ", primaryKeyColumn=" + str(
             self.primaryKeyColumn) + ", foreignKeyCatalog=" + str(self.foreignKeyCatalog) + ", foreignKeySchema=" + str(
             self.foreignKeySchema) + ", foreignKeyTable=" + str(self.foreignKeyTable) + ", foreignKeyColumn=" + str(

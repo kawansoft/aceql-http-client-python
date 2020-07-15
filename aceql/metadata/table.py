@@ -19,11 +19,8 @@
 
 from dataclasses import dataclass
 from typing import Optional, List
-import marshmallow_dataclass
-
 from aceql.metadata.column import Column
 from aceql.metadata.exportedkey import ExportedKey
-from aceql.metadata.foreignkey import ForeignKey
 from aceql.metadata.importedkey import ImportedKey
 from aceql.metadata.index import Index
 from aceql.metadata.primarykey import PrimaryKey
@@ -31,6 +28,7 @@ from aceql.metadata.primarykey import PrimaryKey
 
 @dataclass
 class Table:
+
     """A SQL Table with it's defining elements."""
     TABLE = "TABLE";
     VIEW = "VIEW";
@@ -46,10 +44,12 @@ class Table:
     schema: Optional[str]
 
     class Meta:
+
+        """Meta class is required."""
         ordered = True
 
     def __str__(self):
-        """ The string representation."""
+        """The string representation."""
         return "Table [tableName=" + str(self.tableName) + ", tableType=" + str(self.tableType) + ", remarks=" + str(
             self.remarks) + ", columns=" + str(self.columns) + ", primaryKeys=" + str(
             self.primaryKeys) + ", indexes=" + str(self.indexes) + ", importedforeignKeys=" + str(

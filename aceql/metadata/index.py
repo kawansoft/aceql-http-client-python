@@ -19,11 +19,11 @@
 
 from dataclasses import dataclass
 from typing import Optional
-import marshmallow_dataclass
 
 
 @dataclass
 class Index:
+
     """A SQL Index with it's defining elements."""
     catalog: Optional[str]
     schema: Optional[str]
@@ -40,10 +40,12 @@ class Index:
     filterCondition: Optional[str]
 
     class Meta:
+
+        """Meta class is required."""
         ordered = True
 
     def __str__(self):
-        """ The string representation."""
+        """The string representation."""
         return "Index [indexName=" + str(self.indexName) + ", tableName=" + str(self.tableName) + ", nonUnique=" + str(
             self.nonUnique) + ", indexQualifier=" + str(self.indexQualifier) + ", type=" + str(
             self.type) + ", ordinalPosition=" + str(self.ordinalPosition) + ", columnName=" + str(
