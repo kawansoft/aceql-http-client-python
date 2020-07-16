@@ -296,6 +296,17 @@ class Cursor(object):
             if row_parser is not None:
                 row_parser.close()
 
+    @staticmethod
+    def check_blob_id(blob_id, column_index):
+        """Checks blob id"""
+        if blob_id is None:
+            raise Error("No value found for column_index " + str(column_index),
+                        0, None, None, 200)
+
+        if not blob_id.endswith(".blob"):
+            raise Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
+                        0, None, None, 200)
+
     # def blob_download(self, blob_id, filename, total_length=0,
     # progress_holder=None):
     # 	""" Allows to download a blob corresponding to a blob_id into a filename
@@ -336,14 +347,7 @@ class Cursor(object):
 
         print("blob_id: " + str(blob_id))
 
-        if blob_id is None:
-            raise Error("No value found for column_index " + str(column_index),
-                        0, None, None, 200)
-
-        if not blob_id.endswith(".blob"):
-            raise Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
-                        0, None, None, 200)
-
+        Cursor.check_blob_id(blob_id, column_index)
         blob_length = self.__aceql_http_api.get_blob_length(blob_id)
         return blob_length
 
@@ -366,13 +370,7 @@ class Cursor(object):
 
         blob_id = values_per_column_index[column_index]
 
-        if blob_id is None:
-            raise Error("No value found for column_index " + str(column_index),
-                        0, None, None, 200)
-
-        if not blob_id.endswith(".blob"):
-            raise Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
-                        0, None, None, 200)
+        Cursor.check_blob_id(blob_id, column_index)
 
         # OK!  we have a valid BLOB Id:
         response = self.__aceql_http_api.get_blob_stream(blob_id)
