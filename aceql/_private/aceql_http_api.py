@@ -117,7 +117,7 @@ class AceQLHttpApi(object):
 
                 user_login_store.set_session_id(session_id);
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -785,8 +785,8 @@ class AceQLHttpApi(object):
         m = encoder.MultipartEncoderMonitor(e, self.my_callback)
 
         the_url = self._url + "blob_upload"
-        r = requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
-                          auth=self.__auth)
+        requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
+                      auth=self.__auth)
 
     def get_db_metadata(self):
         try:
