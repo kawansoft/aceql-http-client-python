@@ -21,9 +21,7 @@
 from aceql import Connection
 from aceql import ProgressIndicator
 from aceql import SqlNullType
-from aceql import ProxyAuth
 import unittest
-import sys
 import os
 from os import sep
 from datetime import datetime, date
