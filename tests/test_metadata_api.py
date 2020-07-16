@@ -18,48 +18,20 @@
 # limitations under the License.
 ##
 
-import aceql
 from aceql import Connection
 import unittest
 import sys
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 import webbrowser
 import os
+from tests.connection_builder import ConnectionBuilder
 
 
 class TestAll(unittest.TestCase):
     @staticmethod
     def test_A():
 
-        print(sys.version)
-        # assert sys.version_info >= (2,5)
-        print()
-
-        print("aceql.apilevel    : " + aceql.apilevel)
-        print("aceql.threadsafety: " + str(aceql.threadsafety))
-        print("aceql.paramstyle  : " + aceql.paramstyle)
-
-        proxies = None
-        auth = None
-
-        use_proxy = False
-        if use_proxy:
-            proxies = {
-                "http": "http://localhost:8080",
-            }
-
-            auth = TestAll.getProxyAuth()
-
-        localhost = "http://localhost:9090/aceql"
-        #server_host = "https://www.aceql.com:9443/aceql"
-        #server_host_no_ssl = "http://www.aceql.com:9090/aceql"
-
-        host = localhost
-
-        Connection.set_timeout(10)
-        Connection.set_stateless(False)
-        connection = aceql.connect(host, "sampledb", "user1", "password1", proxies=proxies, auth=auth)
-        connection.set_gzip_result(True)
+        connection = ConnectionBuilder.get_connection()
 
         print()
         print("aceql version: " + Connection.get_client_version())

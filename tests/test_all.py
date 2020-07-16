@@ -18,7 +18,6 @@
 # limitations under the License.
 ##
 
-import aceql
 from aceql import Connection
 from aceql import ProgressIndicator
 from aceql import SqlNullType
@@ -28,45 +27,13 @@ import sys
 import os
 from os import sep
 from datetime import datetime, date
+from tests.connection_builder import ConnectionBuilder
 
 
 class TestAll(unittest.TestCase):
     def test_A(self):
-        print(sys.version)
-        # assert sys.version_info >= (2,5)
-        print()
 
-        print("aceql.apilevel    : " + aceql.apilevel)
-        print("aceql.threadsafety: " + str(aceql.threadsafety))
-        print("aceql.paramstyle  : " + aceql.paramstyle)
-
-        proxies = None
-        auth = None
-
-        use_proxy = False
-        if use_proxy:
-            proxies = {
-                "http": "http://localhost:8080",
-            }
-
-            auth = TestAll.getProxyAuth()
-
-        localhost = "http://localhost:9090/aceql"
-        # server_host = "https://www.aceql.com:9443/aceql"
-        # server_host_no_ssl = "http://www.aceql.com:9090/aceql"
-
-        host = localhost
-        database = "sampledb"
-        username = "user1"
-
-        # password= "password1"
-        session_id = None
-
-        Connection.set_timeout(10)
-        Connection.set_stateless(False)
-        connection = aceql.connect(host, database, username, "password1", session_id, proxies=proxies, auth=auth)
-        connection.set_gzip_result(True)
-
+        connection = ConnectionBuilder.get_connection()
         print()
         print("aceql version: " + Connection.get_client_version())
         print()
@@ -211,7 +178,7 @@ class TestAll(unittest.TestCase):
         cursor.close()
 
         connection.close()
-        connection2 = aceql.connect(host, "sampledb", "user1", "password1", proxies=proxies, auth=auth)
+        connection2 = ConnectionBuilder.get_connection()
         print("connection2.get_auto_commit(): " + str(connection2.get_auto_commit()))
         print()
         connection2.logout()
