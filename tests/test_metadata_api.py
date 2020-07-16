@@ -62,7 +62,7 @@ class TestAll(unittest.TestCase):
         connection.set_gzip_result(True)
 
         print()
-        print("aceql version: " + get_client_version())
+        print("aceql version: " + Connection.get_client_version())
         print()
 
         remote_database_meta_data = RemoteDatabaseMetaData(connection)
