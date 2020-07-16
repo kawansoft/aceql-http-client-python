@@ -20,7 +20,6 @@
 
 from aceql import Connection
 import unittest
-import sys
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 import webbrowser
 import os

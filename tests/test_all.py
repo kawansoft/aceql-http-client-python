@@ -184,15 +184,6 @@ class TestAll(unittest.TestCase):
         connection2.logout()
         print()
 
-    @staticmethod
-    def getProxyAuth():
-        """Get proxy auth info from a filename"""
-        with open("I:\\neotunnel.txt", "rt") as fd:
-            content = fd.read()
-        lines = content.split()
-        auth = ProxyAuth(lines[0].strip(), lines[1].strip())
-        return auth
-
 
 if __name__ == '__main__':
     unittest.main()
