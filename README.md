@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/945858b13a75453c9701f7fe195ec0d7)](https://www.codacy.com/gh/kawansoft/aceql-http-client-python?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kawansoft/aceql-http-client-python&amp;utm_campaign=Badge_Grade)
 ![GitHub top language](https://img.shields.io/github/languages/top/kawansoft/aceql-http-client-python) 
 ![GitHub issues](https://img.shields.io/github/issues/kawansoft/aceql-http-client-python) 
 
