@@ -9,7 +9,7 @@
 # You may obtain a copy of the License at
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -207,7 +207,7 @@ class AceQLHttpApi(object):
             return result_analyzer.get_result_default()
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -225,7 +225,7 @@ class AceQLHttpApi(object):
                             result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -253,11 +253,8 @@ class AceQLHttpApi(object):
     def rollback(self):
         self.call_api_no_result("rollback", None)
 
-    def trace(self):
-        if AceQLHttpApi.__trace_on:
-            print()
-
-    def trace(self, s):
+    @staticmethod
+    def trace(s):
         if AceQLHttpApi.__trace_on:
             print(s)
 
@@ -535,7 +532,7 @@ class AceQLHttpApi(object):
             return row_count
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -650,7 +647,7 @@ class AceQLHttpApi(object):
             return result_set_info
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -675,7 +672,7 @@ class AceQLHttpApi(object):
             return response
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -706,7 +703,7 @@ class AceQLHttpApi(object):
             return response
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -751,7 +748,7 @@ class AceQLHttpApi(object):
             return int(length_str)
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -814,7 +811,7 @@ class AceQLHttpApi(object):
             return jdbc_database_meta_data_holder;
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -845,7 +842,7 @@ class AceQLHttpApi(object):
             return table_names_dto;
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
@@ -877,7 +874,7 @@ class AceQLHttpApi(object):
             return table_dto;
 
         except Exception as e:
-            if type(e) == Error:
+            if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
