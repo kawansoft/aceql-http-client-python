@@ -7,7 +7,7 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
 # 
 # Unless required by applicable law or agreed to in writing, software
@@ -18,6 +18,7 @@
 ##
 import marshmallow_dataclass
 
+from aceql._private.file_util import FileUtil
 from aceql._private.user_login_store import *
 from aceql._private.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
 from aceql._private.table_dto import TableDto
@@ -26,12 +27,14 @@ from aceql._private.table_names_dto import TableNamesDto
 import requests
 from requests_toolbelt.multipart import encoder
 
-from aceql.error import *
-from aceql._private.result_analyzer import *
-from aceql._private.result_set_info import *
-from aceql._private.row_counter import *
-from aceql._private.stream_result_analyzer import *
-from aceql._private.version_values import *
+from aceql._private.file_util import os
+from aceql.error import Error
+from aceql._private.aceql_debug import AceQLDebug
+from aceql._private.result_analyzer import ResultAnalyzer
+from aceql._private.result_set_info import ResultSetInfo
+from aceql._private.row_counter import RowCounter
+from aceql._private.stream_result_analyzer import StreamResultAnalyzer
+from aceql._private.version_values import VersionValues
 
 class AceQLHttpApi(object):
     """ AceQL HTTP wrapper for all apis. Takes care of all
@@ -123,10 +126,9 @@ class AceQLHttpApi(object):
     # *
     # * @return {@code true} if session is stateless, else {@code false}.
     #
+    @staticmethod
     def is_stateless():
         return AceQLHttpApi.__stateless
-
-    is_stateless = staticmethod(is_stateless)
 
     # *
     # * Sets the session mode
@@ -134,6 +136,7 @@ class AceQLHttpApi(object):
     # * @param stateless
     # * if true, the session will be stateless, else stateful.
     #
+    @staticmethod
     def set_stateless(the_stateless):
         if the_stateless is None:
             raise TypeError("stateless is null!")
@@ -142,17 +145,14 @@ class AceQLHttpApi(object):
         else:
             AceQLHttpApi.__stateless = False
 
-    set_stateless = staticmethod(set_stateless)
-
     # *
     # * Sets the timeout in seconds
     #
+    @staticmethod
     def set_timeout(timeout):
         if timeout is None:
             raise TypeError("timeout is null!")
         AceQLHttpApi.__timeout = timeout
-
-    set_timeout = staticmethod(set_timeout)
 
     def set_progress_indicator(self, progress_indicator):
         self.__progress_indicator = progress_indicator

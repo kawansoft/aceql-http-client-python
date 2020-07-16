@@ -17,7 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-from typing import List
 
 import aceql
 from aceql import Connection
@@ -29,7 +28,8 @@ import os
 
 
 class TestAll(unittest.TestCase):
-    def test_A(self):
+    @staticmethod
+    def test_A():
 
         print(sys.version)
         # assert sys.version_info >= (2,5)

@@ -8,9 +8,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,8 @@
 import aceql
 from aceql import Connection
 from aceql import ProgressIndicator
-from aceql import ProgressIndicator
+from aceql import SqlNullType
+from aceql import ProxyAuth
 import unittest
 import sys
 import os
@@ -42,7 +43,7 @@ class TestAll(unittest.TestCase):
         proxies = None
         auth = None
 
-        use_proxy  = False
+        use_proxy = False
         if use_proxy:
             proxies = {
                 "http": "http://localhost:8080",
@@ -51,14 +52,14 @@ class TestAll(unittest.TestCase):
             auth = TestAll.getProxyAuth()
 
         localhost = "http://localhost:9090/aceql"
-        #server_host = "https://www.aceql.com:9443/aceql"
-        #server_host_no_ssl = "http://www.aceql.com:9090/aceql"
+        # server_host = "https://www.aceql.com:9443/aceql"
+        # server_host_no_ssl = "http://www.aceql.com:9090/aceql"
 
         host = localhost
         database = "sampledb"
-        username= "user1"
+        username = "user1"
 
-        #password= "password1"
+        # password= "password1"
         session_id = None
 
         Connection.set_timeout(10)

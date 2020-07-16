@@ -18,8 +18,9 @@
 ##
 
 from aceql._private.row_parser import RowParser
-from aceql._private.aceql_http_api import CursorUtil
-from aceql._private.aceql_http_api import AceQLDebug, Error, DateTimeUtil, os
+from aceql._private.cursor_util import CursorUtil
+from aceql._private.datetime_util import DateTimeUtil
+from aceql._private.aceql_http_api import AceQLDebug, Error, os
 
 
 class Cursor(object):
