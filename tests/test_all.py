@@ -68,7 +68,7 @@ class TestAll(unittest.TestCase):
         connection.set_gzip_result(True)
 
         print()
-        print("aceql version: " + connection.get_client_version())
+        print("aceql version: " + Connection.get_client_version())
         print()
 
         connection.set_holdability("hold_cursors_over_commit")

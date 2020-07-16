@@ -151,10 +151,6 @@ class Connection(object):
         """Gets the server version of AceQL HTTP."""
         return self.__aceQLHttpApi.get_server_version()
 
-    def get_client_version(self):
-        """Gets the SDK version."""
-        return self.__aceQLHttpApi.get_client_version()
-
     def close(self):
         """Closes the connection to the remote database but keeps the HTTP session."""
         self.__aceQLHttpApi.close()
@@ -196,3 +192,8 @@ class Connection(object):
     def set_read_only(self, read_only):
         """Allows to put Connection read-only mode."""
         self.__aceQLHttpApi.set_read_only(read_only)
+
+    @staticmethod
+    def get_client_version():
+        """Gets the SDK version."""
+        return AceQLHttpApi.get_client_version()

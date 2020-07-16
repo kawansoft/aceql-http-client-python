@@ -19,7 +19,7 @@
 import marshmallow_dataclass
 
 from aceql._private.file_util import FileUtil
-from aceql._private.user_login_store import *
+from aceql._private.user_login_store import UserLoginStore
 from aceql._private.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
 from aceql._private.table_dto import TableDto
 from aceql._private.table_names_dto import TableNamesDto
@@ -35,6 +35,7 @@ from aceql._private.result_set_info import ResultSetInfo
 from aceql._private.row_counter import RowCounter
 from aceql._private.stream_result_analyzer import StreamResultAnalyzer
 from aceql._private.version_values import VersionValues
+
 
 class AceQLHttpApi(object):
     """ AceQL HTTP wrapper for all apis. Takes care of all
@@ -265,10 +266,9 @@ class AceQLHttpApi(object):
     # *
     # * @return true if trace is on
     #
+    @staticmethod
     def is_trace_on():
         return AceQLHttpApi.__trace_on
-
-    is_trace_on = staticmethod(is_trace_on)
 
     # *
     # * Sets the trace on/off
@@ -276,10 +276,9 @@ class AceQLHttpApi(object):
     # * @param TRACE_ON
     # * if true, trace will be on
     #
+    @staticmethod
     def set_trace_on(trace_on):
         AceQLHttpApi.__trace_on = trace_on
-
-    set_trace_on = staticmethod(set_trace_on)
 
     # *
     # * @return the prettyPrinting
@@ -333,7 +332,8 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def get_client_version(self):
+    @staticmethod
+    def get_client_version():
         return VersionValues.NAME + " - " + VersionValues.VERSION + " - " + VersionValues.DATE
 
     # *
@@ -771,7 +771,6 @@ class AceQLHttpApi(object):
 
         except Exception as e:
             print(str(e))
-            pass
 
     def blob_upload(self, blob_id, fd, total_length):
         """ Upload the BLOB and use a callback function for progress indicator. """
