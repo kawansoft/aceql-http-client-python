@@ -123,7 +123,7 @@ class Connection(object):
 
     def _trace(self):
         """Print empty line on trace."""
-        self.__aceQLHttpApi.trace()
+        self.__aceQLHttpApi.trace("")
 
     def trace(self, s):
         """Prints the string on trace."""

@@ -24,7 +24,6 @@ from io import open
 
 # -*- coding: utf-8 -*-
 from aceql._private.aceql_debug import AceQLDebug
-from aceql._private.cursor_util import *
 
 
 class StreamResultAnalyzer(object):

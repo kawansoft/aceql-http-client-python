@@ -21,7 +21,6 @@
 from aceql._private.datetime_util import DateTimeUtil
 from aceql._private.datetime_util import datetime
 from aceql._private.file_util import FileUtil
-from aceql.sql_null_type import *
 
 
 class CursorUtil(object):

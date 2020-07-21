@@ -24,7 +24,8 @@ from aceql._private.file_util import FileUtil
 class AceQLHttpApiTest(object):
     """description of class"""
 
-    def doIt(self):
+    @staticmethod
+    def doIt():
         AceQLHttpApi.set_stateless(True)
         is_stateless = AceQLHttpApi.is_stateless()
         print("isStateless: " + str(is_stateless))

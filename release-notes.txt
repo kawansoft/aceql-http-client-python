@@ -1,6 +1,6 @@
 
                  AceQL Python Client SDK
-                      Version 3.2
+                      Version 3.2.1
                       Release Notes
 
 
@@ -20,8 +20,16 @@ The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
 
+AceQL Python Client SDK - Version 3.2.1 - 21-Jul-2020
+-----------------------------------------------------
+
+What's New
+- Add remaining refactor for compliance with 
+  codacy.com best practices.
+
+
 AceQL Python Client SDK - Version 3.2 - 17-Jul-2020
-___________________________________________________
+----------------------------------------------------
 
 What's New
 - Connection get_client_version() is now static.
