@@ -23,7 +23,7 @@
     It provides a SQL interface compliant with the DB-API 2.0 specification described by PEP 249.
 """
 
-from aceql.connection import *
+from aceql.connection import Connection
 from aceql.progress_indicator import *
 from aceql.sql_null_type import *
 from aceql.cursor import *
