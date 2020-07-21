@@ -3,8 +3,6 @@ from typing import List, Optional
 from typing import ClassVar
 
 import marshmallow_dataclass
-from marshmallow import Schema
-from typing_extensions import Type
 
 
 @dataclass
@@ -13,7 +11,6 @@ class Tables:
     status: str
     tableNames: List[str]
     toto: bool
-    Schema: ClassVar[Type[Schema]] = Schema
 
     def __str__(self):
         """ The string representation."""
