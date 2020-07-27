@@ -475,18 +475,12 @@ class AceQLHttpApi(object):
 
             action = "execute_update"
 
-            if sql is None:
-                raise TypeError("sql is null!")
-            if is_prepared_statement is None:
-                raise TypeError("isPreparedStatement is null!")
+            self.check_values(is_prepared_statement, sql)
 
             dict_params = {}
             dict_params["sql"] = sql
 
-            if str(is_prepared_statement) == 'True':
-                dict_params["prepared_statement"] = "true"
-            else:
-                dict_params["prepared_statement"] = "false"
+            self.set_is_prepared_statement(dict_params, is_prepared_statement)
 
             url_withaction = self._url + action
 
@@ -558,21 +552,12 @@ class AceQLHttpApi(object):
     def execute_query(self, sql, isPreparedStatement, statementParameters):
 
         try:
-
             action = "execute_query"
 
-            if sql is None:
-                raise TypeError("sql is null!")
-            if isPreparedStatement is None:
-                raise TypeError("isPreparedStatement is null!")
+            self.check_values(isPreparedStatement, sql)
 
-            dict_params = {}
-            dict_params["sql"] = sql
-
-            if str(isPreparedStatement) == 'True':
-                dict_params["prepared_statement"] = "true"
-            else:
-                dict_params["prepared_statement"] = "false"
+            dict_params = {"sql": sql}
+            self.set_is_prepared_statement(dict_params, isPreparedStatement)
 
             url_withaction = self._url + action
 
@@ -585,16 +570,7 @@ class AceQLHttpApi(object):
 
                 dict_params.update(statementParameters)
 
-            if self._gzipResult:
-                dict_params["gzip_result"] = "true"
-            if self._prettyPrinting:
-                dict_params["pretty_printing"] = "true"
-
-            # Force pretty printing to True because parser needs it
-            dict_params["pretty_printing"] = "true"
-
-            # We need the types
-            dict_params["column_types"] = "true"
+            self.update_dict_params(dict_params)
 
             AceQLDebug.debug("dictParams 2: " + str(dict_params))
 
@@ -618,31 +594,7 @@ class AceQLHttpApi(object):
 
             AceQLDebug.debug("after open filename")
 
-            file_out = None
-
-            if self.is_gzip_result():
-                file_out = filename[0: len(filename) - 4] + ".ungzipped.txt"
-                FileUtil.decompress(filename, file_out)
-                from aceql import Parms
-                if Parms.DELETE_FILES:
-                    os.remove(filename)
-            else:
-                file_out = filename
-
-            AceQLDebug.debug("Before StreamResultAnalyzer")
-
-            result_analyzer = StreamResultAnalyzer(file_out, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                if Parms.DELETE_FILES:
-                    os.remove(filename)
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
-
-            row_counter = RowCounter(file_out)
-            row_count = row_counter.count()
-
-            result_set_info = ResultSetInfo(file_out, row_count)
-            AceQLDebug.debug("Before resultSetInfo")
+            result_set_info = self.treat_result(filename)
 
             return result_set_info
 
@@ -651,6 +603,52 @@ class AceQLHttpApi(object):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
+
+    def treat_result(self, filename):
+        file_out = None
+        if self.is_gzip_result():
+            file_out = filename[0: len(filename) - 4] + ".ungzipped.txt"
+            FileUtil.decompress(filename, file_out)
+            from aceql import Parms
+            if Parms.DELETE_FILES:
+                os.remove(filename)
+        else:
+            file_out = filename
+        AceQLDebug.debug("Before StreamResultAnalyzer")
+        result_analyzer = StreamResultAnalyzer(file_out, self.__http_status_code)
+        if not result_analyzer.is_status_ok():
+            if Parms.DELETE_FILES:
+                os.remove(filename)
+            raise Error(result_analyzer.get_error_message(),
+                        result_analyzer.get_error_type(), None, None, self.__http_status_code)
+        row_counter = RowCounter(file_out)
+        row_count = row_counter.count()
+        result_set_info = ResultSetInfo(file_out, row_count)
+        AceQLDebug.debug("Before resultSetInfo")
+        return result_set_info
+
+    def update_dict_params(self, dict_params):
+        if self._gzipResult:
+            dict_params["gzip_result"] = "true"
+        if self._prettyPrinting:
+            dict_params["pretty_printing"] = "true"
+        # Force pretty printing to True because parser needs it
+        dict_params["pretty_printing"] = "true"
+        # We need the types
+        dict_params["column_types"] = "true"
+
+    def check_values(self, is_prepared_statement, sql):
+        if sql is None:
+            raise TypeError("sql is null!")
+        if is_prepared_statement is None:
+            raise TypeError("isPreparedStatement is null!")
+
+    @staticmethod
+    def set_is_prepared_statement(dict_params, is_prepared_statement):
+        if str(is_prepared_statement) == 'True':
+            dict_params["prepared_statement"] = "true"
+        else:
+            dict_params["prepared_statement"] = "false"
 
     def get_blob_stream(self, blob_id):
         """ returns a BLOB stream as a Requests response """
