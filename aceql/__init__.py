@@ -27,7 +27,7 @@ from aceql.connection import Connection
 from aceql.progress_indicator import *
 from aceql.sql_null_type import *
 from aceql.cursor import *
-from aceql.error import *
+from aceql.error import Error
 from aceql.proxy_auth import *
 
 from aceql.dbapi2 import *
