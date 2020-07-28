@@ -20,8 +20,7 @@
 
 import sys
 import aceql
-from aceql import Connection
-from aceql import ProxyAuth
+from aceql import *
 
 
 class ConnectionBuilder(object):

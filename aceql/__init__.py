@@ -29,9 +29,7 @@ from aceql.sql_null_type import SqlNullType
 from aceql.cursor import Cursor
 from aceql.error import Error
 from aceql.proxy_auth import ProxyAuth
-from aceql.dbapi2 import *
 
-from aceql._private.parms import Parms
 from aceql.metadata.exportedkey import ExportedKey
 from aceql.metadata.foreignkey import ForeignKey
 from aceql.metadata.importedkey import ImportedKey
@@ -41,6 +39,8 @@ from aceql.metadata.primarykey import PrimaryKey
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 from aceql.metadata.table import Table
 from aceql.metadata.column import Column
+
+from aceql.dbapi2 import *
 
 __all__ = ["Connection", "Cursor", "Error", "ProgressIndicator", "ProxyAuth", "SqlNullType", "Column", "ExportedKey",
            "ForeignKey", "ImportedKey", "Index", "JdbcDatabaseMetaData", "PrimaryKey", "RemoteDatabaseMetaData",
