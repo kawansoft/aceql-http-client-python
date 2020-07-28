@@ -20,7 +20,7 @@
 
 import sys
 import aceql
-from aceql import *
+from aceql import Connection
 
 
 class ConnectionBuilder(object):
