@@ -16,6 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+
+import sys
+
 import marshmallow_dataclass
 
 from aceql._private.file_util import FileUtil
@@ -35,7 +38,7 @@ from aceql._private.result_set_info import ResultSetInfo
 from aceql._private.row_counter import RowCounter
 from aceql._private.stream_result_analyzer import StreamResultAnalyzer
 from aceql._private.version_values import VersionValues
-
+from aceql._private.parms import Parms
 
 class AceQLHttpApi(object):
     """ AceQL HTTP wrapper for all apis. Takes care of all
@@ -334,6 +337,16 @@ class AceQLHttpApi(object):
         return VersionValues.NAME + " - " + VersionValues.VERSION + " - " + VersionValues.DATE
 
     # *
+    # * Gets the SDK version + Python version
+    # *
+    # * @
+    # * if any Exception occurs
+    #
+    @staticmethod
+    def get_client_version_full():
+        return AceQLHttpApi.get_client_version() + " - " + sys.version
+
+    # *
     # * Calls /close API
     # *
     # * @
@@ -552,6 +565,7 @@ class AceQLHttpApi(object):
     def execute_query(self, sql, isPreparedStatement, statementParameters):
 
         try:
+
             action = "execute_query"
 
             self.check_values(isPreparedStatement, sql)

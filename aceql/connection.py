@@ -197,3 +197,8 @@ class Connection(object):
     def get_client_version():
         """Gets the SDK version."""
         return AceQLHttpApi.get_client_version()
+
+    @staticmethod
+    def get_client_version_full():
+        """Gets the SDK version with the Python version."""
+        return AceQLHttpApi.get_client_version_full()

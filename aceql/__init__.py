@@ -24,23 +24,23 @@
 """
 
 from aceql.connection import Connection
-from aceql.progress_indicator import *
-from aceql.sql_null_type import *
-from aceql.cursor import *
+from aceql.progress_indicator import ProgressIndicator
+from aceql.sql_null_type import SqlNullType
+from aceql.cursor import Cursor
 from aceql.error import Error
-from aceql.proxy_auth import *
-
+from aceql.proxy_auth import ProxyAuth
 from aceql.dbapi2 import *
 
-from aceql.metadata.exportedkey import *
-from aceql.metadata.foreignkey import *
-from aceql.metadata.importedkey import *
-from aceql.metadata.index import *
-from aceql.metadata.jdbc_database_meta_data import *
-from aceql.metadata.primarykey import *
-from aceql.metadata.remote_database_metadata import *
-from aceql.metadata.table import *
-from aceql.metadata.column import *
+from aceql._private.parms import Parms
+from aceql.metadata.exportedkey import ExportedKey
+from aceql.metadata.foreignkey import ForeignKey
+from aceql.metadata.importedkey import ImportedKey
+from aceql.metadata.index import Index
+from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
+from aceql.metadata.primarykey import PrimaryKey
+from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
+from aceql.metadata.table import Table
+from aceql.metadata.column import Column
 
 __all__ = ["Connection", "Cursor", "Error", "ProgressIndicator", "ProxyAuth", "SqlNullType", "Column", "ExportedKey",
            "ForeignKey", "ImportedKey", "Index", "JdbcDatabaseMetaData", "PrimaryKey", "RemoteDatabaseMetaData",

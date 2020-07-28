@@ -21,7 +21,7 @@ from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
 from aceql._private.datetime_util import DateTimeUtil
 from aceql._private.aceql_http_api import AceQLDebug, Error, os
-
+from aceql._private.parms import Parms
 
 class Cursor(object):
     """Cursor class."""
@@ -158,7 +158,6 @@ class Cursor(object):
         values_per_column_index = self.__row_parser.get_values_per_col_index()
         types_per_column_index = self.__row_parser.get_types_per_col_index()
 
-        from aceql import Parms
         if Parms.DEBUG_ON:
             print("values_per_column_index: " + str(values_per_column_index))
             print("types_per_column_index : " + str(types_per_column_index))
@@ -387,7 +386,6 @@ class Cursor(object):
         if self.__row_parser is not None:
             self.__row_parser.close()  # very important
 
-        from aceql import Parms
         if Parms.DELETE_FILES:
             for filename in self.__filelist:
                 os.remove(filename)

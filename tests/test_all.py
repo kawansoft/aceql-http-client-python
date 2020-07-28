@@ -33,8 +33,8 @@ class TestAll(unittest.TestCase):
 
         connection = ConnectionBuilder.get_connection()
         print()
-        print("aceql version: " + Connection.get_client_version())
-        print()
+        print("aceql version     : " + Connection.get_client_version())
+        print("aceql version full: " + Connection.get_client_version_full())
 
         connection.set_holdability("hold_cursors_over_commit")
         holdability = connection.get_holdability()
