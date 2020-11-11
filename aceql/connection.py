@@ -72,6 +72,14 @@ class Connection(object):
         cursor = Cursor(self, self.__aceQLHttpApi)
         return cursor
 
+    def add_request_headers(self, headers):
+        """Allows to pass a dictionary of headers to each request."""
+        self.__aceQLHttpApi.add_request_headers(headers)
+
+    def reset_request_headers(self):
+        """Resets the request headers. The previously added headers with add_request_headers will be suppressed."""
+        self.__aceQLHttpApi.reset_request_headers()
+
     @staticmethod
     def is_stateless():
         """Says if session is stateless."""

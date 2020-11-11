@@ -40,6 +40,7 @@ from aceql._private.row_counter import RowCounter
 from aceql._private.stream_result_analyzer import StreamResultAnalyzer
 from aceql._private.version_values import VersionValues
 
+
 class AceQLHttpApi(object):
     """ AceQL HTTP wrapper for all apis. Takes care of all
     HTTP calls and operations."""
@@ -71,11 +72,13 @@ class AceQLHttpApi(object):
         self.__http_status_code = requests.codes.ok
 
         # Other self for other methods
-        self._prettyPrinting = True
-        self._gzipResult = False
+        self._pretty_printing = True
+        self._gzip_result = False
         self._temp_length = 0
         self.__total_length = 0
         self.__progress_indicator = None
+
+        self.__headers = {}
 
         # url = c + "/database/" + database + "/username/" \
         #       + username + "/connect" + "?password=" \
@@ -167,9 +170,9 @@ class AceQLHttpApi(object):
     def call_with_get_url(self, url):
 
         if AceQLHttpApi.__timeout == 0:
-            response = requests.get(url, proxies=self.__proxies, auth=self.__auth)
+            response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
         else:
-            response = requests.get(url, proxies=self.__proxies, auth=self.__auth, timeout=AceQLHttpApi.__timeout)
+            response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth, timeout=AceQLHttpApi.__timeout)
 
         self.__http_status_code = response.status_code
 
@@ -178,9 +181,9 @@ class AceQLHttpApi(object):
     def call_with_post_url(self, url, dict_params):
 
         if AceQLHttpApi.__timeout == 0:
-            response = requests.post(url, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+            response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
         else:
-            response = requests.post(url, data=dict_params, proxies=self.__proxies, auth=self.__auth,
+            response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
                                      timeout=AceQLHttpApi.__timeout)
 
         self.__http_status_code = response.status_code
@@ -284,7 +287,7 @@ class AceQLHttpApi(object):
     # * @return the prettyPrinting
     #
     def is_pretty_printing(self):
-        return self._prettyPrinting
+        return self._pretty_printing
 
     # *
     # * Says the query result is returned compressed with the GZIP file format.
@@ -292,7 +295,7 @@ class AceQLHttpApi(object):
     # * @return the gzipResult
     #
     def is_gzip_result(self):
-        return self._gzipResult
+        return self._gzip_result
 
     # *
     # * Says if JSON contents are to be pretty printed.  Defaults to false.
@@ -300,8 +303,8 @@ class AceQLHttpApi(object):
     # * @param prettyPrinting
     # * if true, JSON contents are to be pretty printed
     #
-    def set_pretty_printing(self, prettyPrinting):
-        self._prettyPrinting = prettyPrinting
+    def set_pretty_printing(self, pretty_printing):
+        self._pretty_printing = pretty_printing
 
     # *
     # * Define if result sets are compressed before download.  Defaults to true.
@@ -309,12 +312,12 @@ class AceQLHttpApi(object):
     # * @param gzipResult
     # * if true, sets are compressed before download
     #
-    def set_gzip_result(self, gzipResult):
+    def set_gzip_result(self, gzip_result):
 
-        if str(gzipResult) == 'True':
-            self._gzipResult = True
+        if str(gzip_result) == 'True':
+            self._gzip_result = True
         else:
-            self._gzipResult = False
+            self._gzip_result = False
 
     # *
     # * Calls /get_version API
@@ -460,7 +463,7 @@ class AceQLHttpApi(object):
     # * @return the httpStatusMessage
     #
     def get_http_status_message(self):
-        status_messages = requests.status_codes._codes[self.__http_status_code]
+        status_messages = requests.status_codes.codes[self.__http_status_code]
         return status_messages[0]
 
     # *
@@ -512,9 +515,9 @@ class AceQLHttpApi(object):
             # print("Before update request")
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
                                          timeout=AceQLHttpApi.__timeout)
 
             # if AceQLHttpApi.__timeout == 0:
@@ -591,9 +594,9 @@ class AceQLHttpApi(object):
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
                                          timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
@@ -641,9 +644,9 @@ class AceQLHttpApi(object):
         return result_set_info
 
     def update_dict_params(self, dict_params):
-        if self._gzipResult:
+        if self._gzip_result:
             dict_params["gzip_result"] = "true"
-        if self._prettyPrinting:
+        if self._pretty_printing:
             dict_params["pretty_printing"] = "true"
         # Force pretty printing to True because parser needs it
         dict_params["pretty_printing"] = "true"
@@ -673,9 +676,9 @@ class AceQLHttpApi(object):
             the_url = self._url + "/blob_download?blob_id=" + blob_id
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.get(the_url, proxies=self.__proxies, auth=self.__auth)
+                response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.get(the_url, proxies=self.__proxies, auth=self.__auth,
+                response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
                                         timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
@@ -704,9 +707,9 @@ class AceQLHttpApi(object):
                 dict_params["table_name"] = table_name
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.post(the_url, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+                response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(the_url, data=dict_params, proxies=self.__proxies, auth=self.__auth,
+                response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
                                          timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
@@ -739,9 +742,9 @@ class AceQLHttpApi(object):
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
             if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
                                          timeout=AceQLHttpApi.__timeout)
 
             self.__http_status_code = response.status_code
@@ -786,7 +789,7 @@ class AceQLHttpApi(object):
         self.__total_length = total_length
 
         # fields={'field0': 'value', 'field1': 'value',
-        #		'field2': ('filename', open('file.py', 'rb'), 'text/plain')}
+        # 'field2': ('filename', open('file.py', 'rb'), 'text/plain')}
 
         the_fields = dict()
         the_fields["blob_id"] = blob_id
@@ -795,8 +798,13 @@ class AceQLHttpApi(object):
         e = encoder.MultipartEncoder(fields=the_fields)
         m = encoder.MultipartEncoderMonitor(e, self.my_callback)
 
+        the_headers = dict(self.__headers)  # or orig.copy()
+        the_headers["Content-Type"] = m.content_type
+
         the_url = self._url + "blob_upload"
-        requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
+        #requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
+        #              auth=self.__auth)
+        requests.post(the_url, data=m, headers=the_headers, proxies=self.__proxies,
                       auth=self.__auth)
 
     def get_db_metadata(self):
@@ -889,3 +897,9 @@ class AceQLHttpApi(object):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
+
+    def add_request_headers(self, headers):
+        self.__headers = headers
+
+    def reset_request_headers(self):
+        self.__headers = {}
