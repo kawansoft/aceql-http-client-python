@@ -20,7 +20,7 @@ License.
 
 
 AceQL Python Client SDK - Version 3.3 - 11-Nov-2020
------------------------------------------------------
+----------------------------------------------------
 
 What's New:
 - The new Connection.add_request_headers()  and
