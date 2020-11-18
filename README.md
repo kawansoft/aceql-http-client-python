@@ -57,7 +57,7 @@
 
 This document describes how to use the AceQL SDK / module and gives some details about how it operates with the AceQL Server side.
 
-The AceQL SDK / module allows you to wrap the [AceQL HTTP APIs](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-6.1-user-guide-api.md)  to access remote SQL databases and/or SQL databases in the cloud by simply including standard Python SQL calls in your code, just like you would do for any local database. There is zero learning curve and usage is straightforward.
+The AceQL SDK / module allows you to wrap the [AceQL HTTP APIs](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-6.2-user-guide-api.md)  to access remote SQL databases and/or SQL databases in the cloud by simply including standard Python SQL calls in your code, just like you would do for any local database. There is zero learning curve and usage is straightforward.
 
 The AceQL Server operation is described in [AceQL HTTP Server Installation and Configuration Guide](https://github.com/kawansoft/aceql-http/blob/master/README.md), whose content is sometimes referred to in his User Guide.
 
@@ -170,7 +170,7 @@ password = "password1"
 connection = aceql.connect(host, database, username, password)
 ```
 
-The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/6.1/src/sampledb_other_databases.txt)
+The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/6.2/src/sampledb_other_databases.txt)
 
 Once you have a `Connection`, you can create a `Cursor` object and call its `execute()` method to perform SQL commands.
 
@@ -580,7 +580,7 @@ with closing(connection.cursor()) as cursor:
 
 Some working environments (Intranet, etc.) require that the client user authenticates himself without a password. Thus, it is not possible for this users to authenticate though the AceQL client SDK.
 
-In this case, you may use directly the native HTTP [login](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-6.1-user-guide-api.md#login) API to authenticate the users and retrieve the `session_id` returned by the API:
+In this case, you may use directly the native HTTP [login](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-6.2-user-guide-api.md#login) API to authenticate the users and retrieve the `session_id` returned by the API:
 
 ```python
 import aceql
@@ -626,7 +626,7 @@ filename = os.path.expanduser("~") + os.sep + "db_schema.html"
 remote_database_meta_data.db_schema_download(filename)
 ```
 
-See an example of the built HTML schema:  [db_schema.out.html](https://www.aceql.com/rest/soft/6.1/src/db_schema.out.html)
+See an example of the built HTML schema:  [db_schema.out.html](https://www.aceql.com/rest/soft/6.2/src/db_schema.out.html)
 
 ### Accessing remote database main properties
 
