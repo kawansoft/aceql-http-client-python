@@ -17,7 +17,9 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v3.3 - November 11, 2020
+## Python Client SDK v3.3 - User Guide 
+
+## November 11, 2020
 
 <img src="https://www.aceql.com/favicon.png" alt=""/>
 

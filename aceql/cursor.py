@@ -23,6 +23,7 @@ from aceql._private.datetime_util import DateTimeUtil
 from aceql._private.aceql_http_api import AceQLDebug, Error, os
 from aceql._private.parms import Parms
 
+
 class Cursor(object):
     """Cursor class."""
 
