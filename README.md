@@ -21,7 +21,7 @@
 
 ## November 11, 2020
 
-<img src="https://www.aceql.com/favicon.png" alt=""/>
+<img src="https://www.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
    * [Fundamentals](#fundamentals)
       * [License](#license)
