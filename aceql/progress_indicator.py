@@ -46,7 +46,7 @@ class ProgressIndicator(object):
     # Public methods
     #
     @property
-    def get_percent(self):
+    def get_percent(self) -> str:
         """ Allows to get transfer progress from 0 to 100 """
         return self.__percent
 
@@ -54,6 +54,6 @@ class ProgressIndicator(object):
         """ Allows caller to cancel the transfer operation """
         self.__cancelled = True
 
-    def is_cancelled(self):
+    def is_cancelled(self) -> bool:
         """ Allows for AceQL internal for transfer thread to test if cancelled """
         return self.__cancelled

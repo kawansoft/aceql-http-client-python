@@ -34,6 +34,7 @@ Date = datetime.date
 Time = datetime.time
 Timestamp = datetime.datetime
 
+
 def DateFromTicks(ticks):
     return Date(*time.localtime(ticks)[:3])
 

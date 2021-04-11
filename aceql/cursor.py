@@ -20,14 +20,14 @@
 from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
 from aceql._private.datetime_util import DateTimeUtil
-from aceql._private.aceql_http_api import AceQLDebug, Error, os
+from aceql._private.aceql_http_api import AceQLDebug, Error, os, AceQLHttpApi
 from aceql._private.parms import Parms
 
 
 class Cursor(object):
     """Cursor class."""
 
-    def __init__(self, connection, aceql_http_api):
+    def __init__(self, connection, aceql_http_api: AceQLHttpApi):
         self.__connection = connection
         self.__aceql_http_api = aceql_http_api
         self.__is_closed = False
@@ -41,7 +41,7 @@ class Cursor(object):
         self.__row_parser = None
 
     @property
-    def description(self):
+    def description(self) -> str:
         """Describes the name and SLQ type of each column.
 
         (5 other elements are not set in this version)"""
@@ -50,14 +50,14 @@ class Cursor(object):
         return self.__description
 
     @property
-    def rowcount(self):
+    def rowcount(self) -> int:
         """This read-only attribute specifies the number of rows that the last .execute*()
         produced (for DQL statements like SELECT)
         or affected (for DML statements like UPDATE or INSERT)"""
         self.__raise_error_if_closed()
         return self.__rowcount
 
-    def execute(self, sql, params=()):
+    def execute(self, sql: str, params: tuple = ()):
         """Executes the given operation
 
         Executes the given operation substituting any markers with
@@ -86,7 +86,7 @@ class Cursor(object):
         self.__raise_error_if_closed()
         raise NotImplementedError("executemany is not implemented in this AceQL SDK version.")
 
-    def __execute_update(self, sql, params=()):
+    def __execute_update(self, sql: str, params: tuple = ()):
         """Executes and update operation on remote database"""
 
         blob_streams = []
@@ -117,7 +117,7 @@ class Cursor(object):
             for blob_stream in blob_streams:
                 blob_stream.close()
 
-    def __execute_query(self, sql, params=()):
+    def __execute_query(self, sql: str, params: tuple =()):
         """Executes a SELECT on remote database"""
         self.__raise_error_if_closed()
 
@@ -195,7 +195,7 @@ class Cursor(object):
         the_tup = tuple(the_list)
         return the_tup
 
-    def fetchmany(self, size=-1):
+    def fetchmany(self, size: int = -1):
         """Fetch the next set of rows of a query result, returning a sequence of sequences
 
         (e.g. a list of tuples). An empty sequence is returned when no more rows are available.
@@ -297,7 +297,7 @@ class Cursor(object):
                 row_parser.close()
 
     @staticmethod
-    def check_blob_id(blob_id, column_index):
+    def check_blob_id(blob_id: str, column_index: int):
         """Checks blob id"""
         if blob_id is None:
             raise Error("No value found for column_index " + str(column_index),
@@ -324,7 +324,7 @@ class Cursor(object):
     # 	self.__aceql_http_api.blob_download(blob_id, filename, total_length,
     # 	progress_holder)
 
-    def get_blob_length(self, column_index):
+    def get_blob_length(self, column_index: int) -> int:
         """ Gets the remote BLOB length  on a column in the current row
 
         To be used if progress indicator needed.
@@ -351,7 +351,7 @@ class Cursor(object):
         blob_length = self.__aceql_http_api.get_blob_length(blob_id)
         return blob_length
 
-    def get_blob_stream(self, column_index):
+    def get_blob_stream(self, column_index: int) :
         """ Returns a BLOB stream on a column in the current row.
 
             The column index starts at 0.

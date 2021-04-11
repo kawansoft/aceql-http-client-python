@@ -24,7 +24,7 @@ class UserLoginStore(object):
 
     __logged_users = {}
 
-    def __init__(self, server_url, username, database):
+    def __init__(self, server_url: str, username: str, database: str):
         """Constructor"""
 
         if server_url is None:
@@ -38,11 +38,11 @@ class UserLoginStore(object):
         self.__username = username
         self.__database = database
 
-    def build_key(self):
+    def build_key(self) -> str:
         """Builds the Dcit key for the (:, username, database) triplet key."""
         return self.__server_url + "/" + self.__username + "/" + self.__database;
 
-    def is_already_logged(self):
+    def is_already_logged(self) -> bool:
         """Says if user is already logged, aka key exists in Dict"""
         key = self.build_key()
         data = UserLoginStore.__logged_users.get(key)
@@ -51,13 +51,13 @@ class UserLoginStore(object):
         else:
             return True
 
-    def get_session_id(self):
+    def get_session_id(self) -> str:
         """Returns the session Id of logged user with (server_url, username, database) triplet."""
         key = self.build_key()
         session_id = UserLoginStore.__logged_users[key]
         return session_id
 
-    def set_session_id(self, session_id):
+    def set_session_id(self, session_id: str):
         """Stores the session Id of a logged user with (server_url, username, database) triplet."""
         key = self.build_key()
         UserLoginStore.__logged_users[key] = session_id

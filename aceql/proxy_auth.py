@@ -28,9 +28,9 @@ class ProxyAuth(GuessProxyAuth):
     """
 
     def __init__(self,
-                 proxy_username=None, proxy_password=None):
+                 proxy_username: str = None, proxy_password: str = None):
         super(ProxyAuth, self).__init__('user', 'passwd')
-        self.proxy_username  = proxy_username
+        self.proxy_username = proxy_username
         self.proxy_password = proxy_password
 
 

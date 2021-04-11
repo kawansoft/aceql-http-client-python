@@ -9,5 +9,6 @@ class MyTestCase(unittest.TestCase):
         my_object = MyObject(username="username42")
         print("my_object: " + str(my_object.get_username()))
 
+
 if __name__ == '__main__':
     unittest.main()
