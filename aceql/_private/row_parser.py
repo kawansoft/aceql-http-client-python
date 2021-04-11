@@ -34,7 +34,7 @@ def is_row_one(s):
 class RowParser(object):
     """Allows to parse rows in retrieved JSON result set and return each row content dictionaries"""
 
-    def __init__(self, filename, row_count):
+    def __init__(self, filename: str, row_count: int):
         self.__filename = filename
         self.__last_row = 1
         self.__row_count = row_count
@@ -128,24 +128,24 @@ class RowParser(object):
         self.__rows_parsed += 1
         return True
 
-    def is_last_row(self, line):
+    def is_last_row(self, line) -> bool:
         # if line == ("\"row_" + str(self.__last_row + 1) + "\":["):
         return line == ("\"row_" + str(self.__last_row + 1) + "\":[") or line == (
                 "\"row_" + str(self.__last_row + 1) + "\": [")
 
-    def column_names_per_index(self):
+    def column_names_per_index(self) -> dict:
         """Returns the dictionary of column names per column index, starting at 0 """
         return self.__column_names_per_index
 
-    def get_values_per_col_index(self):
+    def get_values_per_col_index(self) -> dict:
         """Returns the dictionary of values per column index, starting at 0 """
         return self.__values_per_col_index
 
-    def get_types_per_col_index(self):
+    def get_types_per_col_index(self) -> dict:
         """Returns the dictionary of type per column index, starting at 0 """
         return self.__types_per_col_index
 
-    def get_row_cout(self):
+    def get_row_cout(self) -> int:
         return self.__row_count
 
     def close(self):

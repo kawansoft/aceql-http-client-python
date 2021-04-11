@@ -33,7 +33,7 @@ class ResultAnalyzer(object):
     # We try to find status.  If error parsing, invalidJsonStream = true
     # </summary>
     # * Exception when parsing the JSON stream.  Future usage
-    def __init__(self, son_result, http_status_code):
+    def __init__(self, json_result: str, http_status_code: int):
         """ <summary>
          Initializes a new instance of the <see cref="ResultAnalyzer"/> class.
          </summary>
@@ -44,7 +44,7 @@ class ResultAnalyzer(object):
         self._invalid_json_stream = False
         self._parse_exception = None
         self._http_status_code = http_status_code
-        self._json_result = son_result
+        self._json_result = json_result
 
     def is_status_ok(self):
         """ <summary>
@@ -67,7 +67,7 @@ class ResultAnalyzer(object):
             self._invalid_json_stream = True
             return False
 
-    def is_invalid_json_stream(self):
+    def is_invalid_json_stream(self) -> bool:
         """ <summary>
          Says if the JSON Stream is invalid.
          </summary>
@@ -79,7 +79,7 @@ class ResultAnalyzer(object):
             return True
         return False
 
-    def get_result(self, name):
+    def get_result(self, name) -> str:
         """ <summary>
          Gets the result for a a key name
          </summary>
@@ -88,7 +88,7 @@ class ResultAnalyzer(object):
         """
         return self.get_value(name)
 
-    def get_result_default(self):
+    def get_result_default(self) -> str:
         """ <summary>
          Gets the result for the key name "result"
          </summary>
@@ -96,7 +96,7 @@ class ResultAnalyzer(object):
         """
         return self.get_value("result")
 
-    def get_value(self, name):
+    def get_value(self, name) -> str:
         """ <summary>
          Gets the value.
          </summary>
@@ -131,7 +131,7 @@ class ResultAnalyzer(object):
             self._invalid_json_stream = True
             return None
 
-    def get_error_type(self):
+    def get_error_type(self) -> int:
         """ <summary>
          Gets the error_type.
          </summary>
@@ -149,7 +149,7 @@ class ResultAnalyzer(object):
             self._invalid_json_stream = True
             return 0
 
-    def get_error_message(self):
+    def get_error_message(self) -> str:
         """ <summary>
          Gets the error_message.
          </summary>
@@ -169,7 +169,7 @@ class ResultAnalyzer(object):
             self._invalid_json_stream = True
             return None
 
-    def get_stack_trace(self):
+    def get_stack_trace(self) -> str:
         """ <summary>
          Gets the remote stack_trace.
          </summary>
@@ -186,7 +186,7 @@ class ResultAnalyzer(object):
             self._invalid_json_stream = True
             return None
 
-    def get_int_value(self, name):
+    def get_int_value(self, name: str) -> int:
         """ <summary>
          Gets the int value.
          </summary>

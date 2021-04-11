@@ -39,7 +39,7 @@ class UserLoginStore(object):
         self.__database = database
 
     def build_key(self) -> str:
-        """Builds the Dcit key for the (:, username, database) triplet key."""
+        """Builds the Dict key for the (:, username, database) triplet key."""
         return self.__server_url + "/" + self.__username + "/" + self.__database;
 
     def is_already_logged(self) -> bool:

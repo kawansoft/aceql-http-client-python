@@ -42,7 +42,7 @@ class StreamResultAnalyzer(object):
     # The stack trace
     # </summary>
     # The JSON file containing Result Set
-    def __init__(self, filename, http_status_code):
+    def __init__(self, filename: str, http_status_code: int):
         """ <summary>
          Initializes a new instance of the <see cref="StreamResultAnalyzer"/> class.
          </summary>
@@ -64,7 +64,7 @@ class StreamResultAnalyzer(object):
         self.__error_message = None
         self.__stack_trace = None
 
-    def is_status_ok(self):
+    def is_status_ok(self) -> bool:
         """ <summary>
          Determines whether the SQL correctly executed on server side.
          </summary>
@@ -109,7 +109,7 @@ class StreamResultAnalyzer(object):
 
             return
 
-    def get_error_message(self):
+    def get_error_message(self) -> str:
         """ <summary>
          Gets the error message.
          </summary>
@@ -117,7 +117,7 @@ class StreamResultAnalyzer(object):
         """
         return self.__error_message
 
-    def get_error_type(self):
+    def get_error_type(self) -> int:
         """ <summary>
          Gets the error type.
          </summary>
@@ -125,7 +125,7 @@ class StreamResultAnalyzer(object):
         """
         return self.__error_type
 
-    def get_stack_trace(self):
+    def get_stack_trace(self) -> str:
         """ <summary>
          Gets the remote stack trace.
          </summary>

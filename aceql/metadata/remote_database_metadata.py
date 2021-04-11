@@ -18,17 +18,19 @@
 ##
 from typing import List
 
+from aceql import Connection
 from aceql._private.table_names_dto import TableNamesDto
 from aceql._private.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
 from aceql._private.table_dto import TableDto
 from aceql.metadata.table import Table
+from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
 
 
 class RemoteDatabaseMetaData(object):
 
     """Allows to retrieve metadata info from the remote SQL database."""
 
-    def __init__(self, connection):
+    def __init__(self, connection: Connection):
         self.__connection = connection
         self.__aceql_http_api = self.__connection._get_aceql_http_api
 
@@ -61,7 +63,7 @@ class RemoteDatabaseMetaData(object):
             for chunk in response.iter_content(chunk_size=2048):
                 fd.write(chunk)
 
-    def get_jdbc_database_meta_data(self):
+    def get_jdbc_database_meta_data(self) -> JdbcDatabaseMetaData:
         """
         Returns the basic meta data values of the remote database, as sent by the the remote JDBC Driver of the remote database.
         :return:
@@ -70,7 +72,7 @@ class RemoteDatabaseMetaData(object):
         jdbc_database_meta_data_holder : JdbcDatabaseMetaDataDto = self.__aceql_http_api.get_db_metadata()
         return jdbc_database_meta_data_holder.jdbcDatabaseMetaData
 
-    def get_table_names(self, table_type=None):
+    def get_table_names(self, table_type=None) -> List[str]:
         """
         Returns The list of tables
         :param table_type:
@@ -83,7 +85,7 @@ class RemoteDatabaseMetaData(object):
         table_names : List[str] = table_names_dto.tableNames
         return table_names
 
-    def get_table(self, name):
+    def get_table(self, name) -> Table:
         """
         Returns the Table details
         :param name:

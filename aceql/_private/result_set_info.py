@@ -23,12 +23,12 @@ class ResultSetInfo(object):
     1) the local filename,
     2) the number of rows"""
 
-    def __init__(self, filename, row_count):
+    def __init__(self, filename: str, row_count: int):
         self.__filename = filename
         self.__row_count = row_count
 
-    def get_filename(self):
+    def get_filename(self) -> str:
         return self.__filename
 
-    def get_row_count(self):
+    def get_row_count(self) -> int:
         return self.__row_count
