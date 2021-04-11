@@ -32,7 +32,7 @@ class RemoteDatabaseMetaData(object):
         self.__connection = connection
         self.__aceql_http_api = self.__connection._get_aceql_http_api
 
-    def db_schema_download(self, file, file_format = None, table_name= None):
+    def db_schema_download(self, file: str, file_format: str = None, table_name: str = None):
         """
         Downloads the schema extract for a table name in the specified HTML or Text format.
 
