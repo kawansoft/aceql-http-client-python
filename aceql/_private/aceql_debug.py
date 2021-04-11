@@ -37,7 +37,7 @@ class AceQLDebug(object):
             print("debug> ")
 
     @staticmethod
-    def debug(s):
+    def debug(s: str):
         if Parms.DEBUG_ON:
             print("debug> " + str(s))
 
