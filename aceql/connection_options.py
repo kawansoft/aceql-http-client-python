@@ -48,7 +48,7 @@ class ConnectionOptions(object):
                 the HTTP connection timeout in seconds. 0 means not timeout is used (default value).
             request_headers : dict
                 the request headers to send to server for validation.
-                
+
             Returns
             -------
             ConnectionOptions

@@ -470,7 +470,7 @@ class AceQLHttpApi(object):
 
             action = "execute_update"
 
-            self.check_values(is_prepared_statement, sql)
+            AceQLHttpApi.check_values(is_prepared_statement, sql)
 
             dict_params = {}
             dict_params["sql"] = sql
@@ -550,7 +550,7 @@ class AceQLHttpApi(object):
 
             action = "execute_query"
 
-            self.check_values(is_prepared_statement, sql)
+            AceQLHttpApi.check_values(is_prepared_statement, sql)
 
             dict_params = {"sql": sql}
             self.set_is_prepared_statement(dict_params, is_prepared_statement)
@@ -632,7 +632,8 @@ class AceQLHttpApi(object):
         # We need the types
         dict_params["column_types"] = "true"
 
-    def check_values(self, is_prepared_statement: bool, sql: str):
+    @staticmethod
+    def check_values(is_prepared_statement: bool, sql: str):
         if sql is None:
             raise TypeError("sql is null!")
         if is_prepared_statement is None:
