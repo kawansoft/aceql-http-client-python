@@ -48,7 +48,6 @@ class Connection(object):
         -------
         Connection
             A connection to the remote database.
-
         """
 
         if server_url is None:
