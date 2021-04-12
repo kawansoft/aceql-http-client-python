@@ -72,7 +72,7 @@ class RemoteDatabaseMetaData(object):
         jdbc_database_meta_data_holder : JdbcDatabaseMetaDataDto = self.__aceql_http_api.get_db_metadata()
         return jdbc_database_meta_data_holder.jdbcDatabaseMetaData
 
-    def get_table_names(self, table_type=None) -> List[str]:
+    def get_table_names(self, table_type: str =None) -> List[str]:
         """
         Returns The list of tables
         :param table_type:
@@ -82,10 +82,10 @@ class RemoteDatabaseMetaData(object):
         The list of tables
         """
         table_names_dto : TableNamesDto = self.__aceql_http_api.get_table_names(table_type)
-        table_names : List[str] = table_names_dto.tableNames
+        table_names: List[str] = table_names_dto.tableNames
         return table_names
 
-    def get_table(self, name) -> Table:
+    def get_table(self, name: str) -> Table:
         """
         Returns the Table details
         :param name:
