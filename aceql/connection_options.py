@@ -16,8 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-
-from aceql import ProxyAuth
+from aceql.proxy_auth import ProxyAuth
 
 
 class ConnectionOptions(object):
@@ -76,5 +75,5 @@ class ConnectionOptions(object):
         return self.__timeout
 
     @property
-    def request_headers(self) -> str:
+    def request_headers(self) -> dict:
         return self.__request_headers

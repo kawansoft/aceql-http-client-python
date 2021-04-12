@@ -169,7 +169,7 @@ database = "sampledb"
 username = "user1"
 password = "password1"
 
-connection = aceql.connect(host, database, username, password)
+connection = aceql.connect(host, username, password, database)
 ```
 
 The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/6.2/src/sampledb_other_databases.txt)
@@ -441,13 +441,12 @@ import aceql
 from aceql import *
 
 proxies = {
-  'http': 'http://10.10.1.10:3128',
-  'https': 'http://10.10.1.10:1080',
+    'http': 'http://10.10.1.10:3128',
+    'https': 'http://10.10.1.10:1080',
 }
 
 # Create a Connection using a proxy:
-connection = aceql.connect(host, database,
-                           username, password, proxies=proxies)
+connection = aceql.connect(host, username, password, database, proxies=proxies)
 ```
 
 Authenticated proxies are supported.  Just create an `aceql.ProxyAuth`  instance and pass it to `aceql.connect()`:
@@ -457,17 +456,15 @@ import aceql
 from aceql import *
 
 proxies = {
-  'http': 'http://10.10.1.10:3128',
-  'https': 'http://10.10.1.10:1080',
+    'http': 'http://10.10.1.10:3128',
+    'https': 'http://10.10.1.10:1080',
 }
 
 # The proxy authentication info:
 auth = ProxyAuth("proxyUsername", "proxyPassword")
 
 # Create a Connection using an authenticated proxy:
-connection = aceql.connect(host, database,
-                           username, password,
-                           proxies=proxies, auth=auth)
+connection = aceql.connect(host, username, password, database, proxies=proxies, auth=auth)
 ```
 
 The AceQL module uses  [requests-toolbelt](https://pypi.python.org/pypi/requests-toolbelt)  for authenticated proxy management.
@@ -594,8 +591,8 @@ database = "sampledb"
 username = "user1"
 session_id = my_get_session_id_from_login_api()
 
-#Authentication will be done without password and using the sessionId.
-connection = aceql.connect(host, database, username, None, session_id)
+# Authentication will be done without password and using the sessionId.
+connection = aceql.connect(host, username, None, database, session_id)
 ```
 
 ### 

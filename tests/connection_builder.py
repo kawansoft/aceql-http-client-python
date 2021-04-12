@@ -61,7 +61,7 @@ class ConnectionBuilder(object):
         session_id = None
 
         Connection.set_timeout(10)
-        connection = aceql.connect(host, database, username, "password1", session_id, proxies=proxies, auth=auth)
+        connection = aceql.connect(url=host, username=username, password="password1", database=database)
         connection.set_gzip_result(True)
         return connection
 
