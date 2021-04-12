@@ -48,7 +48,7 @@ __all__ = ["Connection", "Cursor", "Error", "ProgressIndicator", "ProxyAuth", "S
            "Table"]
 
 
-def connect(url, username: str, password: str, database: str, connection_options: ConnectionOptions = None):
+def connect(url: str, username: str, password: str, database: str, connection_options: ConnectionOptions = None):
     """
     Creates a database connection to the remote AceQL HTTP server.
 
@@ -56,13 +56,13 @@ def connect(url, username: str, password: str, database: str, connection_options
     ----------
     url : str
         The URL of the AceQL server. Example: https://www.acme.com:9443/aceql.
-    database : str
-        The remote database name.
     username : str
         The authentication username.
     password : str
         the authentication password.
-    connectionoptions : ConnectionOptions
+    database : str
+        The remote database name.
+    connection_options : ConnectionOptions
             the  supplemental Connection Options
 
     Returns

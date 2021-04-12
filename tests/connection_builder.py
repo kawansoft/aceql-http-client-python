@@ -22,7 +22,7 @@ import sys
 import aceql
 from aceql import Connection
 from aceql import ProxyAuth
-
+from aceql import ConnectionOptions
 
 class ConnectionBuilder(object):
     """Allows to create a database connection to a remote server."""
@@ -43,10 +43,10 @@ class ConnectionBuilder(object):
         use_proxy = False
         if use_proxy:
             proxies = {
-                "http": "http://localhost:8080",
+                "http": "http://localhost:8081",
             }
 
-            auth = ConnectionBuilder.getProxyAuth()
+            auth = ConnectionBuilder.get_proxy_auth()
 
         localhost = "http://localhost:9090/aceql"
         # server_host = "https://www.aceql.com:9443/aceql"
@@ -57,16 +57,20 @@ class ConnectionBuilder(object):
         database = "sampledb"
         username = "user1"
 
-        # password= "password1"
+        password= "password1"
         session_id = None
 
-        Connection.set_timeout(10)
-        connection = aceql.connect(url=host, username=username, password="password1", database=database)
-        connection.set_gzip_result(True)
+        connection_options = ConnectionOptions(proxies=proxies, auth=auth, gzip_result=True, timeout=10)
+
+        #Connection.set_timeout(10)
+        connection = aceql.connect(url=host, username=username, password=password,
+                                   database=database, connection_options=connection_options)
+        #connection.set_gzip_result(True)
+
         return connection
 
     @staticmethod
-    def getProxyAuth():
+    def get_proxy_auth():
         """Get proxy auth info from a filename"""
         with open("I:\\neotunnel.txt", "rt") as fd:
             content = fd.read()

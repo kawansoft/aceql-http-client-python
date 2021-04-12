@@ -21,10 +21,12 @@ from aceql.cursor import Cursor
 from aceql.connection_options import ConnectionOptions
 from aceql.proxy_auth import ProxyAuth
 
+
 class Connection(object):
     """Allows to create a database connection to a remote server."""
 
-    def __init__(self, *, url:str, username:str, password:str, database:str, connection_options:ConnectionOptions = None):
+    def __init__(self, *, url: str, username: str, password: str, database: str,
+                 connection_options: ConnectionOptions = None):
         """
         Creates a database connection to the remote AceQL HTTP server.
 
@@ -63,10 +65,11 @@ class Connection(object):
         session_id = None
         proxies = None
         auth = None
+
         if connection_options != None:
             if connection_options.password_is_session_id:
-                session_id=password
-                password=None
+                session_id = password
+                password = None
             proxie = connection_options.proxies
             auth = connection_options.auth
 
@@ -88,21 +91,6 @@ class Connection(object):
     def reset_request_headers(self):
         """Resets the request headers. The previously added headers with add_request_headers will be suppressed."""
         self.__aceQLHttpApi.reset_request_headers()
-
-    @staticmethod
-    def is_stateless():
-        """Says if session is stateless."""
-        return AceQLHttpApi.is_stateless()
-
-    @staticmethod
-    def set_stateless(stateless):
-        """Sets the session mode. if true, the session will be stateless, else stateful."""
-        if stateless is None:
-            raise TypeError("stateless is null!")
-        if str(stateless) == "True":
-            AceQLHttpApi.set_stateless(True)
-        else:
-            AceQLHttpApi.set_stateless(False)
 
     @staticmethod
     def set_timeout(timeout):
