@@ -77,3 +77,10 @@ class ConnectionOptions(object):
     @property
     def request_headers(self) -> dict:
         return self.__request_headers
+
+    def __str__(self):
+        """ The string representation."""
+        return "ConnectionOptions [proxies=" + str(self.proxies) + ", auth=" + str(self.auth) \
+               + ", password_is_session_id=" + str(self.password_is_session_id) \
+               + ", gzip_result=" + str(self.gzip_result) + ", timeout=" + str(self.timeout) \
+               + ", request_headers=" + str(self.request_headers) + "]"

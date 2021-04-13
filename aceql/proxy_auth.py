@@ -33,5 +33,7 @@ class ProxyAuth(GuessProxyAuth):
         self.proxy_username = proxy_username
         self.proxy_password = proxy_password
 
-
-
+    def __str__(self):
+        """ The string representation."""
+        return "ProxyAuth [proxy_username=" + str(self.proxy_username) + ", proxy_password=" + str(
+            self.self.proxy_password) + "]"
