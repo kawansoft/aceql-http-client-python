@@ -58,7 +58,8 @@ class Connection(object):
         if database is None:
             raise TypeError("database is null!")
 
-        self.__aceQLHttpApi = AceQLHttpApi(url, username, password, database, connection_options)
+        self.__aceQLHttpApi = AceQLHttpApi(url=url, username=username, password=password, database=database,
+                                           connection_options=connection_options)
         self.__connection_options = connection_options
 
     @property

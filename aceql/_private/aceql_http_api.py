@@ -51,7 +51,7 @@ class AceQLHttpApi(object):
     __trace_on = False
     __debug = True
 
-    def __init__(self, url: str, username: str, password: str, database: str,
+    def __init__(self, *, url: str, username: str, password: str, database: str,
                  connection_options: ConnectionOptions = None):
 
         if url is None:
