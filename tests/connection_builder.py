@@ -24,6 +24,7 @@ from aceql import Connection
 from aceql import ProxyAuth
 from aceql import ConnectionOptions
 
+
 class ConnectionBuilder(object):
     """Allows to create a database connection to a remote server."""
 
@@ -56,7 +57,6 @@ class ConnectionBuilder(object):
 
         database = "sampledb"
         username = "user1"
-
         password= "password1"
         session_id = None
 
