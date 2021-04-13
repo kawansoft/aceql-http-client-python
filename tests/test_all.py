@@ -32,12 +32,11 @@ class TestAll(unittest.TestCase):
     def test_A(self):
 
         connection = ConnectionBuilder.get_connection()
-        headers = {'user-agent': 'aceql-client'}
-        connection.add_request_headers(headers)
 
         print()
         print("aceql version     : " + Connection.get_client_version())
         print("aceql version full: " + Connection.get_client_version_full())
+        print("Connection Options: " + str(connection.get_connections_options()))
 
         connection.set_holdability("hold_cursors_over_commit")
         holdability = connection.get_holdability()

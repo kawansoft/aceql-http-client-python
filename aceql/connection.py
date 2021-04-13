@@ -66,8 +66,8 @@ class Connection(object):
     def _get_aceql_http_api(self) -> AceQLHttpApi:
         return self.__aceQLHttpApi
 
-    def getConnectionsOptions(self) -> ConnectionOptions:
-        return self.____connection_options
+    def get_connections_options(self) -> ConnectionOptions:
+        return self.__connection_options
 
     def cursor(self) -> Cursor:
         """Instantiates and returns a cursor."""

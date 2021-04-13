@@ -57,10 +57,12 @@ class ConnectionBuilder(object):
 
         database = "sampledb"
         username = "user1"
-        password= "password1"
+        password = "password1"
         session_id = None
+        headers = {'user-agent': 'aceql-client'}
 
-        connection_options = ConnectionOptions(proxies=proxies, auth=auth, gzip_result=True, timeout=10)
+        connection_options = ConnectionOptions(proxies=proxies, auth=auth, gzip_result=True,
+                                               password_is_session_id=False, timeout=10, request_headers=headers)
 
         connection = aceql.connect(url=host, username=username, password=password,
                                    database=database, connection_options=connection_options)
