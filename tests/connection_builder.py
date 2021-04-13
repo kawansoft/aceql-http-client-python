@@ -22,6 +22,7 @@ import sys
 import aceql
 from aceql import ProxyAuth
 from aceql import ConnectionOptions
+from aceql.dbapi2 import *
 
 
 class ConnectionBuilder(object):
@@ -33,9 +34,9 @@ class ConnectionBuilder(object):
         # assert sys.version_info >= (2,5)
         print()
 
-        print("aceql.apilevel    : " + aceql.apilevel)
-        print("aceql.threadsafety: " + str(aceql.threadsafety))
-        print("aceql.paramstyle  : " + aceql.paramstyle)
+        print("aceql.apilevel    : " + apilevel)
+        print("aceql.threadsafety: " + str(threadsafety))
+        print("aceql.paramstyle  : " + paramstyle)
 
         proxies = None
         auth = None
