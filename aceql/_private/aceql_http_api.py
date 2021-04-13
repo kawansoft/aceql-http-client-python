@@ -143,13 +143,13 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def set_progress_indicator(self, progress_indicator):
+    def set_progress_indicator(self, progress_indicator: ProgressIndicator):
         self.__progress_indicator = progress_indicator
 
     def get_progress_indicator(self) -> ProgressIndicator:
         return self.__progress_indicator
 
-    def call_with_get_url(self, url: str):
+    def call_with_get_url(self, url: str) -> str:
 
         if self.__timeout == 0:
             response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
@@ -161,7 +161,7 @@ class AceQLHttpApi(object):
 
         return response.text
 
-    def call_with_post_url(self, url: str, dict_params: dict):
+    def call_with_post_url(self, url: str, dict_params: dict) -> str:
 
         if self.__timeout == 0:
             response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
@@ -175,7 +175,7 @@ class AceQLHttpApi(object):
 
         return response.text
 
-    def call_with_get_action(self, action: str, action_parameter: dict):
+    def call_with_get_action(self, action: str, action_parameter: dict) -> str:
         url_withaction = self._url + action
 
         if action_parameter is not None and len(action_parameter) > 1:
@@ -269,27 +269,12 @@ class AceQLHttpApi(object):
         AceQLHttpApi.__trace_on = trace_on
 
     # *
-    # * @return the prettyPrinting
-    #
-    def is_pretty_printing(self) -> bool:
-        return self._pretty_printing
-
-    # *
     # * Says the query result is returned compressed with the GZIP file format.
     # *
     # * @return the gzipResult
     #
     def is_gzip_result(self) -> bool:
         return self.__gzip_result
-
-    # *
-    # * Says if JSON contents are to be pretty printed.  Defaults to false.
-    # *
-    # * @param prettyPrinting
-    # * if true, JSON contents are to be pretty printed
-    #
-    def set_pretty_printing(self, pretty_printing: bool):
-        self._pretty_printing = pretty_printing
 
     # *
     # * Define if result sets are compressed before download.  Defaults to true.
@@ -366,7 +351,7 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def get_transaction_isolation(self):
+    def get_transaction_isolation(self) -> str:
         transaction_isolation = self.call_api_with_result("get_transaction_isolation_level", None)
         return transaction_isolation
 
@@ -506,12 +491,6 @@ class AceQLHttpApi(object):
                 response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth,
                                          timeout=self.__timeout)
-
-            # if self.__timeout== 0:
-            #     response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
-            # else:
-            #     response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
-            #                              timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
             result = response.text
