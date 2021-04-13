@@ -55,7 +55,6 @@ class ConnectionOptions(object):
         self.__timeout = timeout
         self.__request_headers = request_headers
 
-
     @property
     def proxies(self) -> str:
         return self.__proxies

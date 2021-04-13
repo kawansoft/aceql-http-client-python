@@ -221,7 +221,7 @@ class Cursor(object):
 
         return list_tuples
 
-    def fetchall(self):
+    def fetchall(self) -> list[tuple]:
         """Fetches all (remaining) rows of a query result, returning a list.
 
             Note that the cursors arraysize attribute can affect the performance
@@ -229,7 +229,7 @@ class Cursor(object):
         """
         self.__raise_error_if_closed()
 
-        list_tuples = []
+        list_tuples: list[tuple] = []
         while True:
             the_tup = self.fetchone()
             if the_tup is None:
@@ -255,14 +255,14 @@ class Cursor(object):
         if self.__rowcount < 1:
             return
 
-        row_parser = None
+        row_parser: RowParser = None
 
         try:
-            row_parser = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
+            row_parser  = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
             row_parser.build_next_row()  # read first row to get the column names, only way to do it...
 
-            aceql_types = row_parser.get_types_per_col_index()
-            aceql_names = row_parser.column_names_per_index()
+            aceql_types: dict = row_parser.get_types_per_col_index()
+            aceql_names: dict = row_parser.column_names_per_index()
 
             AceQLDebug.debug("aceql_types : " + str(aceql_types))
             AceQLDebug.debug("aceql_names: " + str(aceql_names))
@@ -335,7 +335,7 @@ class Cursor(object):
         if column_index is None:
             raise TypeError("column_index is null!")
 
-        values_per_column_index = self.__row_parser.get_values_per_col_index()
+        values_per_column_index: dict = self.__row_parser.get_values_per_col_index()
 
         AceQLDebug.debug("values_per_column_index: " + str(values_per_column_index))
 
@@ -344,14 +344,13 @@ class Cursor(object):
                         0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
-
         print("blob_id: " + str(blob_id))
 
         Cursor.check_blob_id(blob_id, column_index)
         blob_length = self.__aceql_http_api.get_blob_length(blob_id)
         return blob_length
 
-    def get_blob_stream(self, column_index: int) :
+    def get_blob_stream(self, column_index: int):
         """ Returns a BLOB stream on a column in the current row.
 
             The column index starts at 0.
@@ -362,7 +361,7 @@ class Cursor(object):
         if column_index is None:
             raise TypeError("column_index is null!")
 
-        values_per_column_index = self.__row_parser.get_values_per_col_index()
+        values_per_column_index: dict = self.__row_parser.get_values_per_col_index()
 
         if values_per_column_index is None:
             raise Error("Not positioned on a row. (Seems no fetchone() call done.)",

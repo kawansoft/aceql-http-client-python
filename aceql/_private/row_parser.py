@@ -27,7 +27,7 @@ from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.cursor_util import CursorUtil
 
 
-def is_row_one(s):
+def is_row_one(s) -> bool:
     return s == "\"row_1\":[" or s == "\"row_1\": ["
 
 

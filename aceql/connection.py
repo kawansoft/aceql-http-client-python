@@ -58,6 +58,10 @@ class Connection(object):
         if database is None:
             raise TypeError("database is null!")
 
+        self.__url = url
+        self.__username = username
+        self.__database = database
+
         self.__aceQLHttpApi = AceQLHttpApi(url=url, username=username, password=password, database=database,
                                            connection_options=connection_options)
         self.__connection_options = connection_options
@@ -65,6 +69,18 @@ class Connection(object):
     @property
     def _get_aceql_http_api(self) -> AceQLHttpApi:
         return self.__aceQLHttpApi
+
+    def get_url(self) -> str :
+        """Gets the Serverl URL for this Connection."""
+        return self.__url
+
+    def get_username(self) -> str :
+        """Gets the username for this Connection."""
+        return self.__username
+
+    def get_database(self) -> str :
+        """Gets the database for this Connection."""
+        return self.__database
 
     def get_connections_options(self) -> ConnectionOptions:
         """Gets the Connections options."""
