@@ -22,7 +22,9 @@ import sys
 import aceql
 from aceql import ProxyAuth
 from aceql import ConnectionOptions
-from aceql.dbapi2 import *
+from aceql.dbapi2 import apilevel
+from aceql.dbapi2 import threadsafety
+from aceql.dbapi2 import paramstyle
 
 
 class ConnectionBuilder(object):
