@@ -62,11 +62,8 @@ class ConnectionBuilder(object):
 
         connection_options = ConnectionOptions(proxies=proxies, auth=auth, gzip_result=True, timeout=10)
 
-        #Connection.set_timeout(10)
         connection = aceql.connect(url=host, username=username, password=password,
                                    database=database, connection_options=connection_options)
-        #connection.set_gzip_result(True)
-
         return connection
 
     @staticmethod

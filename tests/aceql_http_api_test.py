@@ -25,16 +25,9 @@ class AceQLHttpApiTest(object):
     """description of class"""
 
     @staticmethod
-    def doIt():
-        AceQLHttpApi.set_stateless(True)
-        is_stateless = AceQLHttpApi.is_stateless()
-        print("isStateless: " + str(is_stateless))
+    def do_it():
 
-        AceQLHttpApi.set_stateless(False)
-        is_stateless = AceQLHttpApi.is_stateless()
-        print("isStateless: " + str(is_stateless))
-
-        aceql_http_api = AceQLHttpApi("http://localhost:9090/aceql", "sampledb", "user1", "password1")
+        aceql_http_api = AceQLHttpApi("http://localhost:9090/aceql", "user1", "password1", "sampledb")
         print("connect done!")
 
         print("client version: " + aceql_http_api.get_client_version())

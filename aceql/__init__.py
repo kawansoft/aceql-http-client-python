@@ -63,7 +63,7 @@ def connect(url: str, username: str, password: str, database: str, connection_op
     database : str
         The remote database name.
     connection_options : ConnectionOptions
-            the  supplemental Connection Options
+            the  supplemental Connection Options.
 
     Returns
     -------
@@ -72,5 +72,6 @@ def connect(url: str, username: str, password: str, database: str, connection_op
 
     """
 
-    the_connection = Connection(url=url, username=username, password=password, database=database, connection_options= connection_options)
+    the_connection = Connection(url=url, username=username, password=password, database=database,
+                                connection_options=connection_options)
     return the_connection
