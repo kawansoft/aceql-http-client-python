@@ -66,6 +66,7 @@ class Connection(object):
         return self.__aceQLHttpApi
 
     def get_connections_options(self) -> ConnectionOptions:
+        """Gets the Connections options."""
         return self.__connection_options
 
     def cursor(self) -> Cursor:
@@ -82,7 +83,7 @@ class Connection(object):
         self.__aceQLHttpApi.reset_request_headers()
 
     def set_progress_indicator(self, progress_indicator: ProgressIndicator):
-        """ Allows to set a progress indicator."""
+        """Allows to set a progress indicator."""
         self.__aceQLHttpApi.set_progress_indicator(progress_indicator)
 
     def get_progress_indicator(self) -> ProgressIndicator:

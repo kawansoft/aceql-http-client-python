@@ -24,12 +24,6 @@ class ConnectionOptions(object):
 
     def __init__(self, *, proxies: dict = None, auth: ProxyAuth = None, password_is_session_id: bool = False,
                  gzip_result: bool = False, timeout: int = 0, request_headers: dict = None):
-        self.__proxies = proxies
-        self.__auth = auth
-        self.__password_is_session_id = password_is_session_id
-        self.__gzip_result = gzip_result
-        self.__timeout = timeout
-        self.__request_headers = request_headers
         """
             Creates the Connection Options for the current session
 
@@ -53,6 +47,14 @@ class ConnectionOptions(object):
             ConnectionOptions
                 An object containing all connections options for this session
         """
+
+        self.__proxies = proxies
+        self.__auth = auth
+        self.__password_is_session_id = password_is_session_id
+        self.__gzip_result = gzip_result
+        self.__timeout = timeout
+        self.__request_headers = request_headers
+
 
     @property
     def proxies(self) -> str:
