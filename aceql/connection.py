@@ -19,7 +19,6 @@
 from aceql._private.aceql_http_api import AceQLHttpApi
 from aceql.cursor import Cursor
 from aceql.connection_options import ConnectionOptions
-from aceql.proxy_auth import ProxyAuth
 from aceql.progress_indicator import ProgressIndicator
 
 
