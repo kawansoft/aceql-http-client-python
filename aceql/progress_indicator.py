@@ -21,7 +21,7 @@ from aceql._private.parms import Parms
 
 
 class ProgressIndicator(object):
-    """Class that hold a progress when transferring a Blob."""
+    """Class that holds a progress when transferring a Blob."""
 
     def __init__(self):
         self.__percent = 0

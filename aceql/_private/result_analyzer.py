@@ -21,22 +21,21 @@ import json
 
 
 class ResultAnalyzer(object):
-    """ <summary>
-     Class <see cref="ResultAnalyzer"/>. Used to analyze a JSON response from the AceQL server.
-     </summary>
+    """
+     Used to analyze a JSON response from the AceQL server.
     """
 
-    # <summary>
+    # 
     # The json result
-    # </summary>
-    # <summary>
+    # 
+    # 
     # We try to find status.  If error parsing, invalidJsonStream = true
-    # </summary>
+    # 
     # * Exception when parsing the JSON stream.  Future usage
     def __init__(self, json_result: str, http_status_code: int):
-        """ <summary>
+        """ 
          Initializes a new instance of the <see cref="ResultAnalyzer"/> class.
-         </summary>
+         
          <param name="son_result">The json result.</param>
          <param name="http_status_code">The http status code.</param>
          <exception cref="System.ArgumentNullException">son_result is null!</exception>
@@ -46,10 +45,10 @@ class ResultAnalyzer(object):
         self._http_status_code = http_status_code
         self._json_result = json_result
 
-    def is_status_ok(self):
-        """ <summary>
+    def is_status_ok(self) -> bool:
+        """ 
          Determines whether the SQL command correctly executed on server side.
-         </summary>
+         
          <returns><c>true</c> if [is status ok]; otherwise, <c>false</c>.</returns>
         """
 
@@ -68,9 +67,9 @@ class ResultAnalyzer(object):
             return False
 
     def is_invalid_json_stream(self) -> bool:
-        """ <summary>
+        """ 
          Says if the JSON Stream is invalid.
-         </summary>
+         
          <returns>true if JSN stream is invalid</returns>
         """
         if self._json_result is None or len(self._json_result) == 0:
@@ -80,26 +79,26 @@ class ResultAnalyzer(object):
         return False
 
     def get_result(self, name) -> str:
-        """ <summary>
+        """ 
          Gets the result for a a key name
-         </summary>
+         
          <param name="name">The name.</param>
          <returns>System.String.</returns>
         """
         return self.get_value(name)
 
     def get_result_default(self) -> str:
-        """ <summary>
+        """ 
          Gets the result for the key name "result"
-         </summary>
+         
          <returns></returns>
         """
         return self.get_value("result")
 
     def get_value(self, name) -> str:
-        """ <summary>
+        """ 
          Gets the value.
-         </summary>
+         
          <param name="name">The name.</param>
          <returns>System.String.</returns>
          <exception cref="System.ArgumentNullException">name is null!</exception>
@@ -132,9 +131,9 @@ class ResultAnalyzer(object):
             return None
 
     def get_error_type(self) -> int:
-        """ <summary>
+        """ 
          Gets the error_type.
-         </summary>
+         
          <returns>System.Int32.</returns>
         """
         if self.is_invalid_json_stream():
@@ -150,9 +149,9 @@ class ResultAnalyzer(object):
             return 0
 
     def get_error_message(self) -> str:
-        """ <summary>
+        """ 
          Gets the error_message.
-         </summary>
+         
          <returns>System.String.</returns>
         """
         if self.is_invalid_json_stream():
@@ -170,9 +169,9 @@ class ResultAnalyzer(object):
             return None
 
     def get_stack_trace(self) -> str:
-        """ <summary>
+        """ 
          Gets the remote stack_trace.
-         </summary>
+         
          <returns>String.</returns>
         """
         if self.is_invalid_json_stream():
@@ -187,9 +186,9 @@ class ResultAnalyzer(object):
             return None
 
     def get_int_value(self, name: str) -> int:
-        """ <summary>
+        """ 
          Gets the int value.
-         </summary>
+         
          <param name="name">The name.</param>
          <returns>System.Int32.</returns>
         """

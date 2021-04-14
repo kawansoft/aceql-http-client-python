@@ -62,7 +62,8 @@ def connect(url: str, username: str, password: str, database: str, connection_op
     database : str
         The remote database name.
     connection_options : ConnectionOptions
-            the  supplemental Connection Options.
+            the  supplemental Connection Options (Container that allows define some options: proxies,
+            timeout, request headers, etc.)
 
     Returns
     -------

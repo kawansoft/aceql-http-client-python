@@ -27,25 +27,24 @@ from aceql._private.aceql_debug import AceQLDebug
 
 
 class StreamResultAnalyzer(object):
-    """ <summary>
+    """ 
      Class <see cref="StreamResultAnalyzer"/>. Allows to analyze the result of a downloaded result of a SQL query stored in a local PC file.
-     </summary>
     """
 
-    # <summary>
+    # 
     # The error identifier
-    # </summary>
-    # <summary>
+    # 
+    # 
     # The error message
-    # </summary>
-    # <summary>
+    # 
+    # 
     # The stack trace
-    # </summary>
+    # 
     # The JSON file containing Result Set
     def __init__(self, filename: str, http_status_code: int):
-        """ <summary>
+        """ 
          Initializes a new instance of the <see cref="StreamResultAnalyzer"/> class.
-         </summary>
+         
          <param name="filename">The file to analyze.</param>
          <param name="httpStatusCode">The http status code.</param>
          <exception cref="System.ArgumentNullException">The file is null.</exception>
@@ -65,9 +64,9 @@ class StreamResultAnalyzer(object):
         self.__stack_trace = None
 
     def is_status_ok(self) -> bool:
-        """ <summary>
+        """ 
          Determines whether the SQL correctly executed on server side.
-         </summary>
+         
          <returns><c>true</c> if [is status ok]; otherwise, <c>false</c>.</returns>
         """
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
@@ -90,9 +89,9 @@ class StreamResultAnalyzer(object):
         return status_ok
 
     def parse_error_keywords(self):
-        """ <summary>
+        """ 
          Parses the error keywords.
-         </summary>
+         
          <param name="reader">The reader.</param>
         """
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
@@ -110,25 +109,25 @@ class StreamResultAnalyzer(object):
             return
 
     def get_error_message(self) -> str:
-        """ <summary>
+        """ 
          Gets the error message.
-         </summary>
+         
          <returns>The error message</returns>
         """
         return self.__error_message
 
     def get_error_type(self) -> int:
-        """ <summary>
+        """ 
          Gets the error type.
-         </summary>
+         
          <returns>The error type.</returns>
         """
         return self.__error_type
 
     def get_stack_trace(self) -> str:
-        """ <summary>
+        """ 
          Gets the remote stack trace.
-         </summary>
+         
          <returns>The remote stack trace.</returns>
         """
         return self.__stack_trace

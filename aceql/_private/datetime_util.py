@@ -44,6 +44,7 @@ class DateTimeUtil(object):
 
     @staticmethod
     def to_timestamp(a_date: str) -> int:
+        """"Returns a timestamp for a str date."""
         if a_date.tzinfo:
             epoch = datetime(1970, 1, 1, tzinfo=pytz.UTC)
             diff = a_date.astimezone(pytz.UTC) - epoch
@@ -55,8 +56,8 @@ class DateTimeUtil(object):
     @staticmethod
     def get_timestamp_from_date(the_date: datetime) -> str:
         """"Returns an Epoch for date."""
-        unix_time = time.mktime(the_date.timetuple())
 
+        unix_time = time.mktime(the_date.timetuple())
         unix_time_str = str(unix_time)
         unix_time_str = unix_time_str[0:len(unix_time_str) - 2]
         return unix_time_str + "000"

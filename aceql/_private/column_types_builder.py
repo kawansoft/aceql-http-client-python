@@ -56,7 +56,7 @@ class ColumnTypesBuilder(object):
 
             # print("list_column_types: " + str(list_column_types))
 
-            dict_column_types = {}
+            dict_column_types: dict = {}
 
             # index = 0
             # for s in list_column_types:
@@ -69,5 +69,4 @@ class ColumnTypesBuilder(object):
                 index += 1
 
             # print("dict_column_types: " + str(dict_column_types))
-
             return dict_column_types

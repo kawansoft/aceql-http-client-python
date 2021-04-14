@@ -32,3 +32,7 @@ class ResultSetInfo(object):
 
     def get_row_count(self) -> int:
         return self.__row_count
+
+    def __str__(self):
+        """ The string representation."""
+        return str(self.__filename) + ", " + str(self.__row_count)

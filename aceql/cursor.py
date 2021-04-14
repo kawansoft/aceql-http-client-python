@@ -86,10 +86,10 @@ class Cursor(object):
         self.__raise_error_if_closed()
         raise NotImplementedError("executemany is not implemented in this AceQL SDK version.")
 
-    def __execute_update(self, sql: str, params: tuple = ()):
+    def __execute_update(self, sql: str, params: tuple = ()) -> int:
         """Executes and update operation on remote database"""
 
-        blob_streams = []
+        blob_streams: list = []
 
         try:
             the_cursor_util = CursorUtil()
@@ -110,7 +110,7 @@ class Cursor(object):
             if len(parms_dict) > 0:
                 is_prepared_statement = True
 
-            rows = self.__aceql_http_api.execute_update(sql, is_prepared_statement, parms_dict)
+            rows:int = self.__aceql_http_api.execute_update(sql, is_prepared_statement, parms_dict)
             self.__rowcount = rows
             return rows
         finally:
@@ -122,10 +122,10 @@ class Cursor(object):
         self.__raise_error_if_closed()
 
         self.row_count = 0
-        self.__description = []
+        self.__description: list = []
 
         the_cursor_util = CursorUtil()
-        parms_dict = the_cursor_util.get_http_parameters_dict(params)
+        parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
 
         is_prepared_statement = False
         if len(parms_dict) > 0:
@@ -192,7 +192,7 @@ class Cursor(object):
 
             index += 1
 
-        the_tup = tuple(the_list)
+        the_tup: tuple = tuple(the_list)
         return the_tup
 
     def fetchmany(self, size: int = -1):
@@ -208,7 +208,7 @@ class Cursor(object):
         if size_to_use <= 1:
             size_to_use = self.arraysize
 
-        list_tuples = []
+        list_tuples: list[tuple] = []
         cpt = 0
         while True:
             the_tup = self.fetchone()
@@ -250,7 +250,7 @@ class Cursor(object):
         """ Builds the .description property"""
 
         self.__raise_error_if_closed()
-        self.__description = []
+        self.__description: list = []
 
         if self.__rowcount < 1:
             return
@@ -307,28 +307,9 @@ class Cursor(object):
             raise Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
                         0, None, None, 200)
 
-    # def blob_download(self, blob_id, filename, total_length=0,
-    # progress_holder=None):
-    # 	""" Allows to download a blob corresponding to a blob_id into a filename
-    #
-    # 		total_length & and a ProgressHolder instance may be passed for progress
-    # 		indication.
-    # 	"""
-    #
-    # 	if blob_id is None:
-    # 		raise TypeError("blob_id is null!")
-    #
-    # 	if filename is None:
-    # 		raise TypeError("filename is null!")
-    #
-    # 	self.__aceql_http_api.blob_download(blob_id, filename, total_length,
-    # 	progress_holder)
-
     def get_blob_length(self, column_index: int) -> int:
         """ Gets the remote BLOB length  on a column in the current row
-
         To be used if progress indicator needed.
-
         """
         self.__raise_error_if_closed()
 
@@ -352,7 +333,6 @@ class Cursor(object):
 
     def get_blob_stream(self, column_index: int):
         """ Returns a BLOB stream on a column in the current row.
-
             The column index starts at 0.
         """
 

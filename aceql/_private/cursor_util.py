@@ -35,11 +35,10 @@ class CursorUtil(object):
 
     def get_http_parameters_dict(self, params: dict) -> dict:
         """ Build the http parameters dictionary to pass to remote server. """
-        parms_dict = {}
+        parms_dict: dict = {}
         param_index = 0
 
         # Blob lists
-
         if params is None:
             return parms_dict
 

@@ -463,8 +463,7 @@ class AceQLHttpApi(object):
 
             AceQLHttpApi.check_values(is_prepared_statement, sql)
 
-            dict_params = {}
-            dict_params["sql"] = sql
+            dict_params: dict = {"sql": sql}
 
             self.set_is_prepared_statement(dict_params, is_prepared_statement)
 
@@ -578,9 +577,7 @@ class AceQLHttpApi(object):
                     fd.write(chunk)
 
             AceQLDebug.debug("after open filename")
-
             result_set_info = self.treat_result(filename)
-
             return result_set_info
 
         except Exception as e:
@@ -668,8 +665,7 @@ class AceQLHttpApi(object):
 
             the_url = self._url + "/metadata_query/db_schema_download"
 
-            dict_params = {}
-            dict_params["format"] = file_format
+            dict_params = {"format": file_format}
 
             if table_name is not None:
                 table_name = table_name.lower()
@@ -702,8 +698,7 @@ class AceQLHttpApi(object):
 
             action = "get_blob_length"
 
-            dict_params = {}
-            dict_params["blob_id"] = blob_id
+            dict_params: dict = {"blob_id": blob_id}
 
             url_withaction = self._url + action
 
@@ -764,7 +759,7 @@ class AceQLHttpApi(object):
         # fields={'field0': 'value', 'field1': 'value',
         # 'field2': ('filename', open('file.py', 'rb'), 'text/plain')}
 
-        the_fields = dict()
+        the_fields: dict = dict()
         the_fields["blob_id"] = blob_id
         the_fields["file"] = ("filename", fd, "application/octet-stream")
 
