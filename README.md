@@ -481,7 +481,7 @@ proxy_password = my_proxy.get_password()
 # The AceQL ProxyAuth class allows to define the proxy credentials
 auth = ProxyAuth(proxy_username, proxy_password)
 
-# We use the ConnectionOptions wrapper class to pass botthe proxies & auth
+# We use the ConnectionOptions wrapper class to pass both the proxies & the auth
 connection_options = ConnectionOptions(proxies=proxies, auth=auth)
 connection = aceql.connect(url=url, username=username, password=password, database=database,
                            connection_options=connection_options)
@@ -491,7 +491,7 @@ The AceQL module uses  [requests-toolbelt](https://pypi.python.org/pypi/requests
 
 ### Timeouts
 
-Use the `timeout` parameter of `ConnectionOptions` to pass a timeout value  in [Requests Timeouts](https://requests.readthedocs.io/en/master/user/advanced/#timeouts) format.
+Use the `timeout` parameter of `ConnectionOptions` to pass a timeout value  in the  [Requests Timeouts](https://requests.readthedocs.io/en/master/user/advanced/#timeouts) format.
 
 If no timeout is specified explicitly, requests do not time out.  
 
