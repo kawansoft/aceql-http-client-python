@@ -69,8 +69,8 @@ class AceQLHttpApi(object):
         request_headers: dict = {}
 
         if connection_options is not None:
-            if connection_options.password_is_session_id:
-                session_id = password
+            if connection_options.session_id is not None:
+                session_id = connection_options.session_id
                 password = None
             proxies = connection_options.proxies
             auth = connection_options.auth

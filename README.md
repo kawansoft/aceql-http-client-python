@@ -610,19 +610,19 @@ In this case, you may use directly the native HTTP [login](https://github.com/ka
 ```python
 import aceql
 from aceql import ConnectionOptions
-from samples import my_session_id_factory
+from samples import my_session_id_builder
 
-# URL of the AceQL server, Remote SQL database name & authentication info
+# URL of the AceQL server, Remote SQL database name & authentication info without password
 url = "http://www.runsafester.net:8081/aceql"
 database = "sampledb"
 username = "user1"
 
-# Our application will get the session_id to use instead of a password
-password = my_session_id_factory.get_session_id_from_login_api()
+# Our application will get the session_id to use
+session_id = my_session_id_builder.get_session_id_from_login_api()
 
-# We use the ConnectionOptions wrapper to tell that the password is to be used as a session_id
-connection_options = ConnectionOptions(password_is_session_id=True)
-connection = aceql.connect(url=url, username=username, password=password, database=database,
+# We use the ConnectionOptions wrapper to tell to use session_id instead of a password
+connection_options = ConnectionOptions(session_id=session_id)
+connection = aceql.connect(url=url, username=username, password=None, database=database,
                            connection_options=connection_options)
 ```
 

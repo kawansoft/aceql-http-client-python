@@ -54,7 +54,10 @@ class Connection(object):
         if username is None:
             raise TypeError("username is null!")
         if password is None:
-            raise TypeError("password is null!")
+            if connection_options is None:
+                raise TypeError("password and connection_options cannot be both null!")
+            if connection_options.session_id is None:
+                raise TypeError("password and connection_options.session_id cannot be both null!")
         if database is None:
             raise TypeError("database is null!")
 
