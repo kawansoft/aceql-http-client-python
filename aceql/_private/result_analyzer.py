@@ -27,7 +27,7 @@ class ResultAnalyzer(object):
 
     #
     # The json result
-    # 
+    #
     # 
     # We try to find status.  If error parsing, invalidJsonStream = true
     # 
@@ -45,9 +45,8 @@ class ResultAnalyzer(object):
         self._json_result = json_result
 
     def is_status_ok(self) -> bool:
-        """ 
+        """
          Determines whether the SQL command correctly executed on server side.
-         
          <returns><c>true</c> if [is status ok]; otherwise, <c>false</c>.</returns>
         """
 

@@ -33,7 +33,7 @@ class StreamResultAnalyzer(object):
 
     #
     # The error identifier
-    # 
+    #
     # 
     # The error message
     # 
@@ -42,7 +42,7 @@ class StreamResultAnalyzer(object):
     # 
     # The JSON file containing Result Set
     def __init__(self, filename: str, http_status_code: int):
-        """ 
+        """
          Initializes a new instance of the <see cref="StreamResultAnalyzer"/> class.
 
          <param name="filename">The file to analyze.</param>
@@ -66,7 +66,6 @@ class StreamResultAnalyzer(object):
     def is_status_ok(self) -> bool:
         """ 
          Determines whether the SQL correctly executed on server side.
-         
          <returns><c>true</c> if [is status ok]; otherwise, <c>false</c>.</returns>
         """
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
