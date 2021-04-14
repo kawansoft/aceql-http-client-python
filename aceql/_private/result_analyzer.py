@@ -84,17 +84,15 @@ class ResultAnalyzer(object):
         return self.get_value(name)
 
     def get_result_default(self) -> str:
-        """ 
+        """
          Gets the result for the key name "result"
-         
          <returns></returns>
         """
         return self.get_value("result")
 
     def get_value(self, name) -> str:
-        """ 
+        """
          Gets the value.
-         
          <param name="name">The name.</param>
          <returns>System.String.</returns>
          <exception cref="System.ArgumentNullException">name is null!</exception>
@@ -127,9 +125,8 @@ class ResultAnalyzer(object):
             return None
 
     def get_error_type(self) -> int:
-        """ 
+        """
          Gets the error_type.
-         
          <returns>System.Int32.</returns>
         """
         if self.is_invalid_json_stream():
@@ -145,9 +142,8 @@ class ResultAnalyzer(object):
             return 0
 
     def get_error_message(self) -> str:
-        """ 
+        """
          Gets the error_message.
-         
          <returns>System.String.</returns>
         """
         if self.is_invalid_json_stream():
@@ -165,9 +161,8 @@ class ResultAnalyzer(object):
             return None
 
     def get_stack_trace(self) -> str:
-        """ 
+        """
          Gets the remote stack_trace.
-         
          <returns>String.</returns>
         """
         if self.is_invalid_json_stream():
@@ -182,9 +177,8 @@ class ResultAnalyzer(object):
             return None
 
     def get_int_value(self, name: str) -> int:
-        """ 
+        """
          Gets the int value.
-         
          <param name="name">The name.</param>
          <returns>System.Int32.</returns>
         """

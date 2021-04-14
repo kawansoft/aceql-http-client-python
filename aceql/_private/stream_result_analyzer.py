@@ -102,9 +102,8 @@ class StreamResultAnalyzer(object):
             return
 
     def get_error_message(self) -> str:
-        """ 
+        """
          Gets the error message.
-         
          <returns>The error message</returns>
         """
         return self.__error_message
