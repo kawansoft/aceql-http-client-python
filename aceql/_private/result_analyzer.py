@@ -25,7 +25,7 @@ class ResultAnalyzer(object):
      Used to analyze a JSON response from the AceQL server.
     """
 
-    # 
+    #
     # The json result
     # 
     # 
@@ -33,9 +33,8 @@ class ResultAnalyzer(object):
     # 
     # * Exception when parsing the JSON stream.  Future usage
     def __init__(self, json_result: str, http_status_code: int):
-        """ 
+        """
          Initializes a new instance of the <see cref="ResultAnalyzer"/> class.
-         
          <param name="son_result">The json result.</param>
          <param name="http_status_code">The http status code.</param>
          <exception cref="System.ArgumentNullException">son_result is null!</exception>

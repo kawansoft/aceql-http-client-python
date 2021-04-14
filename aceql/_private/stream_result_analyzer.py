@@ -27,11 +27,11 @@ from aceql._private.aceql_debug import AceQLDebug
 
 
 class StreamResultAnalyzer(object):
-    """ 
+    """
      Class <see cref="StreamResultAnalyzer"/>. Allows to analyze the result of a downloaded result of a SQL query stored in a local PC file.
     """
 
-    # 
+    #
     # The error identifier
     # 
     # 
@@ -44,7 +44,7 @@ class StreamResultAnalyzer(object):
     def __init__(self, filename: str, http_status_code: int):
         """ 
          Initializes a new instance of the <see cref="StreamResultAnalyzer"/> class.
-         
+
          <param name="filename">The file to analyze.</param>
          <param name="httpStatusCode">The http status code.</param>
          <exception cref="System.ArgumentNullException">The file is null.</exception>
