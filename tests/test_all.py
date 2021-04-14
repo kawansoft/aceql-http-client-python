@@ -98,10 +98,10 @@ class TestAll(unittest.TestCase):
                 blob_tuple = (None, SqlNullType.BLOB)
                 print("NULL BLOB INSERT")
 
-            theFloat = float((cpt * 1000) + 0.44)
-            print("theFloat: " + str(theFloat))
+            the_float = float((cpt * 1000) + 0.44)
+            print("theFloat: " + str(the_float))
 
-            params = (cpt, cpt, u"intitulé_" + str(cpt), theFloat,
+            params = (cpt, cpt, u"intitulé_" + str(cpt), the_float,
                       the_date, datetime.now(), blob_tuple, 1, cpt * 1000)
             print("insert: " + str(params))
             cursor.execute(sql, params)

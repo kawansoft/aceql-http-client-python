@@ -94,14 +94,6 @@ class Connection(object):
         cursor = Cursor(self, self.__aceQLHttpApi)
         return cursor
 
-    def add_request_headers(self, headers: dict):
-        """Allows to pass a dictionary of headers to each request."""
-        self.__aceQLHttpApi.add_request_headers(headers)
-
-    def reset_request_headers(self):
-        """Resets the request headers. The previously added headers with add_request_headers will be suppressed."""
-        self.__aceQLHttpApi.reset_request_headers()
-
     def set_progress_indicator(self, progress_indicator: ProgressIndicator):
         """Allows to set a progress indicator."""
         self.__aceQLHttpApi.set_progress_indicator(progress_indicator)

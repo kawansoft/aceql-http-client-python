@@ -491,9 +491,9 @@ The AceQL module uses  [requests-toolbelt](https://pypi.python.org/pypi/requests
 
 ### Timeouts
 
-Use the `timeout` parameter of `ConnectionOptions` to pass a tieout value in seconds.
+Use the `timeout` parameter of `ConnectionOptions` to pass a timeout value  in [Requests Timeouts](https://requests.readthedocs.io/en/master/user/advanced/#timeouts) format.
 
-If no timeout is specified explicitly, requests do not time out. (For more info: timeouts are implemented with [Requests Timeouts](https://requests.readthedocs.io/en/master/user/advanced/#timeouts).)
+If no timeout is specified explicitly, requests do not time out.  
 
 ```python
 connection_options = ConnectionOptions(timeout=10)

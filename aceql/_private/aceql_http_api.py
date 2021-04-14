@@ -65,7 +65,7 @@ class AceQLHttpApi(object):
         proxies: dict = None
         auth: ProxyAuth = None
         gzip_result: bool = True
-        timeout: int = 0
+        timeout = None
         request_headers: dict = {}
 
         if connection_options is not None:
@@ -151,7 +151,7 @@ class AceQLHttpApi(object):
 
     def call_with_get_url(self, url: str) -> str:
 
-        if self.__timeout == 0:
+        if self.__timeout is None:
             response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
         else:
             response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
@@ -163,7 +163,7 @@ class AceQLHttpApi(object):
 
     def call_with_post_url(self, url: str, dict_params: dict) -> str:
 
-        if self.__timeout == 0:
+        if self.__timeout is None:
             response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
                                      auth=self.__auth)
         else:
@@ -483,7 +483,7 @@ class AceQLHttpApi(object):
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
             # print("Before update request")
 
-            if self.__timeout == 0:
+            if self.__timeout is None:
                 response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth)
             else:
@@ -558,7 +558,7 @@ class AceQLHttpApi(object):
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
-            if self.__timeout == 0:
+            if self.__timeout is None:
                 response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth)
             else:
@@ -641,7 +641,7 @@ class AceQLHttpApi(object):
 
             the_url = self._url + "/blob_download?blob_id=" + blob_id
 
-            if self.__timeout == 0:
+            if self.__timeout is None:
                 response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
             else:
                 response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
@@ -671,7 +671,7 @@ class AceQLHttpApi(object):
                 table_name = table_name.lower()
                 dict_params["table_name"] = table_name
 
-            if self.__timeout == 0:
+            if self.__timeout is None:
                 response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
                                          auth=self.__auth)
             else:
@@ -707,7 +707,7 @@ class AceQLHttpApi(object):
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
-            if self.__timeout == 0:
+            if self.__timeout is None:
                 response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth)
             else:
