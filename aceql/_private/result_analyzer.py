@@ -28,7 +28,7 @@ class ResultAnalyzer(object):
     #
     # The json result
     #
-    # 
+    #
     # We try to find status.  If error parsing, invalidJsonStream = true
     # 
     # * Exception when parsing the JSON stream.  Future usage
@@ -65,9 +65,8 @@ class ResultAnalyzer(object):
             return False
 
     def is_invalid_json_stream(self) -> bool:
-        """ 
+        """
          Says if the JSON Stream is invalid.
-         
          <returns>true if JSN stream is invalid</returns>
         """
         if self._json_result is None or len(self._json_result) == 0:

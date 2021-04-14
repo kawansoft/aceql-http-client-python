@@ -30,16 +30,11 @@ class StreamResultAnalyzer(object):
     """
      Class <see cref="StreamResultAnalyzer"/>. Allows to analyze the result of a downloaded result of a SQL query stored in a local PC file.
     """
-
     #
     # The error identifier
-    #
-    # 
     # The error message
-    # 
-    # 
     # The stack trace
-    # 
+    #
     # The JSON file containing Result Set
     def __init__(self, filename: str, http_status_code: int):
         """
