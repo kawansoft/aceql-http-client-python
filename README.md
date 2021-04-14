@@ -17,9 +17,9 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v3.3 - User Guide 
+## Python Client SDK v4.0 - User Guide 
 
-## November 11, 2020
+## April 14, 2021
 
 <img src="https://www.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -71,7 +71,7 @@ The SDK is licensed with the liberal [Apache 2.0](https://www.apache.org/license
 
 ## Python Versions & DB-API 2.0
 
-The module supports Python 3.6–3.8.
+The module supports Python 3.6–3.9.
 
 The module provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 
