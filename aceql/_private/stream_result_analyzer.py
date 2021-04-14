@@ -109,17 +109,15 @@ class StreamResultAnalyzer(object):
         return self.__error_message
 
     def get_error_type(self) -> int:
-        """ 
+        """
          Gets the error type.
-         
          <returns>The error type.</returns>
         """
         return self.__error_type
 
     def get_stack_trace(self) -> str:
-        """ 
+        """
          Gets the remote stack trace.
-         
          <returns>The remote stack trace.</returns>
         """
         return self.__stack_trace
