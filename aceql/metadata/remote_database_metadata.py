@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,21 +18,23 @@
 ##
 from typing import List
 
+from aceql import Connection
 from aceql._private.table_names_dto import TableNamesDto
 from aceql._private.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
 from aceql._private.table_dto import TableDto
 from aceql.metadata.table import Table
+from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
 
 
 class RemoteDatabaseMetaData(object):
 
     """Allows to retrieve metadata info from the remote SQL database."""
 
-    def __init__(self, connection):
+    def __init__(self, connection: Connection):
         self.__connection = connection
         self.__aceql_http_api = self.__connection._get_aceql_http_api
 
-    def db_schema_download(self, file, file_format = None, table_name= None):
+    def db_schema_download(self, file: str, file_format: str = None, table_name: str = None):
         """
         Downloads the schema extract for a table name in the specified HTML or Text format.
 
@@ -61,7 +63,7 @@ class RemoteDatabaseMetaData(object):
             for chunk in response.iter_content(chunk_size=2048):
                 fd.write(chunk)
 
-    def get_jdbc_database_meta_data(self):
+    def get_jdbc_database_meta_data(self) -> JdbcDatabaseMetaData:
         """
         Returns the basic meta data values of the remote database, as sent by the the remote JDBC Driver of the remote database.
         :return:
@@ -70,7 +72,7 @@ class RemoteDatabaseMetaData(object):
         jdbc_database_meta_data_holder : JdbcDatabaseMetaDataDto = self.__aceql_http_api.get_db_metadata()
         return jdbc_database_meta_data_holder.jdbcDatabaseMetaData
 
-    def get_table_names(self, table_type=None):
+    def get_table_names(self, table_type: str =None) -> List[str]:
         """
         Returns The list of tables
         :param table_type:
@@ -80,10 +82,10 @@ class RemoteDatabaseMetaData(object):
         The list of tables
         """
         table_names_dto : TableNamesDto = self.__aceql_http_api.get_table_names(table_type)
-        table_names : List[str] = table_names_dto.tableNames
+        table_names: List[str] = table_names_dto.tableNames
         return table_names
 
-    def get_table(self, name):
+    def get_table(self, name: str) -> Table:
         """
         Returns the Table details
         :param name:

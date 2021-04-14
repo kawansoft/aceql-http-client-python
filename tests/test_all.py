@@ -2,7 +2,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,12 +32,11 @@ class TestAll(unittest.TestCase):
     def test_A(self):
 
         connection = ConnectionBuilder.get_connection()
-        headers = {'user-agent': 'aceql-client'}
-        connection.add_request_headers(headers)
 
         print()
         print("aceql version     : " + Connection.get_client_version())
         print("aceql version full: " + Connection.get_client_version_full())
+        print("Connection Options: " + str(connection.get_connections_options()))
 
         connection.set_holdability("hold_cursors_over_commit")
         holdability = connection.get_holdability()
@@ -99,10 +98,10 @@ class TestAll(unittest.TestCase):
                 blob_tuple = (None, SqlNullType.BLOB)
                 print("NULL BLOB INSERT")
 
-            theFloat = float((cpt * 1000) + 0.44)
-            print("theFloat: " + str(theFloat))
+            the_float = float((cpt * 1000) + 0.44)
+            print("theFloat: " + str(the_float))
 
-            params = (cpt, cpt, u"intitulé_" + str(cpt), theFloat,
+            params = (cpt, cpt, u"intitulé_" + str(cpt), the_float,
                       the_date, datetime.now(), blob_tuple, 1, cpt * 1000)
             print("insert: " + str(params))
             cursor.execute(sql, params)

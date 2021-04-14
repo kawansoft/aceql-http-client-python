@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,6 +33,9 @@ from requests_toolbelt.multipart import encoder
 
 from aceql._private.file_util import os
 from aceql.error import Error
+from aceql.connection_options import ConnectionOptions
+from aceql.progress_indicator import ProgressIndicator
+from aceql.proxy_auth import ProxyAuth
 from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql._private.result_set_info import ResultSetInfo
@@ -46,45 +49,57 @@ class AceQLHttpApi(object):
     HTTP calls and operations."""
 
     __trace_on = False
-    __stateless = False
-    __timeout = 0
     __debug = True
 
-    def __init__(self, server_url, database, username, password, session_id=None, proxies=None, auth=None):
+    def __init__(self, *, url: str, username: str, password: str, database: str,
+                 connection_options: ConnectionOptions = None):
 
-        if server_url is None:
-            raise TypeError("server_url is null!")
+        if url is None:
+            raise TypeError("url is null!")
         if database is None:
             raise TypeError("database is null!")
         if username is None:
             raise TypeError("username is null!")
 
-        if password is None and session_id is None:
-            raise TypeError("password and session_id are both null!")
+        session_id: str = None
+        proxies: dict = None
+        auth: ProxyAuth = None
+        gzip_result: bool = True
+        timeout = None
+        request_headers: dict = {}
 
-        self.__server_url = server_url
+        if connection_options is not None:
+            if connection_options.session_id is not None:
+                session_id = connection_options.session_id
+                password = None
+            proxies = connection_options.proxies
+            auth = connection_options.auth
+            gzip_result = connection_options.gzip_result
+            timeout = connection_options.timeout
+            request_headers = connection_options.request_headers
+
+        self.__url = url
         self.__database = database
         self.__username = username
         self.__password = password
         self.__proxies = proxies
         self.__auth = auth
-
+        self.__gzip_result = gzip_result
+        self.__timeout = timeout
+        self.__headers = request_headers
         self.__http_status_code = requests.codes.ok
 
         # Other self for other methods
         self._pretty_printing = True
-        self._gzip_result = False
         self._temp_length = 0
         self.__total_length = 0
         self.__progress_indicator = None
 
-        self.__headers = {}
-
         # url = c + "/database/" + database + "/username/" \
         #       + username + "/connect" + "?password=" \
-        #       + password + "&stateless=" + str(AceQLHttpApi.__stateless)
+        #       + password
 
-        user_login_store = UserLoginStore(server_url, username, database)
+        user_login_store = UserLoginStore(url, username, database)
 
         if session_id is not None:
             user_login_store.set_session_id(session_id);
@@ -92,7 +107,7 @@ class AceQLHttpApi(object):
         try:
             if user_login_store.is_already_logged():
                 session_id = user_login_store.get_session_id()
-                the_url = server_url + "/session/" + session_id + "/get_connection";
+                the_url = url + "/session/" + session_id + "/get_connection";
 
                 result = self.call_with_get_url(the_url)
 
@@ -102,13 +117,13 @@ class AceQLHttpApi(object):
                                 result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
                 connection_id = result_analyzer.get_value("connection_id");
-                self._url = server_url + "/session/" + session_id + "/connection/" + connection_id + "/";
+                self._url = url + "/session/" + session_id + "/connection/" + connection_id + "/";
 
             else:
-                url = server_url + "/database/" + database + "/username/" \
+                url = url + "/database/" + database + "/username/" \
                       + username + "/login"
 
-                dict_params = {"password": password, "stateless": str(AceQLHttpApi.__stateless)}
+                dict_params = {"password": password, "client_version": str(VersionValues.VERSION)}
 
                 result = self.call_with_post_url(url, dict_params)
 
@@ -119,7 +134,7 @@ class AceQLHttpApi(object):
 
                 session_id = result_analyzer.get_value("session_id")
                 connection_id = result_analyzer.get_value("connection_id");
-                self._url = server_url + "/session/" + session_id + "/" + connection_id + "/" + connection_id + "/"
+                self._url = url + "/session/" + session_id + "/" + connection_id + "/" + connection_id + "/"
 
                 user_login_store.set_session_id(session_id);
         except Exception as e:
@@ -128,69 +143,39 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    # *
-    # * Says if session is stateless.
-    # *
-    # * @return {@code true} if session is stateless, else {@code false}.
-    #
-    @staticmethod
-    def is_stateless():
-        return AceQLHttpApi.__stateless
-
-    # *
-    # * Sets the session mode
-    # *
-    # * @param stateless
-    # * if true, the session will be stateless, else stateful.
-    #
-    @staticmethod
-    def set_stateless(the_stateless):
-        if the_stateless is None:
-            raise TypeError("stateless is null!")
-        if str(the_stateless) == "True":
-            AceQLHttpApi.__stateless = True
-        else:
-            AceQLHttpApi.__stateless = False
-
-    # *
-    # * Sets the timeout in seconds
-    #
-    @staticmethod
-    def set_timeout(timeout):
-        if timeout is None:
-            raise TypeError("timeout is null!")
-        AceQLHttpApi.__timeout = timeout
-
-    def set_progress_indicator(self, progress_indicator):
+    def set_progress_indicator(self, progress_indicator: ProgressIndicator):
         self.__progress_indicator = progress_indicator
 
-    def get_progress_indicator(self):
+    def get_progress_indicator(self) -> ProgressIndicator:
         return self.__progress_indicator
 
-    def call_with_get_url(self, url):
+    def call_with_get_url(self, url: str) -> str:
 
-        if AceQLHttpApi.__timeout == 0:
+        if self.__timeout is None:
             response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
         else:
-            response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth, timeout=AceQLHttpApi.__timeout)
+            response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
+                                    timeout=self.__timeout)
 
         self.__http_status_code = response.status_code
 
         return response.text
 
-    def call_with_post_url(self, url, dict_params):
+    def call_with_post_url(self, url: str, dict_params: dict) -> str:
 
-        if AceQLHttpApi.__timeout == 0:
-            response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+        if self.__timeout is None:
+            response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+                                     auth=self.__auth)
         else:
-            response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
-                                     timeout=AceQLHttpApi.__timeout)
+            response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+                                     auth=self.__auth,
+                                     timeout=self.__timeout)
 
         self.__http_status_code = response.status_code
 
         return response.text
 
-    def call_with_get_action(self, action, action_parameter):
+    def call_with_get_action(self, action: str, action_parameter: dict) -> str:
         url_withaction = self._url + action
 
         if action_parameter is not None and len(action_parameter) > 1:
@@ -198,7 +183,7 @@ class AceQLHttpApi(object):
 
         return self.call_with_get_url(url_withaction)
 
-    def call_api_with_result(self, command_name, command_option):
+    def call_api_with_result(self, command_name: str, command_option: str):
         if command_name is None:
             raise TypeError("command_name is null!")
 
@@ -218,7 +203,7 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def call_api_no_result(self, command_name, command_option):
+    def call_api_no_result(self, command_name: str, command_option: str):
         if command_name is None:
             raise TypeError("command_name is null!")
 
@@ -236,7 +221,7 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def set_auto_commit(self, auto_commit):
+    def set_auto_commit(self, auto_commit: bool):
         auto_commit_str = str(auto_commit)
 
         if auto_commit_str == "True":
@@ -246,7 +231,7 @@ class AceQLHttpApi(object):
 
         self.call_api_no_result("set_auto_commit", auto_commit_str)
 
-    def get_auto_commit(self):
+    def get_auto_commit(self) -> bool:
         is_auto_commit_str = self.call_api_with_result("get_auto_commit", None)
         if is_auto_commit_str == "true":
             return True
@@ -260,7 +245,7 @@ class AceQLHttpApi(object):
         self.call_api_no_result("rollback", None)
 
     @staticmethod
-    def trace(s):
+    def trace(s: str):
         if AceQLHttpApi.__trace_on:
             print(s)
 
@@ -270,7 +255,7 @@ class AceQLHttpApi(object):
     # * @return true if trace is on
     #
     @staticmethod
-    def is_trace_on():
+    def is_trace_on() -> bool:
         return AceQLHttpApi.__trace_on
 
     # *
@@ -280,31 +265,16 @@ class AceQLHttpApi(object):
     # * if true, trace will be on
     #
     @staticmethod
-    def set_trace_on(trace_on):
+    def set_trace_on(trace_on: bool):
         AceQLHttpApi.__trace_on = trace_on
-
-    # *
-    # * @return the prettyPrinting
-    #
-    def is_pretty_printing(self):
-        return self._pretty_printing
 
     # *
     # * Says the query result is returned compressed with the GZIP file format.
     # *
     # * @return the gzipResult
     #
-    def is_gzip_result(self):
-        return self._gzip_result
-
-    # *
-    # * Says if JSON contents are to be pretty printed.  Defaults to false.
-    # *
-    # * @param prettyPrinting
-    # * if true, JSON contents are to be pretty printed
-    #
-    def set_pretty_printing(self, pretty_printing):
-        self._pretty_printing = pretty_printing
+    def is_gzip_result(self) -> bool:
+        return self.__gzip_result
 
     # *
     # * Define if result sets are compressed before download.  Defaults to true.
@@ -312,12 +282,12 @@ class AceQLHttpApi(object):
     # * @param gzipResult
     # * if true, sets are compressed before download
     #
-    def set_gzip_result(self, gzip_result):
+    def set_gzip_result(self, gzip_result: bool):
 
         if str(gzip_result) == 'True':
-            self._gzip_result = True
+            self.__gzip_result = True
         else:
-            self._gzip_result = False
+            self.__gzip_result = False
 
     # *
     # * Calls /get_version API
@@ -325,7 +295,7 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def get_server_version(self):
+    def get_server_version(self) -> str:
         the_version = self.call_api_with_result("get_version", None)
         return the_version
 
@@ -336,7 +306,7 @@ class AceQLHttpApi(object):
     # * if any Exception occurs
     #
     @staticmethod
-    def get_client_version():
+    def get_client_version() -> str:
         return VersionValues.NAME + " - " + VersionValues.VERSION + " - " + VersionValues.DATE
 
     # *
@@ -346,7 +316,7 @@ class AceQLHttpApi(object):
     # * if any Exception occurs
     #
     @staticmethod
-    def get_client_version_full():
+    def get_client_version_full() -> str:
         return AceQLHttpApi.get_client_version() + " - " + sys.version
 
     # *
@@ -365,7 +335,7 @@ class AceQLHttpApi(object):
     # * if any Exception occurs
     #
     def logout(self):
-        user_login_store = UserLoginStore(self.__server_url, self.__username, self.__database)
+        user_login_store = UserLoginStore(self.__url, self.__username, self.__database)
         user_login_store.remove()
         self.call_api_no_result("logout", None)
 
@@ -381,7 +351,7 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def get_transaction_isolation(self):
+    def get_transaction_isolation(self) -> str:
         transaction_isolation = self.call_api_with_result("get_transaction_isolation_level", None)
         return transaction_isolation
 
@@ -393,7 +363,7 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def set_transaction_isolation(self, level):
+    def set_transaction_isolation(self, level: str):
         self.call_api_no_result("set_transaction_isolation_level", level)
 
     #
@@ -404,7 +374,7 @@ class AceQLHttpApi(object):
     # * @throws Error
     # * if any Exception occurs
     #
-    def get_holdability(self):
+    def get_holdability(self) -> str:
         holdability = self.call_api_with_result("get_holdability", None)
         return holdability
 
@@ -416,7 +386,7 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def set_holdability(self, holdability):
+    def set_holdability(self, holdability: str):
         self.call_api_no_result("set_holdability", holdability)
 
     # *
@@ -427,7 +397,7 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def is_read_only(self):
+    def is_read_only(self) -> bool:
         is_read_only_str = self.call_api_with_result("is_read_only", None)
         if is_read_only_str == "true":
             return True
@@ -442,7 +412,7 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def set_read_only(self, read_only):
+    def set_read_only(self, read_only: bool):
         if read_only is None:
             raise TypeError("read_only is null!")
 
@@ -456,13 +426,13 @@ class AceQLHttpApi(object):
     # *
     # * @return the httpStatus
     #
-    def get_http_status_code(self):
+    def get_http_status_code(self) -> int:
         return self.__http_status_code
 
     # *
     # * @return the httpStatusMessage
     #
-    def get_http_status_message(self):
+    def get_http_status_message(self) -> str:
         status_messages = requests.status_codes.codes[self.__http_status_code]
         return status_messages[0]
 
@@ -485,16 +455,15 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def execute_update(self, sql, is_prepared_statement, statement_parameters):
+    def execute_update(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
 
         try:
 
             action = "execute_update"
 
-            self.check_values(is_prepared_statement, sql)
+            AceQLHttpApi.check_values(is_prepared_statement, sql)
 
-            dict_params = {}
-            dict_params["sql"] = sql
+            dict_params: dict = {"sql": sql}
 
             self.set_is_prepared_statement(dict_params, is_prepared_statement)
 
@@ -514,17 +483,13 @@ class AceQLHttpApi(object):
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
             # print("Before update request")
 
-            if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+            if self.__timeout is None:
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                                         proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
-                                         timeout=AceQLHttpApi.__timeout)
-
-            # if AceQLHttpApi.__timeout == 0:
-            #     response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth)
-            # else:
-            #     response = requests.post(url_withaction, data=dict_params, proxies=self.__proxies, auth=self.__auth,
-            #                              timeout=AceQLHttpApi.__timeout)
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                                         proxies=self.__proxies, auth=self.__auth,
+                                         timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
             result = response.text
@@ -565,27 +530,27 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def execute_query(self, sql, isPreparedStatement, statementParameters):
+    def execute_query(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
 
         try:
 
             action = "execute_query"
 
-            self.check_values(isPreparedStatement, sql)
+            AceQLHttpApi.check_values(is_prepared_statement, sql)
 
             dict_params = {"sql": sql}
-            self.set_is_prepared_statement(dict_params, isPreparedStatement)
+            self.set_is_prepared_statement(dict_params, is_prepared_statement)
 
             url_withaction = self._url + action
 
             AceQLDebug.debug("url_withaction: " + url_withaction)
             AceQLDebug.debug("dictParams 1: " + str(dict_params))
 
-            if statementParameters is not None:
-                if not isinstance(statementParameters, dict):
+            if statement_parameters is not None:
+                if not isinstance(statement_parameters, dict):
                     raise TypeError("statementParameters is not a dictionnary!")
 
-                dict_params.update(statementParameters)
+                dict_params.update(statement_parameters)
 
             self.update_dict_params(dict_params)
 
@@ -593,11 +558,13 @@ class AceQLHttpApi(object):
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
-            if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+            if self.__timeout is None:
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                                         proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
-                                         timeout=AceQLHttpApi.__timeout)
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                                         proxies=self.__proxies, auth=self.__auth,
+                                         timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
 
@@ -610,9 +577,7 @@ class AceQLHttpApi(object):
                     fd.write(chunk)
 
             AceQLDebug.debug("after open filename")
-
             result_set_info = self.treat_result(filename)
-
             return result_set_info
 
         except Exception as e:
@@ -621,7 +586,7 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def treat_result(self, filename):
+    def treat_result(self, filename: str):
         file_out = None
         if self.is_gzip_result():
             file_out = filename[0: len(filename) - 4] + ".ungzipped.txt"
@@ -643,8 +608,8 @@ class AceQLHttpApi(object):
         AceQLDebug.debug("Before resultSetInfo")
         return result_set_info
 
-    def update_dict_params(self, dict_params):
-        if self._gzip_result:
+    def update_dict_params(self, dict_params: dict):
+        if self.__gzip_result:
             dict_params["gzip_result"] = "true"
         if self._pretty_printing:
             dict_params["pretty_printing"] = "true"
@@ -653,20 +618,21 @@ class AceQLHttpApi(object):
         # We need the types
         dict_params["column_types"] = "true"
 
-    def check_values(self, is_prepared_statement, sql):
+    @staticmethod
+    def check_values(is_prepared_statement: bool, sql: str):
         if sql is None:
             raise TypeError("sql is null!")
         if is_prepared_statement is None:
             raise TypeError("isPreparedStatement is null!")
 
     @staticmethod
-    def set_is_prepared_statement(dict_params, is_prepared_statement):
+    def set_is_prepared_statement(dict_params: dict, is_prepared_statement: bool):
         if str(is_prepared_statement) == 'True':
             dict_params["prepared_statement"] = "true"
         else:
             dict_params["prepared_statement"] = "false"
 
-    def get_blob_stream(self, blob_id):
+    def get_blob_stream(self, blob_id: str):
         """ returns a BLOB stream as a Requests response """
         try:
 
@@ -675,11 +641,11 @@ class AceQLHttpApi(object):
 
             the_url = self._url + "/blob_download?blob_id=" + blob_id
 
-            if AceQLHttpApi.__timeout == 0:
+            if self.__timeout is None:
                 response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
             else:
                 response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
-                                        timeout=AceQLHttpApi.__timeout)
+                                        timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
 
@@ -691,7 +657,7 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def db_schema_download(self, file_format, table_name):
+    def db_schema_download(self, file_format: str, table_name: str):
         """ returns a schema stream as a Requests response """
         try:
             if file_format is None:
@@ -699,18 +665,19 @@ class AceQLHttpApi(object):
 
             the_url = self._url + "/metadata_query/db_schema_download"
 
-            dict_params = {}
-            dict_params["format"] = file_format
+            dict_params = {"format": file_format}
 
             if table_name is not None:
                 table_name = table_name.lower()
                 dict_params["table_name"] = table_name
 
-            if AceQLHttpApi.__timeout == 0:
-                response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+            if self.__timeout is None:
+                response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+                                         auth=self.__auth)
             else:
-                response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
-                                         timeout=AceQLHttpApi.__timeout)
+                response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+                                         auth=self.__auth,
+                                         timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
 
@@ -722,7 +689,7 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def get_blob_length(self, blob_id):
+    def get_blob_length(self, blob_id: str) -> int:
         """ Gets the blob length. """
         try:
 
@@ -731,8 +698,7 @@ class AceQLHttpApi(object):
 
             action = "get_blob_length"
 
-            dict_params = {}
-            dict_params["blob_id"] = blob_id
+            dict_params: dict = {"blob_id": blob_id}
 
             url_withaction = self._url + action
 
@@ -741,11 +707,13 @@ class AceQLHttpApi(object):
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
-            if AceQLHttpApi.__timeout == 0:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth)
+            if self.__timeout is None:
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                                         proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params, proxies=self.__proxies, auth=self.__auth,
-                                         timeout=AceQLHttpApi.__timeout)
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                                         proxies=self.__proxies, auth=self.__auth,
+                                         timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
             result = response.text
@@ -783,7 +751,7 @@ class AceQLHttpApi(object):
         except Exception as e:
             print(str(e))
 
-    def blob_upload(self, blob_id, fd, total_length):
+    def blob_upload(self, blob_id: str, fd, total_length: int):
         """ Upload the BLOB and use a callback function for progress indicator. """
 
         self.__total_length = total_length
@@ -791,7 +759,7 @@ class AceQLHttpApi(object):
         # fields={'field0': 'value', 'field1': 'value',
         # 'field2': ('filename', open('file.py', 'rb'), 'text/plain')}
 
-        the_fields = dict()
+        the_fields: dict = dict()
         the_fields["blob_id"] = blob_id
         the_fields["file"] = ("filename", fd, "application/octet-stream")
 
@@ -802,12 +770,12 @@ class AceQLHttpApi(object):
         the_headers["Content-Type"] = m.content_type
 
         the_url = self._url + "blob_upload"
-        #requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
+        # requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
         #              auth=self.__auth)
         requests.post(the_url, data=m, headers=the_headers, proxies=self.__proxies,
                       auth=self.__auth)
 
-    def get_db_metadata(self):
+    def get_db_metadata(self) -> JdbcDatabaseMetaDataDto:
         try:
             url_withaction = self._url + "metadata_query/get_db_metadata"
             result = self.call_with_get_url(url_withaction)
@@ -835,7 +803,7 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def get_table_names(self, table_type):
+    def get_table_names(self, table_type: str) -> TableNamesDto:
         try:
             url_withaction = self._url + "metadata_query/get_table_names"
 
@@ -866,7 +834,7 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def get_table(self, name):
+    def get_table(self, name: str) -> TableDto:
         try:
             url_withaction = self._url + "metadata_query/get_table"
 
@@ -898,7 +866,7 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    def add_request_headers(self, headers):
+    def add_request_headers(self, headers: dict):
         self.__headers = headers
 
     def reset_request_headers(self):

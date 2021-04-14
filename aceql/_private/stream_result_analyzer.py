@@ -2,7 +2,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,25 +27,19 @@ from aceql._private.aceql_debug import AceQLDebug
 
 
 class StreamResultAnalyzer(object):
-    """ <summary>
-     Class <see cref="StreamResultAnalyzer"/>. Allows to analyze the result of a downloaded result of a SQL query stored in a local PC file.
-     </summary>
     """
-
-    # <summary>
+     Class <see cref="StreamResultAnalyzer"/>. Allows to analyze the result of a downloaded result of a SQL query stored in a local PC file.
+    """
+    #
     # The error identifier
-    # </summary>
-    # <summary>
     # The error message
-    # </summary>
-    # <summary>
     # The stack trace
-    # </summary>
+    #
     # The JSON file containing Result Set
-    def __init__(self, filename, http_status_code):
-        """ <summary>
+    def __init__(self, filename: str, http_status_code: int):
+        """
          Initializes a new instance of the <see cref="StreamResultAnalyzer"/> class.
-         </summary>
+
          <param name="filename">The file to analyze.</param>
          <param name="httpStatusCode">The http status code.</param>
          <exception cref="System.ArgumentNullException">The file is null.</exception>
@@ -64,10 +58,9 @@ class StreamResultAnalyzer(object):
         self.__error_message = None
         self.__stack_trace = None
 
-    def is_status_ok(self):
-        """ <summary>
+    def is_status_ok(self) -> bool:
+        """
          Determines whether the SQL correctly executed on server side.
-         </summary>
          <returns><c>true</c> if [is status ok]; otherwise, <c>false</c>.</returns>
         """
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
@@ -90,9 +83,8 @@ class StreamResultAnalyzer(object):
         return status_ok
 
     def parse_error_keywords(self):
-        """ <summary>
+        """
          Parses the error keywords.
-         </summary>
          <param name="reader">The reader.</param>
         """
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
@@ -109,26 +101,23 @@ class StreamResultAnalyzer(object):
 
             return
 
-    def get_error_message(self):
-        """ <summary>
+    def get_error_message(self) -> str:
+        """
          Gets the error message.
-         </summary>
          <returns>The error message</returns>
         """
         return self.__error_message
 
-    def get_error_type(self):
-        """ <summary>
+    def get_error_type(self) -> int:
+        """
          Gets the error type.
-         </summary>
          <returns>The error type.</returns>
         """
         return self.__error_type
 
-    def get_stack_trace(self):
-        """ <summary>
+    def get_stack_trace(self) -> str:
+        """
          Gets the remote stack trace.
-         </summary>
          <returns>The remote stack trace.</returns>
         """
         return self.__stack_trace

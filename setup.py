@@ -9,8 +9,8 @@ setup(
     name='aceql',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='3.3',
-    packages=['aceql', 'aceql._private', 'aceql.metadata', 'tests'],
+    version='4.0',
+    packages=['aceql', 'aceql._private', 'aceql.metadata'],
     url='https://github.com/kawansoft/aceql-py',
     license='Apache 2.0',
 
@@ -20,6 +20,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Topic :: Database',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],

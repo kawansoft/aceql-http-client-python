@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +27,7 @@ class ColumnTypesBuilder(object):
     """Allows to build the dictionary of SQL types per coumn index of a
        valid result set file (no check is done)"""
 
-    def __init__(self, filename):
+    def __init__(self, filename: str):
         self.__filename = filename
 
         if filename is None:
@@ -36,7 +36,7 @@ class ColumnTypesBuilder(object):
         if not os.path.isfile(filename):
             raise IOError("filename does not exist: " + str(filename))
 
-    def get_types_per_col_index(self):
+    def get_types_per_col_index(self) -> dict:
         with open(self.__filename, 'r') as fd:
             s = ""
             while True:
@@ -56,7 +56,7 @@ class ColumnTypesBuilder(object):
 
             # print("list_column_types: " + str(list_column_types))
 
-            dict_column_types = {}
+            dict_column_types: dict = {}
 
             # index = 0
             # for s in list_column_types:
@@ -69,5 +69,4 @@ class ColumnTypesBuilder(object):
                 index += 1
 
             # print("dict_column_types: " + str(dict_column_types))
-
             return dict_column_types

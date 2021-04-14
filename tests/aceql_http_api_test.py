@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,16 +25,9 @@ class AceQLHttpApiTest(object):
     """description of class"""
 
     @staticmethod
-    def doIt():
-        AceQLHttpApi.set_stateless(True)
-        is_stateless = AceQLHttpApi.is_stateless()
-        print("isStateless: " + str(is_stateless))
+    def do_it():
 
-        AceQLHttpApi.set_stateless(False)
-        is_stateless = AceQLHttpApi.is_stateless()
-        print("isStateless: " + str(is_stateless))
-
-        aceql_http_api = AceQLHttpApi("http://localhost:9090/aceql", "sampledb", "user1", "password1")
+        aceql_http_api = AceQLHttpApi("http://localhost:9090/aceql", "user1", "password1", "sampledb")
         print("connect done!")
 
         print("client version: " + aceql_http_api.get_client_version())

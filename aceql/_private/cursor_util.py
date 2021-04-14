@@ -2,7 +2,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,13 +33,12 @@ class CursorUtil(object):
         self.blob_streams = []
         self.blob_lengths = []
 
-    def get_http_parameters_dict(self, params):
+    def get_http_parameters_dict(self, params: dict) -> dict:
         """ Build the http parameters dictionary to pass to remote server. """
-        parms_dict = {}
+        parms_dict: dict = {}
         param_index = 0
 
         # Blob lists
-
         if params is None:
             return parms_dict
 
@@ -89,7 +88,7 @@ class CursorUtil(object):
         return parms_dict
 
     @staticmethod
-    def get_utf8_value(x):
+    def get_utf8_value(x: str) -> str:
         """ For python 2: string values with special chars must be UTF-8 encoded """
         if FileUtil.is_python_2() and CursorUtil.get_class_name(x) == "unicode":
             x = x.encode('utf-8')
@@ -105,7 +104,7 @@ class CursorUtil(object):
     # 12:30:00 / <class 'datetime.time'>
 
     @staticmethod
-    def get_sql_type(x):
+    def get_sql_type(x) -> str:
         """get the SQL type of the passed param value. """
 
         if x is None:
@@ -152,7 +151,7 @@ class CursorUtil(object):
         return sql_type
 
     @staticmethod
-    def get_class_name(x):
+    def get_class_name(x) -> str:
         """ Parse <class 'class_name'> to get only class_name. """
 
         s = str(type(x))

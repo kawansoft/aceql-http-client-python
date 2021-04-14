@@ -17,9 +17,9 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v3.3 - User Guide 
+## Python Client SDK v4.0 - User Guide 
 
-## November 11, 2020
+## April 14, 2021
 
 <img src="https://www.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -71,7 +71,7 @@ The SDK is licensed with the liberal [Apache 2.0](https://www.apache.org/license
 
 ## Python Versions & DB-API 2.0
 
-The module supports Python 3.6–3.8.
+The module supports Python 3.6–3.9.
 
 The module provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 
@@ -162,14 +162,13 @@ To use the module, just create a `Connection` object that represents the databas
 ```python
 import aceql
 
-# URL of the AceQL server, Remote SQL database name
-# & authentication info
-host = "https://www.acme.com:9443/aceql"
+# URL of the AceQL server, Remote SQL database name authentication info
+url = "https://www.acme.com:9443/aceql"
 database = "sampledb"
 username = "user1"
 password = "password1"
 
-connection = aceql.connect(host, database, username, password)
+connection = aceql.connect(url=url, username=username, password=password, database=database)
 ```
 
 The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/6.2/src/sampledb_other_databases.txt)
@@ -235,7 +234,7 @@ for desc in cursor.description:
 
 Which returns:
 
-```bash
+```
 customer_id, INTEGER
 customer_title, CHAR
 fname, VARCHAR
@@ -373,7 +372,7 @@ cursor.execute(sql, params)
 
 A `NULL` column value is returned as `None`:
 
-```
+```python
 sql = "select * from customer_3 where customer_id = ? order by customer_id"
 params = (4,)
 cursor.execute(sql, params)
@@ -383,7 +382,7 @@ print (row)
 
 Execution will return:
 
-```
+```python
 (4, 'Sir ', 'William', 'Smith IV', '1 Madison Ave', 'New York', 'NY 10010  ', None)
 ```
 
@@ -434,49 +433,73 @@ finally:
 
 ### Proxies
 
-The AceQL module support proxies, using  the [proxy](https://requests.readthedocs.io/en/master/user/advanced/#proxies) syntax of [Requests](https://requests.readthedocs.io/en/master/) The aceql module uses Requests for HTTP communications with the remote server:
+The AceQL module support proxies, using  the [proxy](https://requests.readthedocs.io/en/master/user/advanced/#proxies) syntax of [Requests](https://requests.readthedocs.io/en/master/) The aceql module uses Requests for HTTP communications with the remote server. All options of a new AceQL connection are passed with the `ConnectionOptions` wrapper.
 
 ```python
 import aceql
-from aceql import *
+from aceql import ConnectionOptions
+
+# URL of the AceQL server, Remote SQL database name & authentication info
+url = "https://www.acme.com:9443/aceql"
+database = "sampledb"
+username = "user1"
+password = "password1"
 
 proxies = {
-  'http': 'http://10.10.1.10:3128',
-  'https': 'http://10.10.1.10:1080',
+    'http': 'http://10.10.1.10:3128',
+    'https': 'http://10.10.1.10:1080',
 }
 
-# Create a Connection using a proxy:
-connection = aceql.connect(host, database,
-                           username, password, proxies=proxies)
+# We use the ConnectionOptions wrapper class to pass the proxies
+connection_options = ConnectionOptions(proxies=proxies)
+connection = aceql.connect(url=url, username=username, password=password, database=database,
+                           connection_options=connection_options)
 ```
 
-Authenticated proxies are supported.  Just create an `aceql.ProxyAuth`  instance and pass it to `aceql.connect()`:
+Authenticated proxies are supported.  Just create an `aceql.ProxyAuth`  instance and pass it to `aceql.connect()` with the `ConnectionOptions` wrapper.
 
 ```python
 import aceql
-from aceql import *
+from aceql import ConnectionOptions
+from aceql import ProxyAuth
+from samples import my_proxy
+
+# URL of the AceQL server, Remote SQL database name & authentication info
+url = "https://www.acme.com:9443/aceql"
+database = "sampledb"
+username = "user1"
+password = "password1"
 
 proxies = {
-  'http': 'http://10.10.1.10:3128',
-  'https': 'http://10.10.1.10:1080',
+    "http": "http://localhost:8081",
 }
 
-# The proxy authentication info:
-auth = ProxyAuth("proxyUsername", "proxyPassword")
+# Get the proxy credentials with our own application methods
+proxy_username = my_proxy.get_username()
+proxy_password = my_proxy.get_password()
 
-# Create a Connection using an authenticated proxy:
-connection = aceql.connect(host, database,
-                           username, password,
-                           proxies=proxies, auth=auth)
+# The AceQL ProxyAuth class allows to define the proxy credentials
+auth = ProxyAuth(proxy_username, proxy_password)
+
+# We use the ConnectionOptions wrapper class to pass both the proxies & the auth
+connection_options = ConnectionOptions(proxies=proxies, auth=auth)
+connection = aceql.connect(url=url, username=username, password=password, database=database,
+                           connection_options=connection_options)
 ```
 
 The AceQL module uses  [requests-toolbelt](https://pypi.python.org/pypi/requests-toolbelt)  for authenticated proxy management.
 
 ### Timeouts
 
-Use static method `Connection.set_timeout(timeout)`to define a timeout in seconds
+Use the `timeout` parameter of `ConnectionOptions` to pass a timeout value  in the  [Requests Timeouts](https://requests.readthedocs.io/en/master/user/advanced/#timeouts) format.
 
-If no timeout is specified explicitly, requests do not time out. (For more info: timeouts are implemented with [Requests Timeouts](https://requests.readthedocs.io/en/master/user/advanced/#timeouts).)
+If no timeout is specified explicitly, requests do not time out.  
+
+```python
+connection_options = ConnectionOptions(timeout=10)
+connection = aceql.connect(url=url, username=username, password=password, database=database,
+                           connection_options=connection_options)
+```
 
 ### BLOB management
 
@@ -582,23 +605,28 @@ with closing(connection.cursor()) as cursor:
 
 Some working environments (Intranet, etc.) require that the client user authenticates himself without a password. Thus, it is not possible for this users to authenticate though the AceQL client SDK.
 
-In this case, you may use directly the native HTTP [login](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-6.2-user-guide-api.md#login) API to authenticate the users and retrieve the `session_id` returned by the API:
+In this case, you may use directly the native HTTP [login](https://github.com/kawansoft/aceql-http/blob/master/aceql-http-6.4-user-guide-api.md#login) API to authenticate the users and retrieve the `session_id` returned by the API. Just pass the value of the `session_id` to the `ConnectionOptions` instance, along with a `None` `password` to `connect`.
 
 ```python
 import aceql
+from aceql import ConnectionOptions
+from samples import my_session_id_builder
 
-# URL of the AceQL server, Remote SQL database name
-# & authentication info
-host = "https://www.acme.com:9443/aceql"
+# URL of the AceQL server, Remote SQL database name & authentication info without password
+url = "http://www.runsafester.net:8081/aceql"
 database = "sampledb"
 username = "user1"
-session_id = my_get_session_id_from_login_api()
 
-#Authentication will be done without password and using the sessionId.
-connection = aceql.connect(host, database, username, None, session_id)
+# Our application will get the session_id to use
+session_id = my_session_id_builder.get_session_id_from_login_api()
+
+# We use the ConnectionOptions wrapper to tell to use session_id instead of a password
+connection_options = ConnectionOptions(session_id=session_id)
+connection = aceql.connect(url=url, username=username, password=None, database=database,
+                           connection_options=connection_options)
 ```
 
-### 
+
 
 ## Using the Metadata Query API 
 

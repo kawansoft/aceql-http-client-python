@@ -2,7 +2,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,11 @@
 
 import sys
 import aceql
-from aceql import Connection
 from aceql import ProxyAuth
+from aceql import ConnectionOptions
+from aceql.dbapi2 import apilevel
+from aceql.dbapi2 import threadsafety
+from aceql.dbapi2 import paramstyle
 
 
 class ConnectionBuilder(object):
@@ -33,9 +36,9 @@ class ConnectionBuilder(object):
         # assert sys.version_info >= (2,5)
         print()
 
-        print("aceql.apilevel    : " + aceql.apilevel)
-        print("aceql.threadsafety: " + str(aceql.threadsafety))
-        print("aceql.paramstyle  : " + aceql.paramstyle)
+        print("aceql.apilevel    : " + apilevel)
+        print("aceql.threadsafety: " + str(threadsafety))
+        print("aceql.paramstyle  : " + paramstyle)
 
         proxies = None
         auth = None
@@ -43,10 +46,10 @@ class ConnectionBuilder(object):
         use_proxy = False
         if use_proxy:
             proxies = {
-                "http": "http://localhost:8080",
+                "http": "http://localhost:8081",
             }
 
-            auth = ConnectionBuilder.getProxyAuth()
+            auth = ConnectionBuilder.get_proxy_auth()
 
         localhost = "http://localhost:9090/aceql"
         # server_host = "https://www.aceql.com:9443/aceql"
@@ -56,18 +59,17 @@ class ConnectionBuilder(object):
 
         database = "sampledb"
         username = "user1"
+        password = "password1"
+        headers = {'user-agent': 'aceql-client'}
 
-        # password= "password1"
-        session_id = None
+        connection_options = ConnectionOptions(proxies=proxies, auth=auth, gzip_result=True, timeout=10, request_headers=headers)
 
-        Connection.set_timeout(10)
-        Connection.set_stateless(False)
-        connection = aceql.connect(host, database, username, "password1", session_id, proxies=proxies, auth=auth)
-        connection.set_gzip_result(True)
+        connection = aceql.connect(url=host, username=username, password=password,
+                                   database=database, connection_options=connection_options)
         return connection
 
     @staticmethod
-    def getProxyAuth():
+    def get_proxy_auth():
         """Get proxy auth info from a filename"""
         with open("I:\\neotunnel.txt", "rt") as fd:
             content = fd.read()

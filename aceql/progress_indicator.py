@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@ from aceql._private.parms import Parms
 
 
 class ProgressIndicator(object):
-    """Class that hold a progress when transferring a Blob."""
+    """Class that holds a progress when transferring a Blob."""
 
     def __init__(self):
         self.__percent = 0
@@ -46,7 +46,7 @@ class ProgressIndicator(object):
     # Public methods
     #
     @property
-    def get_percent(self):
+    def get_percent(self) -> int:
         """ Allows to get transfer progress from 0 to 100 """
         return self.__percent
 
@@ -54,6 +54,6 @@ class ProgressIndicator(object):
         """ Allows caller to cancel the transfer operation """
         self.__cancelled = True
 
-    def is_cancelled(self):
+    def is_cancelled(self) -> bool:
         """ Allows for AceQL internal for transfer thread to test if cancelled """
         return self.__cancelled

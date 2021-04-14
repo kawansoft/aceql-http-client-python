@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,14 +20,14 @@
 from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
 from aceql._private.datetime_util import DateTimeUtil
-from aceql._private.aceql_http_api import AceQLDebug, Error, os
+from aceql._private.aceql_http_api import AceQLDebug, Error, os, AceQLHttpApi
 from aceql._private.parms import Parms
 
 
 class Cursor(object):
     """Cursor class."""
 
-    def __init__(self, connection, aceql_http_api):
+    def __init__(self, connection, aceql_http_api: AceQLHttpApi):
         self.__connection = connection
         self.__aceql_http_api = aceql_http_api
         self.__is_closed = False
@@ -41,7 +41,7 @@ class Cursor(object):
         self.__row_parser = None
 
     @property
-    def description(self):
+    def description(self) -> str:
         """Describes the name and SLQ type of each column.
 
         (5 other elements are not set in this version)"""
@@ -50,14 +50,14 @@ class Cursor(object):
         return self.__description
 
     @property
-    def rowcount(self):
+    def rowcount(self) -> int:
         """This read-only attribute specifies the number of rows that the last .execute*()
         produced (for DQL statements like SELECT)
         or affected (for DML statements like UPDATE or INSERT)"""
         self.__raise_error_if_closed()
         return self.__rowcount
 
-    def execute(self, sql, params=()):
+    def execute(self, sql: str, params: tuple = ()):
         """Executes the given operation
 
         Executes the given operation substituting any markers with
@@ -86,10 +86,10 @@ class Cursor(object):
         self.__raise_error_if_closed()
         raise NotImplementedError("executemany is not implemented in this AceQL SDK version.")
 
-    def __execute_update(self, sql, params=()):
+    def __execute_update(self, sql: str, params: tuple = ()) -> int:
         """Executes and update operation on remote database"""
 
-        blob_streams = []
+        blob_streams: list = []
 
         try:
             the_cursor_util = CursorUtil()
@@ -110,22 +110,22 @@ class Cursor(object):
             if len(parms_dict) > 0:
                 is_prepared_statement = True
 
-            rows = self.__aceql_http_api.execute_update(sql, is_prepared_statement, parms_dict)
+            rows:int = self.__aceql_http_api.execute_update(sql, is_prepared_statement, parms_dict)
             self.__rowcount = rows
             return rows
         finally:
             for blob_stream in blob_streams:
                 blob_stream.close()
 
-    def __execute_query(self, sql, params=()):
+    def __execute_query(self, sql: str, params: tuple =()):
         """Executes a SELECT on remote database"""
         self.__raise_error_if_closed()
 
         self.row_count = 0
-        self.__description = []
+        self.__description: list = []
 
         the_cursor_util = CursorUtil()
-        parms_dict = the_cursor_util.get_http_parameters_dict(params)
+        parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
 
         is_prepared_statement = False
         if len(parms_dict) > 0:
@@ -192,10 +192,10 @@ class Cursor(object):
 
             index += 1
 
-        the_tup = tuple(the_list)
+        the_tup: tuple = tuple(the_list)
         return the_tup
 
-    def fetchmany(self, size=-1):
+    def fetchmany(self, size: int = -1):
         """Fetch the next set of rows of a query result, returning a sequence of sequences
 
         (e.g. a list of tuples). An empty sequence is returned when no more rows are available.
@@ -208,7 +208,7 @@ class Cursor(object):
         if size_to_use <= 1:
             size_to_use = self.arraysize
 
-        list_tuples = []
+        list_tuples: list[tuple] = []
         cpt = 0
         while True:
             the_tup = self.fetchone()
@@ -221,7 +221,7 @@ class Cursor(object):
 
         return list_tuples
 
-    def fetchall(self):
+    def fetchall(self) -> list[tuple]:
         """Fetches all (remaining) rows of a query result, returning a list.
 
             Note that the cursors arraysize attribute can affect the performance
@@ -229,7 +229,7 @@ class Cursor(object):
         """
         self.__raise_error_if_closed()
 
-        list_tuples = []
+        list_tuples: list[tuple] = []
         while True:
             the_tup = self.fetchone()
             if the_tup is None:
@@ -250,19 +250,19 @@ class Cursor(object):
         """ Builds the .description property"""
 
         self.__raise_error_if_closed()
-        self.__description = []
+        self.__description: list = []
 
         if self.__rowcount < 1:
             return
 
-        row_parser = None
+        row_parser: RowParser = None
 
         try:
-            row_parser = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
+            row_parser  = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
             row_parser.build_next_row()  # read first row to get the column names, only way to do it...
 
-            aceql_types = row_parser.get_types_per_col_index()
-            aceql_names = row_parser.column_names_per_index()
+            aceql_types: dict = row_parser.get_types_per_col_index()
+            aceql_names: dict = row_parser.column_names_per_index()
 
             AceQLDebug.debug("aceql_types : " + str(aceql_types))
             AceQLDebug.debug("aceql_names: " + str(aceql_names))
@@ -297,7 +297,7 @@ class Cursor(object):
                 row_parser.close()
 
     @staticmethod
-    def check_blob_id(blob_id, column_index):
+    def check_blob_id(blob_id: str, column_index: int):
         """Checks blob id"""
         if blob_id is None:
             raise Error("No value found for column_index " + str(column_index),
@@ -307,35 +307,16 @@ class Cursor(object):
             raise Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
                         0, None, None, 200)
 
-    # def blob_download(self, blob_id, filename, total_length=0,
-    # progress_holder=None):
-    # 	""" Allows to download a blob corresponding to a blob_id into a filename
-    #
-    # 		total_length & and a ProgressHolder instance may be passed for progress
-    # 		indication.
-    # 	"""
-    #
-    # 	if blob_id is None:
-    # 		raise TypeError("blob_id is null!")
-    #
-    # 	if filename is None:
-    # 		raise TypeError("filename is null!")
-    #
-    # 	self.__aceql_http_api.blob_download(blob_id, filename, total_length,
-    # 	progress_holder)
-
-    def get_blob_length(self, column_index):
+    def get_blob_length(self, column_index: int) -> int:
         """ Gets the remote BLOB length  on a column in the current row
-
         To be used if progress indicator needed.
-
         """
         self.__raise_error_if_closed()
 
         if column_index is None:
             raise TypeError("column_index is null!")
 
-        values_per_column_index = self.__row_parser.get_values_per_col_index()
+        values_per_column_index: dict = self.__row_parser.get_values_per_col_index()
 
         AceQLDebug.debug("values_per_column_index: " + str(values_per_column_index))
 
@@ -344,16 +325,14 @@ class Cursor(object):
                         0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
-
         print("blob_id: " + str(blob_id))
 
         Cursor.check_blob_id(blob_id, column_index)
         blob_length = self.__aceql_http_api.get_blob_length(blob_id)
         return blob_length
 
-    def get_blob_stream(self, column_index):
+    def get_blob_stream(self, column_index: int):
         """ Returns a BLOB stream on a column in the current row.
-
             The column index starts at 0.
         """
 
@@ -362,7 +341,7 @@ class Cursor(object):
         if column_index is None:
             raise TypeError("column_index is null!")
 
-        values_per_column_index = self.__row_parser.get_values_per_col_index()
+        values_per_column_index: dict = self.__row_parser.get_values_per_col_index()
 
         if values_per_column_index is None:
             raise Error("Not positioned on a row. (Seems no fetchone() call done.)",

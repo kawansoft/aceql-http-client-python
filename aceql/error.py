@@ -2,7 +2,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,7 +26,7 @@ class Error(Exception):
     Wrapper class for Exceptions thrown on client side or server side.
     """
 
-    def __init__(self, reason, error_type, cause, remote_stack_trace, http_status_code):
+    def __init__(self, reason: str, error_type: int, cause: str, remote_stack_trace: str, http_status_code: int):
         """
         Builds an Error that wraps/traps an Exception.
 
@@ -68,12 +68,12 @@ class Error(Exception):
         self._http_status_code = http_status_code
 
     @property
-    def reason(self):
+    def reason(self) -> str:
         """ The main error wrapped Exception message as a list of a split str. Can be None"""
         return self._reason
 
     @property
-    def error_type(self):
+    def error_type(self) -> int:
         """
         The error type
 
@@ -86,17 +86,17 @@ class Error(Exception):
         return self._error_type
 
     @property
-    def cause(self):
+    def cause(self) -> str:
         """ The Exception cause, None if no cause."""
         return self._cause
 
     @property
-    def remote_stack_trace(self):
+    def remote_stack_trace(self) -> str:
         """ The Remote Stack Trace as a list of a split str. None if Exception raised locally"""
         return self._remote_stack_trace
 
     @property
-    def http_status_code(self):
+    def http_status_code(self) -> int:
         """ The HTTP Status Code."""
         return self._http_status_code
 

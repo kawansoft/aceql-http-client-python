@@ -19,6 +19,18 @@ The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
 
+AceQL Python Client SDK - Version 4.0 - 14-Apr-2021
+----------------------------------------------------
+
+What's New:
+- The SDK supports now Python 3.9.
+- Type checks have been added to all public methods.
+- The new ConnectionOptions class is now used to pass
+  options at Connection creation.
+- The whole API has been cleaned for the sake of ease of use.
+  See User Guide.
+
+
 AceQL Python Client SDK - Version 3.3 - 11-Nov-2020
 ----------------------------------------------------
 

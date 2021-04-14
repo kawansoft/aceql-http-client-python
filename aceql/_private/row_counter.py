@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,7 +26,7 @@ import ijson
 class RowCounter(object):
     """Allows to count rows in retrieved JSON result set"""
 
-    def __init__(self, filename):
+    def __init__(self, filename: str):
         self.__filename = filename
 
         if filename is None:
@@ -35,7 +35,7 @@ class RowCounter(object):
         if not os.path.isfile(filename):
             raise IOError("filename does not exist: " + str(filename))
 
-    def count(self):
+    def count(self) -> int:
         """Returns the number of rows in JSON file (key "row_count") """
         rows = 0
         with open(self.__filename, 'rb') as input_file:

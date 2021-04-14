@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,12 +35,12 @@ class FileUtil(object):
     WRITE_MODE_PY_3 = "wt"
 
     @staticmethod
-    def get_unique_id():
+    def get_unique_id() -> str:
         x = uuid.uuid4()
         return str(x)
 
     @staticmethod
-    def get_user_home_dot_kawansoft_dir():
+    def get_user_home_dot_kawansoft_dir() -> str:
         # user.home
         # home = str(Path.home())
         home = os.path.expanduser("~")
@@ -55,7 +55,7 @@ class FileUtil(object):
         return home_kawan_soft
 
     @staticmethod
-    def get_kawansoft_temp_dir():
+    def get_kawansoft_temp_dir() -> str:
         home_kawan_soft = FileUtil.get_user_home_dot_kawansoft_dir()
 
         # File.separator
@@ -67,12 +67,12 @@ class FileUtil(object):
         return home_kawan_soft_tmp
 
     @staticmethod
-    def build_result_set_file():
+    def build_result_set_file() -> str:
         the_file = FileUtil.get_kawansoft_temp_dir() + sep + "pc-result-set-" + FileUtil.get_unique_id() + ".txt"
         return the_file
 
     @staticmethod
-    def decompress(file_in, file_out):
+    def decompress(file_in: str, file_out: str):
         """Decompress GZIP text file into a text file."""
 
         if file_in is None:
@@ -96,25 +96,25 @@ class FileUtil(object):
                     out.write(line)
 
     @staticmethod
-    def get_unzip_mode():
+    def get_unzip_mode() -> str:
         if FileUtil.is_python_3():
             return FileUtil.UNZIP_MODE_PY_3
         else:
             return FileUtil.UNZIP_MODE_PY_2
 
     @staticmethod
-    def get_write_mode():
+    def get_write_mode()-> str:
         if FileUtil.is_python_3():
             return FileUtil.WRITE_MODE_PY_3
         else:
             return FileUtil.WRITE_MODE_PY_2
 
     @staticmethod
-    def is_python_2():
+    def is_python_2() -> bool:
         if sys.version_info[0] < 3:
             return True
 
     @staticmethod
-    def is_python_3():
+    def is_python_3() -> bool:
         if sys.version_info[0] >= 3:
             return True

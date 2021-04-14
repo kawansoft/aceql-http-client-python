@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,12 +23,16 @@ class ResultSetInfo(object):
     1) the local filename,
     2) the number of rows"""
 
-    def __init__(self, filename, row_count):
+    def __init__(self, filename: str, row_count: int):
         self.__filename = filename
         self.__row_count = row_count
 
-    def get_filename(self):
+    def get_filename(self) -> str:
         return self.__filename
 
-    def get_row_count(self):
+    def get_row_count(self) -> int:
         return self.__row_count
+
+    def __str__(self):
+        """ The string representation."""
+        return str(self.__filename) + ", " + str(self.__row_count)

@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2020,  KawanSoft SAS
+# Copyright (C) 2021,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,10 +28,11 @@ class ProxyAuth(GuessProxyAuth):
     """
 
     def __init__(self,
-                 proxy_username=None, proxy_password=None):
+                 proxy_username: str = None, proxy_password: str = None):
         super(ProxyAuth, self).__init__('user', 'passwd')
-        self.proxy_username  = proxy_username
+        self.proxy_username = proxy_username
         self.proxy_password = proxy_password
 
-
-
+    def __str__(self):
+        """ The string representation."""
+        return "ProxyAuth [proxy_username=" + str(self.proxy_username) + ", proxy_password=xxxxxxxx]"
