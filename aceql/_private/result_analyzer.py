@@ -30,7 +30,7 @@ class ResultAnalyzer(object):
     #
     #
     # We try to find status.  If error parsing, invalidJsonStream = true
-    # 
+    #
     # * Exception when parsing the JSON stream.  Future usage
     def __init__(self, json_result: str, http_status_code: int):
         """
@@ -76,9 +76,8 @@ class ResultAnalyzer(object):
         return False
 
     def get_result(self, name) -> str:
-        """ 
+        """
          Gets the result for a a key name
-         
          <param name="name">The name.</param>
          <returns>System.String.</returns>
         """

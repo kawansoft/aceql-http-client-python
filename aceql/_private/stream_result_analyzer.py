@@ -59,7 +59,7 @@ class StreamResultAnalyzer(object):
         self.__stack_trace = None
 
     def is_status_ok(self) -> bool:
-        """ 
+        """
          Determines whether the SQL correctly executed on server side.
          <returns><c>true</c> if [is status ok]; otherwise, <c>false</c>.</returns>
         """
@@ -83,9 +83,8 @@ class StreamResultAnalyzer(object):
         return status_ok
 
     def parse_error_keywords(self):
-        """ 
+        """
          Parses the error keywords.
-         
          <param name="reader">The reader.</param>
         """
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
