@@ -10,7 +10,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     version='4.0',
-    packages=['aceql', 'aceql._private', 'aceql.metadata', 'tests'],
+    packages=['aceql', 'aceql._private', 'aceql.metadata'],
     url='https://github.com/kawansoft/aceql-py',
     license='Apache 2.0',
 
