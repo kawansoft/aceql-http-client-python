@@ -649,7 +649,7 @@ remote_database_meta_data = RemoteDatabaseMetaData(connection)
 
 ### Downloading database schema into a file
 
-Downloading a schema into a  `File` is done through the method. See the `RemoteDatabaseMetaData` documentation:
+Downloading a schema into a  `File` is done through the `db_schema_download(filename)` method. See the `RemoteDatabaseMetaData` documentation:
 
 ```python
 filename = os.path.expanduser("~") + os.sep + "db_schema.html"
