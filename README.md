@@ -613,7 +613,7 @@ from aceql import ConnectionOptions
 from samples import my_session_id_builder
 
 # URL of the AceQL server, Remote SQL database name & authentication info without password
-url = "http://www.runsafester.net:8081/aceql"
+url = "https://www.acme.com:9443/aceql"
 database = "sampledb"
 username = "user1"
 
