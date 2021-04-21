@@ -162,7 +162,7 @@ To use the module, just create a `Connection` object that represents the databas
 ```python
 import aceql
 
-# URL of the AceQL server, Remote SQL database name authentication info
+# URL of the AceQL server, Remote SQL database name & authentication info
 url = "https://www.acme.com:9443/aceql"
 database = "sampledb"
 username = "user1"
