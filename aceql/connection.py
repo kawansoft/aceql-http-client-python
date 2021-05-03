@@ -20,12 +20,12 @@ from aceql._private.aceql_http_api import AceQLHttpApi
 from aceql.cursor import Cursor
 from aceql.connection_options import ConnectionOptions
 from aceql.progress_indicator import ProgressIndicator
-
+from aceql.login_url_decoder import LoginUrlDecoder
 
 class Connection(object):
     """Allows to create a database connection to a remote server."""
 
-    def __init__(self, *, url: str, username: str, password: str, database: str,
+    def __init__(self, *, url: str, username: str= None, password: str = None, database: str = None,
                  connection_options: ConnectionOptions = None):
         """
         Creates a database connection to the remote AceQL HTTP server.
@@ -51,6 +51,14 @@ class Connection(object):
 
         if url is None:
             raise TypeError("url is null!")
+
+        url_connection = LoginUrlDecoder(url)
+        if "?" in url:
+            url = url_connection.server_url
+            username = url_connection.database
+            password = url_connection.password
+            database = url_connection.database
+
         if username is None:
             raise TypeError("username is null!")
         if password is None:

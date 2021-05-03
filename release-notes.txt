@@ -19,6 +19,16 @@ The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
 
+AceQL Python Client SDK - Version 4.1 - 03-May-2021
+----------------------------------------------------
+
+What's New:
+- The Connection constructor allows now to pass only an URL
+  parameter that will contain in query string the username,
+  the password and database:
+  https://www.acme.com/acel?username=my_username&password=my_password&database=my_database
+
+
 AceQL Python Client SDK - Version 4.0 - 14-Apr-2021
 ----------------------------------------------------
 
