@@ -17,7 +17,7 @@
 # limitations under the License.
 ##
 
-from urllib.parse import urlparse, urlsplit, parse_qsl
+from urllib.parse import urlsplit, parse_qsl
 
 
 class LoginUrlDecoder(object):
