@@ -47,7 +47,7 @@ __all__ = ["Connection", "Cursor", "Error", "ConnectionOptions", "ProgressIndica
            "Table"]
 
 
-def connect(url: str, username: str = None, password: str = None, database: str = None, connection_options: ConnectionOptions = None):
+def connect(*, url: str, username: str = None, password: str = None, database: str = None, connection_options: ConnectionOptions = None):
     """
     Creates a database connection to the remote AceQL HTTP server.
 
