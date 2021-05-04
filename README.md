@@ -19,7 +19,7 @@
 
 ## Python Client SDK v4.1 - User Guide 
 
-## May 3, 2021
+## May 4, 2021
 
 <img src="https://www.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -169,6 +169,13 @@ username = "user1"
 password = "password1"
 
 connection = aceql.connect(url=url, username=username, password=password, database=database)
+```
+
+The alternate syntax with parameters in the URL is supported:
+
+```python
+url="https://www.acme.com:9443/aceql?username=user1&password=password1&database=sampledb"
+connection = aceql.connect(url=url)
 ```
 
 The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/7.0/src/sampledb_other_databases.txt)
