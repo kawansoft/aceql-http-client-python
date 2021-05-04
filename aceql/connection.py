@@ -57,9 +57,12 @@ class Connection(object):
         url_connection = LoginUrlDecoder(url)
         if "?" in url:
             url = url_connection.server_url
-            username = url_connection.database
-            password = url_connection.password
-            database = url_connection.database
+            if url_connection.username is not None:
+                username = url_connection.username
+            if url_connection.password is not None:
+                password = url_connection.password
+            if url_connection.database is not None:
+                database = url_connection.database
 
         if username is None:
             raise TypeError("username is null!")

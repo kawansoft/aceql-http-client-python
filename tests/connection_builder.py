@@ -64,7 +64,7 @@ class ConnectionBuilder(object):
 
         connection_options = ConnectionOptions(proxies=proxies, auth=auth, gzip_result=True, timeout=10, request_headers=headers)
 
-        connect_with_parms = True
+        connect_with_parms = False
         if connect_with_parms:
             print("connecting with parameters")
             connection = aceql.connect(url=url, username=username, password=password,
