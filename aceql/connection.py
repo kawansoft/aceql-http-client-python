@@ -34,6 +34,8 @@ class Connection(object):
         ----------
         url : str
             The URL of the AceQL server. Example: https://www.acme.com:9443/aceql.
+            The URL may includes all parameters:
+            https://www.acme.com:9443/acel?username=my_name&password=my_passwd&database=my_db
         username : str
             The authentication username.
         password : str

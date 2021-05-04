@@ -55,7 +55,7 @@ class ConnectionBuilder(object):
         # server_host = "https://www.aceql.com:9443/aceql"
         # server_host_no_ssl = "http://www.aceql.com:9090/aceql"
 
-        host = localhost
+        url = localhost
 
         database = "sampledb"
         username = "user1"
@@ -64,8 +64,17 @@ class ConnectionBuilder(object):
 
         connection_options = ConnectionOptions(proxies=proxies, auth=auth, gzip_result=True, timeout=10, request_headers=headers)
 
-        connection = aceql.connect(url=host, username=username, password=password,
+        connect_with_parms = False
+        if connect_with_parms:
+            print("connecting with parameters")
+            connection = aceql.connect(url=url, username=username, password=password,
                                    database=database, connection_options=connection_options)
+            return connection
+
+        url = localhost + "?username="+username+"&password=" + password + "&database=" + database
+        print("connecting with url: " + url)
+        connection = aceql.connect(url=url, connection_options=connection_options)
+
         return connection
 
     @staticmethod
