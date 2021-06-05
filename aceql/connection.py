@@ -197,10 +197,10 @@ class Connection(object):
 
     @staticmethod
     def get_client_version() -> str:
-        """Gets the SDK version."""
+        """Gets the AceQL Cient SDK version."""
         return AceQLHttpApi.get_client_version()
 
     @staticmethod
     def get_client_version_full() -> str:
-        """Gets the SDK version with the Python version."""
+        """Gets the AceQL Cient SDK version with the Python version."""
         return AceQLHttpApi.get_client_version_full()

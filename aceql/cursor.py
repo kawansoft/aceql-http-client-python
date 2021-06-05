@@ -42,7 +42,7 @@ class Cursor(object):
 
     @property
     def description(self) -> str:
-        """Describes the name and SLQ type of each column.
+        """Describes the name and SQL type of each column.
 
         (5 other elements are not set in this version)"""
 
@@ -56,6 +56,18 @@ class Cursor(object):
         or affected (for DML statements like UPDATE or INSERT)"""
         self.__raise_error_if_closed()
         return self.__rowcount
+
+    def mogrify(self, sql: str, params: tuple = None) -> str:
+        """Return a query string after arguments binding. The string returned is exactly the one
+        that would be sent to the database running the execute() method or similar.
+        Support th %1 or ? notation for the parameters tuple."""
+        if tuple is None:
+            return sql
+        index = 0
+        for x in params:
+            sql = sql.replace("%s", str(x), 1)
+            sql = sql.replace("?", str(x), 1)
+        return sql
 
     def execute(self, sql: str, params: tuple = ()):
         """Executes the given operation

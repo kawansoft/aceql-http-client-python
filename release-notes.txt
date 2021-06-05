@@ -18,6 +18,17 @@ they would for a local database.
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
+AceQL Python Client SDK - Version 4.2 - 05-Jun-2021
+----------------------------------------------------
+
+What's New
+- Cursor.mogrify DB API extension has been added.
+  See https://www.psycopg.org/docs/cursor.html#cursor.mogrify
+
+Bugs fixed:
+- Some documentation glitches have been fixed.
+- The Python 2 U notation has been removed from samples.
+
 
 AceQL Python Client SDK - Version 4.1 - 04-May-2021
 ----------------------------------------------------

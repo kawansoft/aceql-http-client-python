@@ -41,12 +41,12 @@ class TestAll(unittest.TestCase):
         connection.set_holdability("hold_cursors_over_commit")
         holdability = connection.get_holdability()
         print("holdability: " + holdability)
-        self.assertEqual(holdability, u"hold_cursors_over_commit")
+        self.assertEqual(holdability, "hold_cursors_over_commit")
 
         connection.set_holdability("close_cursors_at_commit")
         holdability = connection.get_holdability()
         print("holdability: " + holdability)
-        self.assertEqual(holdability, u"close_cursors_at_commit")
+        self.assertEqual(holdability, "close_cursors_at_commit")
 
         connection.set_auto_commit(True)
         auto_commit = connection.get_auto_commit()
@@ -59,6 +59,11 @@ class TestAll(unittest.TestCase):
         self.assertEqual(auto_commit, False)
 
         cursor = connection.cursor()
+
+        sql = "delete from orderlog where customer_id = ? and order_id = ?"
+        print("sql before mogrify: " + sql)
+        sql = cursor.mogrify(sql, (11, 22))
+        print("sql after mogrify: " + str(sql))
 
         print("Before delete all orderlog")
         sql = "delete from orderlog where customer_id >= ?"
@@ -101,7 +106,7 @@ class TestAll(unittest.TestCase):
             the_float = float((cpt * 1000) + 0.44)
             print("theFloat: " + str(the_float))
 
-            params = (cpt, cpt, u"intitulé_" + str(cpt), the_float,
+            params = (cpt, cpt, "intitulé_" + str(cpt), the_float,
                       the_date, datetime.now(), blob_tuple, 1, cpt * 1000)
             print("insert: " + str(params))
             cursor.execute(sql, params)

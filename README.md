@@ -17,9 +17,9 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v4.1 - User Guide 
+## Python Client SDK v4.2 - User Guide 
 
-## May 4, 2021
+## June 5, 2021
 
 <img src="https://www.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -692,7 +692,6 @@ for table_name in table_names:
 ```
 
 ____________
-
 
 
 
