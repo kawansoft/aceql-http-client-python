@@ -49,7 +49,7 @@ class AceQLHttpApi(object):
     HTTP calls and operations."""
 
     __trace_on = False
-    __debug = True
+    __debug = False
 
     def __init__(self, *, url: str, username: str, password: str, database: str,
                  connection_options: ConnectionOptions = None):
@@ -134,7 +134,7 @@ class AceQLHttpApi(object):
 
                 session_id = result_analyzer.get_value("session_id")
                 connection_id = result_analyzer.get_value("connection_id");
-                self._url = url + "/session/" + session_id + "/" + connection_id + "/" + connection_id + "/"
+                self._url = url + "/session/" + session_id + "/connection/" + connection_id + "/"
 
                 user_login_store.set_session_id(session_id);
         except Exception as e:
@@ -177,6 +177,9 @@ class AceQLHttpApi(object):
 
     def call_with_get_action(self, action: str, action_parameter: dict) -> str:
         url_withaction = self._url + action
+
+        if AceQLHttpApi.__debug:
+            print("url_withaction: " + url_withaction)
 
         if action_parameter is not None and len(action_parameter) > 1:
             url_withaction += "/" + action_parameter
