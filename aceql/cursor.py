@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+from typing import List
 
 from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
@@ -70,7 +71,7 @@ class Cursor(object):
         return sql
 
     def execute(self, sql: str, params: tuple = ()):
-        """Executes the given operation
+        """Executes the given SQL operation
 
         Executes the given operation substituting any markers with
         the given parameters.
@@ -90,13 +91,43 @@ class Cursor(object):
         else:
             return self.__execute_update(sql, params)
 
-    def executemany(self):
-        """Execute the given operation multiple times.
-
-        Not implemented in this version.
+    def executemany(self, sql: str, seq_params: list) -> list[int]:
+        """Execute the given SQL operation multiple times
+        The executemany() method will execute the operation iterating
+        over the list of parameters in seq_params.
+        Note that the SQL operation are transferred with one unique HTTP call to the server side which will execute them using
+        a JDBC PreparedStatement batch: this will allow fast execution.
         """
         self.__raise_error_if_closed()
-        raise NotImplementedError("executemany is not implemented in this AceQL SDK version.")
+
+        if sql is None:
+            raise TypeError("sql is null!")
+
+        sql = sql.strip()
+
+        if not CursorUtil.is_update_call(sql):
+            raise Error("Only DELETE, INSERT or UPDATE calls are supported this AceQL Client version.", 0,
+                        None, None, 200)
+
+        if not seq_params:
+            return
+
+        prep_statement_params_holder_list: List[dict] = []
+
+        # The addBatch() part
+        for params in seq_params:
+            the_cursor_util : CursorUtil = CursorUtil()
+            parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
+
+            blob_ids: list = the_cursor_util.blob_ids
+            if blob_ids is None or blob_ids.len() == 0:
+                raise Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0, None, None, 200)
+
+            prep_statement_params_holder_list.append(parms_dict)
+
+        # The executeBatch() part
+        rows:List[int] = self.__aceql_http_api.execute_batch(sql, parms_dict)
+        return rows
 
     def __execute_update(self, sql: str, params: tuple = ()) -> int:
         """Executes and update operation on remote database"""
@@ -104,8 +135,8 @@ class Cursor(object):
         blob_streams: list = []
 
         try:
-            the_cursor_util = CursorUtil()
-            parms_dict = the_cursor_util.get_http_parameters_dict(params)
+            the_cursor_util : CursorUtil = CursorUtil()
+            parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
 
             blob_ids = the_cursor_util.blob_ids
             blob_streams = the_cursor_util.blob_streams

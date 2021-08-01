@@ -159,3 +159,7 @@ class CursorUtil(object):
         s = s.replace("<type '", "")  # Python2 syntax
         s = s[0:len(s) - 2]
         return s
+
+    @staticmethod
+    def is_update_call(sql: str) -> bool:
+        return sql.lower().startswith("delete") or sql.lower().startswith("insert") or sql.lower().startswith("insert")

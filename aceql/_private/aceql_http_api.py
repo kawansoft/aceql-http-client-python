@@ -874,3 +874,6 @@ class AceQLHttpApi(object):
 
     def reset_request_headers(self):
         self.__headers = {}
+
+    def execute_batch(self, sql, parms_dict):
+        pass

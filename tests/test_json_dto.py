@@ -33,14 +33,14 @@ table_names_dto_schema = marshmallow_dataclass.class_schema(TableNamesDto)
 table_names = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana']
 
 # 1) Create the DTO  class instance
-table_names_dto_0 = TableNamesDto (status="OK", tableNames=table_names)
+table_names_dto_0: TableNamesDto = TableNamesDto (status="OK", tableNames=table_names)
 print(table_names_dto_0)
 
-# 2) Transform the DTP class instance to Json with dumps:
+# 2) Transform the DTO class instance to Json with dumps():
 my_str: str = table_names_dto_schema().dumps(table_names_dto_0)
 print(my_str)
 
-# 3) Tranform the Json string Back to DTO new class instance
+# 3) Transform back the Json string to DTO new class instance with loads()
 result: str = my_str
 table_names_dto: TableNamesDto = table_names_dto_schema().loads(result)
 print()
