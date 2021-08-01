@@ -60,7 +60,8 @@ print()
 print("prep_statement_parameters_holder_list1: " + str(prep_statement_parameters_holder_list1))
 
 prepared_statements_batch_dto_schema = marshmallow_dataclass.class_schema(PreparedStatementsBatchDto)
-prepared_statements_batch_dto = PreparedStatementsBatchDto(prep_statement_params_holder_list = prep_statement_parameters_holder_list1)
+prepared_statements_batch_dto = PreparedStatementsBatchDto(
+    prep_statement_params_holder_list=prep_statement_parameters_holder_list1)
 print(prepared_statements_batch_dto)
 print()
 
@@ -68,7 +69,8 @@ json_string2: str = prepared_statements_batch_dto_schema().dumps(prepared_statem
 print("json_string2: " + json_string2)
 print()
 
-prepared_statements_batch_dto_back: PreparedStatementsBatchDto = prepared_statements_batch_dto_schema().loads(json_string2)
+prepared_statements_batch_dto_back: PreparedStatementsBatchDto = prepared_statements_batch_dto_schema().loads(
+    json_string2)
 print("prepared_statements_batch_dto_back: " + str(prepared_statements_batch_dto_back))
 print()
 
@@ -79,4 +81,3 @@ for preparedStatementBack in prep_statement_parameters_holder_list_back:
 
 print()
 print(str(datetime.now()) + " End.")
-
