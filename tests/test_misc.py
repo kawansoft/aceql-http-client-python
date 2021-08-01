@@ -78,5 +78,5 @@ for preparedStatementBack in prep_statement_parameters_holder_list_back:
     print("preparedStatementBack: " + str(preparedStatementBack))
 
 print()
-print(str(datetime.now) + " End.")
+print(str(datetime.now()) + " End.")
 
