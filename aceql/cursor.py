@@ -91,7 +91,7 @@ class Cursor(object):
         else:
             return self.__execute_update(sql, params)
 
-    def executemany(self, sql: str, seq_params: list) -> list[int]:
+    def executemany(self, sql: str, seq_params: list) -> List[int]:
         """Execute the given SQL operation multiple times
         The executemany() method will execute the operation iterating
         over the list of parameters in seq_params.
@@ -127,7 +127,7 @@ class Cursor(object):
             prep_statement_params_holder_list.append(parms_dict)
 
         # The executeBatch() part
-        rows: List[int] = self.__aceql_http_api.execute_batch(sql, parms_dict)
+        rows: List[int] = self.__aceql_http_api.execute_batch(sql, prep_statement_params_holder_list)
         return rows
 
     def __execute_update(self, sql: str, params: tuple = ()) -> int:

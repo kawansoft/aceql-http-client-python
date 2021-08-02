@@ -18,9 +18,12 @@
 ##
 
 import sys
+from typing import List
 
 import marshmallow_dataclass
 
+from aceql._private.batch.prepared_statements_batch_dto import PreparedStatementsBatchDto
+from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.file_util import FileUtil
 from aceql._private.parms import Parms
 from aceql._private.user_login_store import UserLoginStore
@@ -477,7 +480,7 @@ class AceQLHttpApi(object):
 
             if statement_parameters is not None:
                 if not isinstance(statement_parameters, dict):
-                    raise TypeError("statement_parameters is not a dictionnary!")
+                    raise TypeError("statement_parameters is not a dictionary!")
 
                 dict_params.update(statement_parameters)
 
@@ -551,7 +554,7 @@ class AceQLHttpApi(object):
 
             if statement_parameters is not None:
                 if not isinstance(statement_parameters, dict):
-                    raise TypeError("statementParameters is not a dictionnary!")
+                    raise TypeError("statementParameters is not a dictionary!")
 
                 dict_params.update(statement_parameters)
 
@@ -875,5 +878,69 @@ class AceQLHttpApi(object):
     def reset_request_headers(self):
         self.__headers = {}
 
-    def execute_batch(self, sql, parms_dict):
-        pass
+    def execute_batch(self, sql: str, prep_statement_parameters_holder_list: List):
+
+        try:
+            action = "prepared_statement_execute_batch"
+            AceQLHttpApi.check_values(True, sql)
+            url_withaction = self._url + action
+
+            AceQLDebug.debug("url_withaction: " + url_withaction)
+
+            if prep_statement_parameters_holder_list is not None:
+                if not isinstance(prep_statement_parameters_holder_list, list):
+                    raise TypeError("prep_statement_params_holder_list is not a List!")
+
+            # PreparedStatementsBatchDto statementsBatchDto = new
+            # PreparedStatementsBatchDto(prepStatementParamsHolderList);
+            # jsonString = GsonWsUtil.getJSonString(statementsBatchDto);
+            #
+            # Map < String, String > parametersMap = new
+            # HashMap < String, String > ();
+            # parametersMap.put("sql", sql);
+            # parametersMap.put("batch_list", jsonString);
+
+            prepared_statements_batch_dto_schema = marshmallow_dataclass.class_schema(PreparedStatementsBatchDto)
+            prepared_statements_batch_dto = PreparedStatementsBatchDto(
+                prep_statement_params_holder_list=prep_statement_parameters_holder_list)
+
+            json_string: str = prepared_statements_batch_dto_schema().dumps(prepared_statements_batch_dto)
+
+            dict_params: dict = {"sql": sql, "batch_list": json_string}
+            AceQLDebug.debug("dict_params: " + str(dict_params))
+
+            # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
+            # print("Before update request")
+
+            if self.__timeout is None:
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                                         proxies=self.__proxies, auth=self.__auth)
+            else:
+                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                                         proxies=self.__proxies, auth=self.__auth,
+                                         timeout=self.__timeout)
+
+            self.__http_status_code = response.status_code
+            result = response.text
+
+            # print("self.__http_status_code: " + str(self.__http_status_code ))
+            # print("result                 : " + str(result))
+            AceQLDebug.debug("result: " + result)
+
+            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
+
+            update_counts_array_dto_schema = marshmallow_dataclass.class_schema(UpdateCountsArrayDto)
+            update_counts_array_dto_back: UpdateCountsArrayDto = update_counts_array_dto_schema().loads(
+                result)
+
+            update_counts_array: List[int] = update_counts_array_dto_back.update_counts_array
+            return update_counts_array
+        except Exception as e:
+            if isinstance(e, Error):
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__http_status_code)
+
