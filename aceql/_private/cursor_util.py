@@ -84,7 +84,6 @@ class CursorUtil(object):
             else:
                 parms_dict["param_value_" + str(param_index)] = str(x)
 
-        print("parms_dict: " + str(parms_dict))
         return parms_dict
 
     @staticmethod
@@ -145,7 +144,6 @@ class CursorUtil(object):
         elif CursorUtil.get_class_name(x) == "datetime.time":
             sql_type = "TIME"
         else:
-            print("CursorUtil.get_class_name(x): " + CursorUtil.get_class_name(x))
             raise TypeError("Type is not supported for value: " + str(x))
 
         return sql_type

@@ -178,8 +178,7 @@ class AceQLHttpApi(object):
     def call_with_get_action(self, action: str, action_parameter: dict) -> str:
         url_withaction = self._url + action
 
-        if AceQLHttpApi.__debug:
-            print("url_withaction: " + url_withaction)
+        #self.debug(str("url_withaction: " + url_withaction))
 
         if action_parameter is not None and len(action_parameter) > 1:
             url_withaction += "/" + action_parameter
@@ -484,7 +483,7 @@ class AceQLHttpApi(object):
             AceQLDebug.debug("dictParams 2: " + str(dict_params))
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
-            # print("Before update request")
+            # debug("Before update request")
 
             if self.__timeout is None:
                 response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
@@ -788,15 +787,13 @@ class AceQLHttpApi(object):
                 raise Error(result_analyzer.get_error_message(),
                             result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            if AceQLHttpApi.__debug:
-                print(result)
+            self.debug(result)
 
             holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(JdbcDatabaseMetaDataDto)
             jdbc_database_meta_data_holder: JdbcDatabaseMetaDataDto = holder_jdbc_database_meta_data_schema().loads(
                 result)
 
-            if AceQLHttpApi.__debug:
-                print(jdbc_database_meta_data_holder)
+            self.debug(jdbc_database_meta_data_holder)
 
             return jdbc_database_meta_data_holder;
 
@@ -820,14 +817,12 @@ class AceQLHttpApi(object):
                 raise Error(result_analyzer.get_error_message(),
                             result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
-            if AceQLHttpApi.__debug:
-                print(result)
+            self.debug(result)
 
             table_names_dto_schema = marshmallow_dataclass.class_schema(TableNamesDto)
             table_names_dto: TableNamesDto = table_names_dto_schema().loads(result)
 
-            if AceQLHttpApi.__debug:
-                print(table_names_dto)
+            self.debug(table_names_dto)
 
             return table_names_dto;
 
@@ -847,8 +842,7 @@ class AceQLHttpApi(object):
 
             result = self.call_with_get_url(url_withaction)
 
-            if AceQLHttpApi.__debug:
-                print(result)
+            self.debug(result)
 
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
             if not result_analyzer.is_status_ok():
@@ -858,8 +852,7 @@ class AceQLHttpApi(object):
             table_dto_schema = marshmallow_dataclass.class_schema(TableDto)
             table_dto: TableDto = table_dto_schema().loads(result)
 
-            if AceQLHttpApi.__debug:
-                print(table_dto)
+            self.debug(table_dto)
 
             return table_dto;
 
@@ -874,3 +867,7 @@ class AceQLHttpApi(object):
 
     def reset_request_headers(self):
         self.__headers = {}
+
+    def debug(param):
+        if AceQLHttpApi.__debug:
+            print(str(param))

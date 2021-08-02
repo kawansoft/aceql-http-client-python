@@ -22,6 +22,8 @@ import json
 import os
 from io import open
 
+from aceql._private.aceql_debug import AceQLDebug
+
 
 class ColumnTypesBuilder(object):
     """Allows to build the dictionary of SQL types per coumn index of a
@@ -50,11 +52,10 @@ class ColumnTypesBuilder(object):
                     break
                 s += line
 
-            # AceQLDebug.print(s)
             j = json.loads(s, object_pairs_hook=collections.OrderedDict)
             list_column_types = j["column_types"]
 
-            # print("list_column_types: " + str(list_column_types))
+            # debug("list_column_types: " + str(list_column_types))
 
             dict_column_types: dict = {}
 
