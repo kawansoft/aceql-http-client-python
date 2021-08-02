@@ -18,8 +18,6 @@
 ##
 
 from dataclasses import dataclass
-from typing import List
-from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
 
 
 @dataclass

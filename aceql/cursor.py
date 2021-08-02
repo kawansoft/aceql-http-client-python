@@ -95,8 +95,8 @@ class Cursor(object):
         """Execute the given SQL operation multiple times
         The executemany() method will execute the operation iterating
         over the list of parameters in seq_params.
-        Note that the SQL operation are transferred with one unique HTTP call to the server side which will execute them using
-        a JDBC PreparedStatement batch: this will allow fast execution.
+        Note that the SQL operation are transferred with one unique HTTP call to the server side which will execute
+        them using a JDBC PreparedStatement batch: this will allow fast execution.
         """
         self.__raise_error_if_closed()
 
@@ -116,17 +116,18 @@ class Cursor(object):
 
         # The addBatch() part
         for params in seq_params:
-            the_cursor_util : CursorUtil = CursorUtil()
+            the_cursor_util: CursorUtil = CursorUtil()
             parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
 
             blob_ids: list = the_cursor_util.blob_ids
             if blob_ids is None or blob_ids.len() == 0:
-                raise Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0, None, None, 200)
+                raise Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0,
+                            None, None, 200)
 
             prep_statement_params_holder_list.append(parms_dict)
 
         # The executeBatch() part
-        rows:List[int] = self.__aceql_http_api.execute_batch(sql, parms_dict)
+        rows: List[int] = self.__aceql_http_api.execute_batch(sql, parms_dict)
         return rows
 
     def __execute_update(self, sql: str, params: tuple = ()) -> int:
@@ -135,7 +136,7 @@ class Cursor(object):
         blob_streams: list = []
 
         try:
-            the_cursor_util : CursorUtil = CursorUtil()
+            the_cursor_util: CursorUtil = CursorUtil()
             parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
 
             blob_ids = the_cursor_util.blob_ids
@@ -153,14 +154,14 @@ class Cursor(object):
             if len(parms_dict) > 0:
                 is_prepared_statement = True
 
-            rows:int = self.__aceql_http_api.execute_update(sql, is_prepared_statement, parms_dict)
+            rows: int = self.__aceql_http_api.execute_update(sql, is_prepared_statement, parms_dict)
             self.__rowcount = rows
             return rows
         finally:
             for blob_stream in blob_streams:
                 blob_stream.close()
 
-    def __execute_query(self, sql: str, params: tuple =()):
+    def __execute_query(self, sql: str, params: tuple = ()):
         """Executes a SELECT on remote database"""
         self.__raise_error_if_closed()
 
@@ -301,7 +302,7 @@ class Cursor(object):
         row_parser: RowParser = None
 
         try:
-            row_parser  = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
+            row_parser = RowParser(self.__result_set_info.get_filename(), self.__rowcount)
             row_parser.build_next_row()  # read first row to get the column names, only way to do it...
 
             aceql_types: dict = row_parser.get_types_per_col_index()

@@ -17,8 +17,17 @@
 # limitations under the License.
 ##
 
+from dataclasses import dataclass
 
-class VersionValues(object):
-    NAME = "AceQL HTTP SDK"
-    VERSION = "v5.0"
-    DATE = "02-Aug-2021"
+
+@dataclass
+class UpdateCountsArrayDto(object):
+    status: str
+    update_counts_array: list
+
+    class Meta:
+        ordered = True
+
+    def __str__(self):
+        """ The string representation."""
+        return self.status + ", " + str(self.update_counts_array)
