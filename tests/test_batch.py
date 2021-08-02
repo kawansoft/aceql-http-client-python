@@ -21,26 +21,22 @@ from tests.connection_builder import ConnectionBuilder
 from datetime import datetime
 
 connection = ConnectionBuilder.get_connection()
+cursor = connection.cursor()
 
 print()
 print("aceql version     : " + Connection.get_client_version())
 print("aceql version full: " + Connection.get_client_version_full())
 print("Connection Options: " + str(connection.get_connections_options()))
 print()
-cursor = connection.cursor()
 
-print("Before SQL delete all customer")
-sql = "delete from customer where customer_id >= 1"
-cursor.execute(sql, None)
+connection.set_holdability("hold_cursors_over_commit")
+holdability = connection.get_holdability()
+print("holdability: " + holdability)
 
-print("Before SQL insert call")
-sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
-params = (1, 'Sir', 'John', 'Smith I', '11 Madison Ave', 'New York',
-          'NY 10010', '+1 212-586-7001')
-cursor.execute(sql, params)
+connection.set_auto_commit(False)
 
-print("Before SQL delete all customer")
-sql = "delete from customer where customer_id >= 1"
+print("Before delete all customer")
+sql = "delete from customer where customer_id >= 0"
 cursor.execute(sql, None)
 
 print("Before SQL executemany")
@@ -53,6 +49,8 @@ params = (2, 'Mme', 'John', 'Smith II', '2 Madison Ave', 'New York',
           'NY 20020', '+1 212-586-7002')
 params_list.append(params)
 cursor.executemany(sql, params_list)
+
+connection.set_auto_commit(True)
 
 print(str(datetime.now()) + " End.")
 
