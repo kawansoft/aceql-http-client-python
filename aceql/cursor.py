@@ -100,7 +100,7 @@ class Cursor(object):
         The executemany() method will execute the operation iterating
         over the list of parameters in seq_params.
         Note that the SQL operation are transferred with one unique HTTP call to the server side which will execute
-        them using a JDBC PreparedStatement batch: this will allow fast execution.
+        them using a JDBC PreparedStatement in batch mode: this will allow fast execution.
         """
         batch_file_parameters = FileUtil.build_batch_file()
 
