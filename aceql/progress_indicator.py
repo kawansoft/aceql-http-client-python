@@ -17,7 +17,7 @@
 # limitations under the License.
 ##
 
-from aceql._private.parms import Parms
+from aceql._private.aceql_debug_parms import AceQLDebugParms
 
 
 class ProgressIndicator(object):
@@ -35,7 +35,7 @@ class ProgressIndicator(object):
         """ Called by AceQL internal code during transfer progress."""
         if self.__percent < 99:
             self.__percent += 1
-        if Parms.PRINT_PROGRESS_INDICATOR:
+        if AceQLDebugParms.PRINT_PROGRESS_INDICATOR:
             print(str(self.__percent) + "%")
 
     def _set_complete(self):

@@ -18,7 +18,7 @@
 ##
 
 
-class Parms(object):
+class AceQLDebugParms(object):
     """Parameters for behavior."""
     DEBUG_ON = False
     DELETE_FILES = True

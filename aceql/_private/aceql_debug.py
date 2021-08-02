@@ -17,7 +17,7 @@
 # limitations under the License.
 ##
 
-from aceql._private.parms import Parms
+from aceql._private.aceql_debug_parms import AceQLDebugParms
 
 
 class AceQLDebug(object):
@@ -33,11 +33,11 @@ class AceQLDebug(object):
 
     @staticmethod
     def debug_empty():
-        if Parms.DEBUG_ON:
+        if AceQLDebugParms.DEBUG_ON:
             print("debug> ")
 
     @staticmethod
     def debug(s: str):
-        if Parms.DEBUG_ON:
+        if AceQLDebugParms.DEBUG_ON:
             print("debug> " + str(s))
 

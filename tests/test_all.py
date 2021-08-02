@@ -26,14 +26,14 @@ import os
 from os import sep
 from datetime import datetime, date
 
-from aceql._private.parms import Parms
+from aceql._private.aceql_debug_parms import AceQLDebugParms
 from tests.connection_builder import ConnectionBuilder
 
 
 class TestAll(unittest.TestCase):
     def test_A(self):
 
-        Parms.PRINT_PROGRESS_INDICATOR = True;
+        AceQLDebugParms.PRINT_PROGRESS_INDICATOR = True;
         connection = ConnectionBuilder.get_connection()
 
         print()

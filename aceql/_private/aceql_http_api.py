@@ -30,7 +30,7 @@ from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.file_util import FileUtil
 from aceql._private.file_util import os
 from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
-from aceql._private.parms import Parms
+from aceql._private.aceql_debug_parms import AceQLDebugParms
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql._private.result_set_info import ResultSetInfo
 from aceql._private.row_counter import RowCounter
@@ -595,14 +595,14 @@ class AceQLHttpApi(object):
         if self.is_gzip_result():
             file_out = filename[0: len(filename) - 4] + ".ungzipped.txt"
             FileUtil.decompress(filename, file_out)
-            if Parms.DELETE_FILES:
+            if AceQLDebugParms.DELETE_FILES:
                 os.remove(filename)
         else:
             file_out = filename
         AceQLDebug.debug("Before StreamResultAnalyzer")
         result_analyzer = StreamResultAnalyzer(file_out, self.__http_status_code)
         if not result_analyzer.is_status_ok():
-            if Parms.DELETE_FILES:
+            if AceQLDebugParms.DELETE_FILES:
                 os.remove(filename)
             raise Error(result_analyzer.get_error_message(),
                         result_analyzer.get_error_type(), None, None, self.__http_status_code)
