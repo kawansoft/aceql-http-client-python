@@ -25,7 +25,6 @@ import requests
 from requests_toolbelt.multipart import encoder
 
 from aceql._private.aceql_debug import AceQLDebug
-from aceql._private.batch.prepared_statements_batch_dto import PreparedStatementsBatchDto
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.file_util import FileUtil
 from aceql._private.file_util import os
@@ -876,7 +875,7 @@ class AceQLHttpApi(object):
     def reset_request_headers(self):
         self.__headers = {}
 
-    def execute_batch(self, sql: str, prep_statement_parameters_holder_list: List):
+    def execute_batch(self, sql: str, batch_file_parameters: str):
 
         try:
             action = "prepared_statement_execute_batch"
@@ -885,17 +884,13 @@ class AceQLHttpApi(object):
 
             AceQLDebug.debug("url_withaction: " + url_withaction)
 
-            if prep_statement_parameters_holder_list is not None:
-                if not isinstance(prep_statement_parameters_holder_list, list):
-                    raise TypeError("prep_statement_params_holder_list is not a List!")
+            blob_id: str = os.path.basename(batch_file_parameters)
+            length: int = os.path.getsize(batch_file_parameters)
 
-            prepared_statements_batch_dto_schema = marshmallow_dataclass.class_schema(PreparedStatementsBatchDto)
-            prepared_statements_batch_dto = PreparedStatementsBatchDto(
-                prepStatementParamsHolderList=prep_statement_parameters_holder_list)
+            with open(batch_file_parameters, "rb") as fd:
+                self.blob_upload(blob_id, fd, length)
 
-            json_string: str = prepared_statements_batch_dto_schema().dumps(prepared_statements_batch_dto)
-
-            dict_params: dict = {"sql": sql, "batch_list": json_string}
+            dict_params: dict = {"sql": sql, "blob_id": blob_id}
             AceQLDebug.debug("dict_params: " + str(dict_params))
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})

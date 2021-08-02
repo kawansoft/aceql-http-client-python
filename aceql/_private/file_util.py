@@ -72,6 +72,11 @@ class FileUtil(object):
         return the_file
 
     @staticmethod
+    def build_batch_file() -> str:
+        the_file = FileUtil.get_kawansoft_temp_dir() + sep + "-batch-file-" + FileUtil.get_unique_id() + ".txt"
+        return the_file
+
+    @staticmethod
     def decompress(file_in: str, file_out: str):
         """Decompress GZIP text file into a text file."""
 

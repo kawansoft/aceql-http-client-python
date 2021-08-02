@@ -52,5 +52,13 @@ cursor.executemany(sql, params_list)
 
 connection.set_auto_commit(True)
 
+print()
+sql = "select * from customer where customer_id >= ?"
+params = (1,)
+cursor.execute(sql, params)
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
+
 print(str(datetime.now()) + " End.")
 

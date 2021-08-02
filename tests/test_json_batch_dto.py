@@ -54,29 +54,8 @@ prep_statement_parameters_holder_list1.append(prep_statement_parameters_holder)
 
 print(prep_statement_parameters_holder_list1)
 
-
 print()
 print("prep_statement_parameters_holder_list1: " + str(prep_statement_parameters_holder_list1))
-
-prepared_statements_batch_dto_schema = marshmallow_dataclass.class_schema(PreparedStatementsBatchDto)
-prepared_statements_batch_dto = PreparedStatementsBatchDto(
-    prepStatementParamsHolderList=prep_statement_parameters_holder_list1)
-print(prepared_statements_batch_dto)
-print()
-
-json_string2: str = prepared_statements_batch_dto_schema().dumps(prepared_statements_batch_dto)
-print("json_string2: " + json_string2)
-print()
-
-prepared_statements_batch_dto_back: PreparedStatementsBatchDto = prepared_statements_batch_dto_schema().loads(
-    json_string2)
-print("prepared_statements_batch_dto_back: " + str(prepared_statements_batch_dto_back))
-print()
-
-prep_statement_parameters_holder_list_back = prepared_statements_batch_dto_back.prepStatementParamsHolderList
-print("prep_statement_parameters_holder_list_back:")
-for preparedStatementBack in prep_statement_parameters_holder_list_back:
-    print("preparedStatementBack: " + str(preparedStatementBack))
 
 # array
 update_counts_array1: list = []

@@ -18,7 +18,10 @@
 ##
 from typing import List
 
+import marshmallow_dataclass
+
 from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
+from aceql._private.file_util import FileUtil
 from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
 from aceql._private.datetime_util import DateTimeUtil
@@ -99,38 +102,48 @@ class Cursor(object):
         Note that the SQL operation are transferred with one unique HTTP call to the server side which will execute
         them using a JDBC PreparedStatement batch: this will allow fast execution.
         """
-        self.__raise_error_if_closed()
+        batch_file_parameters = FileUtil.build_batch_file()
 
-        if sql is None:
-            raise TypeError("sql is null!")
+        try:
+            self.__raise_error_if_closed()
 
-        sql = sql.strip()
+            if sql is None:
+                raise TypeError("sql is null!")
 
-        if not CursorUtil.is_update_call(sql):
-            raise Error("Only DELETE, INSERT or UPDATE calls are supported this AceQL Client version.", 0,
-                        None, None, 200)
+            sql = sql.strip()
 
-        if not seq_params:
-            return
-
-        prep_statement_params_holder_list: List = []
-
-        # The addBatch() part
-        for params in seq_params:
-            the_cursor_util: CursorUtil = CursorUtil()
-            parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
-
-            blob_ids: list = the_cursor_util.blob_ids
-            if blob_ids is not None and len(blob_ids) > 0:
-                raise Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0,
+            if not CursorUtil.is_update_call(sql):
+                raise Error("Only DELETE, INSERT or UPDATE calls are supported this AceQL Client version.", 0,
                             None, None, 200)
 
-            prep_statement_parameters_holder: PrepStatementParametersHolder = PrepStatementParametersHolder(parms_dict)
-            prep_statement_params_holder_list.append(prep_statement_parameters_holder)
+            if not seq_params:
+                return
 
-        # The executeBatch() part
-        rows: List[int] = self.__aceql_http_api.execute_batch(sql, prep_statement_params_holder_list)
-        return rows
+            prep_statement_params_holder_list: List = []
+
+            # The addBatch() part
+            for params in seq_params:
+                the_cursor_util: CursorUtil = CursorUtil()
+                parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
+
+                blob_ids: list = the_cursor_util.blob_ids
+                if blob_ids is not None and len(blob_ids) > 0:
+                    raise Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0,
+                                None, None, 200)
+
+                prep_statement_parameters_holder_schema = marshmallow_dataclass.class_schema(
+                    PrepStatementParametersHolder)
+                prep_statement_parameters_holder: PrepStatementParametersHolder = PrepStatementParametersHolder(
+                    parms_dict)
+                json_string: str = prep_statement_parameters_holder_schema().dumps(prep_statement_parameters_holder)
+                with open(batch_file_parameters, "a") as fd:
+                    fd.write(json_string + "\n")
+
+            # The executeBatch() part
+            rows: List[int] = self.__aceql_http_api.execute_batch(sql, batch_file_parameters)
+            return rows
+        finally:
+            os.remove(batch_file_parameters)
 
     def __execute_update(self, sql: str, params: tuple = ()) -> int:
         """Executes and update operation on remote database"""
