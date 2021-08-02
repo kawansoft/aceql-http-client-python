@@ -119,8 +119,6 @@ class Cursor(object):
             if not seq_params:
                 return
 
-            prep_statement_params_holder_list: List = []
-
             # The addBatch() part
             for params in seq_params:
                 the_cursor_util: CursorUtil = CursorUtil()

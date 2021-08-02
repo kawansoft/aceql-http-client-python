@@ -21,7 +21,6 @@ from datetime import datetime
 import marshmallow_dataclass
 
 from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
-from aceql._private.batch.prepared_statements_batch_dto import PreparedStatementsBatchDto
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 
 my_rows: list = [int]
@@ -65,7 +64,7 @@ update_counts_array1.append(2)
 
 print()
 update_counts_array_dto_schema = marshmallow_dataclass.class_schema(UpdateCountsArrayDto)
-update_counts_array_dto = UpdateCountsArrayDto(status="OK", update_counts_array=update_counts_array1)
+update_counts_array_dto = UpdateCountsArrayDto(status="OK", updateCountsArray=update_counts_array1)
 print("update_counts_array_dto: " + str(update_counts_array_dto))
 
 json_string3: str = update_counts_array_dto_schema().dumps(update_counts_array_dto)
