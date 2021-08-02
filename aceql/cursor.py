@@ -382,7 +382,8 @@ class Cursor(object):
                         0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
-        print("blob_id: " + str(blob_id))
+        if Parms.DEBUG_ON:
+            print("blob_id: " + str(blob_id))
 
         Cursor.check_blob_id(blob_id, column_index)
         blob_length = self.__aceql_http_api.get_blob_length(blob_id)
