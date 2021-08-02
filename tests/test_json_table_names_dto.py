@@ -19,7 +19,7 @@
 
 import marshmallow_dataclass
 
-from aceql._private.table_names_dto import TableNamesDto
+from aceql._private.dto.table_names_dto import TableNamesDto
 
 table_names_dto_schema = marshmallow_dataclass.class_schema(TableNamesDto)
 table_names = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana']

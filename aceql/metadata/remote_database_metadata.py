@@ -19,9 +19,9 @@
 from typing import List
 
 from aceql import Connection
-from aceql._private.table_names_dto import TableNamesDto
-from aceql._private.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
-from aceql._private.table_dto import TableDto
+from aceql._private.dto.table_names_dto import TableNamesDto
+from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
+from aceql._private.dto.table_dto import TableDto
 from aceql.metadata.table import Table
 from aceql.metadata.jdbc_database_meta_data import JdbcDatabaseMetaData
 

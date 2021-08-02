@@ -29,14 +29,14 @@ from aceql._private.batch.prepared_statements_batch_dto import PreparedStatement
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.file_util import FileUtil
 from aceql._private.file_util import os
-from aceql._private.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
+from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
 from aceql._private.parms import Parms
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql._private.result_set_info import ResultSetInfo
 from aceql._private.row_counter import RowCounter
 from aceql._private.stream_result_analyzer import StreamResultAnalyzer
-from aceql._private.table_dto import TableDto
-from aceql._private.table_names_dto import TableNamesDto
+from aceql._private.dto.table_dto import TableDto
+from aceql._private.dto.table_names_dto import TableNamesDto
 from aceql._private.user_login_store import UserLoginStore
 from aceql._private.version_values import VersionValues
 from aceql.connection_options import ConnectionOptions
