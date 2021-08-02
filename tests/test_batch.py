@@ -29,13 +29,30 @@ print("Connection Options: " + str(connection.get_connections_options()))
 print()
 cursor = connection.cursor()
 
+print("Before SQL delete all customer")
 sql = "delete from customer where customer_id >= 1"
 cursor.execute(sql, None)
 
+print("Before SQL insert call")
+sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
+params = (1, 'Sir', 'John', 'Smith I', '11 Madison Ave', 'New York',
+          'NY 10010', '+1 212-586-7001')
+cursor.execute(sql, params)
+
+print("Before SQL delete all customer")
+sql = "delete from customer where customer_id >= 1"
+cursor.execute(sql, None)
+
+print("Before SQL executemany")
+params_list:list = []
 sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
 params = (1, 'Sir', 'John', 'Smith I', '1 Madison Ave', 'New York',
           'NY 10010', '+1 212-586-7001')
-cursor.execute(sql, params)
+params_list.append(params)
+params = (2, 'Mme', 'John', 'Smith II', '2 Madison Ave', 'New York',
+          'NY 20020', '+1 212-586-7002')
+params_list.append(params)
+cursor.executemany(sql, params_list)
 
 print(str(datetime.now()) + " End.")
 

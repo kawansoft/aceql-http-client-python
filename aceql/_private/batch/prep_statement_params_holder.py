@@ -22,12 +22,12 @@ from typing import List
 
 
 @dataclass
-class PrepStatementParametersHolder(object):
-    statement_parameters: dict
+class PrepStatementParametersHolder:
+    statementParameters: dict
 
     class Meta:
         ordered = True
 
     def __str__(self):
         """ The string representation."""
-        return str(self.statement_parameters)
+        return str(self.statementParameters)

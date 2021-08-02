@@ -18,15 +18,20 @@
 ##
 
 from dataclasses import dataclass
+from typing import List
+
+from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
 
 
 @dataclass
 class PreparedStatementsBatchDto(object):
-    prep_statement_params_holder_list: list
+
+    # Name must be in Java style
+    prepStatementParamsHolderList: List[PrepStatementParametersHolder]
 
     class Meta:
         ordered = True
 
     def __str__(self):
         """ The string representation."""
-        return str(self.prep_statement_params_holder_list)
+        return str(self.prepStatementParamsHolderList)

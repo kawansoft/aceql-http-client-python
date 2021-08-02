@@ -18,6 +18,9 @@
 ##
 from typing import List
 
+import marshmallow_dataclass
+
+from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
 from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
 from aceql._private.datetime_util import DateTimeUtil
@@ -112,7 +115,7 @@ class Cursor(object):
         if not seq_params:
             return
 
-        prep_statement_params_holder_list: List[dict] = []
+        prep_statement_params_holder_list: List = []
 
         # The addBatch() part
         for params in seq_params:
@@ -120,11 +123,12 @@ class Cursor(object):
             parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
 
             blob_ids: list = the_cursor_util.blob_ids
-            if blob_ids is None or blob_ids.len() == 0:
+            if blob_ids is not None and len(blob_ids) > 0:
                 raise Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0,
                             None, None, 200)
 
-            prep_statement_params_holder_list.append(parms_dict)
+            prep_statement_parameters_holder: PrepStatementParametersHolder = PrepStatementParametersHolder(parms_dict)
+            prep_statement_params_holder_list.append(prep_statement_parameters_holder)
 
         # The executeBatch() part
         rows: List[int] = self.__aceql_http_api.execute_batch(sql, prep_statement_params_holder_list)

@@ -22,6 +22,7 @@ from typing import List
 
 import marshmallow_dataclass
 
+from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
 from aceql._private.batch.prepared_statements_batch_dto import PreparedStatementsBatchDto
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.file_util import FileUtil
@@ -891,18 +892,9 @@ class AceQLHttpApi(object):
                 if not isinstance(prep_statement_parameters_holder_list, list):
                     raise TypeError("prep_statement_params_holder_list is not a List!")
 
-            # PreparedStatementsBatchDto statementsBatchDto = new
-            # PreparedStatementsBatchDto(prepStatementParamsHolderList);
-            # jsonString = GsonWsUtil.getJSonString(statementsBatchDto);
-            #
-            # Map < String, String > parametersMap = new
-            # HashMap < String, String > ();
-            # parametersMap.put("sql", sql);
-            # parametersMap.put("batch_list", jsonString);
-
             prepared_statements_batch_dto_schema = marshmallow_dataclass.class_schema(PreparedStatementsBatchDto)
             prepared_statements_batch_dto = PreparedStatementsBatchDto(
-                prep_statement_params_holder_list=prep_statement_parameters_holder_list)
+                prepStatementParamsHolderList=prep_statement_parameters_holder_list)
 
             json_string: str = prepared_statements_batch_dto_schema().dumps(prepared_statements_batch_dto)
 
@@ -936,7 +928,7 @@ class AceQLHttpApi(object):
             update_counts_array_dto_back: UpdateCountsArrayDto = update_counts_array_dto_schema().loads(
                 result)
 
-            update_counts_array: List[int] = update_counts_array_dto_back.update_counts_array
+            update_counts_array: List[int] = update_counts_array_dto_back.updateCountsArray
             return update_counts_array
         except Exception as e:
             if isinstance(e, Error):

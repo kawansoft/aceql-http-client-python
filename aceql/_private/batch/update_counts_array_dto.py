@@ -18,16 +18,17 @@
 ##
 
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
-class UpdateCountsArrayDto(object):
+class UpdateCountsArrayDto:
     status: str
-    update_counts_array: list
+    updateCountsArray: List[int]
 
     class Meta:
         ordered = True
 
     def __str__(self):
         """ The string representation."""
-        return self.status + ", " + str(self.update_counts_array)
+        return self.status + ", " + str(self.updateCountsArray)
