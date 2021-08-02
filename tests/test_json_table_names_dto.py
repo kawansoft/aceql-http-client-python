@@ -16,9 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-import json
 
 import marshmallow_dataclass
+
 from aceql._private.table_names_dto import TableNamesDto
 
 table_names_dto_schema = marshmallow_dataclass.class_schema(TableNamesDto)

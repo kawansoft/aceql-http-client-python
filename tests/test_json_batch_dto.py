@@ -21,7 +21,6 @@ from datetime import datetime
 import marshmallow_dataclass
 
 from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
-from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
 from aceql._private.batch.prepared_statements_batch_dto import PreparedStatementsBatchDto
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 

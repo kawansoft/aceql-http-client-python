@@ -18,8 +18,6 @@
 ##
 from typing import List
 
-import marshmallow_dataclass
-
 from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
 from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
