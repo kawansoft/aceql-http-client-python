@@ -54,6 +54,7 @@ class DmlSequenceTest(object):
         self.__select_row(cursor, orderlog_row)
         self.connection.commit()
         cursor.close()
+        self.connection.close()
 
     @staticmethod
     def __insert_row(cursor: Cursor, orderlog_row: OrderLogRow) -> int:
