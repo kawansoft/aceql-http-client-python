@@ -54,7 +54,8 @@ class DmlSequenceTest(object):
         self.connection.commit()
         cursor.close()
 
-    def __insert_row(self, cursor: Cursor, orderlog_row: OrderLogRow) -> int:
+    @staticmethod
+    def __insert_row(cursor: Cursor, orderlog_row: OrderLogRow) -> int:
         """Insert a single row wuth a BLOB file"""
         filename = orderlog_row.jpeg_image
         statinfo = os.stat(filename)
@@ -74,7 +75,8 @@ class DmlSequenceTest(object):
         print("Insert values: " + str(params))
         return cursor.execute(sql, params)
 
-    def __select_row(self, cursor: Cursor, orderlog_row: OrderLogRow):
+    @staticmethod
+    def __select_row(cursor: Cursor, orderlog_row: OrderLogRow):
         """Select back one row"""
 
         sql = "select * from orderlog where customer_id = ? and item_id = ?"
