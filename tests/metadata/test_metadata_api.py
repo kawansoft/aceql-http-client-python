@@ -23,7 +23,7 @@ import unittest
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 import webbrowser
 import os
-from tests.connection_builder import ConnectionBuilder
+from tests.connection.connection_builder import ConnectionBuilder
 
 
 class TestAll(unittest.TestCase):

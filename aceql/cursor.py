@@ -41,7 +41,7 @@ class Cursor(object):
         self.__description = []
 
         self.__filelist = []
-        self.arraysize = 1
+        self.__arraysize = 1
 
         self.__row_parser = None
 
@@ -263,7 +263,7 @@ class Cursor(object):
         self.__raise_error_if_closed()
         size_to_use = size
         if size_to_use <= 1:
-            size_to_use = self.arraysize
+            size_to_use = self.__arraysize
 
         list_tuples: list[tuple] = []
         cpt = 0

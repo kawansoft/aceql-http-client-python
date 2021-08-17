@@ -27,7 +27,7 @@ from os import sep
 from datetime import datetime, date
 
 from aceql._private.aceql_debug_parms import AceQLDebugParms
-from tests.connection_builder import ConnectionBuilder
+from tests.connection.connection_builder import ConnectionBuilder
 
 
 class TestAll(unittest.TestCase):

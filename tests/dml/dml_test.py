@@ -1,4 +1,3 @@
-#
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
 # Copyright (C) 2021,  KawanSoft SAS
@@ -17,8 +16,12 @@
 # limitations under the License.
 ##
 
+from aceql import Connection
+from tests.connection.connection_builder import ConnectionBuilder
+from tests.dml.dml_sequence_test import DmlSequenceTest
+from tests.dml_batch.sql_batch_test import SqlBatchTest
 
-class VersionValues(object):
-    NAME = "AceQL HTTP SDK"
-    VERSION = "v5.0"
-    DATE = "17-Aug-2021"
+connection: Connection = ConnectionBuilder.get_connection()
+
+dml_sequence_test: DmlSequenceTest = DmlSequenceTest(connection)
+dml_sequence_test.test_sequence()

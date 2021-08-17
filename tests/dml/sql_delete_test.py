@@ -17,8 +17,25 @@
 # limitations under the License.
 ##
 
+from aceql import Connection
 
-class VersionValues(object):
-    NAME = "AceQL HTTP SDK"
-    VERSION = "v5.0"
-    DATE = "17-Aug-2021"
+
+class SqlDeleteTest(object):
+    """Delete all rows of customer and orderlog tables."""
+
+    def __init__(self, connection: Connection):
+        self.__connection = connection
+
+    def delete_customer_all(self):
+        sql = "delete from customer where customer_id >= ?"
+        params = (0,)
+        cursor = self.__connection.cursor()
+        cursor.execute(sql, params)
+        cursor.close()
+
+    def delete_orderlog_all(self):
+        sql = "delete from orderlog where customer_id >= ?"
+        params = (0,)
+        cursor = self.__connection.cursor()
+        cursor.execute(sql, params)
+        cursor.close()
