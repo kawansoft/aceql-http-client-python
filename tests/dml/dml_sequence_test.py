@@ -18,6 +18,7 @@
 import os
 
 from aceql import Connection, Cursor, ProgressIndicator
+from tests.dml.blob_test_util import BlobTestUtil
 from tests.dml.orderlog_row import OrderLogRow
 from tests.dml.sql_delete_test import SqlDeleteTest
 
@@ -117,6 +118,20 @@ class DmlSequenceTest(object):
         print("is_delivered  : " + str(is_delivered));
         print("quantity      : " + str(quantity));
 
+        assert customer_id == orderlog_row.customer_id, "customer_id are different."
+        assert item_id == orderlog_row.item_id, "item_id are different."
+        assert description == orderlog_row.description, "description are different."
+        assert item_cost == orderlog_row.item_cost, "item_cost are different."
+
+        assert date_placed == orderlog_row.date_placed, "date_placed are different."
+        assert date_shipped == orderlog_row.date_shipped, "date_shipped are different."
+
+        assert is_delivered == orderlog_row.is_delivered, "is_delivered are different."
+        assert quantity == orderlog_row.quantity, "quantity are different."
+
+        print("Testing  files in/out are equals");
+        BlobTestUtil.check_blob_integrity(orderlog_row.jpeg_image, file)
+
     @staticmethod
     def print_description(cursor):
         """Debug tool to print the columns details"""
@@ -125,9 +140,6 @@ class DmlSequenceTest(object):
         print("cursor.description: ")
         for the_col_desc in description:
             print(the_col_desc)
-
-
-
 
 
 
