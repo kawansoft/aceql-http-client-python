@@ -59,7 +59,7 @@ class ConnectionBuilder(object):
 
         database = "sampledb"
         username = "user1"
-        password = "password1"
+        password = ConnectionBuilder.get_the_password()
         headers = {'user-agent': 'aceql-client'}
 
         connection_options = ConnectionOptions(proxies=proxies, auth=auth, gzip_result=True, timeout=10, request_headers=headers)
@@ -76,6 +76,10 @@ class ConnectionBuilder(object):
         connection = aceql.connect(url=url, connection_options=connection_options)
 
         return connection
+
+    @staticmethod
+    def get_the_password():
+        return "password1"
 
     @staticmethod
     def get_proxy_auth():
