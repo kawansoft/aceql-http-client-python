@@ -112,7 +112,7 @@ class DmlSequenceTest(object):
         print("description   : " + str(description));
         print("item_cost     : " + str(item_cost));
         print("date_placed   : " + str(date_placed));
-        print("date_shipped  : " + str(date_shipped));
+        print("date_shipped  : " + str(date_shipped) + " / " + str(orderlog_row.date_shipped));
         print("jpeg_image    : " + "<binary> of " + str(jpeg_image));
 
         print("is_delivered  : " + str(is_delivered));
@@ -124,7 +124,7 @@ class DmlSequenceTest(object):
         assert item_cost == orderlog_row.item_cost, "item_cost are different."
 
         assert date_placed == orderlog_row.date_placed, "date_placed are different."
-        assert date_shipped == orderlog_row.date_shipped, "date_shipped are different."
+        assert date_shipped.ctime() == orderlog_row.date_shipped.ctime(), "date_shipped are different."
 
         assert is_delivered == orderlog_row.is_delivered, "is_delivered are different."
         assert quantity == orderlog_row.quantity, "quantity are different."

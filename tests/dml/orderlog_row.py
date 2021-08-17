@@ -33,8 +33,8 @@ class OrderLogRow(object):
         self.item_id = 11;
         self.description = "customer id 1 and item id 1";
         self.item_cost = 2000.00;
-        self.date_placed = date(2021, 1, 1)
-        self.date_shipped = datetime.utcnow()
+        self.date_placed = date.today()
+        self.date_shipped = datetime.now()
 
         dir_in = str(Path.home()) + "/aceql_tests/IN"
         if not Path(dir_in).is_dir():
