@@ -35,18 +35,27 @@ class OrderLogRow(object):
         self.item_cost = 2000.00;
         self.date_placed = date(2017, 11, 3)
         self.date_shipped = datetime.now()
-        dir = str(Path.home()) + "/aceql_tests/IN"
-        if not Path(dir).is_dir():
-            os.mkdir(dir)
-        self.jpeg_image = str(dir) + "/username_koala.jpg"
+
+        dir_in = str(Path.home()) + "/aceql_tests/IN"
+        if not Path(dir_in).is_dir():
+            os.mkdir(dir_in)
+
+        dir_out = str(Path.home()) + "/aceql_tests/OUT"
+        if not Path(dir_out).is_dir():
+            os.mkdir(dir_out)
+
+        self.jpeg_image = str(dir_in) + "/username_koala.jpg"
+        self.out_jpeg_image = str(dir_out) + "/username_koala.jpg"
+
         self.is_delivered = True;
         self.quantity = 3000;
 
+        file = self.out_jpeg_image
+        if os.path.exists(self.out_jpeg_image):
+            os.remove(self.out_jpeg_image)
+
     def __str__(self) -> str:
         return super().__str__()
-
-
-
 
 if __name__ == '__main__':
     orderlog_raw = OrderLogRow()

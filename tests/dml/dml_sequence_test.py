@@ -76,6 +76,7 @@ class DmlSequenceTest(object):
 
     def __select_row(self, cursor: Cursor, orderlog_row: OrderLogRow):
         """Select back one row"""
+
         sql = "select * from orderlog where customer_id = ? and item_id = ?"
         params = (orderlog_row.customer_id, orderlog_row.item_id)
         cursor.execute(sql, params)
@@ -92,6 +93,15 @@ class DmlSequenceTest(object):
 
         is_delivered = row[7]
         quantity = row[8]
+
+        file = orderlog_row.out_jpeg_image;
+        if os.path.exists(file):
+            os.remove(file)
+
+        response = cursor.get_blob_stream(6)
+        with open(file, 'wb') as fd:
+            for chunk in response.iter_content(chunk_size=2048):
+                fd.write(chunk)
 
         print();
         print("customer_id   : " + str(customer_id));
