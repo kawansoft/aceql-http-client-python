@@ -19,7 +19,6 @@
 from aceql import Connection
 from tests.connection.connection_builder import ConnectionBuilder
 from tests.dml.dml_sequence_test import DmlSequenceTest
-from tests.dml_batch.sql_batch_test import SqlBatchTest
 
 connection: Connection = ConnectionBuilder.get_connection()
 

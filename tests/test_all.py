@@ -184,8 +184,8 @@ class TestAll(unittest.TestCase):
                     fd.write(chunk)
 
         cursor.close()
-
         connection.close()
+
         connection2 = ConnectionBuilder.get_connection()
         print("connection2.get_auto_commit(): " + str(connection2.get_auto_commit()))
         print()

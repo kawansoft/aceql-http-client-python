@@ -33,7 +33,7 @@ class OrderLogRow(object):
         self.item_id = 11;
         self.description = "customer id 1 and item id 1";
         self.item_cost = 2000.00;
-        self.date_placed = date(2017, 11, 3)
+        self.date_placed = date(2021, 1, 1)
         self.date_shipped = datetime.now()
 
         dir_in = str(Path.home()) + "/aceql_tests/IN"
@@ -50,12 +50,12 @@ class OrderLogRow(object):
         self.is_delivered = True;
         self.quantity = 3000;
 
-        file = self.out_jpeg_image
         if os.path.exists(self.out_jpeg_image):
             os.remove(self.out_jpeg_image)
 
     def __str__(self) -> str:
         return super().__str__()
+
 
 if __name__ == '__main__':
     orderlog_raw = OrderLogRow()
