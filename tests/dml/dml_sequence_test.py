@@ -54,11 +54,45 @@ class DmlSequenceTest(object):
         self.__select_row(cursor, orderlog_row)
         self.connection.commit()
         cursor.close()
-        self.connection.close()
+
+        cursor: Cursor = self.connection.cursor()
+        self.connection.set_auto_commit(False)
+
+        rows: int = self.__update_row_quantity_add_one_thousand(cursor, orderlog_row)
+        print("Upate done. Rows: " + str(rows));
+        self.connection.commit()
+        cursor.close()
+
+        cursor: Cursor = self.connection.cursor()
+        self.connection.set_auto_commit(False)
+
+        self.__select_row_display_quantity(cursor, orderlog_row)
+        self.connection.commit()
+        cursor.close()
+
+    @staticmethod
+    def __select_row_display_quantity(cursor: Cursor, orderlog_row: OrderLogRow):
+        """Select back one row"""
+
+        sql = "select * from orderlog where customer_id = ? and item_id = ?"
+        params = (orderlog_row.customer_id, orderlog_row.item_id)
+        cursor.execute(sql, params)
+
+        print("cursor.rowcount    : " + str(cursor.rowcount))
+        row = cursor.fetchone()
+        quantity = row[8]
+        print("quantity    : " + str(quantity))
+        assert quantity == orderlog_row.quantity + 1000, "quantity in select is not the same as updated."
+
+    @staticmethod
+    def __update_row_quantity_add_one_thousand(cursor: Cursor, orderlog_row: OrderLogRow) -> int:
+        sql = "update orderlog set quantity = ?"
+        params = (orderlog_row.quantity + 1000, )
+        return cursor.execute(sql, params)
 
     @staticmethod
     def __insert_row(cursor: Cursor, orderlog_row: OrderLogRow) -> int:
-        """Insert a single row wuth a BLOB file"""
+        """Insert a single row with a BLOB file"""
         filename = orderlog_row.jpeg_image
         statinfo = os.stat(filename)
         the_length = statinfo.st_size

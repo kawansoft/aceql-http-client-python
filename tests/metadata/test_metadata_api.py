@@ -23,10 +23,10 @@ import unittest
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 import webbrowser
 import os
-from tests.connection.connection_builder import ConnectionBuilder
+from tests.util.connection_builder import ConnectionBuilder
 
 
-class TestAll(unittest.TestCase):
+class TestMedata(unittest.TestCase):
     @staticmethod
     def test_A():
 

@@ -17,13 +17,13 @@
 # limitations under the License.
 ##
 
-from tests.cursor_util_test import CursorUtilTest
-from tests.daterime_util_test import DateTimeUtilTest
-from tests.column_types_builder_test import ColumnTypesBuilderTest
-from tests.result_analyzer_test import ResultAnalyzerTest
+from tests.misc.cursor_util_test import CursorUtilTest
+from tests.misc.daterime_util_test import DateTimeUtilTest
+from tests.misc.column_types_builder_test import ColumnTypesBuilderTest
+from tests.result_analyzer.result_analyzer_test import ResultAnalyzerTest
 
-from tests.row_counter_test import RowCounterTest
-from tests.stream_result_analyzer_test import StreamResultAnalyzerTest
+from tests.row.row_counter_test import RowCounterTest
+from tests.result_analyzer.stream_result_analyzer_test import StreamResultAnalyzerTest
 
 
 cursorUtilTest = CursorUtilTest()
@@ -46,3 +46,4 @@ rowCounterTest.test_A()
 
 streamResultAnalyzerTest = StreamResultAnalyzerTest()
 streamResultAnalyzerTest.test_A()
+exit()

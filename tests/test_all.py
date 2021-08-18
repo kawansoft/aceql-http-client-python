@@ -21,16 +21,18 @@
 from aceql import Connection
 from aceql import ProgressIndicator
 from aceql import SqlNullType
-import unittest
 import os
 from os import sep
 from datetime import datetime, date
 
 from aceql._private.aceql_debug_parms import AceQLDebugParms
-from tests.connection.connection_builder import ConnectionBuilder
+from tests.util.connection_builder import ConnectionBuilder
+from tests.dml.dml_sequence_test import DmlSequenceTest
+from tests.dml_batch.sql_batch_test import SqlBatchTest
+from tests.metadata.test_metadata_api import TestMedata
 
 
-class TestAll(unittest.TestCase):
+class TestAll():
     def test_A(self):
 
         AceQLDebugParms.PRINT_PROGRESS_INDICATOR = True;
@@ -44,22 +46,22 @@ class TestAll(unittest.TestCase):
         connection.set_holdability("hold_cursors_over_commit")
         holdability = connection.get_holdability()
         print("holdability: " + holdability)
-        self.assertEqual(holdability, "hold_cursors_over_commit")
+        assert holdability == "hold_cursors_over_commit", "Fail holdability=hold_cursors_over_commit"
 
         connection.set_holdability("close_cursors_at_commit")
         holdability = connection.get_holdability()
         print("holdability: " + holdability)
-        self.assertEqual(holdability, "close_cursors_at_commit")
+        assert holdability == "close_cursors_at_commit", "Fail holdability=close_cursors_at_commit"
 
         connection.set_auto_commit(True)
         auto_commit = connection.get_auto_commit()
         print("auto_commit: " + str(auto_commit))
-        self.assertEqual(auto_commit, True)
+        assert auto_commit is True, "Fail auto_commit == True"
 
         connection.set_auto_commit(False)
         auto_commit = connection.get_auto_commit()
         print("auto_commit: " + str(auto_commit))
-        self.assertEqual(auto_commit, False)
+        assert auto_commit is False, "Fail auto_commit == True"
 
         cursor = connection.cursor()
 
@@ -84,6 +86,13 @@ class TestAll(unittest.TestCase):
         # quantity integer NOT NULL,
 
         connection.commit()
+
+        # Test all DML
+        dml_sequence_test: DmlSequenceTest = DmlSequenceTest(connection)
+        dml_sequence_test.test_sequence()
+
+        sql_batch_test: SqlBatchTest = SqlBatchTest(connection)
+        sql_batch_test.insert_using_batch()
 
         the_date = date(2017, 11, 3)
         cpt = 0
@@ -186,12 +195,20 @@ class TestAll(unittest.TestCase):
         cursor.close()
         connection.close()
 
+        # Test Metadata
+        test_medata: TestMedata = TestMedata()
+        test_medata.test_A()
+
         connection2 = ConnectionBuilder.get_connection()
         print("connection2.get_auto_commit(): " + str(connection2.get_auto_commit()))
         print()
         connection2.logout()
         print()
 
+        print("The End!")
+
 
 if __name__ == '__main__':
-    unittest.main()
+    testAll = TestAll()
+    testAll.test_A()
+    exit()
