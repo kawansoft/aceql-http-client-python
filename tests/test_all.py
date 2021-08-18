@@ -33,10 +33,9 @@ from tests.metadata.test_metadata_api import TestMedata
 
 
 class TestAll():
-    def test_main(self):
+    def test_main(self, connection: Connection):
 
         AceQLDebugParms.PRINT_PROGRESS_INDICATOR = True;
-        connection = ConnectionBuilder.get_connection()
 
         print()
         print("aceql version     : " + Connection.get_client_version())
@@ -193,22 +192,19 @@ class TestAll():
                     fd.write(chunk)
 
         cursor.close()
-        connection.close()
-
-        # Test Metadata
-        test_medata: TestMedata = TestMedata()
-        test_medata.test_A()
-
-        connection2 = ConnectionBuilder.get_connection()
-        print("connection2.get_auto_commit(): " + str(connection2.get_auto_commit()))
-        print()
-        connection2.logout()
-        print()
-
-        print("The End!")
 
 
 if __name__ == '__main__':
-    testAll = TestAll()
-    testAll.test_main()
+    connection: Connection = ConnectionBuilder.get_connection()
+    try:
+        testAll = TestAll()
+        testAll.test_main(connection)
+    finally:
+        connection.close()
+
+    # Test Metadata
+    test_medata: TestMedata = TestMedata()
+    test_medata.test_A()
+
+    print("The End!")
     exit()
