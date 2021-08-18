@@ -21,6 +21,7 @@ from aceql import Connection, Cursor, ProgressIndicator
 from tests.dml.blob_test_util import BlobTestUtil
 from tests.dml.orderlog_row import OrderLogRow
 from tests.dml.sql_delete_test import SqlDeleteTest
+from tests.util.connection_builder import ConnectionBuilder
 
 
 class DmlSequenceTest(object):
@@ -177,5 +178,12 @@ class DmlSequenceTest(object):
             print(the_col_desc)
 
 
-
+if __name__ == '__main__':
+    connection: Connection = ConnectionBuilder.get_connection()
+    try:
+        dmlSequenceTest: DmlSequenceTest = DmlSequenceTest(connection)
+        dmlSequenceTest.test_sequence()
+    finally:
+        connection.close()
+    exit()
 

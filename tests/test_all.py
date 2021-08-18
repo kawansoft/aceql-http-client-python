@@ -33,7 +33,7 @@ from tests.metadata.test_metadata_api import TestMedata
 
 
 class TestAll():
-    def test_A(self):
+    def test_main(self):
 
         AceQLDebugParms.PRINT_PROGRESS_INDICATOR = True;
         connection = ConnectionBuilder.get_connection()
@@ -210,5 +210,5 @@ class TestAll():
 
 if __name__ == '__main__':
     testAll = TestAll()
-    testAll.test_A()
+    testAll.test_main()
     exit()

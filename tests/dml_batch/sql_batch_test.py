@@ -20,6 +20,7 @@ from datetime import datetime
 
 from aceql import Connection, Cursor
 from tests.dml.sql_delete_test import SqlDeleteTest
+from tests.util.connection_builder import ConnectionBuilder
 
 
 class SqlBatchTest(object):
@@ -55,3 +56,12 @@ class SqlBatchTest(object):
 
         print(str(datetime.now()) + " End.")
 
+
+if __name__ == '__main__':
+    connection: Connection = ConnectionBuilder.get_connection()
+    try:
+        sql_batch_test = SqlBatchTest(connection)
+        sql_batch_test.insert_using_batch()
+    finally:
+        connection.close()
+    exit()
