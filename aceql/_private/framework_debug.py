@@ -36,13 +36,13 @@ class FrameworkDebug(object):
         """Loads the file that contains the classes to debug and update the CLASSES_TO_DEBUG set."""
         if len(FrameworkDebug.CLASSES_TO_DEBUG) > 0:
             return;
-        aceql_debug_python_ini = FileUtil.get_user_home_dot_kawansoft_dir() + sep + "aceql-debug-python.ini"
+        aceql_debug_file = FileUtil.get_user_home_dot_kawansoft_dir() + sep + "aceql-debug-python.ini"
 
-        if not os.path.isfile(aceql_debug_python_ini):
+        if not os.path.isfile(aceql_debug_file):
             return;
 
         # Loads from file classes to debug
-        with open(aceql_debug_python_ini) as f:
+        with open(aceql_debug_file) as f:
             lines = f.readlines()
             for line in lines:
                 FrameworkDebug.CLASSES_TO_DEBUG.add(line.strip())
