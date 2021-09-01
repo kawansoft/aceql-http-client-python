@@ -382,7 +382,7 @@ class Cursor(object):
                         0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
-        if Parms.DEBUG_ON:
+        if AceQLDebugParms.DEBUG_ON:
             print("blob_id: " + str(blob_id))
 
         Cursor.check_blob_id(blob_id, column_index)
