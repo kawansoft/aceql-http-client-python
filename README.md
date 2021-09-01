@@ -19,7 +19,7 @@
 
 ## Python Client SDK v5.0 - User Guide 
 
-## September 1, 2021
+## September 2, 2021
 
 <img src="https://www.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
