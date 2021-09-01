@@ -19,8 +19,8 @@ The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
 
-AceQL Python Client SDK - Version 5.0 - 01-Sep-2021
----------------------------------------------------
+AceQL Python Client SDK - Version 5.0.1 - 01-Sep-2021
+-----------------------------------------------------
 
 What's New
 - Cursor.executemany is now supported in order to

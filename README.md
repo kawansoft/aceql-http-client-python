@@ -17,7 +17,7 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v5.0 - User Guide 
+## Python Client SDK v5.0.1 - User Guide 
 
 ## September 2, 2021
 
