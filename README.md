@@ -19,7 +19,7 @@
 
 ## Python Client SDK v5.0 - User Guide 
 
-## August 2, 2021
+## September 1, 2021
 
 <img src="https://www.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -77,7 +77,7 @@ The module provides a SQL interface compliant with the DB-API 2.0 specification 
 
 ## AceQL Server side compatiblity
 
-This  SDK version is compatible with AceQL HTTP server side v5.0.2+.
+This  SDK version is compatible with AceQL HTTP server side v6.2+.  It requires version 8.0+ in order to use batch commands.
 
 ## Installation
 
@@ -113,6 +113,8 @@ Server JDBC ResultSet retrieval is as fast as possible :
 - The client side gets the ResultSet content as a file.
 
 All data reading commands are executed locally on the client side with forward-only reading.
+
+**It is highly recommended to always use  `Cursor.executemany`  with autocommit off when you have many rows to INSERT or UPDATE.**
 
 ## Datatypes
 

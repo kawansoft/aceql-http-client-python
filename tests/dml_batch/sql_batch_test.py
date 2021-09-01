@@ -36,7 +36,7 @@ class SqlBatchTest(object):
         sql_delete_test.delete_customer_all()
 
         print("Before SQL executemany")
-        params_list:list = []
+        params_list: list = []
         sql = "insert into customer values (?, ?, ?, ?, ?, ?, ?, ?)"
         params = (1, 'Sir', 'John', 'Smith I', '1 Madison Ave', 'New York',
                   'NY 10010', '+1 212-586-7001')
