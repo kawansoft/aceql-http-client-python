@@ -21,7 +21,7 @@
 
 ## September 2, 2021
 
-<img src="https://www.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
+<img src="https://download.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
    * [Fundamentals](#fundamentals)
       * [License](#license)
@@ -180,7 +180,7 @@ url="https://www.acme.com:9443/aceql?username=user1&password=password1&database=
 connection = aceql.connect(url=url)
 ```
 
-The schema of the database is here:  [sampledb](https://www.aceql.com/rest/soft/7.0/src/sampledb_other_databases.txt)
+The schema of the database is here:  [sampledb](https://download.aceql.com/rest/soft/7.0/src/sampledb_other_databases.txt)
 
 Once you have a `Connection`, you can create a `Cursor` object and call its `execute()` method to perform SQL commands.
 
@@ -665,7 +665,7 @@ filename = os.path.expanduser("~") + os.sep + "db_schema.html"
 remote_database_meta_data.db_schema_download(filename)
 ```
 
-See an example of the built HTML schema:  [db_schema.out.html](https://www.aceql.com/rest/soft/7.0/src/db_schema.out.html)
+See an example of the built HTML schema:  [db_schema.out.html](https://download.aceql.com/rest/soft/7.0/src/db_schema.out.html)
 
 ### Accessing remote database main properties
 
