@@ -40,9 +40,10 @@ class TestAll():
         AceQLDebugParms.PRINT_PROGRESS_INDICATOR = True;
 
         print()
-        print("aceql version     : " + Connection.get_client_version())
-        print("aceql version full: " + Connection.get_client_version_full())
-        print("Connection Options: " + str(connection.get_connections_options()))
+        print("aceql version      : " + Connection.get_client_version())
+        print("aceql version full : " + Connection.get_client_version_full())
+        print("Connection Options : " + str(connection.get_connections_options()))
+        print("Connection creation: " + str(connection.get_creation_datetime()))
 
         connection.set_holdability("hold_cursors_over_commit")
         holdability = connection.get_holdability()

@@ -18,11 +18,19 @@ they would for a local database.
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
+AceQL Python Client SDK - Version 5.1 - 04-Nov-2021
+---------------------------------------------------
+
+What's New:
+-The ConnectionInfo class includes the new CreationDateTime property
+ that indicates when the AceQL Connection with the remote server
+ was established.
+
 
 AceQL Python Client SDK - Version 5.0.1 - 02-Sep-2021
 -----------------------------------------------------
 
-What's New
+What's New:
 - Cursor.executemany is now supported in order to
   allow fast INSERT and UPDATE calls.
 
@@ -47,7 +55,7 @@ Bugs fixed:
 AceQL Python Client SDK - Version 4.2 - 10-Jun-2021
 ---------------------------------------------------
 
-What's New
+What's New:
 - Cursor.mogrify DB API extension has been added.
   See https://www.psycopg.org/docs/cursor.html#cursor.mogrify
 

@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+from datetime import date, datetime
 from aceql._private.aceql_http_api import AceQLHttpApi
 from aceql.cursor import Cursor
 from aceql.connection_options import ConnectionOptions
@@ -81,6 +82,7 @@ class Connection(object):
         self.__aceQLHttpApi = AceQLHttpApi(url=url, username=username, password=password, database=database,
                                            connection_options=connection_options)
         self.__connection_options = connection_options
+        self.__creation_datetime = datetime.now()
 
     @property
     def _get_aceql_http_api(self) -> AceQLHttpApi:
@@ -97,6 +99,10 @@ class Connection(object):
     def get_database(self) -> str :
         """Gets the database for this Connection."""
         return self.__database
+
+    def get_creation_datetime(self) -> datetime :
+        """Gets the creation date and time for this Connection."""
+        return self.__creation_datetime
 
     def get_connections_options(self) -> ConnectionOptions:
         """Gets the Connections options."""
