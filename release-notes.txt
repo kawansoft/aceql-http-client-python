@@ -18,6 +18,13 @@ they would for a local database.
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
+AceQL Python Client SDK - Version 5.1.1 - 08-Nov-2021
+-----------------------------------------------------
+
+What's New:
+- Python 3.10 is now supported.
+
+
 AceQL Python Client SDK - Version 5.1 - 04-Nov-2021
 ---------------------------------------------------
 
