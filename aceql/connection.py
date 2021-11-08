@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-from datetime import date, datetime
+from datetime import datetime
 from aceql._private.aceql_http_api import AceQLHttpApi
 from aceql.cursor import Cursor
 from aceql.connection_options import ConnectionOptions

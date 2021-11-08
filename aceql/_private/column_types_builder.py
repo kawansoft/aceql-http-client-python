@@ -22,8 +22,6 @@ import json
 import os
 from io import open
 
-from aceql._private.aceql_debug import AceQLDebug
-
 
 class ColumnTypesBuilder(object):
     """Allows to build the dictionary of SQL types per coumn index of a
