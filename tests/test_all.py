@@ -44,6 +44,7 @@ class TestAll():
         print("aceql version full : " + Connection.get_client_version_full())
         print("Connection Options : " + str(connection.get_connections_options()))
         print("Connection creation: " + str(connection.get_creation_datetime()))
+        print("Database Info       : " + str(connection.get_database_info()))
 
         connection.set_holdability("hold_cursors_over_commit")
         holdability = connection.get_holdability()

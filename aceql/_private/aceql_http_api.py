@@ -26,6 +26,7 @@ from requests_toolbelt.multipart import encoder
 
 from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
+from aceql._private.dto.database_info_dto import DatabaseInfoDto
 from aceql._private.file_util import FileUtil
 from aceql._private.file_util import os
 from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
@@ -928,3 +929,30 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
+    def get_database_info(self) -> DatabaseInfoDto:
+        try:
+            url_withaction = self._url + "get_database_info"
+            result = self.call_with_get_url(url_withaction)
+
+            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
+
+            if AceQLHttpApi.__debug:
+                print(result)
+
+            holder_database_info_dto_schema = marshmallow_dataclass.class_schema(DatabaseInfoDto)
+            database_info_dto: DatabaseInfoDto = holder_database_info_dto_schema().loads(
+                result)
+
+            if AceQLHttpApi.__debug:
+                print(database_info_dto)
+
+            return database_info_dto;
+
+        except Exception as e:
+            if isinstance(e, Error):
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__http_status_code)

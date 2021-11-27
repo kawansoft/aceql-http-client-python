@@ -29,14 +29,14 @@ class ConnectionUtil(object):
 
     @staticmethod
     def is_batch_supported(connection) -> bool:
-        """ Says if batch calls are supported on server."""
+        """ Says if batch calls are supported on server for current server version"""
         raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
         return ConnectionUtil.is_current_version_ok(raw_server_version,
                                                     ConnectionUtil.BATCH_MIN_SERVER_VERSION)
 
     @staticmethod
     def is_get_database_info_supported(connection) -> bool:
-        """ Says if GetDatabaseInfo call supported on server."""
+        """ Says if /get_database_info API is call supported on server for current server version."""
         raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
         return ConnectionUtil.is_current_version_ok(raw_server_version,
                                                     ConnectionUtil.GET_DATABASE_INFO_MIN_SERVER_VERSION)

@@ -22,6 +22,8 @@ from aceql.cursor import Cursor
 from aceql.connection_options import ConnectionOptions
 from aceql.progress_indicator import ProgressIndicator
 from aceql.login_url_decoder import LoginUrlDecoder
+from aceql._private.dto.database_info_dto import DatabaseInfoDto
+from aceql.database_info import DatabaseInfo
 
 class Connection(object):
     """Allows to create a database connection to a remote server."""
@@ -158,6 +160,12 @@ class Connection(object):
     def get_server_version(self) -> str:
         """Gets the server version of AceQL HTTP."""
         return self.__aceQLHttpApi.get_server_version()
+
+    def get_database_info(self) -> DatabaseInfo:
+        """Get the the remote database and remote JDBC Driver basic info"""
+        database_info_dto: DatabaseInfoDto = self.__aceQLHttpApi.get_database_info()
+        databaseInfo: DatabaseInfo = DatabaseInfo(database_info_dto)
+        return databaseInfo
 
     def close(self):
         """Closes the connection to the remote database but keeps the HTTP session."""
