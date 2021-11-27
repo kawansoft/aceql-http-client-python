@@ -21,6 +21,7 @@ from typing import List
 import marshmallow_dataclass
 
 from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
+from aceql._private.connection_util import ConnectionUtil
 from aceql._private.file_util import FileUtil
 from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
@@ -102,6 +103,11 @@ class Cursor(object):
         Note that the SQL operation are transferred with one unique HTTP call to the server side which will execute
         them using a JDBC PreparedStatement in batch mode: this will allow fast execution.
         """
+
+        if not ConnectionUtil.is_batch_supported(self.__connection):
+            raise Exception("AceQL Server version must be >= " + ConnectionUtil.BATCH_MIN_SERVER_VERSION
+                + " in order to call PreparedStatement.executeBatch().")
+
         batch_file_parameters = FileUtil.build_batch_file()
 
         try:
