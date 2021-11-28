@@ -91,8 +91,8 @@ class AceQLHttpApi(object):
         self.__http_status_code = requests.codes.ok
 
         # Other self for other methods
-        self._pretty_printing = True
-        self._temp_length = 0
+        self.__pretty_printing = True
+        self.__temp_length = 0
         self.__total_length = 0
         self.__progress_indicator = None
 
@@ -253,170 +253,80 @@ class AceQLHttpApi(object):
         if AceQLHttpApi.__trace_on:
             print(s)
 
-    # *
-    # * Says if trace is on
-    # *
-    # * @return true if trace is on
-    #
     @staticmethod
     def is_trace_on() -> bool:
+        """Says if trace is on"""
         return AceQLHttpApi.__trace_on
 
-    # *
-    # * Sets the trace on/off
-    # *
-    # * @param TRACE_ON
-    # * if true, trace will be on
-    #
     @staticmethod
     def set_trace_on(trace_on: bool):
+        """Sets the trace on/off"""
         AceQLHttpApi.__trace_on = trace_on
 
-    # *
-    # * Says the query result is returned compressed with the GZIP file format.
-    # *
-    # * @return the gzipResult
-    #
     def is_gzip_result(self) -> bool:
+        """Says the query result is returned compressed with the GZIP file format."""
         return self.__gzip_result
 
-    # *
-    # * Define if result sets are compressed before download.  Defaults to true.
-    # *
-    # * @param gzipResult
-    # * if true, sets are compressed before download
-    #
     def set_gzip_result(self, gzip_result: bool):
-
+        """Define if result sets are compressed before download.  Defaults to true."""
         if str(gzip_result) == 'True':
             self.__gzip_result = True
         else:
             self.__gzip_result = False
 
-    # *
-    # * Calls /get_version API
-    # *
-    # * @
-    # * if any Exception occurs
-    #
     def get_server_version(self) -> str:
+        """Calls /get_version API"""
         the_version = self.call_api_with_result("get_version", None)
         return the_version
 
-    # *
-    # * Gets the SDK version
-    # *
-    # * @
-    # * if any Exception occurs
-    #
     @staticmethod
     def get_client_version() -> str:
+        """Gets the SDK version"""
         return VersionValues.NAME + " - " + VersionValues.VERSION + " - " + VersionValues.DATE
 
-    # *
-    # * Gets the SDK version + Python version
-    # *
-    # * @
-    # * if any Exception occurs
-    #
     @staticmethod
     def get_client_version_full() -> str:
+        """Gets the SDK version + Python version"""
         return AceQLHttpApi.get_client_version() + " - " + sys.version
 
-    # *
-    # * Calls /close API
-    # *
-    # * @
-    # * if any Exception occurs
-    #
     def close(self):
+        """Calls /close API"""
         self.call_api_no_result("close", None)
 
-    # *
-    # * Calls /logout API
-    # *
-    # * @
-    # * if any Exception occurs
-    #
     def logout(self):
+        """Calls /logout API"""
         user_login_store = UserLoginStore(self.__url, self.__username, self.__database)
         user_login_store.remove()
         self.call_api_no_result("logout", None)
 
-    # *
-    # * Calls /get_transaction_isolation_level API
-    # *
-    # * @return the current transaction isolation level, which will be one of the
-    # * following constants: <code>transaction_read_uncommitted</code>,
-    # * <code>transaction_read_committed</code>,
-    # * <code>transaction_repeatable_read</code>,
-    # * <code>transaction_serializable</code>, or
-    # * <code>transaction_none</code>.
-    # * @
-    # * if any Exception occurs
-    #
     def get_transaction_isolation(self) -> str:
+        """Calls /get_transaction_isolation_level API"""
         transaction_isolation = self.call_api_with_result("get_transaction_isolation_level", None)
         return transaction_isolation
 
-    # *
-    # * Calls /set_transaction_isolation_level API
-    # *
-    # * @param level
-    # * the isolation level
-    # * @
-    # * if any Exception occurs
-    #
     def set_transaction_isolation(self, level: str):
+        """Calls /set_transaction_isolation_level API"""
         self.call_api_no_result("set_transaction_isolation_level", level)
 
-    #
-    # * Calls /get_holdability API
-    # *
-    # * @return the holdability, one of <code>hold_cursors_over_commit</code> or
-    # * <code>close_cursors_at_commit</code>
-    # * @throws Error
-    # * if any Exception occurs
-    #
     def get_holdability(self) -> str:
+        """Calls /get_holdability API"""
         holdability = self.call_api_with_result("get_holdability", None)
         return holdability
 
-    # *
-    # * Calls /set_holdability API
-    # *
-    # * @param holdability
-    # * the holdability
-    # * @
-    # * if any Exception occurs
-    #
     def set_holdability(self, holdability: str):
+        """Calls /set_holdability API"""
         self.call_api_no_result("set_holdability", holdability)
 
-    # *
-    # * Calls /get_auto_commit API
-    # *
-    # * @return <code>true</code> if this <code>Connection</code> object is
-    # * read-only; <code>false</code> otherwise
-    # * @
-    # * if any Exception occurs
-    #
     def is_read_only(self) -> bool:
+        """Calls /get_auto_commit API"""
         is_read_only_str = self.call_api_with_result("is_read_only", None)
         if is_read_only_str == "true":
             return True
         else:
             return False
 
-    # *
-    # * Calls /set_read_only API
-    # *
-    # * @param readOnly
-    # * {@code true} enables read-only mode; {@code false} disables it
-    # * @
-    # * if any Exception occurs
-    #
     def set_read_only(self, read_only: bool):
+        """Calls /set_read_only API"""
         if read_only is None:
             raise TypeError("read_only is null!")
 
@@ -427,16 +337,12 @@ class AceQLHttpApi(object):
 
         self.call_api_no_result("set_read_only", read_only_str)
 
-    # *
-    # * @return the httpStatus
-    #
     def get_http_status_code(self) -> int:
+        """returns the httpStatus"""
         return self.__http_status_code
 
-    # *
-    # * @return the httpStatusMessage
-    #
     def get_http_status_message(self) -> str:
+        """returns the httpStatusMessage"""
         status_messages = requests.status_codes.codes[self.__http_status_code]
         return status_messages[0]
 
@@ -615,7 +521,7 @@ class AceQLHttpApi(object):
     def update_dict_params(self, dict_params: dict):
         if self.__gzip_result:
             dict_params["gzip_result"] = "true"
-        if self._pretty_printing:
+        if self.__pretty_printing:
             dict_params["pretty_printing"] = "true"
         # Force pretty printing to True because parser needs it
         dict_params["pretty_printing"] = "true"
@@ -747,9 +653,9 @@ class AceQLHttpApi(object):
 
             the_read = monitor.bytes_read
 
-            self._temp_length += the_read
-            if self._temp_length >= self.__total_length / 100:
-                self._temp_length = 0
+            self.__temp_length += the_read
+            if self.__temp_length >= self.__total_length / 100:
+                self.__temp_length = 0
                 self.__progress_indicator._increment()
 
         except Exception as e:

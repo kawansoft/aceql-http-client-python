@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-import re
-
 
 class ConnectionUtil(object):
     """Utilities for Connection class. """
@@ -30,6 +28,7 @@ class ConnectionUtil(object):
     @staticmethod
     def is_batch_supported(connection) -> bool:
         """ Says if batch calls are supported on server for current server version"""
+        import aceql
         raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
         return ConnectionUtil.is_current_version_ok(raw_server_version,
                                                     ConnectionUtil.BATCH_MIN_SERVER_VERSION)

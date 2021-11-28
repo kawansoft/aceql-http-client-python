@@ -22,8 +22,10 @@ from aceql.cursor import Cursor
 from aceql.connection_options import ConnectionOptions
 from aceql.progress_indicator import ProgressIndicator
 from aceql.login_url_decoder import LoginUrlDecoder
+
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
 from aceql.database_info import DatabaseInfo
+
 
 class Connection(object):
     """Allows to create a database connection to a remote server."""
