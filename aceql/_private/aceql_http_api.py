@@ -25,6 +25,7 @@ import requests
 from requests_toolbelt.multipart import encoder
 
 from aceql._private.aceql_debug import AceQLDebug
+from aceql._private.aceql_metadata_api import AceQLMetadataApi
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
 from aceql._private.file_util import FileUtil
@@ -118,7 +119,7 @@ class AceQLHttpApi(object):
                                 result_analyzer.get_error_type(), None, None, self.__http_status_code)
 
                 connection_id = result_analyzer.get_value("connection_id");
-                self._url = url + "/session/" + session_id + "/connection/" + connection_id + "/";
+                self.__url = url + "/session/" + session_id + "/connection/" + connection_id + "/";
 
             else:
                 url = url + "/database/" + database + "/username/" \
@@ -135,7 +136,7 @@ class AceQLHttpApi(object):
 
                 session_id = result_analyzer.get_value("session_id")
                 connection_id = result_analyzer.get_value("connection_id");
-                self._url = url + "/session/" + session_id + "/connection/" + connection_id + "/"
+                self.__url = url + "/session/" + session_id + "/connection/" + connection_id + "/"
 
                 user_login_store.set_session_id(session_id);
         except Exception as e:
@@ -177,7 +178,7 @@ class AceQLHttpApi(object):
         return response.text
 
     def call_with_get_action(self, action: str, action_parameter: dict) -> str:
-        url_withaction = self._url + action
+        url_withaction = self.__url + action
 
         if AceQLHttpApi.__debug:
             print("url_withaction: " + url_withaction)
@@ -337,6 +338,10 @@ class AceQLHttpApi(object):
 
         self.call_api_no_result("set_read_only", read_only_str)
 
+    def get_url(self) -> int:
+        """returns the httpStatus"""
+        return self.__url
+
     def get_http_status_code(self) -> int:
         """returns the httpStatus"""
         return self.__http_status_code
@@ -377,7 +382,7 @@ class AceQLHttpApi(object):
 
             self.set_is_prepared_statement(dict_params, is_prepared_statement)
 
-            url_withaction = self._url + action
+            url_withaction = self.__url + action
 
             AceQLDebug.debug("url_withaction: " + url_withaction)
             AceQLDebug.debug("dict_params 1: " + str(dict_params))
@@ -451,7 +456,7 @@ class AceQLHttpApi(object):
             dict_params = {"sql": sql}
             self.set_is_prepared_statement(dict_params, is_prepared_statement)
 
-            url_withaction = self._url + action
+            url_withaction = self.__url + action
 
             AceQLDebug.debug("url_withaction: " + url_withaction)
             AceQLDebug.debug("dictParams 1: " + str(dict_params))
@@ -549,7 +554,7 @@ class AceQLHttpApi(object):
             if blob_id is None:
                 raise TypeError("blob_id is null!")
 
-            the_url = self._url + "/blob_download?blob_id=" + blob_id
+            the_url = self.__url + "/blob_download?blob_id=" + blob_id
 
             if self.__timeout is None:
                 response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
@@ -573,7 +578,7 @@ class AceQLHttpApi(object):
             if file_format is None:
                 raise TypeError("format is null!")
 
-            the_url = self._url + "/metadata_query/db_schema_download"
+            the_url = self.__url + "/metadata_query/db_schema_download"
 
             dict_params = {"format": file_format}
 
@@ -610,7 +615,7 @@ class AceQLHttpApi(object):
 
             dict_params: dict = {"blob_id": blob_id}
 
-            url_withaction = self._url + action
+            url_withaction = self.__url + action
 
             AceQLDebug.debug("urlWithaction: " + url_withaction)
             AceQLDebug.debug("dictParams   : " + str(dict_params))
@@ -679,7 +684,7 @@ class AceQLHttpApi(object):
         the_headers = dict(self.__headers)  # or orig.copy()
         the_headers["Content-Type"] = m.content_type
 
-        the_url = self._url + "blob_upload"
+        the_url = self.__url + "blob_upload"
         # requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
         #              auth=self.__auth)
         requests.post(the_url, data=m, headers=the_headers, proxies=self.__proxies,
@@ -687,7 +692,7 @@ class AceQLHttpApi(object):
 
     def get_db_metadata(self) -> JdbcDatabaseMetaDataDto:
         try:
-            url_withaction = self._url + "metadata_query/get_db_metadata"
+            url_withaction = self.__url + "metadata_query/get_db_metadata"
             result = self.call_with_get_url(url_withaction)
 
             result_analyzer = ResultAnalyzer(result, self.__http_status_code)
@@ -713,9 +718,10 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
+
     def get_table_names(self, table_type: str) -> TableNamesDto:
         try:
-            url_withaction = self._url + "metadata_query/get_table_names"
+            url_withaction = self.__url + "metadata_query/get_table_names"
 
             if table_type is not None:
                 url_withaction += "?table_type=" + table_type
@@ -746,7 +752,7 @@ class AceQLHttpApi(object):
 
     def get_table(self, name: str) -> TableDto:
         try:
-            url_withaction = self._url + "metadata_query/get_table"
+            url_withaction = self.__url + "metadata_query/get_table"
 
             if name is None:
                 raise TypeError("name is null!")
@@ -787,7 +793,7 @@ class AceQLHttpApi(object):
         try:
             action = "prepared_statement_execute_batch"
             AceQLHttpApi.check_values(True, sql)
-            url_withaction = self._url + action
+            url_withaction = self.__url + action
 
             AceQLDebug.debug("url_withaction: " + url_withaction)
 
@@ -835,30 +841,34 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
+    # def get_database_info(self) -> DatabaseInfoDto:
+    #     try:
+    #         url_withaction = self.__url + "get_database_info"
+    #         result = self.call_with_get_url(url_withaction)
+    #
+    #         result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+    #         if not result_analyzer.is_status_ok():
+    #             raise Error(result_analyzer.get_error_message(),
+    #                         result_analyzer.get_error_type(), None, None, self.__http_status_code)
+    #
+    #         if AceQLHttpApi.__debug:
+    #             print(result)
+    #
+    #         holder_database_info_dto_schema = marshmallow_dataclass.class_schema(DatabaseInfoDto)
+    #         database_info_dto: DatabaseInfoDto = holder_database_info_dto_schema().loads(
+    #             result)
+    #
+    #         if AceQLHttpApi.__debug:
+    #             print(database_info_dto)
+    #
+    #         return database_info_dto;
+    #
+    #     except Exception as e:
+    #         if isinstance(e, Error):
+    #             raise
+    #         else:
+    #             raise Error(str(e), 0, e, None, self.__http_status_code)
+
     def get_database_info(self) -> DatabaseInfoDto:
-        try:
-            url_withaction = self._url + "get_database_info"
-            result = self.call_with_get_url(url_withaction)
-
-            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
-
-            if AceQLHttpApi.__debug:
-                print(result)
-
-            holder_database_info_dto_schema = marshmallow_dataclass.class_schema(DatabaseInfoDto)
-            database_info_dto: DatabaseInfoDto = holder_database_info_dto_schema().loads(
-                result)
-
-            if AceQLHttpApi.__debug:
-                print(database_info_dto)
-
-            return database_info_dto;
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
+        aceQLMetadataApi = AceQLMetadataApi(self)
+        return aceQLMetadataApi.get_database_info()
