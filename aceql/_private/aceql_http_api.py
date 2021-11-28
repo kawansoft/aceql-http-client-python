@@ -25,7 +25,6 @@ import requests
 from requests_toolbelt.multipart import encoder
 
 from aceql._private.aceql_debug import AceQLDebug
-from aceql._private.aceql_metadata_api import AceQLMetadataApi
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
 from aceql._private.file_util import FileUtil
@@ -44,6 +43,7 @@ from aceql.connection_options import ConnectionOptions
 from aceql.error import Error
 from aceql.progress_indicator import ProgressIndicator
 from aceql.proxy_auth import ProxyAuth
+import aceql._private.aceql_metadata_api
 
 
 class AceQLHttpApi(object):
@@ -870,5 +870,5 @@ class AceQLHttpApi(object):
     #             raise Error(str(e), 0, e, None, self.__http_status_code)
 
     def get_database_info(self) -> DatabaseInfoDto:
-        aceQLMetadataApi = AceQLMetadataApi(self)
+        aceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
         return aceQLMetadataApi.get_database_info()

@@ -18,14 +18,17 @@
 ##
 
 import sys
-from typing import List
+from typing import List, TYPE_CHECKING
 
+import aceql._private.aceql_http_api
 import marshmallow_dataclass
 
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
-from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql.error import Error
+
+if TYPE_CHECKING:
+    from aceql._private.aceql_http_api import AceQLHttpApi
 
 
 class AceQLMetadataApi(object):
@@ -33,7 +36,7 @@ class AceQLMetadataApi(object):
     HTTP calls and operations."""
     __debug = False
 
-    def __init__(self, aceQLHttpApi):
+    def __init__(self, aceQLHttpApi: 'AceQLHttpApi'):
         if aceQLHttpApi is None:
             raise TypeError("aceQLHttpApi is null!")
         self.__aceQLHttpApi = aceQLHttpApi
