@@ -103,10 +103,9 @@ class Cursor(object):
         Note that the SQL operation are transferred with one unique HTTP call to the server side which will execute
         them using a JDBC PreparedStatement in batch mode: this will allow fast execution.
         """
-
         if not ConnectionUtil.is_batch_supported(self.__connection):
             raise Exception("AceQL Server version must be >= " + ConnectionUtil.BATCH_MIN_SERVER_VERSION
-                + " in order to call PreparedStatement.executeBatch().")
+                + " in order to call executemany.")
 
         batch_file_parameters = FileUtil.build_batch_file()
 
@@ -209,7 +208,7 @@ class Cursor(object):
 
         self.__row_parser = RowParser(self.__result_set_info.get_filename(), self.__result_set_info.get_row_count())
 
-    def fetchone(self):
+    def fetchone(self) -> tuple:
         """ Fetch the next row of a query result set, returning a single sequence,
         or None when no more data is available"""
 
@@ -258,7 +257,7 @@ class Cursor(object):
         the_tup: tuple = tuple(the_list)
         return the_tup
 
-    def fetchmany(self, size: int = -1):
+    def fetchmany(self, size: int = -1) -> list[tuple] :
         """Fetch the next set of rows of a query result, returning a sequence of sequences
 
         (e.g. a list of tuples). An empty sequence is returned when no more rows are available.

@@ -17,6 +17,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from aceql.connection import Connection
+
 
 class ConnectionUtil(object):
     """Utilities for Connection class. """
@@ -26,7 +31,7 @@ class ConnectionUtil(object):
     GET_DATABASE_INFO_MIN_SERVER_VERSION = "9.0"
 
     @staticmethod
-    def is_batch_supported(connection) -> bool:
+    def is_batch_supported(connection: 'Connection') -> bool:
         """ Says if batch calls are supported on server for current server version"""
         import aceql
         raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
@@ -34,14 +39,14 @@ class ConnectionUtil(object):
                                                     ConnectionUtil.BATCH_MIN_SERVER_VERSION)
 
     @staticmethod
-    def is_get_database_info_supported(connection) -> bool:
+    def is_get_database_info_supported(connection: 'Connection') -> bool:
         """ Says if /get_database_info API is call supported on server for current server version."""
         raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
         return ConnectionUtil.is_current_version_ok(raw_server_version,
                                                     ConnectionUtil.GET_DATABASE_INFO_MIN_SERVER_VERSION)
 
     @staticmethod
-    def get_server_raw_version(connection) -> str:
+    def get_server_raw_version(connection: 'Connection') -> str:
         """ Extract the server number version between the v and - """
         if ConnectionUtil.SERVER_VERSION_NUMBER is None:
             ConnectionUtil.SERVER_VERSION_NUMBER = connection.get_server_version()

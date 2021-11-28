@@ -18,6 +18,7 @@
 ##
 from datetime import datetime
 from aceql._private.aceql_http_api import AceQLHttpApi
+from aceql._private.connection_util import ConnectionUtil
 from aceql.cursor import Cursor
 from aceql.connection_options import ConnectionOptions
 from aceql.progress_indicator import ProgressIndicator
@@ -165,6 +166,11 @@ class Connection(object):
 
     def get_database_info(self) -> DatabaseInfo:
         """Get the the remote database and remote JDBC Driver basic info"""
+
+        if not ConnectionUtil.is_get_database_info_supported(self):
+            raise Exception("AceQL Server version must be >= " + ConnectionUtil.GET_DATABASE_INFO_MIN_SERVER_VERSION
+                + " in order to call get_database_info.")
+
         database_info_dto: DatabaseInfoDto = self.__aceQLHttpApi.get_database_info()
         databaseInfo: DatabaseInfo = DatabaseInfo(database_info_dto)
         return databaseInfo

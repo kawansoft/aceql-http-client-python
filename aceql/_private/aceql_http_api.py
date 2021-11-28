@@ -22,6 +22,7 @@ from typing import List
 
 import marshmallow_dataclass
 import requests
+from requests import Request
 from requests_toolbelt.multipart import encoder
 
 from aceql._private.aceql_debug import AceQLDebug
@@ -154,9 +155,9 @@ class AceQLHttpApi(object):
     def call_with_get_url(self, url: str) -> str:
 
         if self.__timeout is None:
-            response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
+            response: Request = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
         else:
-            response = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
+            response: Request = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
                                     timeout=self.__timeout)
 
         self.__http_status_code = response.status_code
@@ -166,10 +167,10 @@ class AceQLHttpApi(object):
     def call_with_post_url(self, url: str, dict_params: dict) -> str:
 
         if self.__timeout is None:
-            response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+            response: Request = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
                                      auth=self.__auth)
         else:
-            response = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+            response: Request = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
                                      auth=self.__auth,
                                      timeout=self.__timeout)
 
@@ -399,10 +400,10 @@ class AceQLHttpApi(object):
             # print("Before update request")
 
             if self.__timeout is None:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth,
                                          timeout=self.__timeout)
 
@@ -474,10 +475,10 @@ class AceQLHttpApi(object):
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
             if self.__timeout is None:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth,
                                          timeout=self.__timeout)
 
@@ -557,9 +558,9 @@ class AceQLHttpApi(object):
             the_url = self.__url + "/blob_download?blob_id=" + blob_id
 
             if self.__timeout is None:
-                response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
+                response: Request = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
+                response: Request = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
                                         timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
@@ -587,10 +588,10 @@ class AceQLHttpApi(object):
                 dict_params["table_name"] = table_name
 
             if self.__timeout is None:
-                response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+                response: Request = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
                                          auth=self.__auth)
             else:
-                response = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+                response: Request = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
                                          auth=self.__auth,
                                          timeout=self.__timeout)
 
@@ -623,10 +624,10 @@ class AceQLHttpApi(object):
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
 
             if self.__timeout is None:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth,
                                          timeout=self.__timeout)
 
@@ -810,10 +811,10 @@ class AceQLHttpApi(object):
             # print("Before update request")
 
             if self.__timeout is None:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth)
             else:
-                response = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
                                          proxies=self.__proxies, auth=self.__auth,
                                          timeout=self.__timeout)
 
