@@ -32,7 +32,7 @@ if TYPE_CHECKING:
 
 
 class AceQLBlobApi(object):
-    """ AceQL HTTP wrapper for metadata apis. Takes care of all
+    """ AceQL HTTP wrapper for Blob download APIs. Takes care of all
     HTTP calls and operations."""
     __debug = False
 

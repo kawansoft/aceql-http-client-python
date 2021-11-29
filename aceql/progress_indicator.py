@@ -28,7 +28,7 @@ class ProgressIndicator(object):
         self.__cancelled = False
 
     #
-    # Private methods,, not to be called.
+    # Private methods, not to be called.
     #
 
     def _increment(self):

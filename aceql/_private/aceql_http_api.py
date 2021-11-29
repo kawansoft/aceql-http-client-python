@@ -43,6 +43,7 @@ from aceql.progress_indicator import ProgressIndicator
 from aceql.proxy_auth import ProxyAuth
 import aceql._private.aceql_metadata_api
 import aceql._private.aceql_blob_api
+import aceql._private.aceql_blob_upload_api
 import aceql._private.aceql_batch_api
 
 
@@ -93,8 +94,8 @@ class AceQLHttpApi(object):
 
         # Other self for other methods
         self.__pretty_printing = True
-        self.__temp_length = 0
-        self.__total_length = 0
+        #self.__temp_length = 0  ==> Done in AceQLBlobUploadApi
+        #self.__total_length = 0 ==> ==> Done in AceQLBlobUploadApi
         self.__progress_indicator = None
 
         # url = c + "/database/" + database + "/username/" \
@@ -566,51 +567,56 @@ class AceQLHttpApi(object):
         else:
             dict_params["prepared_statement"] = "false"
 
-    def my_callback(self, monitor):
-        """ The callback function when uploading a BLOB """
-        try:
-            if self.__total_length == 0 or self.__progress_indicator is None:
-                return
-
-            the_read = monitor.bytes_read
-
-            self.__temp_length += the_read
-            if self.__temp_length >= self.__total_length / 100:
-                self.__temp_length = 0
-                self.__progress_indicator._increment()
-
-        except Exception as e:
-            print(str(e))
-
-    def blob_upload(self, blob_id: str, fd, total_length: int):
-        """ Upload the BLOB and use a callback function for progress indicator. """
-
-        self.__total_length = total_length
-
-        # fields={'field0': 'value', 'field1': 'value',
-        # 'field2': ('filename', open('file.py', 'rb'), 'text/plain')}
-
-        the_fields: dict = dict()
-        the_fields["blob_id"] = blob_id
-        the_fields["file"] = ("filename", fd, "application/octet-stream")
-
-        e = encoder.MultipartEncoder(fields=the_fields)
-        m = encoder.MultipartEncoderMonitor(e, self.my_callback)
-
-        the_headers = dict(self.__headers)  # or orig.copy()
-        the_headers["Content-Type"] = m.content_type
-
-        the_url = self.__url + "blob_upload"
-        # requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
-        #              auth=self.__auth)
-        requests.post(the_url, data=m, headers=the_headers, proxies=self.__proxies,
-                      auth=self.__auth)
-
     def add_request_headers(self, headers: dict):
         self.__headers = headers
 
     def reset_request_headers(self):
         self.__headers = {}
+
+    # def my_callback(self, monitor):
+    #     """ The callback function when uploading a BLOB """
+    #     try:
+    #         if self.__total_length == 0 or self.__progress_indicator is None:
+    #             return
+    #
+    #         the_read = monitor.bytes_read
+    #
+    #         self.__temp_length += the_read
+    #         if self.__temp_length >= self.__total_length / 100:
+    #             self.__temp_length = 0
+    #             self.__progress_indicator._increment()
+    #
+    #     except Exception as e:
+    #         print(str(e))
+
+    # def blob_upload(self, blob_id: str, fd, total_length: int):
+    #     """ Upload the BLOB and use a callback function for progress indicator. """
+    #
+    #     self.__total_length = total_length
+    #
+    #     # fields={'field0': 'value', 'field1': 'value',
+    #     # 'field2': ('filename', open('file.py', 'rb'), 'text/plain')}
+    #
+    #     the_fields: dict = dict()
+    #     the_fields["blob_id"] = blob_id
+    #     the_fields["file"] = ("filename", fd, "application/octet-stream")
+    #
+    #     e = encoder.MultipartEncoder(fields=the_fields)
+    #     m = encoder.MultipartEncoderMonitor(e, self.my_callback)
+    #
+    #     the_headers = dict(self.__headers)  # or orig.copy()
+    #     the_headers["Content-Type"] = m.content_type
+    #
+    #     the_url = self.__url + "blob_upload"
+    #     # requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
+    #     #              auth=self.__auth)
+    #     requests.post(the_url, data=m, headers=the_headers, proxies=self.__proxies,
+    #                   auth=self.__auth)
+
+    def blob_upload(self, blob_id: str, fd, total_length: int):
+        """ Upload the BLOB and use a callback function for progress indicator."""
+        aceql_blob_upload_api: aceql.AceQLBlobUploadApi = aceql._private.aceql_blob_upload_api.AceQLBlobUploadApi(self)
+        aceql_blob_upload_api.blob_upload(blob_id, fd, total_length)
 
     def execute_batch(self, sql: str, batch_file_parameters: str):
         """Executes batch and return affected rows"""
