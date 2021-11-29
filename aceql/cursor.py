@@ -16,22 +16,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-import os
 from typing import List
 
 import marshmallow_dataclass
 
 import aceql
-from aceql._private import cursor_util
 from aceql._private.aceql_debug import AceQLDebug
+from aceql._private.aceql_debug_parms import AceQLDebugParms
 from aceql._private.aceql_http_api import AceQLHttpApi
 from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
 from aceql._private.connection_util import ConnectionUtil
-from aceql._private.file_util import FileUtil
-from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
 from aceql._private.datetime_util import DateTimeUtil
-from aceql._private.aceql_debug_parms import AceQLDebugParms
+from aceql._private.file_util import FileUtil
+from aceql._private.row_parser import RowParser
 
 
 class Cursor(object):

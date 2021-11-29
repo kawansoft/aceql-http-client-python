@@ -21,10 +21,10 @@ from typing import TYPE_CHECKING
 import requests
 from requests import Request
 
-from aceql.error import Error
 from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.aceql_execution_util import AceQLExecutionUtil
 from aceql._private.result_analyzer import ResultAnalyzer
+from aceql.error import Error
 
 if TYPE_CHECKING:
     from aceql._private.aceql_http_api import AceQLHttpApi

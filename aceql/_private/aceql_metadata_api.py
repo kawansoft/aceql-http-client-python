@@ -17,14 +17,11 @@
 # limitations under the License.
 ##
 
-import sys
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
+import marshmallow_dataclass
 import requests
 from requests import Request
-
-import aceql._private.aceql_http_api
-import marshmallow_dataclass
 
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
 from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto

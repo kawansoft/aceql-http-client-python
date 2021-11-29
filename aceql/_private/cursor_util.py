@@ -169,5 +169,5 @@ class CursorUtil(object):
     def remove_file_safe(filename: str):
         try:
             os.remove(filename)
-        except Exception as e:
+        except Exception:
             pass

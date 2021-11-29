@@ -33,7 +33,6 @@ class ConnectionUtil(object):
     @staticmethod
     def is_batch_supported(connection: 'Connection') -> bool:
         """ Says if batch calls are supported on server for current server version"""
-        import aceql
         raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
         return ConnectionUtil.is_current_version_ok(raw_server_version,
                                                     ConnectionUtil.BATCH_MIN_SERVER_VERSION)

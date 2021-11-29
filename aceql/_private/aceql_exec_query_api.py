@@ -16,21 +16,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-import os
 from typing import TYPE_CHECKING
 
 import requests
 from requests import Request
 
+from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.aceql_debug_parms import AceQLDebugParms
+from aceql._private.aceql_execution_util import AceQLExecutionUtil
 from aceql._private.cursor_util import CursorUtil
 from aceql._private.file_util import FileUtil
 from aceql._private.result_set_info import ResultSetInfo
 from aceql._private.row_counter import RowCounter
 from aceql._private.stream_result_analyzer import StreamResultAnalyzer
 from aceql.error import Error
-from aceql._private.aceql_debug import AceQLDebug
-from aceql._private.aceql_execution_util import AceQLExecutionUtil
 
 if TYPE_CHECKING:
     from aceql._private.aceql_http_api import AceQLHttpApi
