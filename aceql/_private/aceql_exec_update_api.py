@@ -86,10 +86,12 @@ class AceQLExecUpdateApi(object):
             # print("Before update request")
 
             if self.__aceQLHttpApi.get_timeout() is None:
+                AceQLDebug.debug("UPDATE HERE 1")
                 response: Request = requests.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth())
             else:
+                AceQLDebug.debug("UPDATE HERE 2")
                 response: Request = requests.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth(),

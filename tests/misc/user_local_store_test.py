@@ -28,7 +28,7 @@ if user_login_store.is_already_logged():
 else:
     print("User is not logged.")
 
-user_login_store.remove()
+user_login_store.remove_store()
 
 if user_login_store.is_already_logged():
     print("User is already logged!")

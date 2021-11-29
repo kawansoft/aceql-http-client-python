@@ -62,7 +62,7 @@ class UserLoginStore(object):
         key = self.build_key()
         UserLoginStore.__logged_users[key] = session_id
 
-    def remove(self):
+    def remove_store(self):
         """Removes (server_url, username, database) triplet. This is to be called at /logout API.
         """
         key = self.build_key()

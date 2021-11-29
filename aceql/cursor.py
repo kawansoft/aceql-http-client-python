@@ -16,17 +16,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+import os
 from typing import List
 
 import marshmallow_dataclass
 
+import aceql
+from aceql._private import cursor_util
+from aceql._private.aceql_debug import AceQLDebug
+from aceql._private.aceql_http_api import AceQLHttpApi
 from aceql._private.batch.prep_statement_params_holder import PrepStatementParametersHolder
 from aceql._private.connection_util import ConnectionUtil
 from aceql._private.file_util import FileUtil
 from aceql._private.row_parser import RowParser
 from aceql._private.cursor_util import CursorUtil
 from aceql._private.datetime_util import DateTimeUtil
-from aceql._private.aceql_http_api import AceQLDebug, Error, os, AceQLHttpApi
 from aceql._private.aceql_debug_parms import AceQLDebugParms
 
 
@@ -118,7 +122,7 @@ class Cursor(object):
             sql = sql.strip()
 
             if not CursorUtil.is_update_call(sql):
-                raise Error("Only DELETE, INSERT or UPDATE calls are supported this AceQL Client version.", 0,
+                raise aceql.Error("Only DELETE, INSERT or UPDATE calls are supported this AceQL Client version.", 0,
                             None, None, 200)
 
             if not seq_params:
@@ -130,8 +134,9 @@ class Cursor(object):
                 parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
 
                 blob_ids: list = the_cursor_util.blob_ids
+
                 if blob_ids is not None and len(blob_ids) > 0:
-                    raise Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0,
+                    raise aceql.Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0,
                                 None, None, 200)
 
                 prep_statement_parameters_holder_schema = marshmallow_dataclass.class_schema(
@@ -146,7 +151,7 @@ class Cursor(object):
             rows: List[int] = self.__aceql_http_api.execute_batch(sql, batch_file_parameters)
             return rows
         finally:
-            os.remove(batch_file_parameters)
+            CursorUtil.remove_file_safe(batch_file_parameters)
 
     def __execute_update(self, sql: str, params: tuple = ()) -> int:
         """Executes and update operation on remote database"""
@@ -362,11 +367,11 @@ class Cursor(object):
     def check_blob_id(blob_id: str, column_index: int):
         """Checks blob id"""
         if blob_id is None:
-            raise Error("No value found for column_index " + str(column_index),
+            raise aceql.Error("No value found for column_index " + str(column_index),
                         0, None, None, 200)
 
         if not blob_id.endswith(".blob"):
-            raise Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
+            raise aceql.Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
                         0, None, None, 200)
 
     def get_blob_length(self, column_index: int) -> int:
@@ -383,7 +388,7 @@ class Cursor(object):
         AceQLDebug.debug("values_per_column_index: " + str(values_per_column_index))
 
         if values_per_column_index is None:
-            raise Error("Not positioned on a row. (No fetchone call done.)",
+            raise aceql.Error("Not positioned on a row. (No fetchone call done.)",
                         0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
@@ -407,7 +412,7 @@ class Cursor(object):
         values_per_column_index: dict = self.__row_parser.get_values_per_col_index()
 
         if values_per_column_index is None:
-            raise Error("Not positioned on a row. (Seems no fetchone() call done.)",
+            raise aceql.Error("Not positioned on a row. (Seems no fetchone() call done.)",
                         0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
@@ -431,8 +436,8 @@ class Cursor(object):
 
         if AceQLDebugParms.DELETE_FILES:
             for filename in self.__filelist:
-                os.remove(filename)
+                CursorUtil.remove_file_safe(filename)
 
     def __raise_error_if_closed(self):
         if self.__is_closed:
-            raise Error("Invalid call: Cursor is closed.", 0, None, None, 200)
+            raise aceql.Error("Invalid call: Cursor is closed.", 0, None, None, 200)

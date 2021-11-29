@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
+import os
 
 from aceql._private.datetime_util import DateTimeUtil
 from aceql._private.datetime_util import datetime
@@ -163,3 +164,10 @@ class CursorUtil(object):
     @staticmethod
     def is_update_call(sql: str) -> bool:
         return sql.lower().startswith("delete") or sql.lower().startswith("insert") or sql.lower().startswith("insert")
+
+    @staticmethod
+    def remove_file_safe(filename: str):
+        try:
+            os.remove(filename)
+        except Exception as e:
+            pass
