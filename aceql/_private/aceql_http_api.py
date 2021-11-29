@@ -573,46 +573,6 @@ class AceQLHttpApi(object):
     def reset_request_headers(self):
         self.__headers = {}
 
-    # def my_callback(self, monitor):
-    #     """ The callback function when uploading a BLOB """
-    #     try:
-    #         if self.__total_length == 0 or self.__progress_indicator is None:
-    #             return
-    #
-    #         the_read = monitor.bytes_read
-    #
-    #         self.__temp_length += the_read
-    #         if self.__temp_length >= self.__total_length / 100:
-    #             self.__temp_length = 0
-    #             self.__progress_indicator._increment()
-    #
-    #     except Exception as e:
-    #         print(str(e))
-
-    # def blob_upload(self, blob_id: str, fd, total_length: int):
-    #     """ Upload the BLOB and use a callback function for progress indicator. """
-    #
-    #     self.__total_length = total_length
-    #
-    #     # fields={'field0': 'value', 'field1': 'value',
-    #     # 'field2': ('filename', open('file.py', 'rb'), 'text/plain')}
-    #
-    #     the_fields: dict = dict()
-    #     the_fields["blob_id"] = blob_id
-    #     the_fields["file"] = ("filename", fd, "application/octet-stream")
-    #
-    #     e = encoder.MultipartEncoder(fields=the_fields)
-    #     m = encoder.MultipartEncoderMonitor(e, self.my_callback)
-    #
-    #     the_headers = dict(self.__headers)  # or orig.copy()
-    #     the_headers["Content-Type"] = m.content_type
-    #
-    #     the_url = self.__url + "blob_upload"
-    #     # requests.post(the_url, data=m, headers={'Content-Type': m.content_type}, proxies=self.__proxies,
-    #     #              auth=self.__auth)
-    #     requests.post(the_url, data=m, headers=the_headers, proxies=self.__proxies,
-    #                   auth=self.__auth)
-
     def blob_upload(self, blob_id: str, fd, total_length: int):
         """ Upload the BLOB and use a callback function for progress indicator."""
         aceql_blob_upload_api: aceql.AceQLBlobUploadApi = aceql._private.aceql_blob_upload_api.AceQLBlobUploadApi(self)
