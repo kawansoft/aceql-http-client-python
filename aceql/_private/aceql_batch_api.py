@@ -23,6 +23,7 @@ import marshmallow_dataclass
 import requests
 from requests import Request
 
+from aceql._private.aceql_execution_util import AceQLExecutionUtil
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.result_analyzer import ResultAnalyzer
@@ -47,7 +48,7 @@ class AceQLBatchApi(object):
 
         try:
             action = "prepared_statement_execute_batch"
-            AceQLBatchApi.check_values(True, sql)
+            AceQLExecutionUtil.check_values(True, sql)
             url_withaction = self.__url + action
 
             AceQLDebug.debug("url_withaction: " + url_withaction)
@@ -105,10 +106,3 @@ class AceQLBatchApi(object):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
-
-    @staticmethod
-    def check_values(is_prepared_statement: bool, sql: str):
-        if sql is None:
-            raise TypeError("sql is null!")
-        if is_prepared_statement is None:
-            raise TypeError("isPreparedStatement is null!")

@@ -23,6 +23,7 @@ from requests import Request
 from requests_toolbelt.multipart import encoder
 
 from aceql._private.aceql_debug import AceQLDebug
+from aceql._private.aceql_execution_util import AceQLExecutionUtil
 from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
 from aceql._private.file_util import FileUtil
@@ -396,7 +397,7 @@ class AceQLHttpApi(object):
 
             action = "execute_update"
 
-            AceQLHttpApi.check_values(is_prepared_statement, sql)
+            AceQLExecutionUtil.check_values(is_prepared_statement, sql)
 
             dict_params: dict = {"sql": sql}
 
@@ -471,7 +472,7 @@ class AceQLHttpApi(object):
 
             action = "execute_query"
 
-            AceQLHttpApi.check_values(is_prepared_statement, sql)
+            AceQLExecutionUtil.check_values(is_prepared_statement, sql)
 
             dict_params = {"sql": sql}
             self.set_is_prepared_statement(dict_params, is_prepared_statement)
@@ -552,13 +553,6 @@ class AceQLHttpApi(object):
         dict_params["pretty_printing"] = "true"
         # We need the types
         dict_params["column_types"] = "true"
-
-    @staticmethod
-    def check_values(is_prepared_statement: bool, sql: str):
-        if sql is None:
-            raise TypeError("sql is null!")
-        if is_prepared_statement is None:
-            raise TypeError("isPreparedStatement is null!")
 
     @staticmethod
     def set_is_prepared_statement(dict_params: dict, is_prepared_statement: bool):
