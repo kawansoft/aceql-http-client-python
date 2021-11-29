@@ -65,9 +65,10 @@ class TestMedata(unittest.TestCase):
             for table_name in table_names:
                 table = remote_database_meta_data.get_table(table_name)
 
-                print("Columns of table: " + table_name)
-                for column in table.columns:
-                    print(column)
+                # print("Columns of table: " + table_name)
+                # for column in table.columns:
+                #     print(column)
+                print(table)
 
         finally:
             connection.close()

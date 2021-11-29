@@ -20,10 +20,16 @@
 import sys
 from typing import List, TYPE_CHECKING
 
+import requests
+from requests import Request
+
 import aceql._private.aceql_http_api
 import marshmallow_dataclass
 
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
+from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
+from aceql._private.dto.table_dto import TableDto
+from aceql._private.dto.table_names_dto import TableNamesDto
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql.error import Error
 
@@ -41,6 +47,131 @@ class AceQLMetadataApi(object):
             raise TypeError("aceQLHttpApi is null!")
         self.__aceQLHttpApi = aceQLHttpApi
         self.__url = aceQLHttpApi.get_url()
+
+    def db_schema_download(self, file_format: str, table_name: str):
+        """ returns a schema stream as a Requests response """
+        try:
+            if file_format is None:
+                raise TypeError("format is null!")
+
+            the_url = self.__url + "/metadata_query/db_schema_download"
+
+            dict_params = {"format": file_format}
+
+            if table_name is not None:
+                table_name = table_name.lower()
+                dict_params["table_name"] = table_name
+
+            if self.__aceQLHttpApi.get_timeout() is None:
+                response: Request = requests.post(the_url, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
+                                                  proxies=self.__aceQLHttpApi.get_proxies(),
+                                                  auth=self.__aceQLHttpApi.get_auth() )
+            else:
+                response: Request = requests.post(the_url, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
+                                                  proxies=self.__aceQLHttpApi.get_proxies(),
+                                                  auth=self.__aceQLHttpApi.get_auth(),
+                                                  timeout=self.__aceQLHttpApi.get_timeout())
+
+            self.__aceQLHttpApi.__http_status_code = self.__aceQLHttpApi.get_http_status_code()
+
+            return response
+
+        except Exception as e:
+            if isinstance(e, Error):
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
+
+    def get_table_names(self, table_type: str) -> TableNamesDto:
+        try:
+            url_withaction = self.__url + "metadata_query/get_table_names"
+
+            if table_type is not None:
+                url_withaction += "?table_type=" + table_type
+
+            result = self.__aceQLHttpApi.call_with_get_url(url_withaction)
+
+            result_analyzer = ResultAnalyzer(result, self.__aceQLHttpApi.get_http_status_code())
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__aceQLHttpApi.get_http_status_code())
+
+            if AceQLMetadataApi.__debug:
+                print(result)
+
+            table_names_dto_schema = marshmallow_dataclass.class_schema(TableNamesDto)
+            table_names_dto: TableNamesDto = table_names_dto_schema().loads(result)
+
+            if AceQLMetadataApi.__debug:
+                print(table_names_dto)
+
+            return table_names_dto
+
+        except Exception as e:
+            if isinstance(e, Error):
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
+
+    def get_table(self, name: str) -> TableDto:
+        try:
+            url_withaction = self.__url + "metadata_query/get_table"
+
+            if name is None:
+                raise TypeError("name is null!")
+            url_withaction += "?table_name=" + name
+
+            result = self.__aceQLHttpApi.call_with_get_url(url_withaction)
+
+            if AceQLMetadataApi.__debug:
+                print(result)
+
+            result_analyzer = ResultAnalyzer(result, self.__aceQLHttpApi.get_http_status_code())
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__aceQLHttpApi.get_http_status_code())
+
+            table_dto_schema = marshmallow_dataclass.class_schema(TableDto)
+            table_dto: TableDto = table_dto_schema().loads(result)
+
+            if AceQLMetadataApi.__debug:
+                print(table_dto)
+
+            return table_dto
+
+        except Exception as e:
+            if isinstance(e, Error):
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
+
+    def get_db_metadata(self) -> JdbcDatabaseMetaDataDto:
+        try:
+            url_withaction = self.__url + "metadata_query/get_db_metadata"
+            result = self.__aceQLHttpApi.call_with_get_url(url_withaction)
+
+            result_analyzer = ResultAnalyzer(result, self.__aceQLHttpApi.get_http_status_code())
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__aceQLHttpApi.get_http_status_code())
+
+            if AceQLMetadataApi.__debug:
+                print(result)
+
+            holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(JdbcDatabaseMetaDataDto)
+            jdbc_database_meta_data_holder: JdbcDatabaseMetaDataDto = holder_jdbc_database_meta_data_schema().loads(
+                result)
+
+            if AceQLMetadataApi.__debug:
+                print(jdbc_database_meta_data_holder)
+
+            return jdbc_database_meta_data_holder
+
+        except Exception as e:
+            if isinstance(e, Error):
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
 
     def get_database_info(self) -> DatabaseInfoDto:
 

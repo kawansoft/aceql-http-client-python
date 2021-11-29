@@ -101,7 +101,6 @@ class AceQLHttpApi(object):
         # url = c + "/database/" + database + "/username/" \
         #       + username + "/connect" + "?password=" \
         #       + password
-
         user_login_store = UserLoginStore(url, username, database)
 
         if session_id is not None:
@@ -158,7 +157,7 @@ class AceQLHttpApi(object):
             response: Request = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
         else:
             response: Request = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
-                                    timeout=self.__timeout)
+                                             timeout=self.__timeout)
 
         self.__http_status_code = response.status_code
 
@@ -168,11 +167,11 @@ class AceQLHttpApi(object):
 
         if self.__timeout is None:
             response: Request = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
-                                     auth=self.__auth)
+                                              auth=self.__auth)
         else:
             response: Request = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
-                                     auth=self.__auth,
-                                     timeout=self.__timeout)
+                                              auth=self.__auth,
+                                              timeout=self.__timeout)
 
         self.__http_status_code = response.status_code
 
@@ -347,6 +346,22 @@ class AceQLHttpApi(object):
         """returns the httpStatus"""
         return self.__http_status_code
 
+    def get_headers(self):
+        """returns the headers"""
+        return self.__headers
+
+    def get_proxies(self):
+        """returns the proxies"""
+        return self.__proxies
+
+    def get_auth(self):
+        """returns the auth"""
+        return self.__auth
+
+    def get_timeout(self):
+        """returns the timeout"""
+        return self.__timeout
+
     def get_http_status_message(self) -> str:
         """returns the httpStatusMessage"""
         status_messages = requests.status_codes.codes[self.__http_status_code]
@@ -372,6 +387,7 @@ class AceQLHttpApi(object):
     # * if any Exception occurs
     #
     def execute_update(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
+        """Calls /execute_update API"""
 
         try:
 
@@ -401,11 +417,11 @@ class AceQLHttpApi(object):
 
             if self.__timeout is None:
                 response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                         proxies=self.__proxies, auth=self.__auth)
+                                                  proxies=self.__proxies, auth=self.__auth)
             else:
                 response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                         proxies=self.__proxies, auth=self.__auth,
-                                         timeout=self.__timeout)
+                                                  proxies=self.__proxies, auth=self.__auth,
+                                                  timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
             result = response.text
@@ -447,7 +463,7 @@ class AceQLHttpApi(object):
     # * if any Exception occurs
     #
     def execute_query(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
-
+        """Calls /execute_query API"""
         try:
 
             action = "execute_query"
@@ -476,11 +492,11 @@ class AceQLHttpApi(object):
 
             if self.__timeout is None:
                 response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                         proxies=self.__proxies, auth=self.__auth)
+                                                  proxies=self.__proxies, auth=self.__auth)
             else:
                 response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                         proxies=self.__proxies, auth=self.__auth,
-                                         timeout=self.__timeout)
+                                                  proxies=self.__proxies, auth=self.__auth,
+                                                  timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
 
@@ -558,42 +574,12 @@ class AceQLHttpApi(object):
             the_url = self.__url + "/blob_download?blob_id=" + blob_id
 
             if self.__timeout is None:
-                response: Request = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
+                response: Request = requests.get(the_url, headers=self.__headers, proxies=self.__proxies,
+                                                 auth=self.__auth)
             else:
-                response: Request = requests.get(the_url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
-                                        timeout=self.__timeout)
-
-            self.__http_status_code = response.status_code
-
-            return response
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
-
-    def db_schema_download(self, file_format: str, table_name: str):
-        """ returns a schema stream as a Requests response """
-        try:
-            if file_format is None:
-                raise TypeError("format is null!")
-
-            the_url = self.__url + "/metadata_query/db_schema_download"
-
-            dict_params = {"format": file_format}
-
-            if table_name is not None:
-                table_name = table_name.lower()
-                dict_params["table_name"] = table_name
-
-            if self.__timeout is None:
-                response: Request = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
-                                         auth=self.__auth)
-            else:
-                response: Request = requests.post(the_url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
-                                         auth=self.__auth,
-                                         timeout=self.__timeout)
+                response: Request = requests.get(the_url, headers=self.__headers, proxies=self.__proxies,
+                                                 auth=self.__auth,
+                                                 timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
 
@@ -625,11 +611,11 @@ class AceQLHttpApi(object):
 
             if self.__timeout is None:
                 response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                         proxies=self.__proxies, auth=self.__auth)
+                                                  proxies=self.__proxies, auth=self.__auth)
             else:
                 response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                         proxies=self.__proxies, auth=self.__auth,
-                                         timeout=self.__timeout)
+                                                  proxies=self.__proxies, auth=self.__auth,
+                                                  timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
             result = response.text
@@ -691,98 +677,6 @@ class AceQLHttpApi(object):
         requests.post(the_url, data=m, headers=the_headers, proxies=self.__proxies,
                       auth=self.__auth)
 
-    def get_db_metadata(self) -> JdbcDatabaseMetaDataDto:
-        try:
-            url_withaction = self.__url + "metadata_query/get_db_metadata"
-            result = self.call_with_get_url(url_withaction)
-
-            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
-
-            if AceQLHttpApi.__debug:
-                print(result)
-
-            holder_jdbc_database_meta_data_schema = marshmallow_dataclass.class_schema(JdbcDatabaseMetaDataDto)
-            jdbc_database_meta_data_holder: JdbcDatabaseMetaDataDto = holder_jdbc_database_meta_data_schema().loads(
-                result)
-
-            if AceQLHttpApi.__debug:
-                print(jdbc_database_meta_data_holder)
-
-            return jdbc_database_meta_data_holder;
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
-
-
-    def get_table_names(self, table_type: str) -> TableNamesDto:
-        try:
-            url_withaction = self.__url + "metadata_query/get_table_names"
-
-            if table_type is not None:
-                url_withaction += "?table_type=" + table_type
-
-            result = self.call_with_get_url(url_withaction)
-
-            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
-
-            if AceQLHttpApi.__debug:
-                print(result)
-
-            table_names_dto_schema = marshmallow_dataclass.class_schema(TableNamesDto)
-            table_names_dto: TableNamesDto = table_names_dto_schema().loads(result)
-
-            if AceQLHttpApi.__debug:
-                print(table_names_dto)
-
-            return table_names_dto;
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
-
-    def get_table(self, name: str) -> TableDto:
-        try:
-            url_withaction = self.__url + "metadata_query/get_table"
-
-            if name is None:
-                raise TypeError("name is null!")
-            url_withaction += "?table_name=" + name
-
-            result = self.call_with_get_url(url_withaction)
-
-            if AceQLHttpApi.__debug:
-                print(result)
-
-            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
-
-            table_dto_schema = marshmallow_dataclass.class_schema(TableDto)
-            table_dto: TableDto = table_dto_schema().loads(result)
-
-            if AceQLHttpApi.__debug:
-                print(table_dto)
-
-            return table_dto;
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
-
     def add_request_headers(self, headers: dict):
         self.__headers = headers
 
@@ -812,11 +706,11 @@ class AceQLHttpApi(object):
 
             if self.__timeout is None:
                 response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                         proxies=self.__proxies, auth=self.__auth)
+                                                  proxies=self.__proxies, auth=self.__auth)
             else:
                 response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                         proxies=self.__proxies, auth=self.__auth,
-                                         timeout=self.__timeout)
+                                                  proxies=self.__proxies, auth=self.__auth,
+                                                  timeout=self.__timeout)
 
             self.__http_status_code = response.status_code
             result = response.text
@@ -842,34 +736,22 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
-    # def get_database_info(self) -> DatabaseInfoDto:
-    #     try:
-    #         url_withaction = self.__url + "get_database_info"
-    #         result = self.call_with_get_url(url_withaction)
-    #
-    #         result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-    #         if not result_analyzer.is_status_ok():
-    #             raise Error(result_analyzer.get_error_message(),
-    #                         result_analyzer.get_error_type(), None, None, self.__http_status_code)
-    #
-    #         if AceQLHttpApi.__debug:
-    #             print(result)
-    #
-    #         holder_database_info_dto_schema = marshmallow_dataclass.class_schema(DatabaseInfoDto)
-    #         database_info_dto: DatabaseInfoDto = holder_database_info_dto_schema().loads(
-    #             result)
-    #
-    #         if AceQLHttpApi.__debug:
-    #             print(database_info_dto)
-    #
-    #         return database_info_dto;
-    #
-    #     except Exception as e:
-    #         if isinstance(e, Error):
-    #             raise
-    #         else:
-    #             raise Error(str(e), 0, e, None, self.__http_status_code)
+    def db_schema_download(self, file_format: str, table_name: str):
+        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return ace_ql_metadata_api.db_schema_download(file_format, table_name)
+
+    def get_table_names(self, table_type: str) -> TableNamesDto:
+        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return ace_ql_metadata_api.get_table_names(table_type)
+
+    def get_table(self, name: str) -> TableDto:
+        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return ace_ql_metadata_api.get_table(name)
+
+    def get_db_metadata(self) -> JdbcDatabaseMetaDataDto:
+        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return ace_ql_metadata_api.get_db_metadata()
 
     def get_database_info(self) -> DatabaseInfoDto:
-        aceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
-        return aceQLMetadataApi.get_database_info()
+        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return ace_ql_metadata_api.get_database_info()
