@@ -18,9 +18,6 @@
 ##
 
 import sys
-from typing import List
-
-import marshmallow_dataclass
 import requests
 from requests import Request
 from requests_toolbelt.multipart import encoder
@@ -46,6 +43,7 @@ from aceql.progress_indicator import ProgressIndicator
 from aceql.proxy_auth import ProxyAuth
 import aceql._private.aceql_metadata_api
 import aceql._private.aceql_blob_api
+import aceql._private.aceql_batch_api
 
 
 class AceQLHttpApi(object):
@@ -615,61 +613,13 @@ class AceQLHttpApi(object):
         self.__headers = {}
 
     def execute_batch(self, sql: str, batch_file_parameters: str):
-
-        try:
-            action = "prepared_statement_execute_batch"
-            AceQLHttpApi.check_values(True, sql)
-            url_withaction = self.__url + action
-
-            AceQLDebug.debug("url_withaction: " + url_withaction)
-
-            blob_id: str = os.path.basename(batch_file_parameters)
-            length: int = os.path.getsize(batch_file_parameters)
-
-            with open(batch_file_parameters, "rb") as fd:
-                self.blob_upload(blob_id, fd, length)
-
-            dict_params: dict = {"sql": sql, "blob_id": blob_id}
-            AceQLDebug.debug("dict_params: " + str(dict_params))
-
-            # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
-            # print("Before update request")
-
-            if self.__timeout is None:
-                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                                  proxies=self.__proxies, auth=self.__auth)
-            else:
-                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                                  proxies=self.__proxies, auth=self.__auth,
-                                                  timeout=self.__timeout)
-
-            self.__http_status_code = response.status_code
-            result = response.text
-
-            # print("self.__http_status_code: " + str(self.__http_status_code ))
-            # print("result                 : " + str(result))
-            AceQLDebug.debug("result: " + result)
-
-            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
-
-            update_counts_array_dto_schema = marshmallow_dataclass.class_schema(UpdateCountsArrayDto)
-            update_counts_array_dto_back: UpdateCountsArrayDto = update_counts_array_dto_schema().loads(
-                result)
-
-            update_counts_array: List[int] = update_counts_array_dto_back.updateCountsArray
-            return update_counts_array
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
+        """Executes batch and return affected rows"""
+        aceql_batch_api: aceql.AceQLBatchApi = aceql._private.aceql_batch_api.AceQLBatchApi(self)
+        return aceql_batch_api.execute_batch(sql, batch_file_parameters)
 
     def get_blob_stream(self, blob_id: str) -> Request:
         """ returns a BLOB stream as a Requests response """
-        aceql_blob_api: aceql.AceQLBlobApi  = aceql._private.aceql_blob_api.AceQLBlobApi(self)
+        aceql_blob_api: aceql.AceQLBlobApi = aceql._private.aceql_blob_api.AceQLBlobApi(self)
         return aceql_blob_api.get_blob_stream(blob_id)
 
     def get_blob_length(self, blob_id: str):
@@ -696,5 +646,3 @@ class AceQLHttpApi(object):
     def get_database_info(self) -> DatabaseInfoDto:
         ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
         return ace_ql_metadata_api.get_database_info()
-
-

@@ -16,13 +16,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-
-import sys
+import os
 from typing import List, TYPE_CHECKING
 
+import marshmallow_dataclass
 import requests
 from requests import Request
 
+from aceql._private.batch.update_counts_array_dto import UpdateCountsArrayDto
 from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql.error import Error
@@ -31,7 +32,7 @@ if TYPE_CHECKING:
     from aceql._private.aceql_http_api import AceQLHttpApi
 
 
-class AceQLBlobApi(object):
+class AceQLBatchApi(object):
     """ AceQL HTTP wrapper for metadata apis. Takes care of all
     HTTP calls and operations."""
     __debug = False
@@ -42,49 +43,34 @@ class AceQLBlobApi(object):
         self.__aceQLHttpApi = aceQLHttpApi
         self.__url = aceQLHttpApi.get_url()
 
-    def get_blob_stream(self, blob_id: str) -> Request:
-        """ returns a BLOB stream as a Requests response """
+    def execute_batch(self, sql: str, batch_file_parameters: str):
+
         try:
-
-            if blob_id is None:
-                raise TypeError("blob_id is null!")
-
-            the_url = self.__url + "/blob_download?blob_id=" + blob_id
-
-            if self.__aceQLHttpApi.get_timeout() is None:
-                response: Request = requests.get(the_url, headers=self.__aceQLHttpApi.get_headers(),
-                                                 proxies=self.__aceQLHttpApi.get_proxies(),
-                                                 auth=self.__aceQLHttpApi.get_auth())
-            else:
-                response: Request = requests.get(the_url,  headers=self.__aceQLHttpApi.get_headers(),
-                                                 proxies=self.__aceQLHttpApi.get_proxies(),
-                                                 auth=self.__aceQLHttpApi.get_auth(),
-                                                 timeout=self.__aceQLHttpApi.get_timeout())
-
-            self.__aceQLHttpApi.set_http_status_code(response.status_code)
-            return response
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
-
-    def get_blob_length(self, blob_id: str) -> int:
-        """ Gets the blob length. """
-        try:
-
-            if blob_id is None:
-                raise TypeError("blob_id is null!")
-
-            action = "get_blob_length"
-
-            dict_params: dict = {"blob_id": blob_id}
-
+            action = "prepared_statement_execute_batch"
+            AceQLBatchApi.check_values(True, sql)
             url_withaction = self.__url + action
 
-            AceQLDebug.debug("urlWithaction: " + url_withaction)
-            AceQLDebug.debug("dictParams   : " + str(dict_params))
+            AceQLDebug.debug("url_withaction: " + url_withaction)
+
+            blob_id: str = os.path.basename(batch_file_parameters)
+            length: int = os.path.getsize(batch_file_parameters)
+
+            with open(batch_file_parameters, "rb") as fd:
+                self.__aceQLHttpApi.blob_upload(blob_id, fd, length)
+
+            dict_params: dict = {"sql": sql, "blob_id": blob_id}
+            AceQLDebug.debug("dict_params: " + str(dict_params))
+
+            # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
+            # print("Before update request")
+
+            # if self.__timeout is None:
+            #     response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+            #                                       proxies=self.__proxies, auth=self.__auth)
+            # else:
+            #     response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+            #                                       proxies=self.__proxies, auth=self.__auth,
+            #                                       timeout=self.__timeout)
 
             if self.__aceQLHttpApi.get_timeout() is None:
                 response: Request = requests.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
@@ -99,6 +85,8 @@ class AceQLBlobApi(object):
             self.__aceQLHttpApi.set_http_status_code(response.status_code)
             result = response.text
 
+            # print("self.__http_status_code: " + str(self.__http_status_code ))
+            # print("result                 : " + str(result))
             AceQLDebug.debug("result: " + result)
 
             result_analyzer = ResultAnalyzer(result, self.__aceQLHttpApi.get_http_status_code())
@@ -106,12 +94,21 @@ class AceQLBlobApi(object):
                 raise Error(result_analyzer.get_error_message(),
                             result_analyzer.get_error_type(), None, None, self.__aceQLHttpApi.get_http_status_code())
 
-            length_str = result_analyzer.get_value("length")
-            AceQLDebug.debug("result: " + length_str + ":")
-            return int(length_str)
+            update_counts_array_dto_schema = marshmallow_dataclass.class_schema(UpdateCountsArrayDto)
+            update_counts_array_dto_back: UpdateCountsArrayDto = update_counts_array_dto_schema().loads(
+                result)
 
+            update_counts_array: List[int] = update_counts_array_dto_back.updateCountsArray
+            return update_counts_array
         except Exception as e:
             if isinstance(e, Error):
                 raise
             else:
                 raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
+
+    @staticmethod
+    def check_values(is_prepared_statement: bool, sql: str):
+        if sql is None:
+            raise TypeError("sql is null!")
+        if is_prepared_statement is None:
+            raise TypeError("isPreparedStatement is null!")
