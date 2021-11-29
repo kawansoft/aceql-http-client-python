@@ -65,15 +65,14 @@ class AceQLMetadataApi(object):
             if self.__aceQLHttpApi.get_timeout() is None:
                 response: Request = requests.post(the_url, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
-                                                  auth=self.__aceQLHttpApi.get_auth() )
+                                                  auth=self.__aceQLHttpApi.get_auth())
             else:
                 response: Request = requests.post(the_url, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth(),
                                                   timeout=self.__aceQLHttpApi.get_timeout())
 
-            self.__aceQLHttpApi.__http_status_code = self.__aceQLHttpApi.get_http_status_code()
-
+            self.__aceQLHttpApi.set_http_status_code(response.status_code)
             return response
 
         except Exception as e:

@@ -45,6 +45,7 @@ from aceql.error import Error
 from aceql.progress_indicator import ProgressIndicator
 from aceql.proxy_auth import ProxyAuth
 import aceql._private.aceql_metadata_api
+import aceql._private.aceql_blob_api
 
 
 class AceQLHttpApi(object):
@@ -346,6 +347,9 @@ class AceQLHttpApi(object):
         """returns the httpStatus"""
         return self.__http_status_code
 
+    def set_http_status_code(self, status_code):
+        self.__http_status_code = status_code
+
     def get_headers(self):
         """returns the headers"""
         return self.__headers
@@ -564,79 +568,6 @@ class AceQLHttpApi(object):
         else:
             dict_params["prepared_statement"] = "false"
 
-    def get_blob_stream(self, blob_id: str):
-        """ returns a BLOB stream as a Requests response """
-        try:
-
-            if blob_id is None:
-                raise TypeError("blob_id is null!")
-
-            the_url = self.__url + "/blob_download?blob_id=" + blob_id
-
-            if self.__timeout is None:
-                response: Request = requests.get(the_url, headers=self.__headers, proxies=self.__proxies,
-                                                 auth=self.__auth)
-            else:
-                response: Request = requests.get(the_url, headers=self.__headers, proxies=self.__proxies,
-                                                 auth=self.__auth,
-                                                 timeout=self.__timeout)
-
-            self.__http_status_code = response.status_code
-
-            return response
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
-
-    def get_blob_length(self, blob_id: str) -> int:
-        """ Gets the blob length. """
-        try:
-
-            if blob_id is None:
-                raise TypeError("blob_id is null!")
-
-            action = "get_blob_length"
-
-            dict_params: dict = {"blob_id": blob_id}
-
-            url_withaction = self.__url + action
-
-            AceQLDebug.debug("urlWithaction: " + url_withaction)
-            AceQLDebug.debug("dictParams   : " + str(dict_params))
-
-            # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
-
-            if self.__timeout is None:
-                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                                  proxies=self.__proxies, auth=self.__auth)
-            else:
-                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                                  proxies=self.__proxies, auth=self.__auth,
-                                                  timeout=self.__timeout)
-
-            self.__http_status_code = response.status_code
-            result = response.text
-
-            AceQLDebug.debug("result: " + result)
-
-            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
-
-            length_str = result_analyzer.get_value("length")
-            AceQLDebug.debug("result: " + length_str + ":")
-            return int(length_str)
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
-
     def my_callback(self, monitor):
         """ The callback function when uploading a BLOB """
         try:
@@ -736,22 +667,34 @@ class AceQLHttpApi(object):
             else:
                 raise Error(str(e), 0, e, None, self.__http_status_code)
 
+    def get_blob_stream(self, blob_id: str) -> Request:
+        """ returns a BLOB stream as a Requests response """
+        aceql_blob_api: aceql.AceQLBlobApi  = aceql._private.aceql_blob_api.AceQLBlobApi(self)
+        return aceql_blob_api.get_blob_stream(blob_id)
+
+    def get_blob_length(self, blob_id: str):
+        """ returns a BLOB stream as a Requests response """
+        aceql_blob_api: aceql.AceQLBlobApi = aceql._private.aceql_blob_api.AceQLBlobApi(self)
+        aceql_blob_api.get_blob_length(blob_id)
+
     def db_schema_download(self, file_format: str, table_name: str):
-        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
         return ace_ql_metadata_api.db_schema_download(file_format, table_name)
 
     def get_table_names(self, table_type: str) -> TableNamesDto:
-        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
         return ace_ql_metadata_api.get_table_names(table_type)
 
     def get_table(self, name: str) -> TableDto:
-        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
         return ace_ql_metadata_api.get_table(name)
 
     def get_db_metadata(self) -> JdbcDatabaseMetaDataDto:
-        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
         return ace_ql_metadata_api.get_db_metadata()
 
     def get_database_info(self) -> DatabaseInfoDto:
-        ace_ql_metadata_api = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
         return ace_ql_metadata_api.get_database_info()
+
+
