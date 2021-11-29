@@ -46,7 +46,7 @@ import aceql._private.aceql_metadata_api
 import aceql._private.aceql_blob_api
 import aceql._private.aceql_blob_upload_api
 import aceql._private.aceql_batch_api
-
+import aceql._private.aceql_exec_update_api
 
 class AceQLHttpApi(object):
     """ AceQL HTTP wrapper for all apis. Takes care of all
@@ -390,63 +390,63 @@ class AceQLHttpApi(object):
     # * @
     # * if any Exception occurs
     #
-    def execute_update(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
-        """Calls /execute_update API"""
-
-        try:
-
-            action = "execute_update"
-
-            AceQLExecutionUtil.check_values(is_prepared_statement, sql)
-
-            dict_params: dict = {"sql": sql}
-
-            self.set_is_prepared_statement(dict_params, is_prepared_statement)
-
-            url_withaction = self.__url + action
-
-            AceQLDebug.debug("url_withaction: " + url_withaction)
-            AceQLDebug.debug("dict_params 1: " + str(dict_params))
-
-            if statement_parameters is not None:
-                if not isinstance(statement_parameters, dict):
-                    raise TypeError("statement_parameters is not a dictionary!")
-
-                dict_params.update(statement_parameters)
-
-            AceQLDebug.debug("dictParams 2: " + str(dict_params))
-
-            # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
-            # print("Before update request")
-
-            if self.__timeout is None:
-                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                                  proxies=self.__proxies, auth=self.__auth)
-            else:
-                response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
-                                                  proxies=self.__proxies, auth=self.__auth,
-                                                  timeout=self.__timeout)
-
-            self.__http_status_code = response.status_code
-            result = response.text
-
-            # print("self.__http_status_code: " + str(self.__http_status_code ))
-            # print("result                 : " + str(result))
-            AceQLDebug.debug("result: " + result)
-
-            result_analyzer = ResultAnalyzer(result, self.__http_status_code)
-            if not result_analyzer.is_status_ok():
-                raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__http_status_code)
-
-            row_count = result_analyzer.get_int_value("row_count")
-            return row_count
-
-        except Exception as e:
-            if isinstance(e, Error):
-                raise
-            else:
-                raise Error(str(e), 0, e, None, self.__http_status_code)
+    # def execute_update(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
+    #     """Calls /execute_update API"""
+    #
+    #     try:
+    #
+    #         action = "execute_update"
+    #
+    #         AceQLExecutionUtil.check_values(is_prepared_statement, sql)
+    #
+    #         dict_params: dict = {"sql": sql}
+    #
+    #         self.set_is_prepared_statement(dict_params, is_prepared_statement)
+    #
+    #         url_withaction = self.__url + action
+    #
+    #         AceQLDebug.debug("url_withaction: " + url_withaction)
+    #         AceQLDebug.debug("dict_params 1: " + str(dict_params))
+    #
+    #         if statement_parameters is not None:
+    #             if not isinstance(statement_parameters, dict):
+    #                 raise TypeError("statement_parameters is not a dictionary!")
+    #
+    #             dict_params.update(statement_parameters)
+    #
+    #         AceQLDebug.debug("dictParams 2: " + str(dict_params))
+    #
+    #         # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
+    #         # print("Before update request")
+    #
+    #         if self.__timeout is None:
+    #             response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+    #                                               proxies=self.__proxies, auth=self.__auth)
+    #         else:
+    #             response: Request = requests.post(url_withaction, headers=self.__headers, data=dict_params,
+    #                                               proxies=self.__proxies, auth=self.__auth,
+    #                                               timeout=self.__timeout)
+    #
+    #         self.__http_status_code = response.status_code
+    #         result = response.text
+    #
+    #         # print("self.__http_status_code: " + str(self.__http_status_code ))
+    #         # print("result                 : " + str(result))
+    #         AceQLDebug.debug("result: " + result)
+    #
+    #         result_analyzer = ResultAnalyzer(result, self.__http_status_code)
+    #         if not result_analyzer.is_status_ok():
+    #             raise Error(result_analyzer.get_error_message(),
+    #                         result_analyzer.get_error_type(), None, None, self.__http_status_code)
+    #
+    #         row_count = result_analyzer.get_int_value("row_count")
+    #         return row_count
+    #
+    #     except Exception as e:
+    #         if isinstance(e, Error):
+    #             raise
+    #         else:
+    #             raise Error(str(e), 0, e, None, self.__http_status_code)
 
     # *
     # * Calls /execute_query API
@@ -475,7 +475,7 @@ class AceQLHttpApi(object):
             AceQLExecutionUtil.check_values(is_prepared_statement, sql)
 
             dict_params = {"sql": sql}
-            self.set_is_prepared_statement(dict_params, is_prepared_statement)
+            AceQLExecutionUtil.set_is_prepared_statement(dict_params, is_prepared_statement)
 
             url_withaction = self.__url + action
 
@@ -554,18 +554,18 @@ class AceQLHttpApi(object):
         # We need the types
         dict_params["column_types"] = "true"
 
-    @staticmethod
-    def set_is_prepared_statement(dict_params: dict, is_prepared_statement: bool):
-        if str(is_prepared_statement) == 'True':
-            dict_params["prepared_statement"] = "true"
-        else:
-            dict_params["prepared_statement"] = "false"
-
     def add_request_headers(self, headers: dict):
         self.__headers = headers
 
     def reset_request_headers(self):
         self.__headers = {}
+
+    def execute_update(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
+        """Calls /execute_update API"""
+        aceql_exec_update_api = aceql._private.aceql_exec_update_api.AceQLExecUpdateApi(self)
+        return aceql_exec_update_api.execute_update(sql, is_prepared_statement, statement_parameters)
+
+    #def execute_query(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
 
     def blob_upload(self, blob_id: str, fd, total_length: int):
         """ Upload the BLOB and use a callback function for progress indicator."""
