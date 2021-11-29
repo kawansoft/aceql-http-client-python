@@ -23,8 +23,8 @@ class BlobTestUtil:
     @staticmethod
     def check_blob_integrity(file_in, file_out):
 
-        hash_file_in = Sha1.get_hexas_tring(file_in)
-        hash_file_out = Sha1.get_hexas_tring(file_out)
+        hash_file_in = Sha1.get_hexa_string(file_in)
+        hash_file_out = Sha1.get_hexa_string(file_out)
 
         print("SHA1 of " + file_in + ": " + hash_file_in);
         print("SHA1 of " + file_out + ": " + hash_file_out);

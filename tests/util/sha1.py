@@ -4,7 +4,7 @@ import hashlib
 class Sha1:
 
     @staticmethod
-    def get_hexas_tring(file: str):
+    def get_hexa_string(file: str):
         block_size = 65536  # The size of each read from the file
 
         file_hash = hashlib.sha256()  # Create the hash object, can use something other than `.sha256()` if you wish
