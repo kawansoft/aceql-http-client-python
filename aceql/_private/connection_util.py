@@ -20,7 +20,7 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from aceql.connection import Connection
+   from aceql.connection import Connection
 
 
 class ConnectionUtil(object):

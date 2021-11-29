@@ -17,11 +17,9 @@
 # limitations under the License.
 ##
 
-import sys
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import requests
-from requests import Request
 from requests_toolbelt.multipart import encoder
 
 if TYPE_CHECKING:
