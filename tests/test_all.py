@@ -26,6 +26,7 @@ from os import sep
 from datetime import datetime, date
 
 from aceql._private.aceql_debug_parms import AceQLDebugParms
+from tests.dml.test_execute_server_query import TestExecuteServerQuery
 from tests.util.connection_builder import ConnectionBuilder
 from tests.dml.dml_sequence_test import DmlSequenceTest
 from tests.dml_batch.sql_batch_test import SqlBatchTest
@@ -197,6 +198,7 @@ class TestAll():
 
         cursor.close()
 
+        TestExecuteServerQuery.test_main(connection)
 
 if __name__ == '__main__':
     connection: Connection = ConnectionBuilder.get_connection()

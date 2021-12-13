@@ -49,17 +49,18 @@ class AceQLExecQueryApi(object):
         self.__aceQLHttpApi = aceQLHttpApi
         self.__url = aceQLHttpApi.get_url()
 
-    def execute_server_query(self, sql: str, parameters: list):
+    def execute_server_query(self, server_query_executor_class_name: str, parameters: list):
         """Calls /execute_server_query API"""
         try:
 
             action = "execute_server_query"
-            dict_params = {"sql": sql}
+            dict_params = {"server_query_executor_class_name": server_query_executor_class_name}
             AceQLDebug.debug("dictParams 1: " + str(dict_params))
 
             server_query_executor_dto_schema = marshmallow_dataclass.class_schema(
                 ServerQueryExecutorDto)
-            server_query_executor_dto: ServerQueryExecutorDto = ServerQueryExecutorDtoBuilder.build(sql, parameters)
+            server_query_executor_dto: ServerQueryExecutorDto = ServerQueryExecutorDtoBuilder.build(
+                server_query_executor_class_name, parameters)
             json_string: str = server_query_executor_dto_schema().dumps(server_query_executor_dto)
 
             dict_params["server_query_executor_dto"] = json_string
@@ -211,7 +212,7 @@ class AceQLExecQueryApi(object):
         return result_set_info
 
     def update_dict_params(self, dict_params: dict):
-        if self.__aceQLHttpApi.is_gzip_result() :
+        if self.__aceQLHttpApi.is_gzip_result():
             dict_params["gzip_result"] = "true"
         if self.__aceQLHttpApi.is_pretty_printing():
             dict_params["pretty_printing"] = "true"

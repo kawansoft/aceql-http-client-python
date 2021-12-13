@@ -23,13 +23,13 @@ from typing import List
 
 @dataclass
 class ServerQueryExecutorDto:
-    sql: str
-    parameter_types: List[str]
-    parameter_values: List[str]
+    serverQueryExecutorClassName: str
+    parameterTypes: List[str]
+    parameterValues: List[str]
 
     class Meta:
         ordered = True
 
     def __str__(self):
         """ The string representation."""
-        return str(self.statementParameters) + ", " + str(self.parameter_types) + ", " + str(self.parameter_values)
+        return str(self.serverQueryExecutorClassName) + ", " + str(self.parameterTypes) + ", " + str(self.parameterValues)

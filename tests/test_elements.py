@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.

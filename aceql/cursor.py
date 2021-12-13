@@ -182,6 +182,31 @@ class Cursor(object):
             for blob_stream in blob_streams:
                 blob_stream.close()
 
+    def execute_server_query(self, server_query_executor_class_name: str, parameters: List):
+        """Executes a remote server query that returns a SELECT JDBC ResultSet on the remote database
+        :param server_query_executor_class_name: the remote ServerQueryExecutor interface implementation name with package info
+        :param parameters: the parameters to pass to the remote ServerQueryExecutor.executeQuery() implementation.
+        """
+        self.__raise_error_if_closed()
+
+        self.row_count = 0
+        self.__description: list = []
+
+        self.__result_set_info = self.__aceql_http_api.execute_server_query(server_query_executor_class_name, parameters)
+
+        # Appends the files to delete
+        self.__filelist.append(self.__result_set_info.get_filename())
+
+        self.__rowcount = self.__result_set_info.get_row_count()
+
+        AceQLDebug.debug("self.rowcount: " + str(self.__rowcount))
+        AceQLDebug.debug("filename    : " + self.__result_set_info.get_filename())
+
+        # first build the description for Cursor.description
+        self.__build_description()
+
+        self.__row_parser = RowParser(self.__result_set_info.get_filename(), self.__result_set_info.get_row_count())
+
     def __execute_query(self, sql: str, params: tuple = ()):
         """Executes a SELECT on remote database"""
         self.__raise_error_if_closed()

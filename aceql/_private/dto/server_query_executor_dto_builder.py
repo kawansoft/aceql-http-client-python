@@ -26,7 +26,7 @@ from aceql._private.type_converter import TypeConverter
 class ServerQueryExecutorDtoBuilder:
 
     @staticmethod
-    def build(sql: str, parameters: typing.List[object]):
+    def build(server_query_executor_class_name: str, parameters: typing.List[object]):
         """ Builds the specified server query executor class name.
 
         Args:
@@ -35,6 +35,7 @@ class ServerQueryExecutorDtoBuilder:
 
         Returns:
             ServerQueryExecutorDto: ServerQueryExecutorDto.
+            :param server_query_executor_class_name:
         """
         params_types = list()
         params_values = list()
@@ -43,7 +44,7 @@ class ServerQueryExecutorDtoBuilder:
             type_converter = TypeConverter(parameter)
             params_types.append(type_converter.get_java_type_name())
             params_values.append(str(parameter))
-            server_query_executor_dto: ServerQueryExecutorDto = ServerQueryExecutorDto(sql,
+            server_query_executor_dto: ServerQueryExecutorDto = ServerQueryExecutorDto(server_query_executor_class_name,
                                                                                        params_types,
                                                                                        params_values)
         return server_query_executor_dto

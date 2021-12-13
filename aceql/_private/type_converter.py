@@ -43,15 +43,15 @@ class TypeConverter(object):
 
         name = CursorUtil.get_class_name(self.__the_value)
 
-        if name.equals("bool"):
+        if name.__eq__("bool"):
             return "Boolean"
-        elif name.equals("int"):
+        elif name.__eq__("int"):
             return TypeConverter.int_or_long(self.__the_value)
-        elif name.equals("float"):
+        elif name.__eq__("float"):
             return "Float"
-        elif name.equals("str"):
+        elif name.__eq__("str"):
             return "String"
-        elif name.equals("datetime.datetime"):
+        elif name.__eq__("datetime.datetime"):
             return "Timestamp"
         else:
             raise TypeError("This parameter type is unsupported in this AceQL version: " + name)
