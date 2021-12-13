@@ -16,8 +16,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
+import marshmallow_dataclass
 import requests
 from requests import Request
 
@@ -25,6 +26,8 @@ from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.aceql_debug_parms import AceQLDebugParms
 from aceql._private.aceql_execution_util import AceQLExecutionUtil
 from aceql._private.cursor_util import CursorUtil
+from aceql._private.dto.server_query_executor_dto import ServerQueryExecutorDto
+from aceql._private.dto.server_query_executor_dto_builder import ServerQueryExecutorDtoBuilder
 from aceql._private.file_util import FileUtil
 from aceql._private.result_set_info import ResultSetInfo
 from aceql._private.row_counter import RowCounter
@@ -45,6 +48,66 @@ class AceQLExecQueryApi(object):
             raise TypeError("aceQLHttpApi is null!")
         self.__aceQLHttpApi = aceQLHttpApi
         self.__url = aceQLHttpApi.get_url()
+
+    def execute_server_query(self, sql: str, parameters: list):
+        """Calls /execute_server_query API"""
+        try:
+
+            action = "execute_server_query"
+            dict_params = {"sql": sql}
+            AceQLDebug.debug("dictParams 1: " + str(dict_params))
+
+            server_query_executor_dto_schema = marshmallow_dataclass.class_schema(
+                ServerQueryExecutorDto)
+            server_query_executor_dto: ServerQueryExecutorDto = ServerQueryExecutorDtoBuilder.build(sql, parameters)
+            json_string: str = server_query_executor_dto_schema().dumps(server_query_executor_dto)
+
+            dict_params["server_query_executor_dto"] = json_string
+            url_withaction = self.__url + action
+
+            AceQLDebug.debug("url_withaction: " + url_withaction)
+            AceQLDebug.debug("parameters    : " + str(parameters))
+
+            self.update_dict_params(dict_params)
+            AceQLDebug.debug("dictParams 2: " + str(dict_params))
+
+            # r = requests.post('http://httpbin.org/post', data = {'key':'value'})
+
+            if self.__aceQLHttpApi.get_timeout() is None:
+                AceQLDebug.debug("QUERY HERE 1")
+                response: Request = requests.post(url_withaction,
+                                                  headers=self.__aceQLHttpApi.get_headers(),
+                                                  data=dict_params,
+                                                  proxies=self.__aceQLHttpApi.get_proxies(),
+                                                  auth=self.__aceQLHttpApi.get_auth())
+            else:
+                AceQLDebug.debug("QUERY HERE 2")
+                response: Request = requests.post(url_withaction,
+                                                  headers=self.__aceQLHttpApi.get_headers(),
+                                                  data=dict_params,
+                                                  proxies=self.__aceQLHttpApi.get_proxies(),
+                                                  auth=self.__aceQLHttpApi.get_auth(),
+                                                  timeout=self.__aceQLHttpApi.get_timeout())
+            AceQLDebug.debug("DONE!")
+            self.__aceQLHttpApi.set_http_status_code(response.status_code)
+
+            filename = FileUtil.build_result_set_file()
+            AceQLDebug.debug("filename1: " + filename)
+
+            # We dump the JSon stream into user.home/.kawansoft/tmp
+            with open(filename, 'wb') as fd:
+                for chunk in response.iter_content(chunk_size=2048):
+                    fd.write(chunk)
+
+            AceQLDebug.debug("after open filename")
+            result_set_info = self.treat_result(filename)
+            return result_set_info
+
+        except Exception as e:
+            if isinstance(e, Error):
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
 
     # *
     # * Calls /execute_query API
@@ -85,7 +148,6 @@ class AceQLExecQueryApi(object):
                 dict_params.update(statement_parameters)
 
             self.update_dict_params(dict_params)
-
             AceQLDebug.debug("dictParams 2: " + str(dict_params))
 
             # r = requests.post('http://httpbin.org/post', data = {'key':'value'})

@@ -18,6 +18,7 @@
 ##
 
 import sys
+from typing import List
 
 import requests
 from requests import Request
@@ -370,6 +371,11 @@ class AceQLHttpApi(object):
 
     def reset_request_headers(self):
         self.__headers = {}
+
+    def execute_server_query(self, sql: str, parameters: List):
+        """Calls /execute_server_query API"""
+        aceql_exec_query_api:  aceql.AceQLExecQueryApi = aceql._private.aceql_exec_query_api.AceQLExecQueryApi(self)
+        return aceql_exec_query_api.execute_server_query(sql, parameters)
 
     def execute_query(self, sql: str, is_prepared_statement: bool, statement_parameters: dict):
         """Calls /execute_query API"""

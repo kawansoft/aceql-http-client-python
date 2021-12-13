@@ -17,8 +17,19 @@
 # limitations under the License.
 ##
 
+from dataclasses import dataclass
+from typing import List
 
-class VersionValues(object):
-    NAME = "AceQL HTTP SDK"
-    VERSION = "v5.2"
-    DATE = "13-Dec-2021"
+
+@dataclass
+class ServerQueryExecutorDto:
+    sql: str
+    parameter_types: List[str]
+    parameter_values: List[str]
+
+    class Meta:
+        ordered = True
+
+    def __str__(self):
+        """ The string representation."""
+        return str(self.statementParameters) + ", " + str(self.parameter_types) + ", " + str(self.parameter_values)
