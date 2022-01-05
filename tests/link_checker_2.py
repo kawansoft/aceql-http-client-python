@@ -1,12 +1,87 @@
-import regex
-body_markdown = "This is an [inline link](http://google.com). This is a [non inline link][4]\r\n\r\n  [1]: http://yahoo.com"
+#
+# This file is part of AceQL Python Client SDK.
+# AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
+# Copyright (C) 2021,  KawanSoft SAS
+# (http://www.kawansoft.com). All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##
 
-with open ("I:\\_dev_awake\\aceql-http-main\\Python\\aceql-http-client-python\\README.md", "r") as myfile:
+import os
+import sys
+from datetime import datetime
+
+import regex
+import requests
+
+# cd I:\_dev_awake\aceql-http-main\Python\aceql-http-client-python\tests
+
+# Server
+# python link_checker_2.py I:\_dev_awake\aceql-http-main\aceql-http\README.md
+# python link_checker_2.py I:\_dev_awake\aceql-http-main\aceql-http\aceql-http-demo-guide.md
+# python link_checker_2.py I:\_dev_awake\aceql-http-main\aceql-http\aceql-http-user-guide-api.md
+
+# C#
+# python link_checker_2.py I:\_dev_awake\aceql-http-main\C#\AceQL.Client2\README.md
+
+# JDBC
+# python link_checker_2.py I:\_dev_awake\aceql-http-main\aceql-http-client-jdbc-driver\README.md
+
+# Python
+# python link_checker_2.py I:\_dev_awake\aceql-http-main\Python\aceql-http-client-python\README.md
+
+
+
+
+
+if len(sys.argv) < 2:
+    print("Please pass markdown file as parameter!")
+    sys.exit()
+
+md_file:str = sys.argv[1]
+only_false:bool = False
+
+if len(sys.argv) == 3:
+    only_false = sys.argv[2]
+
+#print(md_file)
+
+if not os.path.isfile(md_file):
+    print("Invalid file: " + md_file )
+    sys.exit()
+
+print(str(datetime.now()) + " Starting scan...")
+
+with open (md_file, "r") as myfile:
     body_markdown=myfile.read()
 
 rex = """(?|(?<txt>(?<url>(?:ht|f)tps?://\S+(?<=\P{P})))|\(([^)]+)\)\[(\g<url>)\])"""
 pattern = regex.compile(rex)
 matches = regex.findall(pattern, body_markdown, overlapped=True)
 for m in matches:
-    the_link:str = m[0]
-    print(str)
+    url: str = m[0]
+    if url.__contains__("aceql.com") or url.__contains__("github.com") and not url.__contains__("www.aceql.com:9443"):
+
+        if not only_false:
+            print("Testing " + url + "...")
+
+        try:
+            request_response = requests.head(url)
+            status_code = request_response.status_code
+            website_is_up = status_code == 200
+            if not website_is_up:
+                print(str(website_is_up) + " " + url)
+        except requests.exceptions.RequestException as e:
+            print("Timemout on " + url)
+
+print(str(datetime.now()) + " Done!")
