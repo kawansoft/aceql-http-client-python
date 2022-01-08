@@ -40,10 +40,6 @@ import requests
 # Python
 # python link_checker_2.py I:\_dev_awake\aceql-http-main\Python\aceql-http-client-python\README.md
 
-
-
-
-
 if len(sys.argv) < 2:
     print("Please pass markdown file as parameter!")
     sys.exit()
@@ -70,18 +66,19 @@ pattern = regex.compile(rex)
 matches = regex.findall(pattern, body_markdown, overlapped=True)
 for m in matches:
     url: str = m[0]
-    if url.__contains__("aceql.com") or url.__contains__("github.com") and not url.__contains__("www.aceql.com:9443"):
-
+    if not url.__contains__("localhost") and not url.__contains__(".acme.com") and not url.__contains__("acme.org"):
         if not only_false:
             print("Testing " + url + "...")
 
         try:
-            request_response = requests.head(url)
+            request_response = requests.head(url, timeout=3)
             status_code = request_response.status_code
-            website_is_up = status_code == 200
+            website_is_up = False
+            if status_code == 200 or status_code == 301 or status_code == 302 or status_code == 305 or status_code == 306 or status_code == 307:
+                website_is_up = True
             if not website_is_up:
-                print(str(website_is_up) + " " + url)
+                print(str(website_is_up) + " " + str(status_code) + " " + url)
         except requests.exceptions.RequestException as e:
-            print("Timemout on " + url)
+            print(str(False) + " Probably Timeout " + url)
 
 print(str(datetime.now()) + " Done!")
