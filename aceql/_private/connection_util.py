@@ -29,6 +29,7 @@ class ConnectionUtil(object):
     SERVER_VERSION_NUMBER = None
     BATCH_MIN_SERVER_VERSION = "8.0"
     GET_DATABASE_INFO_MIN_SERVER_VERSION = "9.0"
+    EXECUTE_SERVER_QUERY_MIN_SERVER_VERSION = "10.1"
 
     @staticmethod
     def is_batch_supported(connection: 'Connection') -> bool:
@@ -43,6 +44,13 @@ class ConnectionUtil(object):
         raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
         return ConnectionUtil.is_current_version_ok(raw_server_version,
                                                     ConnectionUtil.GET_DATABASE_INFO_MIN_SERVER_VERSION)
+
+    @staticmethod
+    def is_execute_server_query_supported(connection: 'Connection') -> bool:
+        """ Says if remote Java ServerQueryExecutor API is call supported on server for current server version."""
+        raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
+        return ConnectionUtil.is_current_version_ok(raw_server_version,
+                                                    ConnectionUtil.EXECUTE_SERVER_QUERY_MIN_SERVER_VERSION)
 
     @staticmethod
     def get_server_raw_version(connection: 'Connection') -> str:

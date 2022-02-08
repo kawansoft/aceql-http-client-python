@@ -107,7 +107,7 @@ class Cursor(object):
         """
         if not ConnectionUtil.is_batch_supported(self.__connection):
             raise Exception("AceQL Server version must be >= " + ConnectionUtil.BATCH_MIN_SERVER_VERSION
-                + " in order to call executemany.")
+                            + " in order to call executemany.")
 
         batch_file_parameters = FileUtil.build_batch_file()
 
@@ -121,7 +121,7 @@ class Cursor(object):
 
             if not CursorUtil.is_update_call(sql):
                 raise aceql.Error("Only DELETE, INSERT or UPDATE calls are supported this AceQL Client version.", 0,
-                            None, None, 200)
+                                  None, None, 200)
 
             if not seq_params:
                 return
@@ -134,8 +134,9 @@ class Cursor(object):
                 blob_ids: list = the_cursor_util.blob_ids
 
                 if blob_ids is not None and len(blob_ids) > 0:
-                    raise aceql.Error("Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0,
-                                None, None, 200)
+                    raise aceql.Error(
+                        "Cannot call executemany for a table with BLOB parameter in this AceQL Client version.", 0,
+                        None, None, 200)
 
                 prep_statement_parameters_holder_schema = marshmallow_dataclass.class_schema(
                     PrepStatementParametersHolder)
@@ -184,15 +185,22 @@ class Cursor(object):
 
     def execute_server_query(self, server_query_executor_class_name: str, parameters: List):
         """Executes a remote server query that returns a SELECT JDBC ResultSet on the remote database
-        :param server_query_executor_class_name: the remote ServerQueryExecutor interface implementation name with package info
+        :param server_query_executor_class_name: the remote ServerQueryExecutor interface implementation name with
+         package info
         :param parameters: the parameters to pass to the remote ServerQueryExecutor.executeQuery() implementation.
         """
+
+        if not ConnectionUtil.is_get_database_info_supported(self.__connection):
+            raise Exception("AceQL Server version must be >= " + ConnectionUtil.EXECUTE_SERVER_QUERY_MIN_SERVER_VERSION
+                            + " in order to call execute_server_query()")
+
         self.__raise_error_if_closed()
 
         self.row_count = 0
         self.__description: list = []
 
-        self.__result_set_info = self.__aceql_http_api.execute_server_query(server_query_executor_class_name, parameters)
+        self.__result_set_info = self.__aceql_http_api.execute_server_query(server_query_executor_class_name,
+                                                                            parameters)
 
         # Appends the files to delete
         self.__filelist.append(self.__result_set_info.get_filename())
@@ -209,6 +217,7 @@ class Cursor(object):
 
     def __execute_query(self, sql: str, params: tuple = ()):
         """Executes a SELECT on remote database"""
+
         self.__raise_error_if_closed()
 
         self.row_count = 0
@@ -285,7 +294,7 @@ class Cursor(object):
         the_tup: tuple = tuple(the_list)
         return the_tup
 
-    def fetchmany(self, size: int = -1) -> list[tuple] :
+    def fetchmany(self, size: int = -1) -> list[tuple]:
         """Fetch the next set of rows of a query result, returning a sequence of sequences
 
         (e.g. a list of tuples). An empty sequence is returned when no more rows are available.
@@ -391,11 +400,11 @@ class Cursor(object):
         """Checks blob id"""
         if blob_id is None:
             raise aceql.Error("No value found for column_index " + str(column_index),
-                        0, None, None, 200)
+                              0, None, None, 200)
 
         if not blob_id.endswith(".blob"):
             raise aceql.Error("Fetched value does not correspond to a BLOB Id: " + str(blob_id),
-                        0, None, None, 200)
+                              0, None, None, 200)
 
     def get_blob_length(self, column_index: int) -> int:
         """ Gets the remote BLOB length  on a column in the current row
@@ -412,7 +421,7 @@ class Cursor(object):
 
         if values_per_column_index is None:
             raise aceql.Error("Not positioned on a row. (No fetchone call done.)",
-                        0, None, None, 200)
+                              0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
         if AceQLDebugParms.DEBUG_ON:
@@ -436,7 +445,7 @@ class Cursor(object):
 
         if values_per_column_index is None:
             raise aceql.Error("Not positioned on a row. (Seems no fetchone() call done.)",
-                        0, None, None, 200)
+                              0, None, None, 200)
 
         blob_id = values_per_column_index[column_index]
 
