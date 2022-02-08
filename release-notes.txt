@@ -18,6 +18,14 @@ they would for a local database.
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
+AceQL Python Client SDK - Version 5.3 - 22-Feb-2022
+----------------------------------------------------
+
+What's New:
+- The new Cursor.execute_server_query method allows
+  calling a remote server class that returns directly
+  the result of a SELECT.
+
 
 AceQL Python Client SDK - Version 5.2 - 03-Dec-2021
 ----------------------------------------------------

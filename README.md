@@ -17,9 +17,9 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v5.2 - User Guide 
+## Python Client SDK v5.3 - User Guide 
 
-## December 3, 2021
+## February 8, 2022
 
 <img src="https://docs.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -48,6 +48,7 @@
             * [BLOB creation](#blob-creation)
             * [BLOB reading](#blob-reading)
             * [Managing BLOB upload progress](#managing-blob-upload-progress)
+         * [Calling AceQL Java stored procedures](#calling-aceql-java-stored-procedures)
          * [Using outer authentication without a password  and with an AceQL Session ID](#using-outer-authentication-without-a-password-and-with-an-aceql-session-id)
       * [Using the Metadata Query API](#using-the-metadata-query-api)
          * [Downloading database schema into a file](#downloading-database-schema-into-a-file)
@@ -608,7 +609,30 @@ with closing(connection.cursor()) as cursor:
     cursor.execute(sql, params)
 ```
 
+### Calling AceQL Java stored procedures
 
+The AceQL client SDK allows executing a remote server class that implements the AceQL Server
+
+`org.kawanfw.sql.api.server.executor.ServerQueryExecutor` interface and that returns the rows of the SELECT.
+
+See the `org.kawanfw.sql.api.server.executor.ServerQueryExecutor` [Javadoc](https://docs.aceql.com/rest/soft/10.2/javadoc/org/kawanfw/sql/api/server/executor/ServerQueryExecutor.html).
+
+The usage on the client side is straightforward with the `Cursor.ExecuteServerQueryAsync()` method:
+
+```python
+server_query_executor_class_name = "com.mycompany.MyServerQueryExecutor"
+my_parameters = [1]
+
+cursor.execute_server_query(server_query_executor_class_name, my_parameters)
+print("cursor.rowcount    : " + str(cursor.rowcount))
+rows = cursor.fetchall()
+
+print("fetchall:")
+for row in rows:
+    print(row)
+
+cursor.close()
+```
 
 ### Using outer authentication without a password and with an AceQL Session ID
 

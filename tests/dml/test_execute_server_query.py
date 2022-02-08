@@ -41,7 +41,7 @@ class TestExecuteServerQuery():
 
         cursor = connection.cursor()
 
-        server_query_executor_class_name = "org.kawanfw.test.api.server.executor.MyServerQueryExecutor"
+        server_query_executor_class_name = "com.mycompany.MyServerQueryExecutor"
         my_parameters = [1]
 
         cursor.execute_server_query(server_query_executor_class_name, my_parameters)
@@ -51,7 +51,6 @@ class TestExecuteServerQuery():
         print("fetchall:")
         for row in rows:
             print(row)
-        print()
 
         cursor.close()
 
