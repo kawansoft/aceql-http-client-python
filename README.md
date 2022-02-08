@@ -611,7 +611,7 @@ with closing(connection.cursor()) as cursor:
 
 ### Calling AceQL Java stored procedures
 
-The AceQL client SDK allows executing a remote server class that implements the AceQL Server
+The AceQL client SDK allows executing a remote server Java class that implements the AceQL Server
 
 `org.kawanfw.sql.api.server.executor.ServerQueryExecutor` interface and that returns the rows of the SELECT.
 
