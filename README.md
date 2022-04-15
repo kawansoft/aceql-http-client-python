@@ -17,9 +17,9 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v5.3 - User Guide 
+## Python Client SDK v5.4 - User Guide 
 
-## February 8, 2022
+## April 15, 2022
 
 <img src="https://docs.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 

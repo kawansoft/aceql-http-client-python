@@ -18,6 +18,15 @@ they would for a local database.
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
+AceQL Python Client SDK - Version 5.4 - 15-Apr-2022
+----------------------------------------------------
+
+What's New:
+- The new HealthCheck API allows checking the remote server's
+  availability & response time. It will be enhanced in future
+  versions.
+
+
 AceQL Python Client SDK - Version 5.3 - 22-Feb-2022
 ----------------------------------------------------
 
