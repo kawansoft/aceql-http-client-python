@@ -40,10 +40,10 @@ from aceql.metadata.primarykey import PrimaryKey
 from aceql.metadata.remote_database_metadata import RemoteDatabaseMetaData
 from aceql.metadata.table import Table
 from aceql.metadata.column import Column
-
+from aceql.health_check import HealthCheck
 
 __all__ = ["Connection", "Cursor", "Error", "ConnectionOptions", "ProgressIndicator", "ProxyAuth", "SqlNullType",
-           "Column", "ExportedKey",
+           "HealthCheck", "Column", "ExportedKey",
            "ForeignKey", "ImportedKey", "Index", "JdbcDatabaseMetaData", "PrimaryKey", "RemoteDatabaseMetaData",
            "Table"]
 
