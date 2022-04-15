@@ -27,7 +27,6 @@ from aceql._private.result_analyzer import ResultAnalyzer
 
 
 class HealthCheck(object):
-
     """Allows checking the remote server's availability & response time. It will be enhanced in future versions."""
 
     def __init__(self, connection: Connection):
@@ -44,7 +43,8 @@ class HealthCheck(object):
             result_analyzer = ResultAnalyzer(result, self.__aceql_http_api.get_http_status_code)
             if not result_analyzer.is_status_ok():
                 raise Error(result_analyzer.get_error_message(),
-                            result_analyzer.get_error_type(), None, None, self.__aceql_http_api.get_http_status_code)
+                            result_analyzer.get_error_type(), None, result_analyzer.get_stack_trace(),
+                            self.__aceql_http_api.get_http_status_code)
 
             return True
 
@@ -53,7 +53,13 @@ class HealthCheck(object):
             #     raise
             # else:
             #     raise Error(str(e), 0, e, None, self.__http_status_code)
-            self.__error = Error(str(e), 0, e, None, self.__aceql_http_api.get_http_status_code())
+
+            if isinstance(e, Error):
+                self.__error = Error(e.reason, e.error_type, e.cause, e.remote_stack_trace,
+                                     self.__aceql_http_api.get_http_status_code())
+            else:
+                self.__error = Error(str(e), 0, e, None, self.__aceql_http_api.get_http_status_code())
+
             return False
 
     def get_error(self) -> Error:
