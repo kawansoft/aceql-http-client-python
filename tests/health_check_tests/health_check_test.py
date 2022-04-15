@@ -24,7 +24,7 @@ from tests.util.connection_builder import ConnectionBuilder
 
 
 class HealthCheckTest(object):
-    """Delete all rows of customer and orderlog tables."""
+    """Tests of health check features."""
 
     def __init__(self, connection: Connection):
         self.__connection = connection
@@ -32,6 +32,7 @@ class HealthCheckTest(object):
     def execute(self):
         health_check = HealthCheck(self.__connection)
         print("health_check.ping()                      : " + str(health_check.ping()))
+        print("health_check.get_response_time()         : " + str(health_check.get_response_time("select 1")))
         print("health_check.get_response_time_select_1(): " + str(health_check.get_response_time_select_1()))
         print(str(datetime.now()) + " End.")
 
