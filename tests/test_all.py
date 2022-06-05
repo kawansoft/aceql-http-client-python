@@ -200,6 +200,7 @@ class TestAll():
 
         TestExecuteServerQuery.test_main(connection)
 
+
 if __name__ == '__main__':
     connection: Connection = ConnectionBuilder.get_connection()
     try:
