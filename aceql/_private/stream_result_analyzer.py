@@ -23,6 +23,10 @@ import os
 from io import open
 
 # -*- coding: utf-8 -*-
+from os.path import exists
+
+import requests
+
 from aceql._private.aceql_debug import AceQLDebug
 
 
@@ -63,6 +67,15 @@ class StreamResultAnalyzer(object):
          Determines whether the SQL correctly executed on server side.
          <returns><c>true</c> if [is status ok]; otherwise, <c>false</c>.</returns>
         """
+        file_exists: bool = exists(self.__filename)
+        if not file_exists:
+            self.__error_type = 0
+            self.__error_message = "Unknown error.";
+            if self.__httpStatusCode != requests.codes.ok:
+                self.__error_message = "HTTP FAILURE " + self.__httpStatusCode + " (" + requests.status_codes._codes[
+                    self.__httpStatusCode] + ")";
+                return False;
+
         with open(self.__filename, mode="r", encoding="utf-8") as fd:
             status_ok = False
             while True:

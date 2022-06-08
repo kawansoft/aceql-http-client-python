@@ -18,6 +18,7 @@
 ##
 
 import sys
+from http.client import responses
 from typing import List
 
 import requests
@@ -363,8 +364,10 @@ class AceQLHttpApi(object):
 
     def get_http_status_message(self) -> str:
         """returns the httpStatusMessage"""
-        status_messages = requests.status_codes.codes[self.__http_status_code]
-        return status_messages[0]
+        #status_messages = requests.status_codes._codes[self.__http_status_code]
+        #return status_messages[0]
+
+        return responses[self.__http_status_code]
 
     def add_request_headers(self, headers: dict):
         self.__headers = headers

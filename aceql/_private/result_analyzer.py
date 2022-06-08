@@ -18,6 +18,7 @@
 ##
 
 import json
+from http.client import responses
 
 
 class ResultAnalyzer(object):
@@ -149,7 +150,7 @@ class ResultAnalyzer(object):
         if self.is_invalid_json_stream():
             the_error_message = "Unknown error."
             if self._http_status_code != 200:
-                the_error_message = "HTTP FAILURE " + str(self._http_status_code);
+                the_error_message = "HTTP FAILURE " + str(self._http_status_code) + " " + responses[self._http_status_code];
             return the_error_message
         try:
             j = json.loads(self._json_result)
