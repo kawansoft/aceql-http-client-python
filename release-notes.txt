@@ -30,7 +30,7 @@ Whats' New:
 
 Bugs fixed:
 - Fix aceql_http_api.py.get_http_status_message():
-  was bugged.
+  was bugged. This has been fixed.
 
 AceQL Python Client SDK - Version 5.4 - 15-Apr-2022
 ----------------------------------------------------
