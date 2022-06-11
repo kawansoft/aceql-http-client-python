@@ -37,7 +37,7 @@ class TestAll():
 
     @staticmethod
     def test_main(connection: Connection):
-
+        test_execute_server_query = False;
         AceQLDebugParms.PRINT_PROGRESS_INDICATOR = True;
 
         print()
@@ -198,7 +198,8 @@ class TestAll():
 
         cursor.close()
 
-        TestExecuteServerQuery.test_main(connection)
+        if test_execute_server_query:
+            TestExecuteServerQuery.test_main(connection)
 
 
 if __name__ == '__main__':
