@@ -41,10 +41,11 @@ class TestAll():
         AceQLDebugParms.PRINT_PROGRESS_INDICATOR = True;
 
         print()
-        print("aceql version      : " + Connection.get_client_version())
-        print("aceql version full : " + Connection.get_client_version_full())
-        print("Connection Options : " + str(connection.get_connections_options()))
-        print("Connection creation: " + str(connection.get_creation_datetime()))
+        print("aceql Server version: " + connection.get_server_version())
+        print("aceql version       : " + Connection.get_client_version())
+        print("aceql version full  : " + Connection.get_client_version_full())
+        print("Connection Options  : " + str(connection.get_connections_options()))
+        print("Connection creation : " + str(connection.get_creation_datetime()))
         print("Database Info       : " + str(connection.get_database_info()))
 
         connection.set_holdability("hold_cursors_over_commit")
