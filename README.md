@@ -19,7 +19,7 @@
 
 ## Python Client SDK v5.5 - User Guide 
 
-## June 11, 2022
+## June 13, 2022
 
 <img src="https://docs.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -72,7 +72,7 @@ The SDK is licensed with the liberal [Apache 2.0](https://www.apache.org/license
 
 ## Python Versions & DB-API 2.0
 
-The module supports Python 3.6–3.9.
+The module supports Python 3.6–3.10.
 
 The module provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 
@@ -615,7 +615,7 @@ The AceQL client SDK allows executing a remote server Java class that implements
 
 `org.kawanfw.sql.api.server.executor.ServerQueryExecutor` interface and that returns the rows of the SELECT.
 
-See the `org.kawanfw.sql.api.server.executor.ServerQueryExecutor` [Javadoc](https://docs.aceql.com/rest/soft/10.2/javadoc/org/kawanfw/sql/api/server/executor/ServerQueryExecutor.html).
+See the `org.kawanfw.sql.api.server.executor.ServerQueryExecutor` [Javadoc](https://docs.aceql.com/rest/soft/11.0/javadoc/org/kawanfw/sql/api/server/executor/ServerQueryExecutor.html).
 
 The usage on the client side is straightforward with the `Cursor.ExecuteServerQueryAsync()` method:
 
@@ -689,7 +689,7 @@ filename = os.path.expanduser("~") + os.sep + "db_schema.html"
 remote_database_meta_data.db_schema_download(filename)
 ```
 
-See an example of the built HTML schema:  [db_schema.out.html](https://docs.aceql.com/rest/soft/7.0/src/db_schema.out.html)
+See an example of the built HTML schema:  [db_schema.out.html](https://docs.aceql.com/rest/soft/11.0/src/db_schema.out.html)
 
 ### Accessing remote database main properties
 

@@ -18,18 +18,19 @@ they would for a local database.
 The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
-AceQL Python Client SDK - Version 5.5 - 11-June-2022
+
+AceQL Python Client SDK - Version 5.5 - 13-June-2022
 ----------------------------------------------------
 
 Whats' New:
-- Display more detailed error message if an HTTP
+- Display a more detailed error message if an HTTP
   error occurs. (result_analyzer.py)
 - Display a more detailed error message if the JSON parser
   can not find the JSON file of a downloaded ResultSet.
   (stream_result_analyzer.py)
 
 Bugs fixed:
-- Fix aceql_http_api.py.get_http_status_message():
+- aceql_http_api.py.get_http_status_message():
   was bugged. This has been fixed.
 
 AceQL Python Client SDK - Version 5.4 - 15-Apr-2022
