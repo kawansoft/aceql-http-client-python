@@ -19,8 +19,17 @@ The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
 
-AceQL Python Client SDK - Version 5.5 - 13-June-2022
+AceQL Python Client SDK - Version 5.6 - 26-Nov-2022
 ----------------------------------------------------
+
+Whats' New:
+- AceQL now supports Python 3.11.
+- The new HealthCheck.get_server_memory_info() API allows
+  gathering memory info of the AceQL server running instance.
+
+
+AceQL Python Client SDK - Version 5.5 - 13-Jun-2022
+---------------------------------------------------
 
 Whats' New:
 - Display a more detailed error message if an HTTP

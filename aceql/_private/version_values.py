@@ -20,5 +20,5 @@
 
 class VersionValues(object):
     NAME = "AceQL HTTP SDK"
-    VERSION = "v5.5"
-    DATE = "13-Jun-2022"
+    VERSION = "v5.6"
+    DATE = "26-Nov-2022"
