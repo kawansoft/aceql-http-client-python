@@ -30,7 +30,9 @@ import aceql._private.aceql_blob_upload_api
 import aceql._private.aceql_exec_query_api
 import aceql._private.aceql_exec_update_api
 import aceql._private.aceql_metadata_api
+import aceql._private.aceql_health_check_info_api
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
+from aceql._private.dto.health_check_info_dto import HealthCheckInfoDto
 from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
 from aceql._private.dto.table_dto import TableDto
 from aceql._private.dto.table_names_dto import TableNamesDto
@@ -415,17 +417,24 @@ class AceQLHttpApi(object):
         return ace_ql_metadata_api.db_schema_download(file_format, table_name)
 
     def get_table_names(self, table_type: str) -> TableNamesDto:
-        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
-        return ace_ql_metadata_api.get_table_names(table_type)
+        aceql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return aceql_metadata_api.get_table_names(table_type)
 
     def get_table(self, name: str) -> TableDto:
-        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
-        return ace_ql_metadata_api.get_table(name)
+        aceql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return aceql_metadata_api.get_table(name)
 
     def get_db_metadata(self) -> JdbcDatabaseMetaDataDto:
-        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
-        return ace_ql_metadata_api.get_db_metadata()
+        aceql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return aceql_metadata_api.get_db_metadata()
 
     def get_database_info(self) -> DatabaseInfoDto:
-        ace_ql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
-        return ace_ql_metadata_api.get_database_info()
+        aceql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return aceql_metadata_api.get_database_info()
+
+    def get_health_check_info(self) -> HealthCheckInfoDto:
+        aceql_health_check_info_api: aceql.AceQLHealthCheckInfoApi \
+            = aceql._private.aceql_health_check_info_api.AceQLHealthCheckInfoApi(self)
+        return aceql_health_check_info_api.get_health_check_info_dto()
+
+

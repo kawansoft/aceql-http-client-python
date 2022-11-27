@@ -24,6 +24,7 @@ from requests import Request
 
 from aceql import Connection, Error
 from aceql._private.result_analyzer import ResultAnalyzer
+from aceql._private.dto.health_check_info_dto import HealthCheckInfoDto
 
 
 class HealthCheck(object):
@@ -79,3 +80,10 @@ class HealthCheck(object):
         """Gets the response time of a "select 1" called on the remote database defined by the underlying
         Connection. """
         return self.get_response_time("select 1");
+
+    def get_server_memory_info(self):
+        """Gets health check memory info from server."""
+        health_check_info_dto: HealthCheckInfoDto = self.__aceql_http_api.get_health_check_info();
+        print("HealthCheckInfoDto:")
+        print(str(health_check_info_dto))
+

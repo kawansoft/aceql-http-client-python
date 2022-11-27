@@ -34,6 +34,7 @@ class HealthCheckTest(object):
         print("health_check.ping()                      : " + str(health_check.ping()))
         print("health_check.get_response_time()         : " + str(health_check.get_response_time("select 1")))
         print("health_check.get_response_time_select_1(): " + str(health_check.get_response_time_select_1()))
+        print("health_check.get_server_memory_info()    : " + str(health_check.get_server_memory_info()))
         print(str(datetime.now()) + " End.")
 
 

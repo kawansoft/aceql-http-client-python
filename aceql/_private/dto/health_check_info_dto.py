@@ -23,7 +23,7 @@ import marshmallow_dataclass
 
 
 @dataclass
-class HealthCheckInfoDto:
+class HealthCheckInfoDto(object):
     """ Generated on 2022-11-27 18:23:21
     from com.aceql.jdbc.commons.main.metadata.dto.HealthCheckInfoDto.java translation """ 
     status: Optional[str]
