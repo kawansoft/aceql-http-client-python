@@ -40,4 +40,4 @@ class HealthCheckInfoDto(object):
         return "HealthCheckInfoDto [status=" + str( self.status) + ", initMemory=" + str( self.initMemory) + ", usedMemory=" + str( 
             self.usedMemory) + ", maxMemory=" + str( 
             self.maxMemory) + ", committedMemory=" + str( 
-            self.committedMemory)  + "]"
+            self.committedMemory) + "]"

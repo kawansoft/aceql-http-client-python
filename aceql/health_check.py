@@ -25,6 +25,7 @@ from requests import Request
 from aceql import Connection, Error
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql._private.dto.health_check_info_dto import HealthCheckInfoDto
+from aceql.server_memory_info import ServerMemoryInfo
 
 
 class HealthCheck(object):
@@ -81,9 +82,15 @@ class HealthCheck(object):
         Connection. """
         return self.get_response_time("select 1");
 
-    def get_server_memory_info(self):
+    def get_server_memory_info(self) -> ServerMemoryInfo:
         """Gets health check memory info from server."""
         health_check_info_dto: HealthCheckInfoDto = self.__aceql_http_api.get_health_check_info();
-        print("HealthCheckInfoDto:")
-        print(str(health_check_info_dto))
+
+        # print("HealthCheckInfoDto:")
+        # print(str(health_check_info_dto))
+
+        server_memory_info: ServerMemoryInfo = ServerMemoryInfo(health_check_info_dto)
+        return server_memory_info
+
+
 
