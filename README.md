@@ -71,7 +71,7 @@ The SDK is licensed with the liberal [Apache 2.0](https://www.apache.org/license
 
 ## Python Versions & DB-API 2.0
 
-The module supports Python 3.6–3.11.
+The module supports Python 3.7–3.11.
 
 The module provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 

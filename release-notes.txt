@@ -26,10 +26,11 @@ Whats' New:
 - The new HealthCheck.get_server_memory_info() API allows
   gathering memory info of the AceQL server running instance.
 - AceQL now supports Python 3.11.
+- Python 3.6 is not any more supported.
 
 Bugs fixed:
-- cursor.py: Use List[tuple] instead of list[tuple]
-  for Python < 3.8 support.
+- cursor.py: Use List instead of list
+  for Python 3.7 support.
 
 
 AceQL Python Client SDK - Version 5.5 - 13-Jun-2022
