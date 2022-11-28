@@ -29,8 +29,7 @@ Whats' New:
 - Python 3.6 is not any more supported.
 
 Bugs fixed:
-- cursor.py: Use List instead of list
-  for Python 3.7 support.
+- cursor.py: Use List instead of list for Python 3.7 support.
 
 
 AceQL Python Client SDK - Version 5.5 - 13-Jun-2022
