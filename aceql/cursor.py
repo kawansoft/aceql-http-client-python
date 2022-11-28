@@ -294,7 +294,7 @@ class Cursor(object):
         the_tup: tuple = tuple(the_list)
         return the_tup
 
-    def fetchmany(self, size: int = -1) -> list[tuple]:
+    def fetchmany(self, size: int = -1) -> List[tuple]:
         """Fetch the next set of rows of a query result, returning a sequence of sequences
 
         (e.g. a list of tuples). An empty sequence is returned when no more rows are available.
@@ -320,7 +320,7 @@ class Cursor(object):
 
         return list_tuples
 
-    def fetchall(self) -> list[tuple]:
+    def fetchall(self) -> List[tuple]:
         """Fetches all (remaining) rows of a query result, returning a list.
 
             Note that the cursors arraysize attribute can affect the performance

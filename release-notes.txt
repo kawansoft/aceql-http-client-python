@@ -27,6 +27,10 @@ Whats' New:
   gathering memory info of the AceQL server running instance.
 - AceQL now supports Python 3.11.
 
+Bugs fixed:
+- cursor.py: Use List[tuple] instead of list[tuple]
+  for Python < 3.8 support.
+
 
 AceQL Python Client SDK - Version 5.5 - 13-Jun-2022
 ---------------------------------------------------
