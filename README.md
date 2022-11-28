@@ -1,4 +1,3 @@
-
 ![GitHub top language](https://img.shields.io/github/languages/top/kawansoft/aceql-http-client-python) 
 ![GitHub issues](https://img.shields.io/github/issues/kawansoft/aceql-http-client-python) 
 
@@ -19,7 +18,7 @@
 
 ## Python Client SDK v5.6 - User Guide 
 
-## November 26, 2022
+## November 28, 2022
 
 <img src="https://docs.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -658,8 +657,6 @@ connection_options = ConnectionOptions(session_id=session_id)
 connection = aceql.connect(url=url, username=username, password=None, database=database,
                            connection_options=connection_options)
 ```
-
-
 
 ## Using the Metadata Query API 
 
