@@ -40,11 +40,25 @@ import requests
 # Python
 # python link_checker_2.py I:\_dev_awake\aceql-http-main\Python\aceql-http-client-python\README.md
 
-if len(sys.argv) < 2:
-    print("Please pass markdown file as parameter!")
-    sys.exit()
+command_line = False
 
-md_file:str = sys.argv[1]
+#the_doc = "I:\\_dev_awake\\aceql-http-main\\C#\\AceQL.Client2\\README.md"
+#the_doc = "I:\\_dev_awake\\aceql-http-main\\aceql-http\\aceql-http-demo-guide.md"
+#the_doc = "I:\\_dev_awake\\aceql-http-main\\aceql-http\\aceql-http-user-guide-api.md"
+
+#the_doc = "I:\\_dev_awake\\aceql-http-main\\C#\\AceQL.Client2\\README.md"
+#the_doc = "I:\\_dev_awake\\aceql-http-main\\aceql-http-client-jdbc-driver\\README.md"
+the_doc = "I:\\_dev_awake\\aceql-http-main\\Python\\aceql-http-client-python\\README.md"
+
+if command_line:
+    if len(sys.argv) < 2:
+        print("Please pass markdown file as parameter!")
+        sys.exit()
+
+    md_file:str = sys.argv[1]
+else:
+    md_file: str = the_doc
+
 only_false:bool = False
 
 if len(sys.argv) == 3:
