@@ -34,6 +34,7 @@ import aceql._private.aceql_health_check_info_api
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
 from aceql._private.dto.health_check_info_dto import HealthCheckInfoDto
 from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
+from aceql._private.dto.limits_info_dto import LimitsInfoDto
 from aceql._private.dto.table_dto import TableDto
 from aceql._private.dto.table_names_dto import TableNamesDto
 from aceql._private.result_analyzer import ResultAnalyzer
@@ -431,6 +432,10 @@ class AceQLHttpApi(object):
     def get_database_info(self) -> DatabaseInfoDto:
         aceql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
         return aceql_metadata_api.get_database_info()
+
+    def get_limits_info(self) -> LimitsInfoDto:
+        aceql_metadata_api: aceql.AceQLMetadataApi = aceql._private.aceql_metadata_api.AceQLMetadataApi(self)
+        return aceql_metadata_api.get_limits_info()
 
     def get_health_check_info(self) -> HealthCheckInfoDto:
         aceql_health_check_info_api: aceql.AceQLHealthCheckInfoApi \

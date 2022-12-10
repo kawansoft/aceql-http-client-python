@@ -1,7 +1,7 @@
 #
 # This file is part of AceQL Python Client SDK.
 # AceQL Python Client SDK: Remote SQL access over HTTP with AceQL HTTP.
-# Copyright (C) 2021,  KawanSoft SAS
+# Copyright (C) 2022,  KawanSoft SAS
 # (http://www.kawansoft.com). All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,23 @@
 # limitations under the License.
 ##
 
+from dataclasses import dataclass
+from typing import Optional
+import marshmallow_dataclass
 
-class VersionValues(object):
-    NAME = "AceQL HTTP SDK"
-    VERSION = "v5.7"
-    DATE = "10-Dec-2022"
+
+@dataclass
+class LimitsInfoDto:
+    """ Generated on 2022-12-10 10:05:38
+    from com.aceql.jdbc.commons.main.metadata.dto.LimitsInfoDto.java translation """
+    status: Optional[str]
+    maxRows: Optional[float]
+    maxBlobLength: Optional[float]
+
+    class Meta:
+        ordered = True
+
+    def __str__(self):
+        """ The string representation."""
+        return "LimitsInfoDto [status=" + str( self.status) + ", maxRows=" + str( self.maxRows) + ", maxBlobLength=" + str(
+            self.maxBlobLength)  + "]"

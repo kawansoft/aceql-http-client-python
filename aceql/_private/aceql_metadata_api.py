@@ -25,6 +25,7 @@ from requests import Request
 
 from aceql._private.dto.database_info_dto import DatabaseInfoDto
 from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataDto
+from aceql._private.dto.limits_info_dto import LimitsInfoDto
 from aceql._private.dto.table_dto import TableDto
 from aceql._private.dto.table_names_dto import TableNamesDto
 from aceql._private.result_analyzer import ResultAnalyzer
@@ -190,8 +191,36 @@ class AceQLMetadataApi(object):
             if AceQLMetadataApi.__debug:
                 print(database_info_dto)
 
-            print(database_info_dto)
             return database_info_dto;
+
+        except Exception as e:
+            if isinstance(e, Error):
+                raise
+            else:
+                raise Error(str(e), 0, e, None, self.__aceQLHttpApi.get_http_status_code())
+
+    def get_limits_info(self) -> LimitsInfoDto:
+
+        try:
+            url_withaction = self.__url + "get_limits_info"
+            result = self.__aceQLHttpApi.call_with_get_url(url_withaction)
+
+            result_analyzer = ResultAnalyzer(result, self.__aceQLHttpApi.get_http_status_code())
+            if not result_analyzer.is_status_ok():
+                raise Error(result_analyzer.get_error_message(),
+                            result_analyzer.get_error_type(), None, None, self.__aceQLHttpApi.get_http_status_code())
+
+            if AceQLMetadataApi.__debug:
+                print(result)
+
+            holder_limits_info_dto_schema = marshmallow_dataclass.class_schema(LimitsInfoDto)
+            limits_info_dto: LimitsInfoDto = holder_limits_info_dto_schema().loads(
+                result)
+
+            if AceQLMetadataApi.__debug:
+                print(limits_info_dto)
+
+            return limits_info_dto;
 
         except Exception as e:
             if isinstance(e, Error):

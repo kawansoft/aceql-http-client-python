@@ -24,6 +24,7 @@
 """
 
 from aceql.connection import Connection
+from aceql.limits_info import LimitsInfo
 from aceql.progress_indicator import ProgressIndicator
 from aceql.sql_null_type import SqlNullType
 from aceql.cursor import Cursor
@@ -44,7 +45,7 @@ from aceql.health_check import HealthCheck
 
 __all__ = ["Connection", "Cursor", "Error", "ConnectionOptions", "ProgressIndicator", "ProxyAuth", "SqlNullType",
            "HealthCheck", "Column", "ExportedKey",
-           "ForeignKey", "ImportedKey", "Index", "JdbcDatabaseMetaData", "PrimaryKey", "RemoteDatabaseMetaData",
+           "ForeignKey", "ImportedKey", "Index", "JdbcDatabaseMetaData", "LimitsInfo", "PrimaryKey", "RemoteDatabaseMetaData",
            "Table"]
 
 
