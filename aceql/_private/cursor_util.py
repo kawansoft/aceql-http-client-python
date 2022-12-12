@@ -18,6 +18,7 @@
 # limitations under the License.
 ##
 import os
+import html
 
 from aceql._private.datetime_util import DateTimeUtil
 from aceql._private.datetime_util import datetime
@@ -34,7 +35,7 @@ class CursorUtil(object):
         self.blob_streams = []
         self.blob_lengths = []
 
-    def get_http_parameters_dict(self, params: dict) -> dict:
+    def get_http_parameters_dict(self, params: dict, do_html_encode: bool) -> dict:
         """ Build the http parameters dictionary to pass to remote server. """
         parms_dict: dict = {}
         param_index = 0
@@ -47,7 +48,7 @@ class CursorUtil(object):
             param_index += 1
 
             # For Py2 always convert "unicode" aka str with special chars to str
-            x = CursorUtil.get_utf8_value(x)
+            #x = CursorUtil.get_utf8_value(x)
 
             param_type = CursorUtil.get_sql_type(x)
             parms_dict["param_type_" + str(param_index)] = param_type
@@ -83,6 +84,9 @@ class CursorUtil(object):
                 the_datetime.second = x.second
                 parms_dict["param_value_" + str(param_index)] = DateTimeUtil.get_timestamp_from_date(the_datetime)
             else:
+                if (do_html_encode and CursorUtil.get_class_name(x) == "str"):
+                    x = html.escape(x)
+
                 parms_dict["param_value_" + str(param_index)] = str(x)
 
         #print("parms_dict: " + str(parms_dict))

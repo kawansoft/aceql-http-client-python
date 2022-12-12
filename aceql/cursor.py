@@ -129,7 +129,7 @@ class Cursor(object):
             # The addBatch() part
             for params in seq_params:
                 the_cursor_util: CursorUtil = CursorUtil()
-                parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
+                parms_dict: dict = the_cursor_util.get_http_parameters_dict(params, True)
 
                 blob_ids: list = the_cursor_util.blob_ids
 
@@ -159,7 +159,7 @@ class Cursor(object):
 
         try:
             the_cursor_util: CursorUtil = CursorUtil()
-            parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
+            parms_dict: dict = the_cursor_util.get_http_parameters_dict(params, False)
 
             blob_ids = the_cursor_util.blob_ids
             blob_streams = the_cursor_util.blob_streams
@@ -224,7 +224,7 @@ class Cursor(object):
         self.__description: list = []
 
         the_cursor_util = CursorUtil()
-        parms_dict: dict = the_cursor_util.get_http_parameters_dict(params)
+        parms_dict: dict = the_cursor_util.get_http_parameters_dict(params, False)
 
         is_prepared_statement = False
         if len(parms_dict) > 0:
