@@ -19,6 +19,15 @@ The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
 
+AceQL Python Client SDK - Version 5.6.1 - 12-Dec-2022
+-----------------------------------------------------
+
+Bugs fixed:
+- The Connection.get_connection_info() would print
+  the database info on the terminal because of
+  a debug error setting. This has been fixed.
+
+
 AceQL Python Client SDK - Version 5.6 - 28-Nov-2022
 ----------------------------------------------------
 
