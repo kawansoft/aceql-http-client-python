@@ -190,7 +190,6 @@ class AceQLMetadataApi(object):
             if AceQLMetadataApi.__debug:
                 print(database_info_dto)
 
-            print(database_info_dto)
             return database_info_dto;
 
         except Exception as e:
