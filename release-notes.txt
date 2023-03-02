@@ -19,13 +19,17 @@ The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
 
-AceQL Python Client SDK - Version 5.7.1 - 02-Mar-2023
+AceQL Python Client SDK - Version 5.7.2 - 02-Mar-2023
 -----------------------------------------------------
 
 What's new:
 - It is now possible to get info about limits set on the server side:
   maximum rows available for a SELECT and maximum allowed length
   for a BLOB upload.
+
+Bugs fixed:
+ - Required marshmallow-dataclass package was missing in setup.py.
+   This has been fixed.
 
 
 AceQL Python Client SDK - Version 5.6 - 28-Nov-2022

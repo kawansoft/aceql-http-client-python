@@ -9,7 +9,7 @@ setup(
     name='aceql',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='5.7.1',
+    version='5.7.2',
     packages=['aceql', 'aceql._private', 'aceql._private.batch', 'aceql._private.dto','aceql.metadata'],
     url='https://github.com/kawansoft/aceql-py',
     license='Apache 2.0',
@@ -32,6 +32,7 @@ setup(
         'requests_toolbelt>=0.8.0',
         'pytz>=2017.3',
         'marshmallow',
+        'marshmallow-dataclass',
         'ijson'
     ],
 
