@@ -167,21 +167,12 @@ class Connection(object):
     def get_database_info(self) -> DatabaseInfo:
         """Get the the remote database and remote JDBC Driver basic info."""
 
-        if not ConnectionUtil.is_get_database_info_supported(self):
-            raise Exception("AceQL Server version must be >= " + ConnectionUtil.GET_DATABASE_INFO_MIN_SERVER_VERSION
-                + " in order to call get_database_info.")
-
         database_info_dto: DatabaseInfoDto = self.__aceQLHttpApi.get_database_info()
         databaseInfo: DatabaseInfo = DatabaseInfo(database_info_dto)
         return databaseInfo
 
     def get_limits_info(self) -> LimitsInfo:
         """ Gives info of limits defined on server side."""
-
-        if not ConnectionUtil.is_get_limits_info_supported(self):
-            raise Exception("AceQL Server version must be >= " + ConnectionUtil.GET_DATABASE_INFO_MIN_SERVER_VERSION
-                + " in order to call get_limits_info.")
-
         limits_info_dto: LimitsInfoDto = self.__aceQLHttpApi.get_limits_info()
         databaseInfo: LimitsInfo = LimitsInfo(limits_info_dto)
         return databaseInfo

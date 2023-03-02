@@ -48,6 +48,10 @@ class Cursor(object):
 
         self.__row_parser = None
 
+        if not ConnectionUtil.is_version12_2_or_higher(self.__connection):
+            raise Exception("AceQL Server version must be >= " + ConnectionUtil.SERVER_VERSION_12_2
+                            + " in order to user the AceQL Python Client SDK.")
+
     @property
     def description(self) -> str:
         """Describes the name and SQL type of each column.
@@ -105,9 +109,6 @@ class Cursor(object):
         Note that the SQL operation are transferred with one unique HTTP call to the server side which will execute
         them using a JDBC PreparedStatement in batch mode: this will allow fast execution.
         """
-        if not ConnectionUtil.is_batch_supported(self.__connection):
-            raise Exception("AceQL Server version must be >= " + ConnectionUtil.BATCH_MIN_SERVER_VERSION
-                            + " in order to call executemany.")
 
         batch_file_parameters = FileUtil.build_batch_file()
 
@@ -189,10 +190,6 @@ class Cursor(object):
          package info
         :param parameters: the parameters to pass to the remote ServerQueryExecutor.executeQuery() implementation.
         """
-
-        if not ConnectionUtil.is_get_database_info_supported(self.__connection):
-            raise Exception("AceQL Server version must be >= " + ConnectionUtil.EXECUTE_SERVER_QUERY_MIN_SERVER_VERSION
-                            + " in order to call execute_server_query()")
 
         self.__raise_error_if_closed()
 

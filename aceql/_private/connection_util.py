@@ -27,38 +27,7 @@ class ConnectionUtil(object):
     """Utilities for Connection class. """
 
     SERVER_VERSION_NUMBER = None
-    BATCH_MIN_SERVER_VERSION = "8.0"
-    GET_DATABASE_INFO_MIN_SERVER_VERSION = "9.0"
-    GET_LIMITS_INFO_MIN_SERVER_VERSION = "12.0"
-    EXECUTE_SERVER_QUERY_MIN_SERVER_VERSION = "10.1"
-
-    @staticmethod
-    def is_batch_supported(connection: 'Connection') -> bool:
-        """ Says if batch calls are supported on server for current server version"""
-        raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
-        return ConnectionUtil.is_current_version_ok(raw_server_version,
-                                                    ConnectionUtil.BATCH_MIN_SERVER_VERSION)
-
-    @staticmethod
-    def is_get_database_info_supported(connection: 'Connection') -> bool:
-        """ Says if /get_database_info API is call supported on server for current server version."""
-        raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
-        return ConnectionUtil.is_current_version_ok(raw_server_version,
-                                                    ConnectionUtil.GET_DATABASE_INFO_MIN_SERVER_VERSION)
-
-    @staticmethod
-    def is_get_limits_info_supported(connection: 'Connection') -> bool:
-        """ Says if /get_limits_info API is call supported on server for current server version."""
-        raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
-        return ConnectionUtil.is_current_version_ok(raw_server_version,
-                                                    ConnectionUtil.GET_LIMITS_INFO_MIN_SERVER_VERSION)
-
-    @staticmethod
-    def is_execute_server_query_supported(connection: 'Connection') -> bool:
-        """ Says if remote Java ServerQueryExecutor API is call supported on server for current server version."""
-        raw_server_version: str = ConnectionUtil.get_server_raw_version(connection)
-        return ConnectionUtil.is_current_version_ok(raw_server_version,
-                                                    ConnectionUtil.EXECUTE_SERVER_QUERY_MIN_SERVER_VERSION)
+    SERVER_VERSION_12_2 = "12.2";
 
     @staticmethod
     def get_server_raw_version(connection: 'Connection') -> str:
@@ -74,3 +43,11 @@ class ConnectionUtil(object):
     def is_current_version_ok(raw_server_version: str, min_server_version: str) -> bool:
         # Says if the current version is OK, that is >= to the minimum required server version
         return float(raw_server_version) >= float(min_server_version)
+
+    @staticmethod
+    def is_version12_2_or_higher(connection: 'Connection') -> bool:
+        raw_server_version = ConnectionUtil.get_server_raw_version(connection)
+        return ConnectionUtil.is_current_version_ok(raw_server_version, ConnectionUtil.SERVER_VERSION_12_2)
+
+
+
