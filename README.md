@@ -16,9 +16,9 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v5.6 - User Guide 
+## Python Client SDK v5.7 - User Guide 
 
-## November 28, 2022
+## March 2, 2023
 
 <img src="https://docs.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -77,7 +77,7 @@ The module provides a SQL interface compliant with the DB-API 2.0 specification 
 
 ## AceQL Server side compatiblity
 
-This  SDK version is compatible with AceQL HTTP server side v6.2+.  It requires version 8.0+ in order to use batch commands.
+This  SDK version requires AceQL HTTP server side v12.2+.  
 
 ## Installation
 
