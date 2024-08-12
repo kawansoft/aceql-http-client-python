@@ -22,6 +22,8 @@ from typing import TYPE_CHECKING
 import requests
 from requests_toolbelt.multipart import encoder
 
+from aceql._private.http_client_with_retry import HTTPClientWithRetry
+
 if TYPE_CHECKING:
     from aceql._private.aceql_http_api import AceQLHttpApi
 
@@ -64,7 +66,7 @@ class AceQLBlobUploadApi(object):
 
         # requests.post(the_url, data=m, headers=the_headers, proxies=self.__proxies,
         #               auth=self.__auth)
-        requests.post(the_url, data=m, headers=the_headers, proxies=self.__aceQLHttpApi.get_proxies(),
+        HTTPClientWithRetry.post(the_url, data=m, headers=the_headers, proxies=self.__aceQLHttpApi.get_proxies(),
                       auth=self.__aceQLHttpApi.get_auth())
 
     def my_callback(self, monitor):

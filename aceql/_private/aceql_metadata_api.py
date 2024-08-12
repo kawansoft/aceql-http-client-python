@@ -28,6 +28,7 @@ from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataD
 from aceql._private.dto.limits_info_dto import LimitsInfoDto
 from aceql._private.dto.table_dto import TableDto
 from aceql._private.dto.table_names_dto import TableNamesDto
+from aceql._private.http_client_with_retry import HTTPClientWithRetry
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql.error import Error
 
@@ -61,11 +62,11 @@ class AceQLMetadataApi(object):
                 dict_params["table_name"] = table_name
 
             if self.__aceQLHttpApi.get_timeout() is None:
-                response: Request = requests.post(the_url, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
+                response: Request = HTTPClientWithRetry.post(the_url, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth())
             else:
-                response: Request = requests.post(the_url, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
+                response: Request = HTTPClientWithRetry.post(the_url, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth(),
                                                   timeout=self.__aceQLHttpApi.get_timeout())

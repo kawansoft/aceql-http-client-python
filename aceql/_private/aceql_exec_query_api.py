@@ -29,6 +29,7 @@ from aceql._private.cursor_util import CursorUtil
 from aceql._private.dto.server_query_executor_dto import ServerQueryExecutorDto
 from aceql._private.dto.server_query_executor_dto_builder import ServerQueryExecutorDtoBuilder
 from aceql._private.file_util import FileUtil
+from aceql._private.http_client_with_retry import HTTPClientWithRetry
 from aceql._private.result_set_info import ResultSetInfo
 from aceql._private.row_counter import RowCounter
 from aceql._private.stream_result_analyzer import StreamResultAnalyzer
@@ -76,14 +77,14 @@ class AceQLExecQueryApi(object):
 
             if self.__aceQLHttpApi.get_timeout() is None:
                 AceQLDebug.debug("QUERY HERE 1")
-                response: Request = requests.post(url_withaction,
+                response: Request = HTTPClientWithRetry.post(url_withaction,
                                                   headers=self.__aceQLHttpApi.get_headers(),
                                                   data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth())
             else:
                 AceQLDebug.debug("QUERY HERE 2")
-                response: Request = requests.post(url_withaction,
+                response: Request = HTTPClientWithRetry.post(url_withaction,
                                                   headers=self.__aceQLHttpApi.get_headers(),
                                                   data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
@@ -155,14 +156,14 @@ class AceQLExecQueryApi(object):
 
             if self.__aceQLHttpApi.get_timeout() is None:
                 AceQLDebug.debug("QUERY HERE 1")
-                response: Request = requests.post(url_withaction,
+                response: Request = HTTPClientWithRetry.post(url_withaction,
                                                   headers=self.__aceQLHttpApi.get_headers(),
                                                   data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth())
             else:
                 AceQLDebug.debug("QUERY HERE 2")
-                response: Request = requests.post(url_withaction,
+                response: Request = HTTPClientWithRetry.post(url_withaction,
                                                   headers=self.__aceQLHttpApi.get_headers(),
                                                   data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),

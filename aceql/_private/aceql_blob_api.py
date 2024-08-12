@@ -23,6 +23,7 @@ import requests
 from requests import Request
 
 from aceql._private.aceql_debug import AceQLDebug
+from aceql._private.http_client_with_retry import HTTPClientWithRetry
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql.error import Error
 
@@ -51,11 +52,11 @@ class AceQLBlobApi(object):
             the_url = self.__url + "/blob_download?blob_id=" + blob_id
 
             if self.__aceQLHttpApi.get_timeout() is None:
-                response: Request = requests.get(the_url, headers=self.__aceQLHttpApi.get_headers(),
+                response: Request = HTTPClientWithRetry.get(the_url, headers=self.__aceQLHttpApi.get_headers(),
                                                  proxies=self.__aceQLHttpApi.get_proxies(),
                                                  auth=self.__aceQLHttpApi.get_auth())
             else:
-                response: Request = requests.get(the_url,  headers=self.__aceQLHttpApi.get_headers(),
+                response: Request = HTTPClientWithRetry.get(the_url,  headers=self.__aceQLHttpApi.get_headers(),
                                                  proxies=self.__aceQLHttpApi.get_proxies(),
                                                  auth=self.__aceQLHttpApi.get_auth(),
                                                  timeout=self.__aceQLHttpApi.get_timeout())
@@ -86,11 +87,11 @@ class AceQLBlobApi(object):
             AceQLDebug.debug("dictParams   : " + str(dict_params))
 
             if self.__aceQLHttpApi.get_timeout() is None:
-                response: Request = requests.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
+                response: Request = HTTPClientWithRetry.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth())
             else:
-                response: Request = requests.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
+                response: Request = HTTPClientWithRetry.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth(),
                                                   timeout=self.__aceQLHttpApi.get_timeout())
