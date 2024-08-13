@@ -26,6 +26,7 @@ from os import sep
 from datetime import datetime, date
 
 from aceql._private.aceql_debug_parms import AceQLDebugParms
+from aceql._private.http_client_with_retry import HTTPClientWithRetry
 from tests.dml.test_execute_server_query import TestExecuteServerQuery
 from tests.util.connection_builder import ConnectionBuilder
 from tests.dml.dml_sequence_test import DmlSequenceTest
@@ -39,6 +40,9 @@ class TestAll():
     def test_main(connection: Connection):
         test_execute_server_query = False;
         AceQLDebugParms.PRINT_PROGRESS_INDICATOR = True;
+
+        HTTPClientWithRetry.set_max_retries(3)
+        HTTPClientWithRetry.set_retry_interval_ms(1000)
 
         print()
         print("aceql Server version: " + connection.get_server_version())

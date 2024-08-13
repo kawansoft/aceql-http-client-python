@@ -16,9 +16,9 @@
 
 # AceQL HTTP 
 
-## Python Client SDK v5.7.2 - User Guide 
+## Python Client SDK v5.8 - User Guide 
 
-## March 2, 2023
+## August 13, 2024
 
 <img src="https://docs.aceql.com/img/AceQL-Schema-min.jpg" alt="AceQL Draw"/>
 
@@ -53,7 +53,7 @@
          * [Downloading database schema into a file](#downloading-database-schema-into-a-file)
          * [Accessing remote database main properties](#accessing-remote-database-main-properties)
          * [Getting Details of Tables and Columns](#getting-details-of-tables-and-columns)
-
+* [Implementing Retry Logic in HTTP Requests (Experimental)](#implementing-retry-logic-in-http-requests-experimental)
 
 # Fundamentals
 
@@ -71,7 +71,7 @@ The SDK is licensed with the liberal [Apache 2.0](https://www.apache.org/license
 
 ## Python Versions & DB-API 2.0
 
-The module supports Python 3.7–3.11.
+The module supports Python 3.7–3.12.
 
 The module provides a SQL interface compliant with the DB-API 2.0 specification described by [**PEP 249**](https://www.python.org/dev/peps/pep-0249).
 
@@ -737,7 +737,21 @@ for table_name in table_names:
 
 ____________
 
+## Implementing Retry Logic in HTTP Requests (Experimental)
 
+In networked applications, transient failures can cause HTTP requests to fail. To handle this, you can configure retry logic using the `HTTPClientWithRetry` class.
+
+- **`set_max_retries`**: Sets the number of retry attempts after a failure. For example, `ConnectionInfo.MaxRetries = 3` retries the request up to three times.
+- **`set_retry_interval_ms`**: Specifies the delay between retries in milliseconds. For instance, `ConnectionInfo.RetryIntervalMs = 1000` adds a 1-second pause between retries.
+
+Example configuration:
+
+```python
+        HTTPClientWithRetry.set_max_retries(3)
+        HTTPClientWithRetry.set_retry_interval_ms(1000)
+```
+
+This setup retries failed requests up to three times with a 1-second interval between attempts.
 
 
 

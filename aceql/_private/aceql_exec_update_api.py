@@ -23,6 +23,7 @@ from requests import Request
 
 from aceql._private.aceql_debug import AceQLDebug
 from aceql._private.aceql_execution_util import AceQLExecutionUtil
+from aceql._private.http_client_with_retry import HTTPClientWithRetry
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql.error import Error
 
@@ -87,12 +88,12 @@ class AceQLExecUpdateApi(object):
 
             if self.__aceQLHttpApi.get_timeout() is None:
                 AceQLDebug.debug("UPDATE HERE 1")
-                response: Request = requests.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
+                response: Request = HTTPClientWithRetry.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth())
             else:
                 AceQLDebug.debug("UPDATE HERE 2")
-                response: Request = requests.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
+                response: Request = HTTPClientWithRetry.post(url_withaction, headers=self.__aceQLHttpApi.get_headers(), data=dict_params,
                                                   proxies=self.__aceQLHttpApi.get_proxies(),
                                                   auth=self.__aceQLHttpApi.get_auth(),
                                                   timeout=self.__aceQLHttpApi.get_timeout())

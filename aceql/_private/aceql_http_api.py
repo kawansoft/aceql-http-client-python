@@ -37,6 +37,7 @@ from aceql._private.dto.jdbc_database_meta_data_dto import JdbcDatabaseMetaDataD
 from aceql._private.dto.limits_info_dto import LimitsInfoDto
 from aceql._private.dto.table_dto import TableDto
 from aceql._private.dto.table_names_dto import TableNamesDto
+from aceql._private.http_client_with_retry import HTTPClientWithRetry
 from aceql._private.result_analyzer import ResultAnalyzer
 from aceql._private.user_login_store import UserLoginStore
 from aceql._private.version_values import VersionValues
@@ -152,9 +153,9 @@ class AceQLHttpApi(object):
 
     def call_with_get_url(self, url: str) -> str:
         if self.__timeout is None:
-            response: Request = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
+            response: Request = HTTPClientWithRetry.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth)
         else:
-            response: Request = requests.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
+            response: Request = HTTPClientWithRetry.get(url, headers=self.__headers, proxies=self.__proxies, auth=self.__auth,
                                              timeout=self.__timeout)
 
         self.__http_status_code = response.status_code
@@ -163,10 +164,10 @@ class AceQLHttpApi(object):
     def call_with_post_url(self, url: str, dict_params: dict) -> str:
 
         if self.__timeout is None:
-            response: Request = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+            response: Request = HTTPClientWithRetry.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
                                               auth=self.__auth)
         else:
-            response: Request = requests.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
+            response: Request = HTTPClientWithRetry.post(url, headers=self.__headers, data=dict_params, proxies=self.__proxies,
                                               auth=self.__auth,
                                               timeout=self.__timeout)
 
