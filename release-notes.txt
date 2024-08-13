@@ -19,7 +19,7 @@ The AceQL Python Client SDK is licensed under the Apache 2.0
 License.
 
 
-AceQL Python Client SDK - Version 5.8 - 12-August-2024
+AceQL Python Client SDK - Version 5.8 - 13-August-2024
 ------------------------------------------------------
 
 What's new:
